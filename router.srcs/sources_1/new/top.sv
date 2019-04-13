@@ -45,8 +45,7 @@ module top(
     
     assign rgmii1_txc = rgmii_tx_clk;
     
-    (*mark_debug = "true"*) reg [3:0]rx_data1;
-    (*mark_debug = "true"*) reg [3:0]rx_data2;
+    (*mark_debug = "true"*) reg [7:0]rx_data;
     (*mark_debug = "true"*) reg trans;
     
     always_ff @ (posedge rgmii1_rxc) begin
@@ -59,18 +58,20 @@ module top(
     
     genvar i;
     for (i = 0;i < 4;i++) begin
-        IDDR2 #(
-            .DDR_ALIGNMENT("C0")
-        )iddr_inst (
-            .Q0(rx_data1[i]),
-            .Q1(rx_data2[i]),
-            .C0(rgmii1_rxc),
-            .C1(~rgmii1_rxc),
+        IDDR #(
+            .DDR_CLK_EDGE("SAME_EDGE_PIPELINED")
+        ) iddr_inst (
+            .Q1(rx_data[i+4]),
+            .Q2(rx_data[i]),
+            .C(rgmii1_rxc),
             .CE(1'b1),
             .D(rgmii1_rd[i]),
-            .R(1'b0),
-            .S(1'b0)
+            .R(1'b0)
         );
     end
+    
+    assign rgmii1_td = rgmii1_rd;
+    assign rgmii1_tx_ctl = rgmii1_rx_ctl;
+    assign rgmii1_txc = rgmii1_rxc;
     
 endmodule
