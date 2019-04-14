@@ -26,6 +26,7 @@ module testbench(
     
     logic clk;
     logic rx_clk;
+    logic rx_clk_90deg;
     logic packet_clk;
     logic trans;
     logic [3:0] count = 0;
@@ -38,11 +39,15 @@ module testbench(
         clk = 0;
         rx_clk = 0;
         packet_clk = 0;
+        rx_clk_90deg = 0;
+        #1;
+        forever rx_clk_90deg = #4 ~rx_clk; // 125MHz, 90 deg shift
     end
     
     always clk = #10 ~clk; // 50MHz
     always rx_clk = #4 ~rx_clk; // 125MHz
     always packet_clk = #100 ~packet_clk; // 5MHz
+    
     
     always_ff @ (posedge rx_clk) begin
         count <= count + 1;
@@ -71,7 +76,7 @@ module testbench(
         .clk(clk),
         .rgmii1_rd(rd),
         .rgmii1_rx_ctl(rx_ctl),
-        .rgmii1_rxc(rx_clk)
+        .rgmii1_rxc(rx_clk_90deg)
     );
     
 endmodule
