@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Sun Apr 14 09:09:51 2019
+// Date        : Sun Apr 14 08:57:47 2019
 // Host        : archlinux running 64-bit unknown
-// Command     : write_verilog -force -mode synth_stub
-//               /home/macbookpro/router/router.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top clk_wiz_0 -prefix
+//               clk_wiz_0_ clk_wiz_0_stub.v
 // Design      : clk_wiz_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg484-2

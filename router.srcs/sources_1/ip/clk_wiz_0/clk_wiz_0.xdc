@@ -57,5 +57,4 @@ create_clock -period 20.000 [get_ports clk_in1]
 set_input_jitter [get_clocks -of_objects [get_ports clk_in1]] 0.2
 
 
-set_false_path -to [get_cells  -hier {*seq_reg*[0]} -filter {is_sequential}]
 set_property PHASESHIFT_MODE WAVEFORM [get_cells -hierarchical *adv*]
