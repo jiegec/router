@@ -31,6 +31,8 @@ module top(
     output logic rgmii1_tx_ctl,
     output logic rgmii1_txc
     );
+
+    logic locked;
     
     logic reset_n;
     assign reset_n = ~reset;
@@ -40,16 +42,17 @@ module top(
     clk_wiz_0 mmcm_inst(
         .clk_in1(clk),
         .clk_out1(rgmii_tx_clk),
-        .reset(reset)
+        .reset(reset),
+        .locked(locked)
     );
     
-    assign rgmii1_txc = rgmii_tx_clk;
     
     (*mark_debug = "true"*) reg [7:0]rx_data;
+    (*mark_debug = "true"*) reg [7:0]tx_data;
     (*mark_debug = "true"*) reg trans;
     
     always_ff @ (posedge rgmii1_rxc) begin
-        if (rgmii1_rx_ctl == 1'b1) begin
+        if (rgmii1_rx_ctl == 1'b1 && locked == 1'b1) begin
             trans <= 1;
         end else begin
             trans <= 0;
@@ -59,19 +62,39 @@ module top(
     genvar i;
     for (i = 0;i < 4;i++) begin
         IDDR #(
-            .DDR_CLK_EDGE("SAME_EDGE_PIPELINED")
+            .DDR_CLK_EDGE("OPPOSITE_EDGE")
         ) iddr_inst (
-            .Q1(rx_data[i+4]),
-            .Q2(rx_data[i]),
+            .Q1(rx_data[i]),
+            .Q2(rx_data[i+4]),
             .C(rgmii1_rxc),
             .CE(1'b1),
             .D(rgmii1_rd[i]),
             .R(1'b0)
         );
     end
+
+    always_ff @ (posedge rgmii_tx_clk) begin
+        if (trans == 1'b1) begin
+            tx_data = rx_data;
+        end else begin
+            tx_data = 8'hdd;
+        end
+    end
+
+    for (i = 0;i < 4;i++) begin
+        ODDR #(
+            .DDR_CLK_EDGE("OPPOSITE_EDGE")
+        ) oddr_inst (
+            .D1(tx_data[i+4]),
+            .D2(tx_data[i]),
+            .C(rgmii_tx_clk),
+            .CE(1'b1),
+            .Q(rgmii1_td[i]),
+            .R(1'b0)
+        );
+    end
     
-    assign rgmii1_td = rgmii1_rd;
-    assign rgmii1_tx_ctl = rgmii1_rx_ctl;
-    assign rgmii1_txc = rgmii1_rxc;
+    assign rgmii1_tx_ctl = trans;
+    assign rgmii1_txc = rgmii_tx_clk;
     
 endmodule

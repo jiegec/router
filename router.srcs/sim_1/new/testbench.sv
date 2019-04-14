@@ -25,49 +25,53 @@ module testbench(
     );
     
     logic clk;
-    logic count = 0;
+    logic rx_clk;
+    logic packet_clk;
+    logic trans;
+    logic [3:0] count = 0;
     logic [3:0] data1;
     logic [3:0] data2;
     logic [3:0] rd;
+    logic rx_ctl;
     
     initial begin
         clk = 0;
+        rx_clk = 0;
+        packet_clk = 0;
     end
     
-    always clk = #2 ~clk; // 50MHz
+    always clk = #10 ~clk; // 50MHz
+    always rx_clk = #4 ~rx_clk; // 125MHz
+    always packet_clk = #100 ~packet_clk; // 5MHz
     
-    always_ff @ (posedge clk) begin
-        count <= ~count;
-    end
-    
-    always_ff @ (posedge clk) begin
-        data1 <= count ? 4'b0001 : 4'b0000;
-    end
-    
-    always_ff @ (negedge clk) begin
-        data2 <= count ? 4'b0101 : 4'b0100;
+    always_ff @ (posedge rx_clk) begin
+        count <= count + 1;
+        trans <= packet_clk;
+        rx_ctl <= trans;
+        data1 <= packet_clk ? count : 4'b0000;
+        data2 <= packet_clk ? ~count : 4'b0000;
     end
     
     genvar i;
     for (i = 0;i < 4;i++) begin
-	ODDR #(
-	    .DDR_CLK_EDGE("OPPOSITE_EDGE")
-	) oddr_inst (
-	    .D1(data1[i]),
-	    .D2(data2[i]),
-	    .C(clk),
-	    .CE(1'b1),
-	    .Q(rd[i]),
-	    .R(1'b0)
-	);
+        ODDR #(
+            .DDR_CLK_EDGE("SAME_EDGE")
+        ) oddr_inst (
+            .D1(data1[i]),
+            .D2(data2[i]),
+            .C(rx_clk),
+            .CE(1'b1),
+            .Q(rd[i]),
+            .R(1'b0)
+        );
     end
     
 
     top top(
         .clk(clk),
         .rgmii1_rd(rd),
-        .rgmii1_rx_ctl(1'b1),
-        .rgmii1_rxc(clk)
+        .rgmii1_rx_ctl(rx_ctl),
+        .rgmii1_rxc(rx_clk)
     );
     
 endmodule
