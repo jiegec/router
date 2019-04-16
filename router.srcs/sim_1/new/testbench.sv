@@ -85,6 +85,7 @@ module testbench(
 
     top top(
         .clk(clk),
+	.reset_n_in(1'b1),
         .rgmii1_rd(rd),
         .rgmii1_rx_ctl(rx_ctl_oddr),
         .rgmii1_rxc(rx_clk_90deg)

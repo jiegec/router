@@ -22,7 +22,7 @@
 
 module top(
     input logic clk,
-    input logic reset_n,
+    input logic reset_n_in,
     output logic led,
     
     input logic [3:0] rgmii1_rd,
@@ -32,10 +32,9 @@ module top(
     output logic rgmii1_tx_ctl,
     output logic rgmii1_txc
     );
-
-    logic locked;
     
     logic reset;
+    logic reset_n;
     assign reset = ~reset_n;
     
     (*mark_debug = "true"*) logic rgmii_tx_clk; // 125MHz
@@ -46,12 +45,11 @@ module top(
         .clk_in1(clk),
         .clk_out1(rgmii_tx_clk),
         .clk_out2(rgmii_tx_clk_90deg),
-        .reset(reset),
-        .locked(locked)
+        .reset(~reset_n_in),
+        .locked(reset_n)
     );
 
-    assign led = locked;
-    
+    assign led = reset_n;
     
     (*mark_debug = "true"*) reg [7:0]rx_data;
     (*mark_debug = "true"*) reg [7:0]tx_data;
@@ -62,7 +60,7 @@ module top(
 
     
     always_ff @ (posedge rgmii_tx_clk) begin
-        if (rgmii1_rx_ctl == 1'b1 && locked == 1'b1) begin
+        if (rgmii1_rx_ctl == 1'b1 && reset == 1'b0) begin
             trans <= 1;
         end else begin
             trans <= 0;

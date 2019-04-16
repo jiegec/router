@@ -8,7 +8,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports clk]
 set_property PACKAGE_PIN A16 [get_ports led]
 set_property IOSTANDARD LVCMOS33 [get_ports led]
 
-set_property PACKAGE_PIN A17 [get_ports reset_n]
+set_property PACKAGE_PIN A17 [get_ports reset_n_in]
 set_property PACKAGE_PIN J18 [get_ports {rgmii1_rd[0]}]
 set_property PACKAGE_PIN K18 [get_ports {rgmii1_rd[1]}]
 set_property PACKAGE_PIN J15 [get_ports {rgmii1_rd[2]}]
@@ -23,7 +23,7 @@ set_property PACKAGE_PIN R20 [get_ports rgmii1_tx_ctl]
 set_property PACKAGE_PIN R21 [get_ports rgmii1_txc]
 
 
-set_property IOSTANDARD LVCMOS33 [get_ports reset_n]
+set_property IOSTANDARD LVCMOS33 [get_ports reset_n_in]
 set_property IOSTANDARD LVCMOS33 [get_ports {rgmii1_rd[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {rgmii1_rd[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {rgmii1_rd[2]}]
