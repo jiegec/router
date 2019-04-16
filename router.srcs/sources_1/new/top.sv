@@ -40,6 +40,7 @@ module top(
     
     (*mark_debug = "true"*) logic rgmii_tx_clk; // 125MHz
     (*mark_debug = "true"*) logic rgmii_tx_clk_90deg; // 125MHz, 90 deg shift
+    (*mark_debug = "true"*) logic rgmii_tx_clk_90deg_oddr; // 125MHz, 90 deg shift, oddr
     
     clk_wiz_0 mmcm_inst(
         .clk_in1(clk),
@@ -81,6 +82,17 @@ module top(
         );
     end
 
+    ODDR #(
+        .DDR_CLK_EDGE("OPPOSITE_EDGE")
+    ) oddr_inst_clk (
+        .D1(1'b1),
+        .D2(1'b0),
+        .C(rgmii_tx_clk_90deg),
+        .CE(1'b1),
+        .Q(rgmii_tx_clk_90deg_oddr),
+        .R(1'b0)
+    );
+
     always_ff @ (posedge rgmii_tx_clk) begin
         if (trans_1 == 1'b1) begin
             tx_data = rx_data;
@@ -93,8 +105,8 @@ module top(
         ODDR #(
             .DDR_CLK_EDGE("OPPOSITE_EDGE")
         ) oddr_inst (
-            .D1(tx_data[i+4]),
-            .D2(tx_data[i]),
+            .D1(tx_data[i]),
+            .D2(tx_data[i+4]),
             .C(rgmii_tx_clk),
             .CE(1'b1),
             .Q(rgmii1_td[i]),
@@ -103,6 +115,6 @@ module top(
     end
     
     assign rgmii1_tx_ctl = trans_1;
-    assign rgmii1_txc = rgmii_tx_clk_90deg;
+    assign rgmii1_txc = rgmii_tx_clk_90deg_oddr;
     
 endmodule

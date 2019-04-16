@@ -40,7 +40,7 @@ module testbench(
         rx_clk = 0;
         packet_clk = 0;
         rx_clk_90deg = 0;
-        #1;
+        #2;
         forever rx_clk_90deg = #4 ~rx_clk; // 125MHz, 90 deg shift
     end
     
