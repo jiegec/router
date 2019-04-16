@@ -139,21 +139,32 @@ module rgmii_interface(
             rx_data_wen <= 0;
             rx_data_in <= 8'b0;
             length <= 0;
+            rx_len_wen <= 1;
+            rx_len_in <= `LENGTH_WIDTH'b0;
         end else begin
-            if (rgmii_rx_ctl == 1'b1) begin
+            // new data in, and both fifos have enough space
+            if (rgmii_rx_ctl == 1'b1 && rx_data_full == 1'b0 && rx_len_full == 1'b0) begin
                 trans <= 1;
             end else begin
                 trans <= 0;
             end
             if (trans == 1'b0 && rgmii_rx_ctl == 1'b1) begin
                 length <= 0;
-            end else if (trans == 1'b1 && rgmii_rx_ctl == 1'b1) begin
-                length <= length + 1;
-            end else if (trans == 1'b1 && rgmii_rx_ctl == 1'b0) begin
+            end else if (trans == 1'b1) begin
                 length <= length + 1;
             end else if (trans == 1'b0 && rgmii_rx_ctl == 1'b0) begin
                 length <= 0;
+                // write length
+                if (length != 0) begin
+                    rx_len_wen <= 1;
+                    rx_len_in <= length;
+                end else begin
+                    rx_len_wen <= 0;
+                    rx_len_in <= `LENGTH_WIDTH'b0;
+                end
             end 
+
+            // write data
             if (length >= 1) begin
                 rx_data_in <= rgmii_rx_data;
                 rx_data_wen <= 1;
