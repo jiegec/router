@@ -1,0 +1,10 @@
+router.sim
+router.runs
+router.hw
+router.ip_user_files
+router.cache
+
+vivado.jou
+vivado.log
+vivado_pid*.str
+.Xil

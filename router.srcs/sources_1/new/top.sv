@@ -7,7 +7,7 @@
 // Design Name: 
 // Module Name: top
 // Project Name: 
-// Target Devices: 
+// Target Devices: xc7z020clg484-2
 // Tool Versions: 
 // Description: 
 // 
@@ -65,11 +65,11 @@ module top(
         end else begin
             trans <= 0;
         end
-	if (trans_1 == 1'b1) begin
-            tx_data <= rx_data;
-	end else begin
-            tx_data <= 8'h55;
-	end
+        if (trans_1 == 1'b1) begin
+                tx_data <= rx_data;
+        end else begin
+                tx_data <= 8'h55;
+        end
         trans_1 <= trans;
         trans_2 <= trans_1;
         trans_3 <= trans_2;

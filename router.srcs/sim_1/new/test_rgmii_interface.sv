@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 04/13/2019 01:09:13 AM
+// Create Date: 04/16/2019 10:02:31 PM
 // Design Name: 
-// Module Name: testbench
+// Module Name: test_rgmii_interface
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,10 +20,10 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module testbench(
+module test_rgmii_interface(
 
     );
-    
+
     logic clk;
     logic rx_clk;
     logic rx_clk_90deg;
@@ -83,12 +83,11 @@ module testbench(
         .R(1'b0)
     );
 
-    top top(
+    rgmii_interface rgmii_interface_inst(
         .clk(clk),
-        .reset_n_in(1'b1),
-        .rgmii1_rd(rd),
-        .rgmii1_rx_ctl(rx_ctl_oddr),
-        .rgmii1_rxc(rx_clk_90deg)
+        .reset(1'b0),
+        .rgmii_rd(rd),
+        .rgmii_rx_ctl(rx_ctl_oddr),
+        .rgmii_rxc(rx_clk_90deg)
     );
-    
 endmodule
