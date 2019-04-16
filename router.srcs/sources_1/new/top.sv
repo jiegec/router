@@ -83,13 +83,24 @@ module top(
     end
 
     ODDR #(
-        .DDR_CLK_EDGE("OPPOSITE_EDGE")
+        .DDR_CLK_EDGE("SAME_EDGE")
     ) oddr_inst_clk (
         .D1(1'b1),
         .D2(1'b0),
         .C(rgmii_tx_clk_90deg),
         .CE(1'b1),
         .Q(rgmii_tx_clk_90deg_oddr),
+        .R(1'b0)
+    );
+
+    ODDR #(
+        .DDR_CLK_EDGE("SAME_EDGE")
+    ) oddr_inst_ctl (
+        .D1(trans),
+        .D2(1'b0),
+        .C(rgmii_tx_clk),
+        .CE(1'b1),
+        .Q(rgmii1_tx_ctl),
         .R(1'b0)
     );
 
@@ -103,7 +114,7 @@ module top(
 
     for (i = 0;i < 4;i++) begin
         ODDR #(
-            .DDR_CLK_EDGE("OPPOSITE_EDGE")
+            .DDR_CLK_EDGE("SAME_EDGE")
         ) oddr_inst (
             .D1(tx_data[i]),
             .D2(tx_data[i+4]),
@@ -114,7 +125,6 @@ module top(
         );
     end
     
-    assign rgmii1_tx_ctl = trans_1;
     assign rgmii1_txc = rgmii_tx_clk_90deg_oddr;
     
 endmodule
