@@ -34,6 +34,7 @@ module testbench(
     logic [3:0] data2;
     logic [3:0] rd;
     logic rx_ctl;
+    logic rx_ctl_oddr;
     
     initial begin
         clk = 0;
@@ -71,11 +72,21 @@ module testbench(
         );
     end
     
+    ODDR #(
+        .DDR_CLK_EDGE("SAME_EDGE")
+    ) oddr_inst_ctl (
+        .D1(trans),
+        .D2(trans),
+        .C(rx_clk),
+        .CE(1'b1),
+        .Q(rx_ctl_oddr),
+        .R(1'b0)
+    );
 
     top top(
         .clk(clk),
         .rgmii1_rd(rd),
-        .rgmii1_rx_ctl(rx_ctl),
+        .rgmii1_rx_ctl(rx_ctl_oddr),
         .rgmii1_rxc(rx_clk_90deg)
     );
     

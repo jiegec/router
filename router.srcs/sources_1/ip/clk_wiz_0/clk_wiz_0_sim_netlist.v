@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Sun Apr 14 23:59:23 2019
-// Host        : archlinux running 64-bit unknown
+// Date        : Tue Apr 16 17:24:48 2019
+// Host        : vision2 running 64-bit Arch Linux
 // Command     : write_verilog -force -mode funcsim
-//               /home/macbookpro/router/router.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v
+//               /home/thu-skyworks/jiegec/router/router.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v
 // Design      : clk_wiz_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.

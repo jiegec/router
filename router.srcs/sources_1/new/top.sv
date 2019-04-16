@@ -40,7 +40,7 @@ module top(
     
     (*mark_debug = "true"*) logic rgmii_tx_clk; // 125MHz
     (*mark_debug = "true"*) logic rgmii_tx_clk_90deg; // 125MHz, 90 deg shift
-    (*mark_debug = "true"*) logic rgmii_tx_clk_90deg_oddr; // 125MHz, 90 deg shift, oddr
+    logic rgmii_tx_clk_90deg_oddr; // 125MHz, 90 deg shift, oddr
     
     clk_wiz_0 mmcm_inst(
         .clk_in1(clk),
@@ -57,15 +57,24 @@ module top(
     (*mark_debug = "true"*) reg [7:0]tx_data;
     (*mark_debug = "true"*) reg trans;
     (*mark_debug = "true"*) reg trans_1;
+    (*mark_debug = "true"*) reg trans_2;
+    (*mark_debug = "true"*) reg trans_3;
 
     
-    always_ff @ (posedge rgmii1_rxc) begin
+    always_ff @ (posedge rgmii_tx_clk) begin
         if (rgmii1_rx_ctl == 1'b1 && locked == 1'b1) begin
             trans <= 1;
         end else begin
             trans <= 0;
         end
+	if (trans_1 == 1'b1) begin
+            tx_data <= rx_data;
+	end else begin
+            tx_data <= 8'h55;
+	end
         trans_1 <= trans;
+        trans_2 <= trans_1;
+        trans_3 <= trans_2;
     end
     
     genvar i;
@@ -96,21 +105,13 @@ module top(
     ODDR #(
         .DDR_CLK_EDGE("SAME_EDGE")
     ) oddr_inst_ctl (
-        .D1(trans),
+        .D1(trans_2),
         .D2(1'b0),
         .C(rgmii_tx_clk),
         .CE(1'b1),
         .Q(rgmii1_tx_ctl),
         .R(1'b0)
     );
-
-    always_ff @ (posedge rgmii_tx_clk) begin
-        if (trans_1 == 1'b1) begin
-            tx_data = rx_data;
-        end else begin
-            tx_data = 8'h55;
-        end
-    end
 
     for (i = 0;i < 4;i++) begin
         ODDR #(
