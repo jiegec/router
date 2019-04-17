@@ -258,6 +258,7 @@ module rgmii_interface(
             tx_len_ren <= 0;
             tx_data_ren <= 0;
             tx_len_dv <= 0;
+            tx_data_dv <= 0;
         end else begin
             tx_len_dv <= tx_len_ren;
             tx_data_dv <= tx_data_ren;
@@ -304,7 +305,7 @@ module rgmii_interface(
         .C(clk_125m),
         .CE(1'b1),
         .Q(rgmii_tx_ctl),
-        .R(1'b0)
+        .R(reset)
     );
 
     for (i = 0;i < 4;i++) begin
@@ -316,7 +317,7 @@ module rgmii_interface(
             .C(clk_125m),
             .CE(1'b1),
             .Q(rgmii_td[i]),
-            .R(1'b0)
+            .R(reset)
         );
     end
 endmodule
