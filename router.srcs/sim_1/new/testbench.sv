@@ -55,7 +55,7 @@ module testbench(
         trans <= packet_clk;
         rx_ctl <= trans;
         data1 <= packet_clk ? count : 4'b0000;
-        data2 <= packet_clk ? ~count : 4'b0000;
+        data2 <= 4'b0000;
     end
     
     genvar i;

@@ -72,6 +72,8 @@ module rgmii_interface(
     logic rx_len_empty;
     logic rx_len_busy;
 
+    logic reset_rxc;
+
     assign rx_avail = ~rx_len_empty;
 
     // stores ethernet frame data
@@ -84,10 +86,10 @@ module rgmii_interface(
         .dout(rx_data_out),
         .rd_en(rx_data_en),
         .rd_clk(clk),
-        .rst(reset),
 
         .prog_full(rx_data_full),
         .din(rx_data_in),
+        .rst(reset_rxc),
         .wr_clk(rgmii_rxc),
         .wr_en(rx_data_wen),
         .wr_rst_busy(rx_data_busy)
@@ -100,16 +102,16 @@ module rgmii_interface(
         .FIFO_WRITE_DEPTH(`MAX_FIFO_SIZE),
         .RD_DATA_COUNT_WIDTH(16),
         .WR_DATA_COUNT_WIDTH(16),
-        .PROG_FULL_THRESH(`MAX_FIFO_SIZE - 1)
+        .PROG_FULL_THRESH(`MAX_FIFO_SIZE - 16)
     ) xpm_fifo_zsync_inst_rx_len (
         .dout(rx_len_out),
         .rd_en(rx_len_en),
         .rd_clk(clk),
-        .rst(reset),
-
         .empty(rx_len_empty),
+
         .prog_full(rx_len_full),
         .din(rx_len_in),
+        .rst(reset_rxc),
         .wr_clk(rgmii_rxc),
         .wr_en(rx_len_wen),
         .wr_rst_busy(rx_len_busy)
@@ -124,7 +126,7 @@ module rgmii_interface(
 
     IDDR #(
         .DDR_CLK_EDGE("SAME_EDGE_PIPELINED")
-    ) iddr_inst_rx (
+    ) iddr_inst_rx_ctl (
         .Q1(rgmii_rx_dv),
         .Q2(rgmii_rx_err),
         .C(rgmii_rxc),
@@ -132,7 +134,7 @@ module rgmii_interface(
         .D(rgmii_rx_ctl),
         .R(reset)
     );
-    
+
     genvar i;
     for (i = 0;i < 4;i++) begin
         IDDR #(
@@ -149,10 +151,10 @@ module rgmii_interface(
 
 
     always_ff @ (posedge rgmii_rxc) begin
+        reset_rxc <= reset;
         rgmii_rx_dv_1 <= rgmii_rx_dv;
         if (reset == 1'b1) begin
             trans_rx <= 0;
-            rgmii_rx_data <= `BYTE_WIDTH'b0;
             rx_data_wen <= 0;
             rx_data_in <= `BYTE_WIDTH'b0;
             length <= 0;
@@ -219,15 +221,15 @@ module rgmii_interface(
         .FIFO_WRITE_DEPTH(`MAX_FIFO_SIZE),
         .PROG_FULL_THRESH(`MAX_FIFO_SIZE - `MAX_ETHERNET_FRAME_BYTES)
     ) xpm_fifo_zsync_inst_tx_data (
+        .dout(tx_data_out),
+        .rd_en(tx_data_ren),
+        .rd_clk(clk_125m),
+
         .din(tx_data_in),
         .wr_en(tx_data_en),
         .rst(reset),
         .wr_clk(clk),
-
-        .dout(tx_data_out),
-        .rd_en(tx_data_ren),
-        .prog_full(tx_data_full),
-        .rd_clk(clk_125m)
+        .prog_full(tx_data_full)
     );
 
     // stores ethernet frame length
@@ -237,18 +239,18 @@ module rgmii_interface(
         .FIFO_WRITE_DEPTH(`MAX_FIFO_SIZE),
         .RD_DATA_COUNT_WIDTH(16),
         .WR_DATA_COUNT_WIDTH(16),
-        .PROG_FULL_THRESH(`MAX_FIFO_SIZE - 1)
+        .PROG_FULL_THRESH(`MAX_FIFO_SIZE - 16)
     ) xpm_fifo_zsync_inst_tx_len (
+        .dout(tx_len_out),
+        .rd_en(tx_len_ren),
+        .empty(tx_len_empty),
+        .rd_clk(clk_125m),
+
         .din(tx_len_in),
         .wr_en(tx_len_en),
         .rst(reset),
         .wr_clk(clk),
-
-        .dout(tx_len_out),
-        .rd_en(tx_len_ren),
-        .empty(tx_len_empty),
-        .prog_full(tx_len_full),
-        .rd_clk(clk_125m)
+        .prog_full(tx_len_full)
     );
 
     always @ (posedge clk_125m) begin

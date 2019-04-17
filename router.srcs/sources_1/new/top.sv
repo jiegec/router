@@ -38,6 +38,7 @@ module top(
     logic reset_n;
     assign reset = ~reset_n;
     
+    logic internal_clk; // 10MHz
     logic rgmii_tx_clk; // 125MHz
     logic rgmii_tx_clk_90deg; // 125MHz, 90 deg shift
     
@@ -45,36 +46,39 @@ module top(
         .clk_in1(clk),
         .clk_out1(rgmii_tx_clk),
         .clk_out2(rgmii_tx_clk_90deg),
+        .clk_out3(internal_clk),
         .reset(~reset_n_in),
         .locked(reset_n)
     );
 
     assign led = reset_n;
     
-    logic rx_data_en;
-    logic [`BYTE_WIDTH-1:0] rx_data_out;
-    logic rx_len_en;
-    logic [`LENGTH_WIDTH-1:0] rx_len_out;
-    logic rx_len_dv;
-    logic rx_avail;
+    (*mark_debug = "true"*) logic rx_data_en;
+    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_data_out;
+    (*mark_debug = "true"*) logic rx_len_en;
+    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] rx_len_out;
+    (*mark_debug = "true"*) logic rx_len_dv;
+    (*mark_debug = "true"*) logic rx_avail;
 
-    logic tx_data_en;
-    logic [`BYTE_WIDTH-1:0] tx_data_in;
-    logic tx_len_en;
-    logic [`LENGTH_WIDTH-1:0] tx_len_in;
-    logic tx_avail;
+    (*mark_debug = "true"*) logic tx_data_en;
+    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] tx_data_in;
+    (*mark_debug = "true"*) logic tx_len_en;
+    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] tx_len_in;
+    (*mark_debug = "true"*) logic tx_avail;
 
-    logic [`LENGTH_WIDTH-1:0] rx_length = 0;
-    logic [`LENGTH_WIDTH-1:0] tx_length = 0;
+    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] rx_length;
+    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] tx_length;
 
     assign rx_len_en = rx_avail && tx_avail && rx_length == 0 && tx_length == 0 && tx_data_en == 0 && tx_len_en == 0 && rx_len_dv == 0;
 
-    always @ (posedge clk) begin
+    always @ (posedge internal_clk) begin
         if (reset == 1) begin
             rx_data_en <= 0;
             rx_length <= 0;
             tx_data_en <= 0;
             tx_len_en <= 0;
+            tx_length <= 0;
+            rx_len_dv <= 0;
         end else begin
             rx_len_dv <= rx_len_en;
             if (rx_length == 0 && rx_len_out != 0 && rx_len_dv == 1) begin
@@ -103,7 +107,7 @@ module top(
 
 
     rgmii_interface rgmii_interface_inst(
-        .clk(clk),
+        .clk(internal_clk),
         .clk_125m(rgmii_tx_clk),
         .clk_125m_90deg(rgmii_tx_clk_90deg),
         .reset(reset),
