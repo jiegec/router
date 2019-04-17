@@ -46,7 +46,7 @@ module testbench_axi(
     
     always clk = #10 ~clk; // 50MHz
     always rx_clk = #4 ~rx_clk; // 125MHz
-    always packet_clk = #100 ~packet_clk; // 5MHz
+    always packet_clk = #1000 ~packet_clk; // 500KHz
     
     
     always_ff @ (posedge rx_clk) begin
