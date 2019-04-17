@@ -27,6 +27,7 @@ module test_rgmii_interface(
     );
 
     logic clk;
+    logic clk_data;
     logic rx_clk;
     logic rx_clk_90deg;
     logic packet_clk;
@@ -43,6 +44,8 @@ module test_rgmii_interface(
         rx_clk = 0;
         packet_clk = 0;
         rx_clk_90deg = 0;
+        clk_data = 0;
+
         reset = 1;
         #200;
         reset = 0;
@@ -55,6 +58,7 @@ module test_rgmii_interface(
     always clk = #10 ~clk; // 50MHz
     always rx_clk = #4 ~rx_clk; // 125MHz
     always packet_clk = #100 ~packet_clk; // 5MHz
+    always clk_data = #5 ~clk_data; // 100MHz
     
     
     always_ff @ (posedge rx_clk) begin
@@ -100,18 +104,20 @@ module test_rgmii_interface(
     logic [`BYTE_WIDTH-1:0] rx_data_out;
     logic rx_len_en;
     logic [`LENGTH_WIDTH-1:0] rx_len_out;
+    logic rx_len_dv;
     logic rx_avail;
 
     logic [`LENGTH_WIDTH-1:0] rx_length = 0;
 
     assign rx_len_en = rx_avail && rx_length == 0;
 
-    always @ (posedge clk) begin
+    always @ (posedge clk_data) begin
         if (reset == 1) begin
             rx_data_en <= 0;
             rx_length <= 0;
         end else begin
-            if (rx_length == 0 && rx_len_out != 0) begin
+            rx_len_dv <= rx_len_en;
+            if (rx_length == 0 && rx_len_out != 0 && rx_len_dv == 1) begin
                 rx_length <= rx_len_out + 1;
             end else if (rx_length != 0) begin
                 rx_length <= rx_length - 1;
@@ -121,7 +127,7 @@ module test_rgmii_interface(
     end
 
     rgmii_interface rgmii_interface_inst(
-        .clk(clk),
+        .clk(clk_data),
         .reset(reset),
         
         .rx_data_en(rx_data_en),
