@@ -31,6 +31,9 @@ module rgmii_interface(
     input logic reset,
     
     // rx fifos
+    // read len first, then data
+    // out is one cycle after en
+    // only read when avail is high
     input logic rx_data_en,
     output logic [`BYTE_WIDTH-1:0] rx_data_out,
     input logic rx_len_en,
@@ -38,6 +41,9 @@ module rgmii_interface(
     output logic rx_avail,
 
     // tx fifos
+    // write data first, then len
+    // in is in the same cycle as en
+    // only write when avail is high
     input logic tx_data_en,
     output logic [`BYTE_WIDTH-1:0] tx_data_in,
     input logic tx_len_en,
@@ -111,6 +117,7 @@ module rgmii_interface(
 
     logic [`BYTE_WIDTH-1:0] rgmii_rx_data;
     logic rgmii_rx_dv;
+    logic rgmii_rx_dv_1;
     logic rgmii_rx_err;
     logic trans_rx;
     logic [`LENGTH_WIDTH-1:0] length;
@@ -142,6 +149,7 @@ module rgmii_interface(
 
 
     always_ff @ (posedge rgmii_rxc) begin
+        rgmii_rx_dv_1 <= rgmii_rx_dv;
         if (reset == 1'b1) begin
             trans_rx <= 0;
             rgmii_rx_data <= `BYTE_WIDTH'b0;
@@ -151,10 +159,15 @@ module rgmii_interface(
             rx_len_wen <= 1;
             rx_len_in <= `LENGTH_WIDTH'b0;
         end else begin
-            // new data in, and both fifos have enough space
-            if (rgmii_rx_ctl == 1 && rx_data_full == 0 && rx_len_full == 0 && rx_data_busy == 0 && rx_len_busy == 0) begin
-                trans_rx <= 1;
-            end else begin
+            // new data in
+            if (rgmii_rx_ctl == 1 && rgmii_rx_dv_1 == 0) begin
+                // both fifos have enough space
+                if (rx_data_full == 0 && rx_len_full == 0 && rx_data_busy == 0 && rx_len_busy == 0) begin
+                    trans_rx <= 1;
+                end else begin
+                    trans_rx <= 0;
+                end
+            end else if (rgmii_rx_ctl == 0 && rgmii_rx_dv_1 == 1) begin
                 trans_rx <= 0;
             end
             if (trans_rx == 1'b0 && rgmii_rx_ctl == 1'b1) begin

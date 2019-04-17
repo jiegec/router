@@ -58,7 +58,7 @@ module test_rgmii_interface(
     always clk = #10 ~clk; // 50MHz
     always rx_clk = #4 ~rx_clk; // 125MHz
     always packet_clk = #100 ~packet_clk; // 5MHz
-    always clk_data = #5 ~clk_data; // 100MHz
+    always clk_data = #50 ~clk_data; // 10MHz
     
     
     always_ff @ (posedge rx_clk) begin
