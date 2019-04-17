@@ -153,6 +153,8 @@ module test_rgmii_interface(
 
     rgmii_interface rgmii_interface_inst(
         .clk(clk_data),
+        .clk_125m(rx_clk),
+        .clk_125m_90deg(rx_clk_90deg),
         .reset(reset),
         
         .rx_data_en(rx_data_en),

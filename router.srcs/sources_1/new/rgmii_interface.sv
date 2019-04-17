@@ -207,10 +207,9 @@ module rgmii_interface(
     logic tx_len_ren;
     logic tx_len_full;
     logic tx_len_empty;
-    logic trans_tx = 0;
-    logic tx_length = 0;
+    logic trans_tx;
+    logic [`LENGTH_WIDTH-1:0] tx_length;
 
-    assign rgmii_txc = clk_125m_90deg;
     assign tx_avail = ~tx_data_full & ~tx_len_full;
 
     // stores ethernet frame data
@@ -225,7 +224,6 @@ module rgmii_interface(
         .rst(reset),
         .wr_clk(clk),
 
-        .data_valid(tx_data_dv),
         .dout(tx_data_out),
         .rd_en(tx_data_ren),
         .prog_full(tx_data_full),
@@ -246,7 +244,6 @@ module rgmii_interface(
         .rst(reset),
         .wr_clk(clk),
 
-        .data_valid(tx_len_dv),
         .dout(tx_len_out),
         .rd_en(tx_len_ren),
         .empty(tx_len_empty),
@@ -260,27 +257,66 @@ module rgmii_interface(
             tx_length <= 0;
             tx_len_ren <= 0;
             tx_data_ren <= 0;
+            tx_len_dv <= 0;
         end else begin
+            tx_len_dv <= tx_len_ren;
+            tx_data_dv <= tx_data_ren;
             // new data out
-            if (trans_tx == 0 && tx_len_empty == 1'b0) begin
+            if (trans_tx == 0 && tx_len_empty == 1'b0 && tx_len_dv == 0) begin
                 trans_tx <= 1;
                 tx_len_ren <= 1;
             end else begin
                 tx_len_ren <= 0;
             end
 
-            if (trans_tx == 1 && tx_len_ren == 1) begin
+            if (trans_tx == 1 && tx_len_dv == 1) begin
                 tx_length <= tx_len_out;
                 tx_data_ren <= 1;
-            end else if (trans_tx == 1 && tx_len_ren == 0) begin
-                tx_length <= tx_length - 1;
-                tx_data_ren <= 1;
+            end else if (trans_tx == 1 && tx_len_ren == 0 && tx_len_dv == 0) begin
+                if (tx_length <= 1) begin
+                    trans_tx <= 0;
+                    tx_data_ren <= 0;
+                end else begin
+                    tx_length <= tx_length - 1;
+                    tx_data_ren <= 1;
+                end
             end
 
-            if (tx_length <= 1) begin
-                trans_tx <= 0;
-                tx_data_ren <= 0;
-            end
         end
+    end
+
+    ODDR #(
+        .DDR_CLK_EDGE("SAME_EDGE")
+    ) oddr_inst_clk (
+        .D1(1'b1),
+        .D2(1'b0),
+        .C(clk_125m_90deg),
+        .CE(1'b1),
+        .Q(rgmii_txc),
+        .R(reset)
+    );
+
+    ODDR #(
+        .DDR_CLK_EDGE("SAME_EDGE")
+    ) oddr_inst_ctl (
+        .D1(tx_data_dv),
+        .D2(1'b0),
+        .C(clk_125m),
+        .CE(1'b1),
+        .Q(rgmii_tx_ctl),
+        .R(1'b0)
+    );
+
+    for (i = 0;i < 4;i++) begin
+        ODDR #(
+            .DDR_CLK_EDGE("SAME_EDGE")
+        ) oddr_inst (
+            .D1(tx_data_out[i]),
+            .D2(tx_data_out[i+4]),
+            .C(clk_125m),
+            .CE(1'b1),
+            .Q(rgmii_td[i]),
+            .R(1'b0)
+        );
     end
 endmodule
