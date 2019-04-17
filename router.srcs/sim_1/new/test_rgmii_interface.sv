@@ -58,7 +58,7 @@ module test_rgmii_interface(
     always clk = #10 ~clk; // 50MHz
     always rx_clk = #4 ~rx_clk; // 125MHz
     always packet_clk = #100 ~packet_clk; // 5MHz
-    always clk_data = #50 ~clk_data; // 10MHz
+    always clk_data = #2.5 ~clk_data; // 20MHz
     
     
     always_ff @ (posedge rx_clk) begin
@@ -107,24 +107,49 @@ module test_rgmii_interface(
     logic rx_len_dv;
     logic rx_avail;
 
-    logic [`LENGTH_WIDTH-1:0] rx_length = 0;
+    logic tx_data_en;
+    logic [`BYTE_WIDTH-1:0] tx_data_in;
+    logic tx_len_en;
+    logic [`LENGTH_WIDTH-1:0] tx_len_in;
+    logic tx_avail;
 
-    assign rx_len_en = rx_avail && rx_length == 0;
+    logic [`LENGTH_WIDTH-1:0] rx_length = 0;
+    logic [`LENGTH_WIDTH-1:0] tx_length = 0;
+
+    assign rx_len_en = rx_avail && tx_avail && rx_length == 0 && tx_length == 0 && tx_data_en == 0 && tx_len_en == 0 && rx_len_dv == 0;
 
     always @ (posedge clk_data) begin
         if (reset == 1) begin
             rx_data_en <= 0;
             rx_length <= 0;
+            tx_data_en <= 0;
+            tx_len_en <= 0;
         end else begin
             rx_len_dv <= rx_len_en;
             if (rx_length == 0 && rx_len_out != 0 && rx_len_dv == 1) begin
-                rx_length <= rx_len_out + 1;
-            end else if (rx_length != 0) begin
+                rx_length <= rx_len_out + 2;
+                tx_length <= 0;
+                tx_data_in <= rx_data_out;
+            end else if (rx_length > 1) begin
+                tx_length <= tx_length + 1;
                 rx_length <= rx_length - 1;
+                tx_data_in <= rx_data_out;
+            end else if (rx_length == 1) begin
+                tx_len_in <= tx_length - 1;
+                tx_len_en <= 1;
+                rx_length <= 0;
+                tx_data_in <= rx_data_out;
+            end else if (rx_length == 0 && tx_length != 0) begin
+                tx_len_en <= 0;
+                tx_len_in <= 0;
+                tx_length <= 0;
+                tx_data_in <= rx_data_out;
             end
-            rx_data_en <= rx_length > 1;
+            rx_data_en <= rx_length > 2;
+            tx_data_en <= tx_length > 1 && rx_length > 0;
         end
     end
+
 
     rgmii_interface rgmii_interface_inst(
         .clk(clk_data),
@@ -135,6 +160,12 @@ module test_rgmii_interface(
         .rx_len_en(rx_len_en),
         .rx_len_out(rx_len_out),
         .rx_avail(rx_avail),
+
+        .tx_data_en(tx_data_en),
+        .tx_data_in(tx_data_in),
+        .tx_len_en(tx_len_en),
+        .tx_len_in(tx_len_in),
+        .tx_avail(tx_avail),
 
         .rgmii_rd(rd),
         .rgmii_rx_ctl(rx_ctl_oddr),

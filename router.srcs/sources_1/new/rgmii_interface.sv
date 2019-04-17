@@ -31,9 +31,9 @@ module rgmii_interface(
     input logic reset,
     
     // rx fifos
-    // read len first, then data
-    // out is one cycle after en
-    // only read when avail is high
+    // read `len` first, then `data`
+    // `out` is one cycle after `en`
+    // only read when `avail` is high
     input logic rx_data_en,
     output logic [`BYTE_WIDTH-1:0] rx_data_out,
     input logic rx_len_en,
@@ -41,13 +41,13 @@ module rgmii_interface(
     output logic rx_avail,
 
     // tx fifos
-    // write data first, then len
-    // in is in the same cycle as en
-    // only write when avail is high
+    // write `data` first, then `len`
+    // `in` is in the same cycle as `en`
+    // only write when `avail` is high
     input logic tx_data_en,
-    output logic [`BYTE_WIDTH-1:0] tx_data_in,
+    input logic [`BYTE_WIDTH-1:0] tx_data_in,
     input logic tx_len_en,
-    output logic [`LENGTH_WIDTH-1:0] tx_len_in,
+    input logic [`LENGTH_WIDTH-1:0] tx_len_in,
     output logic tx_avail,
     
     // rgmii pins
@@ -207,7 +207,8 @@ module rgmii_interface(
     logic tx_len_ren;
     logic tx_len_full;
     logic tx_len_empty;
-    logic trans_tx;
+    logic trans_tx = 0;
+    logic tx_length = 0;
 
     assign rgmii_txc = clk_125m_90deg;
     assign tx_avail = ~tx_data_full & ~tx_len_full;
@@ -255,13 +256,30 @@ module rgmii_interface(
 
     always @ (posedge clk_125m) begin
         if (reset == 1'b1) begin
-            trans_tx <= 1;
+            trans_tx <= 0;
+            tx_length <= 0;
+            tx_len_ren <= 0;
+            tx_data_ren <= 0;
         end else begin
             // new data out
-            if (tx_len_empty == 1'b1) begin
+            if (trans_tx == 0 && tx_len_empty == 1'b0) begin
                 trans_tx <= 1;
+                tx_len_ren <= 1;
             end else begin
+                tx_len_ren <= 0;
+            end
+
+            if (trans_tx == 1 && tx_len_ren == 1) begin
+                tx_length <= tx_len_out;
+                tx_data_ren <= 1;
+            end else if (trans_tx == 1 && tx_len_ren == 0) begin
+                tx_length <= tx_length - 1;
+                tx_data_ren <= 1;
+            end
+
+            if (tx_length <= 1) begin
                 trans_tx <= 0;
+                tx_data_ren <= 0;
             end
         end
     end
