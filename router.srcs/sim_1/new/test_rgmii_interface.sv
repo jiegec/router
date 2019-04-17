@@ -19,6 +19,8 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "constants.vh"
+
 
 module test_rgmii_interface(
 
@@ -28,19 +30,24 @@ module test_rgmii_interface(
     logic rx_clk;
     logic rx_clk_90deg;
     logic packet_clk;
-    logic trans;
+    logic rx_dv;
     logic [3:0] count = 0;
     logic [3:0] data1;
     logic [3:0] data2;
     logic [3:0] rd;
-    logic rx_ctl;
     logic rx_ctl_oddr;
+    logic reset;
     
     initial begin
         clk = 0;
         rx_clk = 0;
         packet_clk = 0;
         rx_clk_90deg = 0;
+        reset = 1;
+        #200;
+        reset = 0;
+    end
+    initial begin
         #2;
         forever rx_clk_90deg = #4 ~rx_clk; // 125MHz, 90 deg shift
     end
@@ -51,11 +58,17 @@ module test_rgmii_interface(
     
     
     always_ff @ (posedge rx_clk) begin
-        count <= count + 1;
-        trans <= packet_clk;
-        rx_ctl <= trans;
-        data1 <= packet_clk ? count : 4'b0000;
-        data2 <= packet_clk ? ~count : 4'b0000;
+        if (reset == 1) begin
+            count <= 0;
+            rx_dv <= 0;
+            data1 <= 0;
+            data2 <= 0;
+        end else begin
+            count <= count + 1;
+            rx_dv <= packet_clk;
+            data1 <= packet_clk ? count : 4'b0000;
+            data2 <= packet_clk ? ~count : 4'b0000;
+        end
     end
     
     genvar i;
@@ -68,26 +81,58 @@ module test_rgmii_interface(
             .C(rx_clk),
             .CE(1'b1),
             .Q(rd[i]),
-            .R(1'b0)
+            .R(reset)
         );
     end
     
     ODDR #(
         .DDR_CLK_EDGE("SAME_EDGE")
     ) oddr_inst_ctl (
-        .D1(trans),
+        .D1(rx_dv),
         .D2(1'b0),
         .C(rx_clk),
         .CE(1'b1),
         .Q(rx_ctl_oddr),
-        .R(1'b0)
+        .R(reset)
     );
+
+    logic rx_data_en;
+    logic [`BYTE_WIDTH-1:0] rx_data_out;
+    logic rx_len_en;
+    logic [`LENGTH_WIDTH-1:0] rx_len_out;
+    logic rx_avail;
+
+    logic [`LENGTH_WIDTH-1:0] rx_length = 0;
+
+    assign rx_len_en = rx_avail && rx_length == 0;
+
+    always @ (posedge clk) begin
+        if (reset == 1) begin
+            rx_data_en <= 0;
+            rx_length <= 0;
+        end else begin
+            if (rx_length == 0 && rx_len_out != 0) begin
+                rx_length <= rx_len_out + 1;
+            end else if (rx_length != 0) begin
+                rx_length <= rx_length - 1;
+            end
+            rx_data_en <= rx_length > 1;
+        end
+    end
 
     rgmii_interface rgmii_interface_inst(
         .clk(clk),
-        .reset(1'b0),
+        .reset(reset),
+        
+        .rx_data_en(rx_data_en),
+        .rx_data_out(rx_data_out),
+        .rx_len_en(rx_len_en),
+        .rx_len_out(rx_len_out),
+        .rx_avail(rx_avail),
+
         .rgmii_rd(rd),
         .rgmii_rx_ctl(rx_ctl_oddr),
         .rgmii_rxc(rx_clk_90deg)
     );
+
 endmodule
