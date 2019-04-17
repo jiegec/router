@@ -19,6 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "constants.vh"
 
 module top(
     input logic clk,
@@ -37,9 +38,8 @@ module top(
     logic reset_n;
     assign reset = ~reset_n;
     
-    (*mark_debug = "true"*) logic rgmii_tx_clk; // 125MHz
-    (*mark_debug = "true"*) logic rgmii_tx_clk_90deg; // 125MHz, 90 deg shift
-    logic rgmii_tx_clk_90deg_oddr; // 125MHz, 90 deg shift, oddr
+    logic rgmii_tx_clk; // 125MHz
+    logic rgmii_tx_clk_90deg; // 125MHz, 90 deg shift
     
     clk_wiz_0 mmcm_inst(
         .clk_in1(clk),
@@ -51,79 +51,81 @@ module top(
 
     assign led = reset_n;
     
-    (*mark_debug = "true"*) reg [7:0]rx_data;
-    (*mark_debug = "true"*) reg [7:0]tx_data;
-    (*mark_debug = "true"*) reg trans;
-    (*mark_debug = "true"*) reg trans_1;
-    (*mark_debug = "true"*) reg trans_2;
-    (*mark_debug = "true"*) reg trans_3;
+    logic rx_data_en;
+    logic [`BYTE_WIDTH-1:0] rx_data_out;
+    logic rx_len_en;
+    logic [`LENGTH_WIDTH-1:0] rx_len_out;
+    logic rx_len_dv;
+    logic rx_avail;
 
-    
-    always_ff @ (posedge rgmii_tx_clk) begin
-        if (rgmii1_rx_ctl == 1'b1 && reset == 1'b0) begin
-            trans <= 1;
+    logic tx_data_en;
+    logic [`BYTE_WIDTH-1:0] tx_data_in;
+    logic tx_len_en;
+    logic [`LENGTH_WIDTH-1:0] tx_len_in;
+    logic tx_avail;
+
+    logic [`LENGTH_WIDTH-1:0] rx_length = 0;
+    logic [`LENGTH_WIDTH-1:0] tx_length = 0;
+
+    assign rx_len_en = rx_avail && tx_avail && rx_length == 0 && tx_length == 0 && tx_data_en == 0 && tx_len_en == 0 && rx_len_dv == 0;
+
+    always @ (posedge clk) begin
+        if (reset == 1) begin
+            rx_data_en <= 0;
+            rx_length <= 0;
+            tx_data_en <= 0;
+            tx_len_en <= 0;
         end else begin
-            trans <= 0;
+            rx_len_dv <= rx_len_en;
+            if (rx_length == 0 && rx_len_out != 0 && rx_len_dv == 1) begin
+                rx_length <= rx_len_out + 2;
+                tx_length <= 0;
+                tx_data_in <= rx_data_out;
+            end else if (rx_length > 1) begin
+                tx_length <= tx_length + 1;
+                rx_length <= rx_length - 1;
+                tx_data_in <= rx_data_out;
+            end else if (rx_length == 1) begin
+                tx_len_in <= tx_length - 1;
+                tx_len_en <= 1;
+                rx_length <= 0;
+                tx_data_in <= rx_data_out;
+            end else if (rx_length == 0 && tx_length != 0) begin
+                tx_len_en <= 0;
+                tx_len_in <= 0;
+                tx_length <= 0;
+                tx_data_in <= rx_data_out;
+            end
+            rx_data_en <= rx_length > 2;
+            tx_data_en <= tx_length > 1 && rx_length > 0;
         end
-        if (trans_1 == 1'b1) begin
-                tx_data <= rx_data;
-        end else begin
-                tx_data <= 8'h55;
-        end
-        trans_1 <= trans;
-        trans_2 <= trans_1;
-        trans_3 <= trans_2;
-    end
-    
-    genvar i;
-    for (i = 0;i < 4;i++) begin
-        IDDR #(
-            .DDR_CLK_EDGE("SAME_EDGE_PIPELINED")
-        ) iddr_inst (
-            .Q1(rx_data[i]),
-            .Q2(rx_data[i+4]),
-            .C(rgmii1_rxc),
-            .CE(1'b1),
-            .D(rgmii1_rd[i]),
-            .R(1'b0)
-        );
     end
 
-    ODDR #(
-        .DDR_CLK_EDGE("SAME_EDGE")
-    ) oddr_inst_clk (
-        .D1(1'b1),
-        .D2(1'b0),
-        .C(rgmii_tx_clk_90deg),
-        .CE(1'b1),
-        .Q(rgmii_tx_clk_90deg_oddr),
-        .R(1'b0)
+
+    rgmii_interface rgmii_interface_inst(
+        .clk(clk),
+        .clk_125m(rgmii_tx_clk),
+        .clk_125m_90deg(rgmii_tx_clk_90deg),
+        .reset(reset),
+        
+        .rx_data_en(rx_data_en),
+        .rx_data_out(rx_data_out),
+        .rx_len_en(rx_len_en),
+        .rx_len_out(rx_len_out),
+        .rx_avail(rx_avail),
+
+        .tx_data_en(tx_data_en),
+        .tx_data_in(tx_data_in),
+        .tx_len_en(tx_len_en),
+        .tx_len_in(tx_len_in),
+        .tx_avail(tx_avail),
+
+        .rgmii_rd(rgmii1_rd),
+        .rgmii_rx_ctl(rgmii1_rx_ctl),
+        .rgmii_rxc(rgmii1_rxc),
+        .rgmii_td(rgmii1_td),
+        .rgmii_tx_ctl(rgmii1_tx_ctl),
+        .rgmii_txc(rgmii1_txc)
     );
-
-    ODDR #(
-        .DDR_CLK_EDGE("SAME_EDGE")
-    ) oddr_inst_ctl (
-        .D1(trans_2),
-        .D2(1'b0),
-        .C(rgmii_tx_clk),
-        .CE(1'b1),
-        .Q(rgmii1_tx_ctl),
-        .R(1'b0)
-    );
-
-    for (i = 0;i < 4;i++) begin
-        ODDR #(
-            .DDR_CLK_EDGE("SAME_EDGE")
-        ) oddr_inst (
-            .D1(tx_data[i]),
-            .D2(tx_data[i+4]),
-            .C(rgmii_tx_clk),
-            .CE(1'b1),
-            .Q(rgmii1_td[i]),
-            .R(1'b0)
-        );
-    end
-    
-    assign rgmii1_txc = rgmii_tx_clk_90deg_oddr;
     
 endmodule
