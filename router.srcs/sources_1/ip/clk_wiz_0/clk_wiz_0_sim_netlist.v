@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Wed Apr 17 18:29:06 2019
+// Date        : Wed Apr 17 22:05:15 2019
 // Host        : vision2 running 64-bit Arch Linux
 // Command     : write_verilog -force -mode funcsim
 //               /home/thu-skyworks/jiegec/router/router.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v
@@ -17,12 +17,14 @@ module clk_wiz_0
    (clk_out1,
     clk_out2,
     clk_out3,
+    clk_out4,
     reset,
     locked,
     clk_in1);
   output clk_out1;
   output clk_out2;
   output clk_out3;
+  output clk_out4;
   input reset;
   output locked;
   input clk_in1;
@@ -31,6 +33,7 @@ module clk_wiz_0
   wire clk_out1;
   wire clk_out2;
   wire clk_out3;
+  wire clk_out4;
   wire locked;
   wire reset;
 
@@ -39,6 +42,7 @@ module clk_wiz_0
         .clk_out1(clk_out1),
         .clk_out2(clk_out2),
         .clk_out3(clk_out3),
+        .clk_out4(clk_out4),
         .locked(locked),
         .reset(reset));
 endmodule
@@ -48,12 +52,14 @@ module clk_wiz_0_clk_wiz_0_clk_wiz
    (clk_out1,
     clk_out2,
     clk_out3,
+    clk_out4,
     reset,
     locked,
     clk_in1);
   output clk_out1;
   output clk_out2;
   output clk_out3;
+  output clk_out4;
   input reset;
   output locked;
   input clk_in1;
@@ -66,6 +72,8 @@ module clk_wiz_0_clk_wiz_0_clk_wiz
   wire clk_out2_clk_wiz_0;
   wire clk_out3;
   wire clk_out3_clk_wiz_0;
+  wire clk_out4;
+  wire clk_out4_clk_wiz_0;
   wire clkfbout_buf_clk_wiz_0;
   wire clkfbout_clk_wiz_0;
   wire locked;
@@ -76,7 +84,6 @@ module clk_wiz_0_clk_wiz_0_clk_wiz
   wire NLW_mmcm_adv_inst_CLKOUT0B_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT2B_UNCONNECTED;
-  wire NLW_mmcm_adv_inst_CLKOUT3_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT3B_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT4_UNCONNECTED;
   wire NLW_mmcm_adv_inst_CLKOUT5_UNCONNECTED;
@@ -111,6 +118,10 @@ module clk_wiz_0_clk_wiz_0_clk_wiz
        (.I(clk_out3_clk_wiz_0),
         .O(clk_out3));
   (* BOX_TYPE = "PRIMITIVE" *) 
+  BUFG clkout4_buf
+       (.I(clk_out4_clk_wiz_0),
+        .O(clk_out4));
+  (* BOX_TYPE = "PRIMITIVE" *) 
   MMCME2_ADV #(
     .BANDWIDTH("OPTIMIZED"),
     .CLKFBOUT_MULT_F(20.000000),
@@ -130,7 +141,7 @@ module clk_wiz_0_clk_wiz_0_clk_wiz
     .CLKOUT2_DUTY_CYCLE(0.500000),
     .CLKOUT2_PHASE(0.000000),
     .CLKOUT2_USE_FINE_PS("FALSE"),
-    .CLKOUT3_DIVIDE(1),
+    .CLKOUT3_DIVIDE(5),
     .CLKOUT3_DUTY_CYCLE(0.500000),
     .CLKOUT3_PHASE(0.000000),
     .CLKOUT3_USE_FINE_PS("FALSE"),
@@ -175,7 +186,7 @@ module clk_wiz_0_clk_wiz_0_clk_wiz
         .CLKOUT1B(NLW_mmcm_adv_inst_CLKOUT1B_UNCONNECTED),
         .CLKOUT2(clk_out3_clk_wiz_0),
         .CLKOUT2B(NLW_mmcm_adv_inst_CLKOUT2B_UNCONNECTED),
-        .CLKOUT3(NLW_mmcm_adv_inst_CLKOUT3_UNCONNECTED),
+        .CLKOUT3(clk_out4_clk_wiz_0),
         .CLKOUT3B(NLW_mmcm_adv_inst_CLKOUT3B_UNCONNECTED),
         .CLKOUT4(NLW_mmcm_adv_inst_CLKOUT4_UNCONNECTED),
         .CLKOUT5(NLW_mmcm_adv_inst_CLKOUT5_UNCONNECTED),

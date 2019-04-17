@@ -1,8 +1,9 @@
 //------------------------------------------------------------------------------
-// File       : tri_mode_ethernet_mac_0.v
+// Title      : Verilog Support Level Module
+// File       : tri_mode_ethernet_mac_0_support.v
 // Author     : Xilinx Inc.
 // -----------------------------------------------------------------------------
-// (c) Copyright 2004-2013 Xilinx, Inc. All rights reserved.
+// (c) Copyright 2013 Xilinx, Inc. All rights reserved.
 //
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -48,37 +49,30 @@
 // THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
 // PART OF THIS FILE AT ALL TIMES.
 // -----------------------------------------------------------------------------
-// Description: This is the wrapper file for the Tri-Mode Ethernet MAC IP.
-//
-  
-// This wrapper instantiates the TEMAC core support level
+// Description: This module holds the support level for the Tri-Mode
+//              Ethernet MAC IP.  It contains potentially shareable FPGA
+//              resources such as clocking, reset and IDELAYCTRL logic.
+//              This can be used as-is in a single core design, or adapted
+//              for use with multi-core implementations.
 //------------------------------------------------------------------------------
+
 
 `timescale 1 ps/1 ps
 
 
 //------------------------------------------------------------------------------
-// The entity declaration for the block level example design.
+// The entity declaration for the block support level
 //------------------------------------------------------------------------------
-
-(* CORE_GENERATION_INFO = "tri_mode_ethernet_mac_0,tri_mode_ethernet_mac_0_support,{x_ipProduct=Vivado 2018.1,x_ipVendor=xilinx.com,x_ipLibrary=ip,x_ipName=tri_mode_ethernet_mac,x_ipVersion=9.0,x_ipCoreRevision=11,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED,x_ipLicense=tri_mode_eth_mac@2015.04(bought),x_ipLicense=eth_avb_endpoint@2015.04(bought),c_component_name=tri_mode_ethernet_mac_0,c_physical_interface=RGMII,c_half_duplex=false,c_has_host=false,c_has_mdio=false,c_mdio_external=false,c_axilite_freq=150.00,c_add_filter=false,c_at_entries=0,c_family=zynq,c_mac_speed=TRI_SPEED,c_int_clk_src=0,c_int_mode_type=BASEX,c_has_stats=false,c_num_stats=34,c_cntr_rst=true,c_stats_width=64,c_avb=false,c_1588=0,c_tx_inband_cf_enable=false,c_rx_inband_ts_enable=false,c_tx_tuser_width=1,c_rx_vec_width=79,c_tx_vec_width=79,c_addr_width=12,c_pfc=false,c_mii_io=true,c_data_rate=1_Gbps}" *)
-(* X_CORE_INFO = "tri_mode_ethernet_mac_0_support,Vivado 2018.1" *)
-(* DowngradeIPIdentifiedWarnings = "yes" *)
-module tri_mode_ethernet_mac_0  (
+module tri_mode_ethernet_mac_0_support
+   (
       input                gtx_clk,
       
-      
- 
-// These output clocks can be connected to input ports gtx_clk and gtx_clk90
-// for secondary cores that are generated with the 'Shared logic in example design option'  
       output               gtx_clk_out,
       output               gtx_clk90_out,
-      
- 
       // Reference clock for IDELAYCTRL's
       input                refclk,
-   
-      // asynchronous reset
+
+       // asynchronous reset
       input                glbl_rstn,
       input                rx_axi_rstn,
       input                tx_axi_rstn,
@@ -113,6 +107,7 @@ module tri_mode_ethernet_mac_0  (
       input                tx_axis_mac_tlast,
       input                tx_axis_mac_tuser,
       output               tx_axis_mac_tready,
+
       // MAC Control Interface
       //----------------------
       input                pause_req,
@@ -139,77 +134,115 @@ module tri_mode_ethernet_mac_0  (
       input       [79:0]   tx_configuration_vector
       );
 
+  //----------------------------------------------------------------------------
+  // Shareable logic
+  //----------------------------------------------------------------------------
+      wire                        mmcm_out_gtx_clk;
+      wire                        mmcm_out_gtx_clk90;
 
-   //---------------------------------------------------------------------------
-   // Instantiate the TEMAC core support level
-   //---------------------------------------------------------------------------
-   tri_mode_ethernet_mac_0_support inst(
-      .gtx_clk                             (gtx_clk),
+      assign gtx_clk_out   = mmcm_out_gtx_clk;
+      assign gtx_clk90_out = mmcm_out_gtx_clk90;
+	  
+  // Instantiate the sharable clocking logic
+  tri_mode_ethernet_mac_0_support_clocking tri_mode_ethernet_mac_support_clocking_i
+  (
+      .clk_in1               (gtx_clk),
+      .clk_out1              (mmcm_out_gtx_clk),
+      .clk_out2              (mmcm_out_gtx_clk90),
+      .reset                 (gtx_mmcm_rst),
+      .locked                (gtx_mmcm_locked)
+ );
+
+  // Instantiate the sharable reset logic
+  tri_mode_ethernet_mac_0_support_resets  tri_mode_ethernet_mac_support_resets_i (
+      .glbl_rstn             (glbl_rstn),
+      .refclk                (refclk),
       
-      .gtx_clk_out                        (gtx_clk_out), 
-      .gtx_clk90_out                      (gtx_clk90_out),    
-      // Reference clock for IDELAYCTRL's
-      .refclk                             (refclk),
+      .idelayctrl_ready      (idelayctrl_ready),
+      
+      .idelayctrl_reset_out  (idelayctrl_reset),
+      .gtx_clk               (gtx_clk),
+      .gtx_dcm_locked        (gtx_mmcm_locked),
+      .gtx_mmcm_rst_out      (gtx_mmcm_rst)
+   );
 
-      // asynchronous reset
-      .glbl_rstn                          (glbl_rstn),
-      .rx_axi_rstn                        (rx_axi_rstn),
-      .tx_axi_rstn                        (tx_axi_rstn),
+   // An IDELAYCTRL primitive needs to be instantiated for the Fixed Tap Delay
+   // mode of the IDELAY.
+   IDELAYCTRL  #(
+      .SIM_DEVICE ("7SERIES")
+   )
+   tri_mode_ethernet_mac_idelayctrl_common_i (
+      .RDY                  (idelayctrl_ready),
+      .REFCLK               (refclk),
+      .RST                  (idelayctrl_reset)
+   );
+
+
+   //---------------------------------------------------------------------------
+   // Instantiate the TEMAC core block
+   //---------------------------------------------------------------------------
+   tri_mode_ethernet_mac_0_block tri_mode_ethernet_mac_i (
+      .gtx_clk                     (mmcm_out_gtx_clk),
+      .gtx_clk90                   (mmcm_out_gtx_clk90),
+       // asynchronous reset
+      .glbl_rstn                   (glbl_rstn),
+      .rx_axi_rstn                 (rx_axi_rstn),
+      .tx_axi_rstn                 (tx_axi_rstn),
 
       // Receiver Interface
       //--------------------------
-      .rx_enable                          (rx_enable),
+      .rx_enable                   (rx_enable),
 
-      .rx_statistics_vector               (rx_statistics_vector),
-      .rx_statistics_valid                (rx_statistics_valid),
+      .rx_statistics_vector        (rx_statistics_vector),
+      .rx_statistics_valid         (rx_statistics_valid),
 
-      .rx_mac_aclk                        (rx_mac_aclk),
-      .rx_reset                           (rx_reset),
-      .rx_axis_mac_tdata                  (rx_axis_mac_tdata),
-      .rx_axis_mac_tvalid                 (rx_axis_mac_tvalid),
-      .rx_axis_mac_tlast                  (rx_axis_mac_tlast),
-      .rx_axis_mac_tuser                  (rx_axis_mac_tuser),
+      .rx_mac_aclk                 (rx_mac_aclk),
+      .rx_reset                    (rx_reset),
+      .rx_axis_mac_tdata           (rx_axis_mac_tdata),
+      .rx_axis_mac_tvalid          (rx_axis_mac_tvalid),
+      .rx_axis_mac_tlast           (rx_axis_mac_tlast),
+      .rx_axis_mac_tuser           (rx_axis_mac_tuser),
       // Transmitter Interface
       //-----------------------------
-      .tx_enable                          (tx_enable),
+      .tx_enable                   (tx_enable),
 
-      .tx_ifg_delay                       (tx_ifg_delay),
-      .tx_statistics_vector               (tx_statistics_vector),
-      .tx_statistics_valid                (tx_statistics_valid),
+      .tx_ifg_delay                (tx_ifg_delay),
+      .tx_statistics_vector        (tx_statistics_vector),
+      .tx_statistics_valid         (tx_statistics_valid),
 
-      .tx_mac_aclk                        (tx_mac_aclk),
-      .tx_reset                           (tx_reset),
-      .tx_axis_mac_tdata                  (tx_axis_mac_tdata),
-      .tx_axis_mac_tvalid                 (tx_axis_mac_tvalid),
-      .tx_axis_mac_tlast                  (tx_axis_mac_tlast),
-      .tx_axis_mac_tuser                  (tx_axis_mac_tuser),
-      .tx_axis_mac_tready                 (tx_axis_mac_tready),
+      .tx_mac_aclk                 (tx_mac_aclk),
+      .tx_reset                    (tx_reset),
+      .tx_axis_mac_tdata           (tx_axis_mac_tdata),
+      .tx_axis_mac_tvalid          (tx_axis_mac_tvalid),
+      .tx_axis_mac_tlast           (tx_axis_mac_tlast),
+      .tx_axis_mac_tuser           (tx_axis_mac_tuser),
+      .tx_axis_mac_tready          (tx_axis_mac_tready),
 
       // MAC Control Interface
       //----------------------
-      .pause_req                          (pause_req),
-      .pause_val                          (pause_val),
+      .pause_req                   (pause_req),
+      .pause_val                   (pause_val),
 
-      .speedis100                         (speedis100),
-      .speedis10100                       (speedis10100),
+      .speedis100                  (speedis100),
+      .speedis10100                (speedis10100),
       // RGMII Interface
       //----------------
-      .rgmii_txd                          (rgmii_txd),
-      .rgmii_tx_ctl                       (rgmii_tx_ctl),
-      .rgmii_txc                          (rgmii_txc),
-      .rgmii_rxd                          (rgmii_rxd),
-      .rgmii_rx_ctl                       (rgmii_rx_ctl),
-      .rgmii_rxc                          (rgmii_rxc),
-      .inband_link_status                 (inband_link_status),
-      .inband_clock_speed                 (inband_clock_speed),
-      .inband_duplex_status               (inband_duplex_status),
+      .rgmii_txd                   (rgmii_txd),
+      .rgmii_tx_ctl                (rgmii_tx_ctl),
+      .rgmii_txc                   (rgmii_txc),
+      .rgmii_rxd                   (rgmii_rxd),
+      .rgmii_rx_ctl                (rgmii_rx_ctl),
+      .rgmii_rxc                   (rgmii_rxc),
+      .inband_link_status          (inband_link_status),
+      .inband_clock_speed          (inband_clock_speed),
+      .inband_duplex_status        (inband_duplex_status),
 
       // Configuration Vectors
       //---------------------
-      .rx_configuration_vector            (rx_configuration_vector),
-      .tx_configuration_vector            (tx_configuration_vector)
+      .rx_configuration_vector     (rx_configuration_vector),
+      .tx_configuration_vector     (tx_configuration_vector)
     );
 
 
 endmodule
-
+ 

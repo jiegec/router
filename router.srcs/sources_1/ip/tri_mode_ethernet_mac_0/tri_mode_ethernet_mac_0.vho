@@ -55,7 +55,8 @@
 COMPONENT tri_mode_ethernet_mac_0
   PORT (
     gtx_clk : IN STD_LOGIC;
-    gtx_clk90 : IN STD_LOGIC;
+    gtx_clk_out : OUT STD_LOGIC;
+    gtx_clk90_out : OUT STD_LOGIC;
     glbl_rstn : IN STD_LOGIC;
     rx_axi_rstn : IN STD_LOGIC;
     tx_axi_rstn : IN STD_LOGIC;
@@ -81,6 +82,7 @@ COMPONENT tri_mode_ethernet_mac_0
     tx_axis_mac_tready : OUT STD_LOGIC;
     pause_req : IN STD_LOGIC;
     pause_val : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+    refclk : IN STD_LOGIC;
     speedis100 : OUT STD_LOGIC;
     speedis10100 : OUT STD_LOGIC;
     rgmii_txd : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -105,7 +107,8 @@ END COMPONENT;
 your_instance_name : tri_mode_ethernet_mac_0
   PORT MAP (
     gtx_clk => gtx_clk,
-    gtx_clk90 => gtx_clk90,
+    gtx_clk_out => gtx_clk_out,
+    gtx_clk90_out => gtx_clk90_out,
     glbl_rstn => glbl_rstn,
     rx_axi_rstn => rx_axi_rstn,
     tx_axi_rstn => tx_axi_rstn,
@@ -131,6 +134,7 @@ your_instance_name : tri_mode_ethernet_mac_0
     tx_axis_mac_tready => tx_axis_mac_tready,
     pause_req => pause_req,
     pause_val => pause_val,
+    refclk => refclk,
     speedis100 => speedis100,
     speedis10100 => speedis10100,
     rgmii_txd => rgmii_txd,

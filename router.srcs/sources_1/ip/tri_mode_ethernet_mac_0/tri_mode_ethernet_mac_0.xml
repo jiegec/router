@@ -1747,7 +1747,7 @@
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.gtx_clk_out" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.gtx_clk_out" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:busInterfaceInfo>
       </spirit:vendorExtensions>
@@ -1809,7 +1809,7 @@
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.gtx_clk90" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;0&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">true</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.gtx_clk90" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;0&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">false</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:busInterfaceInfo>
       </spirit:vendorExtensions>
@@ -1871,7 +1871,7 @@
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.gtx_clk90_out" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.gtx_clk90_out" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:busInterfaceInfo>
       </spirit:vendorExtensions>
@@ -1943,7 +1943,7 @@
       <spirit:vendorExtensions>
         <xilinx:busInterfaceInfo>
           <xilinx:enablement>
-            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.ref_clk" xilinx:dependency="()()(not (starts_with(id(&apos;MODELPARAM_VALUE.C_MAC_SPEED&apos;), &apos;SPEED_10_100_MBPS&apos;)) and not (starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;INTERNAL&apos;)) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) ))">false</xilinx:isEnabled>
+            <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="BUSIF_ENABLEMENT.ref_clk" xilinx:dependency="()()(not (starts_with(id(&apos;MODELPARAM_VALUE.C_MAC_SPEED&apos;), &apos;SPEED_10_100_MBPS&apos;)) and not (starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;INTERNAL&apos;)) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) ))">true</xilinx:isEnabled>
           </xilinx:enablement>
         </xilinx:busInterfaceInfo>
       </spirit:vendorExtensions>
@@ -5264,11 +5264,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Apr 17 13:09:13 UTC 2019</spirit:value>
+            <spirit:value>Wed Apr 17 14:00:32 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:85c0f50c</spirit:value>
+            <spirit:value>8:134ae210</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductLicenses</spirit:name>
@@ -5280,7 +5280,7 @@
         <spirit:name>xilinx_anylanguagesynthesis</spirit:name>
         <spirit:displayName>Synthesis</spirit:displayName>
         <spirit:envIdentifier>:vivado.xilinx.com:synthesis</spirit:envIdentifier>
-        <spirit:modelName>tri_mode_ethernet_mac_0_block</spirit:modelName>
+        <spirit:modelName>tri_mode_ethernet_mac_0_support</spirit:modelName>
         <spirit:fileSetRef>
           <spirit:localName>xilinx_anylanguagesynthesis_xilinx_com_ip_xbip_utils_3_0__ref_view_fileset</spirit:localName>
         </spirit:fileSetRef>
@@ -5302,11 +5302,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Apr 17 13:09:21 UTC 2019</spirit:value>
+            <spirit:value>Wed Apr 17 14:00:37 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:85c0f50c</spirit:value>
+            <spirit:value>8:134ae210</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductLicenses</spirit:name>
@@ -5326,11 +5326,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Apr 17 13:09:21 UTC 2019</spirit:value>
+            <spirit:value>Wed Apr 17 14:00:37 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:85c0f50c</spirit:value>
+            <spirit:value>8:134ae210</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductLicenses</spirit:name>
@@ -5342,7 +5342,7 @@
         <spirit:name>xilinx_anylanguagebehavioralsimulation</spirit:name>
         <spirit:displayName>Simulation</spirit:displayName>
         <spirit:envIdentifier>:vivado.xilinx.com:simulation</spirit:envIdentifier>
-        <spirit:modelName>tri_mode_ethernet_mac_0_block</spirit:modelName>
+        <spirit:modelName>tri_mode_ethernet_mac_0_support</spirit:modelName>
         <spirit:fileSetRef>
           <spirit:localName>xilinx_anylanguagebehavioralsimulation_xilinx_com_ip_xbip_utils_3_0__ref_view_fileset</spirit:localName>
         </spirit:fileSetRef>
@@ -5364,11 +5364,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Apr 17 13:09:21 UTC 2019</spirit:value>
+            <spirit:value>Wed Apr 17 14:00:37 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:fbe7d052</spirit:value>
+            <spirit:value>8:0ac75231</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductLicenses</spirit:name>
@@ -5388,11 +5388,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Apr 17 13:09:21 UTC 2019</spirit:value>
+            <spirit:value>Wed Apr 17 14:00:37 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:fbe7d052</spirit:value>
+            <spirit:value>8:0ac75231</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductLicenses</spirit:name>
@@ -5410,11 +5410,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Apr 17 13:09:25 UTC 2019</spirit:value>
+            <spirit:value>Wed Apr 17 14:00:41 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:85c0f50c</spirit:value>
+            <spirit:value>8:134ae210</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductLicenses</spirit:name>
@@ -5432,11 +5432,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Wed Apr 17 13:09:25 UTC 2019</spirit:value>
+            <spirit:value>Wed Apr 17 14:00:41 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:85c0f50c</spirit:value>
+            <spirit:value>8:134ae210</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductLicenses</spirit:name>
@@ -5453,8 +5453,12 @@
         </spirit:fileSetRef>
         <spirit:parameters>
           <spirit:parameter>
+            <spirit:name>GENtimestamp</spirit:name>
+            <spirit:value>Wed Apr 17 14:02:02 UTC 2019</spirit:value>
+          </spirit:parameter>
+          <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:85c0f50c</spirit:value>
+            <spirit:value>8:134ae210</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductLicenses</spirit:name>
@@ -5571,7 +5575,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.gtx_clk90" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;0&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">true</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.gtx_clk90" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;0&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">false</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -5591,7 +5595,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.gtx_clk_out" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.gtx_clk_out" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -5614,7 +5618,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.gtx_clk90_out" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.gtx_clk90_out" xilinx:dependency="(((contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;artix7&apos;)) or (contains(id(&apos;MODELPARAM_VALUE.C_FAMILY&apos;), &apos;spartan7&apos;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;kintex7&quot;)) or (contains(id(&quot;MODELPARAM_VALUE.C_FAMILY&quot;), &quot;zynq&quot;))) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;) and ((starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;RGMII&apos;)))))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -6691,7 +6695,7 @@
         <spirit:vendorExtensions>
           <xilinx:portInfo>
             <xilinx:enablement>
-              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.refclk" xilinx:dependency="()()(not (starts_with(id(&apos;MODELPARAM_VALUE.C_MAC_SPEED&apos;), &apos;SPEED_10_100_MBPS&apos;)) and not (starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;INTERNAL&apos;)) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;)))">false</xilinx:isEnabled>
+              <xilinx:isEnabled xilinx:resolve="dependent" xilinx:id="PORT_ENABLEMENT.refclk" xilinx:dependency="()()(not (starts_with(id(&apos;MODELPARAM_VALUE.C_MAC_SPEED&apos;), &apos;SPEED_10_100_MBPS&apos;)) and not (starts_with(id(&apos;MODELPARAM_VALUE.C_PHYSICAL_INTERFACE&apos;), &apos;INTERNAL&apos;)) and (((id(&apos;PARAM_VALUE.SupportLevel&apos;)) = &apos;1&apos;)))">true</xilinx:isEnabled>
             </xilinx:enablement>
           </xilinx:portInfo>
         </spirit:vendorExtensions>
@@ -8790,6 +8794,10 @@
         <spirit:logicalName>tri_mode_ethernet_mac_v9_0_11</spirit:logicalName>
       </spirit:file>
       <spirit:file>
+        <spirit:name>synth/common/tri_mode_ethernet_mac_0_block_reset_sync.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>synth/common/tri_mode_ethernet_mac_0_block_sync_block.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
@@ -8805,6 +8813,21 @@
         <spirit:name>synth/tri_mode_ethernet_mac_0_block.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:exportedName>tri_mode_ethernet_mac_0_block</spirit:exportedName>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>synth/tri_mode_ethernet_mac_0_support.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:exportedName>tri_mode_ethernet_mac_0_support</spirit:exportedName>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>synth/tri_mode_ethernet_mac_0_support_clocking.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:exportedName>tri_mode_ethernet_mac_0_support</spirit:exportedName>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>synth/tri_mode_ethernet_mac_0_support_resets.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:exportedName>tri_mode_ethernet_mac_0_support</spirit:exportedName>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -8914,6 +8937,10 @@
         <spirit:logicalName>tri_mode_ethernet_mac_v9_0_11</spirit:logicalName>
       </spirit:file>
       <spirit:file>
+        <spirit:name>synth/common/tri_mode_ethernet_mac_0_block_reset_sync.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
         <spirit:name>synth/common/tri_mode_ethernet_mac_0_block_sync_block.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
@@ -8929,6 +8956,21 @@
         <spirit:name>synth/tri_mode_ethernet_mac_0_block.v</spirit:name>
         <spirit:fileType>verilogSource</spirit:fileType>
         <spirit:exportedName>tri_mode_ethernet_mac_0_block</spirit:exportedName>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>synth/tri_mode_ethernet_mac_0_support.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:exportedName>tri_mode_ethernet_mac_0_support</spirit:exportedName>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>synth/tri_mode_ethernet_mac_0_support_clocking.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:exportedName>tri_mode_ethernet_mac_0_support</spirit:exportedName>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>synth/tri_mode_ethernet_mac_0_support_resets.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+        <spirit:exportedName>tri_mode_ethernet_mac_0_support</spirit:exportedName>
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
@@ -9215,7 +9257,7 @@
     <spirit:parameter>
       <spirit:name>SupportLevel</spirit:name>
       <spirit:displayName>Shared Logic</spirit:displayName>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.SupportLevel" spirit:choiceRef="choice_pairs_14544bc6" spirit:order="11400" spirit:configGroups="1 UnGrouped">0</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.SupportLevel" spirit:choiceRef="choice_pairs_14544bc6" spirit:order="11400" spirit:configGroups="1 UnGrouped">1</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>Enable_Priority_Flow_Control</spirit:name>

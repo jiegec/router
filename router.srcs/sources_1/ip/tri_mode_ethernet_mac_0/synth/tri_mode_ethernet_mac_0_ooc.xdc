@@ -8,13 +8,13 @@
 # Transmitter clock period constraints: please do not relax
 create_clock -name gtx_clk_ooc -period 8.000 [get_ports gtx_clk]
 set_property HD.CLK_SRC BUFGCTRL_X0Y0 [get_ports gtx_clk]
- 
+   
+   
 
-create_clock -name gtx_clk90_ooc -period 8.000 [get_ports gtx_clk90]
-set_property HD.CLK_SRC BUFGCTRL_X0Y1 [get_ports gtx_clk90]
-   
-   
-   
-   
+###################################
+# IDELAYCTRL reference clock period
+###################################
+create_clock -name refclk_ooc -period 5.000 [get_ports refclk]
+set_property HD.CLK_SRC BUFGCTRL_X0Y3 [get_ports refclk]
 
 

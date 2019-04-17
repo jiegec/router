@@ -8,7 +8,7 @@ set rx_clk [get_clocks -of [get_ports rgmii_rxc]]
 ############################################################
 # Obtain input clocks from top level XDC                         #
 ############################################################
-set ip_gtx_clk     [get_clocks -of_objects [get_ports gtx_clk]]
+set ip_gtx_clk     [get_clocks -of [get_pins tri_mode_ethernet_mac_support_clocking_i/mmcm_adv_inst/CLKOUT0]]
 
 
 #
@@ -50,7 +50,7 @@ set_multicycle_path -from [get_clocks $rgmii_rx_clk] -to $rx_clk -hold -1
 # For Setup and Hold time analysis on RGMII outputs        #
 ############################################################
 
-create_generated_clock -name [current_instance .]_rgmii_tx_clk -divide_by 1 -source [get_pins {rgmii_interface/rgmii_txc_ddr/C}] [get_ports rgmii_txc]
+create_generated_clock -name [current_instance .]_rgmii_tx_clk -divide_by 1 -source [get_pins {tri_mode_ethernet_mac_i/rgmii_interface/rgmii_txc_ddr/C}] [get_ports rgmii_txc]
 set rgmii_tx_clk [current_instance .]_rgmii_tx_clk 
 
 set_false_path -rise_from $ip_gtx_clk -fall_to [get_clocks $rgmii_tx_clk] -setup

@@ -56,7 +56,8 @@
 //----------- Begin Cut here for INSTANTIATION Template ---// INST_TAG
 tri_mode_ethernet_mac_0 your_instance_name (
   .gtx_clk(gtx_clk),                                  // input wire gtx_clk
-  .gtx_clk90(gtx_clk90),                              // input wire gtx_clk90
+  .gtx_clk_out(gtx_clk_out),                          // output wire gtx_clk_out
+  .gtx_clk90_out(gtx_clk90_out),                      // output wire gtx_clk90_out
   .glbl_rstn(glbl_rstn),                              // input wire glbl_rstn
   .rx_axi_rstn(rx_axi_rstn),                          // input wire rx_axi_rstn
   .tx_axi_rstn(tx_axi_rstn),                          // input wire tx_axi_rstn
@@ -82,6 +83,7 @@ tri_mode_ethernet_mac_0 your_instance_name (
   .tx_axis_mac_tready(tx_axis_mac_tready),            // output wire tx_axis_mac_tready
   .pause_req(pause_req),                              // input wire pause_req
   .pause_val(pause_val),                              // input wire [15 : 0] pause_val
+  .refclk(refclk),                                    // input wire refclk
   .speedis100(speedis100),                            // output wire speedis100
   .speedis10100(speedis10100),                        // output wire speedis10100
   .rgmii_txd(rgmii_txd),                              // output wire [3 : 0] rgmii_txd

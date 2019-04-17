@@ -36,6 +36,3 @@ set_property IOSTANDARD LVCMOS33 [get_ports {rgmii1_td[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {rgmii1_td[3]}]
 set_property IOSTANDARD LVCMOS33 [get_ports rgmii1_tx_ctl]
 set_property IOSTANDARD LVCMOS33 [get_ports rgmii1_txc]
-
-create_clock -period 8.000 -name rgmii1_rxc -waveform {0.000 4.000} [get_ports rgmii1_rxc]
-create_generated_clock -name rgmii1_txc -source [get_pins rgmii_interface_inst/oddr_inst_clk/C] -divide_by 1 [get_ports rgmii1_txc]
