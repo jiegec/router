@@ -46,23 +46,28 @@ module top_axi(
     assign reset = ~reset_n;
     
     logic internal_clk; // 10MHz
-    logic gtx_clk; // 125MHz
-    logic gtx_clk90; // 125MHz, 90 deg shift
+    logic gtx_clk_in; // 125MHz
     logic refclk; // 200MHz
     
     clk_wiz_0 mmcm_inst(
         .clk_in1(clk),
-        .clk_out1(gtx_clk),
-        .clk_out2(gtx_clk90),
+        .clk_out1(gtx_clk_in),
         .clk_out3(internal_clk),
         .clk_out4(refclk),
         .reset(~reset_n_in),
         .locked(reset_n)
     );
 
-    port port_inst_1(
+    logic gtx_clk; // 125MHz
+    logic gtx_clk90; // 125MHz, 90 deg shift
+
+    port #(
+        .shared(0)
+    ) port_inst_1 (
         .clk(clk),
-        .gtx_clk(gtx_clk),
+        .gtx_clk(gtx_clk_in),
+        .gtx_clk_out(gtx_clk),
+        .gtx_clk90_out(gtx_clk90),
         .refclk(refclk),
         .reset_n(reset_n),
         .rgmii_td(rgmii1_td),
@@ -73,10 +78,12 @@ module top_axi(
         .rgmii_rxc(rgmii1_rxc)
     );
 
-    port port_inst_2(
+    port #(
+        .shared(1)
+    ) port_inst_2 (
         .clk(clk),
         .gtx_clk(gtx_clk),
-        .refclk(refclk),
+        .gtx_clk90(gtx_clk90),
         .reset_n(reset_n),
         .rgmii_td(rgmii2_td),
         .rgmii_tx_ctl(rgmii2_tx_ctl),

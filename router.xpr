@@ -180,7 +180,6 @@
     <FileSet Name="tri_mode_ethernet_mac_0_shared" Type="BlockSrcs" RelSrcDir="$PSRCDIR/tri_mode_ethernet_mac_0_shared">
       <File Path="$PSRCDIR/sources_1/ip/tri_mode_ethernet_mac_0_shared/tri_mode_ethernet_mac_0_shared.xci">
         <FileInfo>
-          <Attr Name="AutoDisabled" Val="1"/>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
