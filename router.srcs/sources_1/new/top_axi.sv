@@ -31,7 +31,14 @@ module top_axi(
     input logic rgmii1_rxc,
     output logic [3:0] rgmii1_td,
     output logic rgmii1_tx_ctl,
-    output logic rgmii1_txc
+    output logic rgmii1_txc,
+
+    input logic [3:0] rgmii2_rd,
+    input logic rgmii2_rx_ctl,
+    input logic rgmii2_rxc,
+    output logic [3:0] rgmii2_td,
+    output logic rgmii2_tx_ctl,
+    output logic rgmii2_txc
     );
     
     logic reset;
@@ -53,7 +60,7 @@ module top_axi(
         .locked(reset_n)
     );
 
-    port port_inst_0(
+    port port_inst_1(
         .clk(clk),
         .gtx_clk(gtx_clk),
         .refclk(refclk),
@@ -64,6 +71,19 @@ module top_axi(
         .rgmii_rd(rgmii1_rd),
         .rgmii_rx_ctl(rgmii1_rx_ctl),
         .rgmii_rxc(rgmii1_rxc)
+    );
+
+    port port_inst_2(
+        .clk(clk),
+        .gtx_clk(gtx_clk),
+        .refclk(refclk),
+        .reset_n(reset_n),
+        .rgmii_td(rgmii2_td),
+        .rgmii_tx_ctl(rgmii2_tx_ctl),
+        .rgmii_txc(rgmii2_txc),
+        .rgmii_rd(rgmii2_rd),
+        .rgmii_rx_ctl(rgmii2_rx_ctl),
+        .rgmii_rxc(rgmii2_rxc)
     );
 
 endmodule
