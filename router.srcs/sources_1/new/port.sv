@@ -7,7 +7,7 @@
 // Design Name: 
 // Module Name: port
 // Project Name: 
-// Target Devices: 
+// Target Devices: xc7z020clg484-2
 // Tool Versions: 
 // Description: 
 // 
@@ -19,6 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`include "constants.vh"
 
 module port #(
     parameter shared = 1
@@ -28,10 +29,10 @@ module port #(
     input reset_n,
 
     // shared=1
-    input gtx_clk90,
+    input gtx_clk90, // 125MHz, 90 deg shift
     // shared=0
-    output gtx_clk_out,
-    output gtx_clk90_out,
+    output gtx_clk_out, // 125MHz
+    output gtx_clk90_out, // 125MHz, 90 deg shift
     input refclk, // 200MHz
 
     input logic [3:0] rgmii_rd,
@@ -41,6 +42,9 @@ module port #(
     output logic rgmii_tx_ctl,
     output logic rgmii_txc
     );
+
+    logic reset;
+    assign reset = ~reset_n;
 
     logic rx_enable;
 
@@ -99,6 +103,104 @@ module port #(
         end
     end
 
+    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_data_out;
+    (*mark_debug = "true"*) logic rx_data_ren = 0;
+
+    (*mark_debug = "true"*) logic rx_data_full;
+    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_data_in;
+    (*mark_debug = "true"*) logic rx_data_busy;
+    (*mark_debug = "true"*) logic rx_data_wen;
+    (*mark_debug = "true"*) logic last_rx_axis_mac_tvalid;
+
+    // stores ethernet frame data
+    xpm_fifo_async #(
+        .READ_DATA_WIDTH(`BYTE_WIDTH),
+        .WRITE_DATA_WIDTH(`BYTE_WIDTH),
+        .FIFO_WRITE_DEPTH(`MAX_FIFO_SIZE),
+        .PROG_FULL_THRESH(`MAX_FIFO_SIZE - `MAX_ETHERNET_FRAME_BYTES)
+    ) xpm_fifo_zsync_inst_rx_data (
+        .dout(rx_data_out),
+        .rd_en(rx_data_ren),
+        .rd_clk(clk),
+
+        .prog_full(rx_data_full),
+        .din(rx_data_in),
+        .rst(reset),
+        .wr_clk(rx_mac_aclk),
+        .wr_en(rx_data_wen),
+        .wr_rst_busy(rx_data_busy)
+    );
+
+    logic [`LENGTH_WIDTH-1:0] rx_len_out;
+    logic rx_len_ren = 0;
+    logic rx_len_empty;
+
+    logic rx_len_full;
+    logic [`LENGTH_WIDTH-1:0] rx_len_in;
+    logic rx_len_busy;
+    logic rx_len_wen;
+
+    logic [`LENGTH_WIDTH-1:0] rx_length;
+
+    // stores ethernet frame length
+    xpm_fifo_async #(
+        .READ_DATA_WIDTH(`LENGTH_WIDTH),
+        .WRITE_DATA_WIDTH(`LENGTH_WIDTH),
+        .FIFO_WRITE_DEPTH(`MAX_FIFO_SIZE),
+        .RD_DATA_COUNT_WIDTH(16),
+        .WR_DATA_COUNT_WIDTH(16),
+        .PROG_FULL_THRESH(`MAX_FIFO_SIZE - 16)
+    ) xpm_fifo_zsync_inst_rx_len (
+        .dout(rx_len_out),
+        .rd_en(rx_len_ren),
+        .rd_clk(clk),
+        .empty(rx_len_empty),
+
+        .prog_full(rx_len_full),
+        .din(rx_len_in),
+        .rst(reset),
+        .wr_clk(rx_mac_aclk),
+        .wr_en(rx_len_wen),
+        .wr_rst_busy(rx_len_busy)
+    );
+
+    always_ff @ (posedge rx_mac_aclk) begin
+        if (reset) begin
+            rx_data_wen <= 0;
+            last_rx_axis_mac_tvalid <= 0;
+            rx_length <= 0;
+            rx_len_wen <= 0;
+            rx_len_in <= 0;
+        end else begin
+            last_rx_axis_mac_tvalid <= rx_axis_mac_tvalid;
+            if (rx_axis_mac_tvalid && !last_rx_axis_mac_tvalid && !rx_data_busy && !rx_data_full && !rx_len_busy && !rx_len_full) begin
+                // begin
+                rx_data_wen <= 1;
+                rx_length <= 1;
+                rx_data_in <= rx_axis_mac_tdata;
+                rx_len_wen <= 0;
+                rx_len_in <= 0;
+            end else if (!rx_axis_mac_tvalid && last_rx_axis_mac_tvalid) begin
+                // end
+                rx_data_wen <= 0;
+                rx_data_in <= 0;
+                rx_len_wen <= 1;
+                rx_len_in <= rx_length;
+                rx_length <= 0;
+            end else begin
+                // progress
+                if (rx_data_wen) begin
+                    rx_length <= rx_length + 1;
+                    rx_data_in <= rx_axis_mac_tdata;
+                end else begin
+                    rx_data_in <= 0;
+                end
+                rx_len_wen <= 0;
+                rx_len_in <= 0;
+            end
+        end
+    end
+
     generate
         if (!shared) begin
             tri_mode_ethernet_mac_0 tri_mode_ethernet_mac_0_inst (
@@ -153,12 +255,14 @@ module port #(
                 .inband_clock_speed(clock_speed),
                 .inband_duplex_status(duplex_status),
 
-                // promiscuous | enable
-                .rx_configuration_vector(80'b100000000010),
+                // receive 1Gb/s | promiscuous | enable
+                .rx_configuration_vector(80'b10100000001010),
                 // transmit 1Gb/s | enable
                 .tx_configuration_vector(80'b10000000000010)
             );
         end else begin
+            assign gtx_clk_out = 0;
+            assign gtx_clk90_out = 0;
             tri_mode_ethernet_mac_0_shared tri_mode_ethernet_mac_0_shared_inst (
                 .gtx_clk(gtx_clk),
                 .gtx_clk90(gtx_clk90),
@@ -209,8 +313,8 @@ module port #(
                 .inband_clock_speed(clock_speed),
                 .inband_duplex_status(duplex_status),
 
-                // promiscuous | enable
-                .rx_configuration_vector(80'b100000000010),
+                // receive 1Gb/s | promiscuous | enable
+                .rx_configuration_vector(80'b10100000001010),
                 // transmit 1Gb/s | enable
                 .tx_configuration_vector(80'b10000000000010)
             );

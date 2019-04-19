@@ -28,18 +28,20 @@ module testbench_axi(
     logic rx_clk_90deg;
     logic packet_clk;
     logic trans;
-    logic [3:0] count = 0;
+    logic [7:0] count = 0;
     logic [3:0] data1;
     logic [3:0] data2;
     logic [3:0] rd;
     logic rx_ctl;
     logic rx_ctl_oddr;
+    logic [7:0] example [71:0];
     
     initial begin
         clk = 0;
         rx_clk = 0;
         packet_clk = 0;
         rx_clk_90deg = 0;
+        $readmemh("example_frame.mem", example);
         #2;
         forever rx_clk_90deg = #4 ~rx_clk; // 125MHz, 90 deg shift
     end
@@ -50,11 +52,15 @@ module testbench_axi(
     
     
     always_ff @ (posedge rx_clk) begin
-        count <= count + 1;
-        trans <= packet_clk;
+        if (packet_clk) begin
+            count <= count + 1;
+        end else begin
+            count <= 0;
+        end
+        trans <= packet_clk && count <= 8'd71;
         rx_ctl <= trans;
-        data1 <= packet_clk ? count : 4'b0000;
-        data2 <= 4'b0000;
+        data1 <= packet_clk ? example[count][3:0] : 4'b0000;
+        data2 <= packet_clk ? example[count][7:4] : 4'b0000;
     end
     
     genvar i;
@@ -75,7 +81,7 @@ module testbench_axi(
         .DDR_CLK_EDGE("SAME_EDGE")
     ) oddr_inst_ctl (
         .D1(trans),
-        .D2(1'b0),
+        .D2(trans),
         .C(rx_clk),
         .CE(1'b1),
         .Q(rx_ctl_oddr),
