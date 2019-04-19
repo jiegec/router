@@ -186,7 +186,6 @@ module port #(
                 rx_data_in <= 0;
                 rx_len_wen <= 1;
                 rx_len_in <= rx_length;
-                rx_length <= 0;
             end else begin
                 // progress
                 if (rx_data_wen) begin
@@ -194,6 +193,7 @@ module port #(
                     rx_data_in <= rx_axis_mac_tdata;
                 end else begin
                     rx_data_in <= 0;
+                    rx_length <= 0;
                 end
                 rx_len_wen <= 0;
                 rx_len_in <= 0;
