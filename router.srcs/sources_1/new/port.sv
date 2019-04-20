@@ -110,7 +110,7 @@ module port #(
     (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_data_in;
     (*mark_debug = "true"*) logic rx_data_busy;
     (*mark_debug = "true"*) logic rx_data_wen;
-    (*mark_debug = "true"*) logic last_rx_axis_mac_tvalid;
+    (*mark_debug = "true"*) logic rx_axis_mac_tvalid_last;
 
     // stores ethernet frame data
     xpm_fifo_async #(
@@ -167,20 +167,20 @@ module port #(
     always_ff @ (posedge rx_mac_aclk) begin
         if (reset) begin
             rx_data_wen <= 0;
-            last_rx_axis_mac_tvalid <= 0;
+            rx_axis_mac_tvalid_last <= 0;
             rx_length <= 0;
             rx_len_wen <= 0;
             rx_len_in <= 0;
         end else begin
-            last_rx_axis_mac_tvalid <= rx_axis_mac_tvalid;
-            if (rx_axis_mac_tvalid && !last_rx_axis_mac_tvalid && !rx_data_busy && !rx_data_full && !rx_len_busy && !rx_len_full) begin
+            rx_axis_mac_tvalid_last <= rx_axis_mac_tvalid;
+            if (rx_axis_mac_tvalid && !rx_axis_mac_tvalid_last && !rx_data_busy && !rx_data_full && !rx_len_busy && !rx_len_full) begin
                 // begin
                 rx_data_wen <= 1;
                 rx_length <= 1;
                 rx_data_in <= rx_axis_mac_tdata;
                 rx_len_wen <= 0;
                 rx_len_in <= 0;
-            end else if (!rx_axis_mac_tvalid && last_rx_axis_mac_tvalid) begin
+            end else if (!rx_axis_mac_tvalid && rx_axis_mac_tvalid_last) begin
                 // end
                 rx_data_wen <= 0;
                 rx_data_in <= 0;
