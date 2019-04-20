@@ -25,31 +25,31 @@ module arbiter(
         input rst,
 
         input [3:0] req,
-        output logic [3:0] grant
+        output logic [3:0] grant = 0
     );
 
-    logic [1:0] rotate;
-    logic [3:0] shift_req;
-    logic [3:0] shift_grant;
-    logic [3:0] grant_comb;
+    logic [1:0] rotate = 0;
+    logic [3:0] shift_req = 0;
+    logic [3:0] shift_grant = 0;
+    logic [3:0] grant_comb = 0;
 
     always_comb begin
-        unique case (rotate)
+        unique casez (rotate)
             2'b00 : shift_req = req;
             2'b01 : shift_req = {req[0], req[3:1]};
             2'b10 : shift_req = {req[1:0], req[3:2]};
             2'b11 : shift_req = {req[2:0], req[3]};
         endcase
 
-        priority case (shift_req)
+        priority casez (shift_req)
             4'b???1 : shift_grant = 4'b0001;
             4'b??1? : shift_grant = 4'b0010;
             4'b?1?? : shift_grant = 4'b0100;
             4'b1??? : shift_grant = 4'b1000;
-            4'b0000 : shift_grant = 4'b0000;
+            4'b???? : shift_grant = 4'b0000;
         endcase
 
-        unique case (rotate)
+        unique casez (rotate)
             2'b00 : grant_comb = shift_grant;
             2'b01 : grant_comb = {shift_grant[2:0], shift_grant[3]};
             2'b10 : grant_comb = {shift_grant[1:0], shift_grant[3:2]};
@@ -69,7 +69,7 @@ module arbiter(
         if (rst) begin
             rotate <= 0;
         end else begin
-            unique case (grant)
+            unique casez (grant)
                 4'b???1 : rotate = 2'b01;
                 4'b??1? : rotate = 2'b10;
                 4'b?1?? : rotate = 2'b11;
