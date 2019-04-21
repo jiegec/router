@@ -82,7 +82,7 @@ module top_axi(
 
     arp_table arp_table_inst(
         .clk(clk),
-        .rst(rst),
+        .rst(reset),
 
         .lookup_ip(arp_lookup_ip),
         .lookup_mac(arp_lookup_mac),
@@ -109,6 +109,9 @@ module top_axi(
                 port_arp_insert_ready[2] = 0;
                 port_arp_insert_ready[3] = 0;
                 arp_insert_valid = port_arp_insert_valid[0];
+                arp_insert_ip = port_arp_insert_ip[0];
+                arp_insert_mac = port_arp_insert_mac[0];
+                arp_insert_port = port_arp_insert_port[0];
             end
             4'b??1?: begin
                 port_arp_insert_ready[0] = 0;
@@ -116,6 +119,9 @@ module top_axi(
                 port_arp_insert_ready[2] = 0;
                 port_arp_insert_ready[3] = 0;
                 arp_insert_valid = port_arp_insert_valid[1];
+                arp_insert_ip = port_arp_insert_ip[1];
+                arp_insert_mac = port_arp_insert_mac[1];
+                arp_insert_port = port_arp_insert_port[1];
             end
             4'b?1??: begin
                 port_arp_insert_ready[0] = 0;
@@ -123,6 +129,9 @@ module top_axi(
                 port_arp_insert_ready[2] = arp_insert_ready;
                 port_arp_insert_ready[3] = 0;
                 arp_insert_valid = port_arp_insert_valid[2];
+                arp_insert_ip = port_arp_insert_ip[2];
+                arp_insert_mac = port_arp_insert_mac[2];
+                arp_insert_port = port_arp_insert_port[2];
             end
             4'b1???: begin
                 port_arp_insert_ready[0] = 0;
@@ -130,6 +139,9 @@ module top_axi(
                 port_arp_insert_ready[2] = 0;
                 port_arp_insert_ready[3] = arp_insert_ready;
                 arp_insert_valid = port_arp_insert_valid[3];
+                arp_insert_ip = port_arp_insert_ip[3];
+                arp_insert_mac = port_arp_insert_mac[3];
+                arp_insert_port = port_arp_insert_port[3];
             end
             4'b0000: begin
                 port_arp_insert_ready[0] = 0;
@@ -137,6 +149,9 @@ module top_axi(
                 port_arp_insert_ready[2] = 0;
                 port_arp_insert_ready[3] = 0;
                 arp_insert_valid = 0;
+                arp_insert_ip = 0;
+                arp_insert_mac = 0;
+                arp_insert_port = 0;
             end
         endcase
     end

@@ -221,6 +221,9 @@ module port #(
     logic [`ETHERTYPE_WIDTH-1:0] rx_saved_ethertype;
     logic [`IPV4_WIDTH-1:0] rx_saved_arp_src_ipv4_addr;
 
+    logic arp_write;
+    logic arp_written;
+
     always_ff @ (posedge clk) begin
         if (reset) begin
             rx_len_ren <= 0;
@@ -229,8 +232,11 @@ module port #(
             rx_saved_src_mac_addr <= 0;
             rx_saved_ethertype <= 0;
             rx_saved_arp_src_ipv4_addr <= 0;
+            arp_write <= 0;
+            arp_insert_valid <= 0;
+            arp_written <= 0;
         end else begin
-            if (!rx_len_empty && !rx_read) begin 
+            if (!rx_len_empty && !rx_read && !arp_write) begin 
                 rx_read <= 1;
                 rx_len_ren <= 1;
                 rx_data_ren <= 1;
@@ -238,6 +244,7 @@ module port #(
                 rx_saved_src_mac_addr <= 0;
                 rx_saved_ethertype <= 0;
                 rx_saved_arp_src_ipv4_addr <= 0;
+                arp_written <= 0;
             end else begin
                 rx_len_ren <= 0;
                 if (rx_read) begin
@@ -254,6 +261,28 @@ module port #(
                     end
                     if (rx_read_counter >= `ARP_SRC_IPV4_BEGIN && rx_read_counter < `ARP_SRC_IPV4_END) begin
                         rx_saved_arp_src_ipv4_addr <= {rx_saved_arp_src_ipv4_addr[`IPV4_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
+                    end
+
+                    if (rx_read_counter == rx_read_length - 2) begin
+                        rx_read <= 0;
+                        rx_data_ren <= 0;
+                    end
+
+                    if (rx_saved_ethertype == `ARP_ETHERTYPE && rx_read_counter > `ARP_SRC_IPV4_END && !arp_write && !arp_written) begin
+                        arp_written <= 1;
+                        arp_write <= 1;
+                        arbiter_req <= 1;
+                        arp_insert_valid <= 0;
+                        arp_insert_ip <= rx_saved_arp_src_ipv4_addr;
+                        arp_insert_mac <= rx_saved_src_mac_addr;
+                        arp_insert_port <= port_id;
+                    end
+                end
+                if (arp_write) begin
+                    if (arbiter_granted && arp_insert_ready) begin
+                        arp_insert_valid <= 1;
+                        arp_write <= 0;
+                        arbiter_req <= 0;
                     end
                 end
             end
