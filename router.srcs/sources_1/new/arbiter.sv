@@ -60,7 +60,7 @@ module arbiter(
     always_ff @ (posedge clk) begin
         if (rst) begin
             grant <= 0;
-        end else begin
+        end else if (!(grant & req)) begin
             grant <= grant_comb;
         end
     end

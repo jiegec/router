@@ -52,6 +52,21 @@ module testbench_arbiter(
         repeat (2) @ (posedge clk);
         req[0] <= 0;
         repeat (2) @ (posedge clk);
+        req[3] <= 1;
+        req[2] <= 0;
+        repeat (2) @ (posedge clk);
+        req[0] <= 1;
+        req[1] <= 1;
+        repeat (2) @ (posedge clk);
+        req[0] <= 0;
+        repeat (2) @ (posedge clk);
+        req[3] <= 0;
+        repeat (2) @ (posedge clk);
+        req[0] <= 1;
+        repeat (2) @ (posedge clk);
+        req[1] <= 1;
+        repeat (2) @ (posedge clk);
+        req[1] <= 0;
         #10  $finish;
     end
     
