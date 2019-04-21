@@ -135,6 +135,7 @@ module arp_table(
                     data[insert_bucket_index][insert_current_bucket_depth] <= temp_data;
                     insert_current_bucket_depth <= insert_current_bucket_depth + 1;
                 end else begin
+                    data[insert_bucket_index][insert_current_bucket_depth] <= temp_data;
                     second_pass <= 0;
                     insert_ready <= 1;
                 end
