@@ -27,6 +27,16 @@ module port #(
     input clk,
     input gtx_clk, // 125MHz
     input reset_n,
+    input [`PORT_WIDTH-1:0] port_id,
+
+    // ARP table
+    output logic arbiter_req,
+    input arbiter_granted,
+    output logic [`IPV4_WIDTH-1:0] arp_insert_ip,
+    output logic [`MAC_WIDTH-1:0] arp_insert_mac,
+    output logic [`PORT_WIDTH-1:0] arp_insert_port,
+    output logic arp_insert_valid,
+    input logic arp_insert_ready,
 
     // shared=1
     input gtx_clk90, // 125MHz, 90 deg shift
@@ -82,6 +92,7 @@ module port #(
     always @ (posedge tx_mac_aclk) begin
         if (!reset_n) begin
             counter <= 0;
+            arbiter_req <= 0;
         end else begin
             if (counter == 0) begin
                 counter <= 8'hff;
@@ -164,6 +175,7 @@ module port #(
         .wr_rst_busy(rx_len_busy)
     );
 
+    // store received ethernet frame into fifo, data first, then len
     always_ff @ (posedge rx_mac_aclk) begin
         if (reset) begin
             rx_data_wen <= 0;
@@ -197,6 +209,53 @@ module port #(
                 end
                 rx_len_wen <= 0;
                 rx_len_in <= 0;
+            end
+        end
+    end
+
+    logic rx_read;
+    logic [`LENGTH_WIDTH-1:0] rx_read_length;
+    logic [`BYTE_WIDTH-1:0] rx_read_data;
+    logic [`LENGTH_WIDTH-1:0] rx_read_counter;
+    logic [`MAC_WIDTH-1:0] rx_saved_src_mac_addr;
+    logic [`ETHERTYPE_WIDTH-1:0] rx_saved_ethertype;
+    logic [`IPV4_WIDTH-1:0] rx_saved_arp_src_ipv4_addr;
+
+    always_ff @ (posedge clk) begin
+        if (reset) begin
+            rx_len_ren <= 0;
+            rx_data_ren <= 0;
+            rx_read <= 0;
+            rx_saved_src_mac_addr <= 0;
+            rx_saved_ethertype <= 0;
+            rx_saved_arp_src_ipv4_addr <= 0;
+        end else begin
+            if (!rx_len_empty && !rx_read) begin 
+                rx_read <= 1;
+                rx_len_ren <= 1;
+                rx_data_ren <= 1;
+                rx_read_counter <= -2;
+                rx_saved_src_mac_addr <= 0;
+                rx_saved_ethertype <= 0;
+                rx_saved_arp_src_ipv4_addr <= 0;
+            end else begin
+                rx_len_ren <= 0;
+                if (rx_read) begin
+                    if (!rx_len_ren && rx_read) begin
+                        rx_read_length <= rx_len_out;
+                    end
+                    rx_read_counter <= rx_read_counter + 1;
+                    rx_read_data <= rx_data_out;
+                    if (rx_read_counter >= `SOURCE_MAC_BEGIN && rx_read_counter < `SOURCE_MAC_END) begin
+                        rx_saved_src_mac_addr <= {rx_saved_src_mac_addr[`MAC_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
+                    end
+                    if (rx_read_counter >= `ETHERTYPE_BEGIN && rx_read_counter < `ETHERTYPE_END) begin
+                        rx_saved_ethertype <= {rx_saved_ethertype[`ETHERTYPE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
+                    end
+                    if (rx_read_counter >= `ARP_SRC_IPV4_BEGIN && rx_read_counter < `ARP_SRC_IPV4_END) begin
+                        rx_saved_arp_src_ipv4_addr <= {rx_saved_arp_src_ipv4_addr[`IPV4_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
+                    end
+                end
             end
         end
     end
