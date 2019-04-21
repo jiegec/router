@@ -136,7 +136,7 @@ module testbench_arp_table(
         // lookup 10.0.0.2
         repeat (1) @ (posedge clk);
         insert_valid <= 0;
-        lookup_ip <= 32'h0a000002; // 10.0.0.1
+        lookup_ip <= 32'h0a000002; // 10.0.0.2
         lookup_ip_valid <= 1;
         repeat (10) @ (posedge clk);
         lookup_ip_valid <= 0;
@@ -179,6 +179,16 @@ module testbench_arp_table(
         repeat (10) @ (posedge clk);
         lookup_ip_valid <= 0;
         if (!lookup_mac_not_found) $finish;
+
+        // lookup 10.0.0.2, on the top
+        repeat (1) @ (posedge clk);
+        insert_valid <= 0;
+        lookup_ip <= 32'h0a000002; // 10.0.0.2
+        lookup_ip_valid <= 1;
+        repeat (10) @ (posedge clk);
+        lookup_ip_valid <= 0;
+        if (lookup_mac != `MAC_WIDTH'hcccccccccccc) $finish;
+        if (lookup_port != 2'b01) $finish;
     end
     
     always clk = #10 ~clk; // 50MHz
