@@ -61,3 +61,4 @@ set_property IOSTANDARD LVCMOS33 [get_ports {rgmii2_td[3]}]
 set_property IOSTANDARD LVCMOS33 [get_ports rgmii2_tx_ctl]
 set_property IOSTANDARD LVCMOS33 [get_ports rgmii2_txc]
 
+

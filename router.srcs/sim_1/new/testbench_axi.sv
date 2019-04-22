@@ -93,6 +93,10 @@ module testbench_axi(
         .reset_n_in(1'b1),
         .rgmii1_rd(rd),
         .rgmii1_rx_ctl(rx_ctl_oddr),
-        .rgmii1_rxc(rx_clk_90deg)
+        .rgmii1_rxc(rx_clk_90deg),
+
+        .rgmii2_rd(rd),
+        .rgmii2_rx_ctl(rx_ctl_oddr),
+        .rgmii2_rxc(rx_clk_90deg)
     );
 endmodule

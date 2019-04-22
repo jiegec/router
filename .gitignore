@@ -9,3 +9,4 @@ vivado*.log
 vivado_pid*.str
 .Xil
 hs_err_*.log
+vivado_pid*.zip

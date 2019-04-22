@@ -1,10 +1,10 @@
 // 7 preamble + 1 sfd + 12 mac + 2 ethertype + 1500 payload + 4 fcs
 `define MAX_ETHERNET_FRAME_BYTES 1526
 
-`define MAX_FIFO_SIZE 32768
+`define MAX_FIFO_SIZE 8192
 
 `define BYTE_WIDTH 8
-`define LENGTH_WIDTH 16
+`define LENGTH_WIDTH 14
 
 `define BUCKET_INDEX_WIDTH 6
 `define BUCKET_DEPTH_WIDTH 4

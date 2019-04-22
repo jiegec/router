@@ -68,11 +68,11 @@ module top_axi(
     logic arp_lookup_mac_valid;
     logic arp_lookup_mac_not_found;
 
-    logic [`IPV4_WIDTH-1:0] arp_insert_ip;
-    logic [`MAC_WIDTH-1:0] arp_insert_mac;
-    logic [`PORT_WIDTH-1:0] arp_insert_port;
-    logic arp_insert_valid;
-    logic arp_insert_ready;
+    (*mark_debug = "true"*) logic [`IPV4_WIDTH-1:0] arp_insert_ip;
+    (*mark_debug = "true"*) logic [`MAC_WIDTH-1:0] arp_insert_mac;
+    (*mark_debug = "true"*) logic [`PORT_WIDTH-1:0] arp_insert_port;
+    (*mark_debug = "true"*) logic arp_insert_valid;
+    (*mark_debug = "true"*) logic arp_insert_ready;
 
     logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_arp_insert_ip;
     logic [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_arp_insert_mac;

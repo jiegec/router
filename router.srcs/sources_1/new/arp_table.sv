@@ -46,13 +46,12 @@ module arp_table(
 
     // A hash table with BUCKET_INDEX_WIDTH buckets, each bucket can have at most BUCKET_DEPTH_WIDTH items
     // Each item consists of (IP, MAC, PORT) tuple.
-    logic [`BUCKET_INDEX_WIDTH-1:0][`BUCKET_DEPTH_WIDTH-1:0][`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] data;
+    logic [`BUCKET_INDEX_WIDTH-1:0][`BUCKET_DEPTH_WIDTH-1:0][`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] data = 0;
 
     logic searching = 0;
 
     always_ff @ (posedge clk) begin
         if (rst) begin
-            data <= 0;
             searching <= 0;
             lookup_mac_valid <= 0;
             lookup_mac <= 0;

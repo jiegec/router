@@ -87,15 +87,14 @@ module port #(
     logic [1:0] clock_speed;
     logic duplex_status;
 
-    logic [7:0] counter = 0;
+    logic [15:0] counter = 0;
 
     always @ (posedge tx_mac_aclk) begin
         if (!reset_n) begin
             counter <= 0;
-            arbiter_req <= 0;
         end else begin
             if (counter == 0) begin
-                counter <= 8'hff;
+                counter <= 16'hffffff;
                 tx_axis_mac_tdata <= 0;
                 tx_axis_mac_tvalid <= 0;
                 tx_axis_mac_tlast = 0;
@@ -114,7 +113,7 @@ module port #(
         end
     end
 
-    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_data_out;
+    logic [`BYTE_WIDTH-1:0] rx_data_out;
     (*mark_debug = "true"*) logic rx_data_ren = 0;
 
     (*mark_debug = "true"*) logic rx_data_full;
@@ -158,8 +157,6 @@ module port #(
         .READ_DATA_WIDTH(`LENGTH_WIDTH),
         .WRITE_DATA_WIDTH(`LENGTH_WIDTH),
         .FIFO_WRITE_DEPTH(`MAX_FIFO_SIZE),
-        .RD_DATA_COUNT_WIDTH(16),
-        .WR_DATA_COUNT_WIDTH(16),
         .PROG_FULL_THRESH(`MAX_FIFO_SIZE - 16)
     ) xpm_fifo_zsync_inst_rx_len (
         .dout(rx_len_out),
@@ -343,8 +340,8 @@ module port #(
                 .inband_clock_speed(clock_speed),
                 .inband_duplex_status(duplex_status),
 
-                // receive 1Gb/s | promiscuous | enable
-                .rx_configuration_vector(80'b10100000001010),
+                // receive 1Gb/s | promiscuous | flow control | fcs | enable
+                .rx_configuration_vector(80'b10100000101010),
                 // transmit 1Gb/s | enable
                 .tx_configuration_vector(80'b10000000000010)
             );
@@ -401,8 +398,8 @@ module port #(
                 .inband_clock_speed(clock_speed),
                 .inband_duplex_status(duplex_status),
 
-                // receive 1Gb/s | promiscuous | enable
-                .rx_configuration_vector(80'b10100000001010),
+                // receive 1Gb/s | promiscuous | flow control | fcs | enable
+                .rx_configuration_vector(80'b10100000101010),
                 // transmit 1Gb/s | enable
                 .tx_configuration_vector(80'b10000000000010)
             );
