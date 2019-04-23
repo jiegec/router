@@ -235,10 +235,10 @@ module top_axi(
         .fifo_matrix_tx_wready({fifo_matrix_wready[3][1], fifo_matrix_wready[2][1], fifo_matrix_wready[1][1], fifo_matrix_wready[0][1]}),
 
         // from current to X
-        .fifo_matrix_rx_wdata({fifo_matrix_wdata[1][3], fifo_matrix_wdata[1][2], fifo_matrix_wdata[1][1], fifo_matrix_wdata[1][1]}),
-        .fifo_matrix_rx_wlast({fifo_matrix_wlast[1][3], fifo_matrix_wlast[1][2], fifo_matrix_wlast[1][1], fifo_matrix_wlast[1][1]}),
-        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[1][3], fifo_matrix_wvalid[1][2], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[1][1]}),
-        .fifo_matrix_rx_wready({fifo_matrix_wready[1][3], fifo_matrix_wready[1][2], fifo_matrix_wready[1][1], fifo_matrix_wready[1][1]}),
+        .fifo_matrix_rx_wdata({fifo_matrix_wdata[1][3], fifo_matrix_wdata[1][2], fifo_matrix_wdata[1][1], fifo_matrix_wdata[1][0]}),
+        .fifo_matrix_rx_wlast({fifo_matrix_wlast[1][3], fifo_matrix_wlast[1][2], fifo_matrix_wlast[1][1], fifo_matrix_wlast[1][0]}),
+        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[1][3], fifo_matrix_wvalid[1][2], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[1][0]}),
+        .fifo_matrix_rx_wready({fifo_matrix_wready[1][3], fifo_matrix_wready[1][2], fifo_matrix_wready[1][1], fifo_matrix_wready[1][0]}),
 
         .gtx_clk(gtx_clk),
         .gtx_clk90(gtx_clk90),

@@ -92,7 +92,7 @@ module port #(
     logic tx_statistics_valid;
     logic tx_mac_aclk;
     logic tx_reset;
-    logic [7:0] tx_axis_mac_tdata = 0;
+    logic [7:0] tx_axis_mac_tdata;
     logic tx_axis_mac_tvalid = 0;
     logic tx_axis_mac_tlast = 0;
     logic tx_axis_mac_tuser = 0;
@@ -108,7 +108,7 @@ module port #(
     logic [15:0] counter = 0;
 
     logic [`BYTE_WIDTH-1:0] tx_data_out;
-    logic tx_data_ren = 0;
+    logic tx_data_ren;
 
     logic tx_data_full;
     logic [`BYTE_WIDTH-1:0] tx_data_in;
@@ -120,7 +120,8 @@ module port #(
         .READ_DATA_WIDTH(`BYTE_WIDTH),
         .WRITE_DATA_WIDTH(`BYTE_WIDTH),
         .FIFO_WRITE_DEPTH(`MAX_FIFO_SIZE),
-        .PROG_FULL_THRESH(`MAX_FIFO_SIZE - `MAX_ETHERNET_FRAME_BYTES)
+        .PROG_FULL_THRESH(`MAX_FIFO_SIZE - `MAX_ETHERNET_FRAME_BYTES),
+        .FIFO_READ_LATENCY(0) // special
     ) xpm_fifo_zsync_inst_tx_data (
         .dout(tx_data_out),
         .rd_en(tx_data_ren),
@@ -216,43 +217,51 @@ module port #(
     logic tx_send;
     logic [`LENGTH_WIDTH-1:0] tx_send_counter;
     logic [`LENGTH_WIDTH-1:0] tx_send_length;
+    logic tx_send_data_ren_mask;
+    logic tx_send_data_ren_set;
+
+    assign tx_axis_mac_tdata = tx_data_out;
+    //assign tx_data_ren = (tx_axis_mac_tready & tx_send_data_ren_mask) | tx_send_data_ren_set;
+    assign tx_data_ren = tx_axis_mac_tready;
 
     always @ (posedge tx_mac_aclk) begin
         if (reset) begin
             tx_len_ren <= 0;
-            tx_data_ren <= 0;
             tx_send <= 0;
             tx_send_counter <= 0;
             tx_send_length <= 0;
+            tx_send_data_ren_mask <= 0;
+            tx_send_data_ren_set <= 0;
         end else begin
             if (!tx_send && !tx_len_empty) begin
                 tx_send <= 1;
                 tx_len_ren <= 1;
-                tx_data_ren <= 1;
-                tx_send_counter <= 1;
+                tx_send_counter <= 0;
                 tx_send_length <= 0;
+                tx_send_data_ren_mask <= 0;
+                tx_send_data_ren_set <= 0;
             end else if (tx_send) begin
-                //if (tx_axis_mac_tready) begin
-                tx_send_counter <= tx_send_counter + 1;
-                //end
-                tx_len_ren <= 0;
+                if (tx_axis_mac_tready) begin
+                    tx_send_counter <= tx_send_counter + 1;
+                end
+                if (tx_send_counter == tx_send_length - 2) begin
+                    tx_axis_mac_tlast <= 1;
+                    tx_send_counter <= 0;
+                    tx_send_length <= 0;
+                end else if (!tx_axis_mac_tlast) begin
+                    tx_axis_mac_tlast <= 0;
+                    tx_axis_mac_tvalid <= 1;
+                end else begin
+                    tx_send <= 0;
+                    tx_axis_mac_tlast <= 0;
+                    tx_axis_mac_tvalid <= 0;
+                end
                 if (!tx_send_length && !tx_len_ren) begin
                     tx_send_length <= tx_len_out;
                 end
-                if (tx_send_counter == tx_send_length + 2 && tx_send_length != 0) begin
-                    tx_send <= 0;
-                    tx_axis_mac_tvalid <= 0;
-                    tx_axis_mac_tlast <= 0;
-                    tx_data_ren <= 0;
-                end else begin
-                    if (tx_send_counter == tx_send_length + 1 && tx_send_length != 0) begin
-                        tx_axis_mac_tlast <= 1;
-                    end
-                    tx_axis_mac_tdata <= tx_data_out;
-                    if (tx_send_counter >= 2) begin
-                        tx_axis_mac_tvalid <= 1;
-                    end
-                end
+                tx_send_data_ren_set <= tx_send_counter == 1;
+                tx_send_data_ren_mask <= tx_send_counter != 3;
+                tx_len_ren <= 0;
             end
         end
     end
@@ -452,7 +461,7 @@ module port #(
                         if (rx_saved_arp_opcode == `ARP_OPCODE_REQUEST && rx_saved_arp_dst_ipv4_addr == port_ip) begin
                             // send arp reply
                             rx_outbound <= 1;
-                            rx_outbound_arp_response <= {140'h0, rx_saved_src_mac_addr, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REPLY, port_mac, port_ip, rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr};
+                            rx_outbound_arp_response <= {rx_saved_src_mac_addr, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REPLY, port_mac, port_ip, rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr};
                             rx_outbound_length <= `ARP_RESPONSE_COUNT;
                             // send to same port
                             fifo_matrix_rx_wvalid[port_id] <= 1;
