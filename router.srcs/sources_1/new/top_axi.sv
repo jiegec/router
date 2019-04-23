@@ -186,15 +186,17 @@ module top_axi(
         .arp_insert_valid(port_arp_insert_valid[0]),
         .arp_insert_ready(port_arp_insert_ready[0]),
 
-        .fifo_matrix_tx_wdata({fifo_matrix_wdata[0][0], fifo_matrix_wdata[1][0], fifo_matrix_wdata[2][0], fifo_matrix_wdata[3][0]}),
-        .fifo_matrix_tx_wlast({fifo_matrix_wlast[0][0], fifo_matrix_wlast[1][0], fifo_matrix_wlast[2][0], fifo_matrix_wlast[3][0]}),
-        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[0][0], fifo_matrix_wvalid[1][0], fifo_matrix_wvalid[2][0], fifo_matrix_wvalid[3][0]}),
-        .fifo_matrix_tx_wready({fifo_matrix_wready[0][0], fifo_matrix_wready[1][0], fifo_matrix_wready[2][0], fifo_matrix_wready[3][0]}),
+        // from X to current
+        .fifo_matrix_tx_wdata({fifo_matrix_wdata[3][0], fifo_matrix_wdata[2][0], fifo_matrix_wdata[1][0], fifo_matrix_wdata[0][0]}),
+        .fifo_matrix_tx_wlast({fifo_matrix_wlast[3][0], fifo_matrix_wlast[2][0], fifo_matrix_wlast[1][0], fifo_matrix_wlast[0][0]}),
+        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[3][0], fifo_matrix_wvalid[2][0], fifo_matrix_wvalid[1][0], fifo_matrix_wvalid[0][0]}),
+        .fifo_matrix_tx_wready({fifo_matrix_wready[3][0], fifo_matrix_wready[2][0], fifo_matrix_wready[1][0], fifo_matrix_wready[0][0]}),
 
-        .fifo_matrix_rx_wdata({fifo_matrix_wdata[0][0], fifo_matrix_wdata[0][1], fifo_matrix_wdata[0][2], fifo_matrix_wdata[0][3]}),
-        .fifo_matrix_rx_wlast({fifo_matrix_wlast[0][0], fifo_matrix_wlast[0][1], fifo_matrix_wlast[0][2], fifo_matrix_wlast[0][3]}),
-        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[0][0], fifo_matrix_wvalid[0][1], fifo_matrix_wvalid[0][2], fifo_matrix_wvalid[0][3]}),
-        .fifo_matrix_rx_wready({fifo_matrix_wready[0][0], fifo_matrix_wready[0][1], fifo_matrix_wready[0][2], fifo_matrix_wready[0][3]}),
+        // from current to X
+        .fifo_matrix_rx_wdata({fifo_matrix_wdata[0][3], fifo_matrix_wdata[0][2], fifo_matrix_wdata[0][1], fifo_matrix_wdata[0][0]}),
+        .fifo_matrix_rx_wlast({fifo_matrix_wlast[0][3], fifo_matrix_wlast[0][2], fifo_matrix_wlast[0][1], fifo_matrix_wlast[0][0]}),
+        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[0][3], fifo_matrix_wvalid[0][2], fifo_matrix_wvalid[0][1], fifo_matrix_wvalid[0][0]}),
+        .fifo_matrix_rx_wready({fifo_matrix_wready[0][3], fifo_matrix_wready[0][2], fifo_matrix_wready[0][1], fifo_matrix_wready[0][0]}),
 
         .gtx_clk(gtx_clk_in),
         .gtx_clk_out(gtx_clk),
@@ -226,15 +228,17 @@ module top_axi(
         .arp_insert_valid(port_arp_insert_valid[1]),
         .arp_insert_ready(port_arp_insert_ready[1]),
 
-        .fifo_matrix_tx_wdata({fifo_matrix_wdata[0][1], fifo_matrix_wdata[1][1], fifo_matrix_wdata[2][1], fifo_matrix_wdata[3][1]}),
-        .fifo_matrix_tx_wlast({fifo_matrix_wlast[0][1], fifo_matrix_wlast[1][1], fifo_matrix_wlast[2][1], fifo_matrix_wlast[3][1]}),
-        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[0][1], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[2][1], fifo_matrix_wvalid[3][1]}),
-        .fifo_matrix_tx_wready({fifo_matrix_wready[0][1], fifo_matrix_wready[1][1], fifo_matrix_wready[2][1], fifo_matrix_wready[3][1]}),
+        // from X to current
+        .fifo_matrix_tx_wdata({fifo_matrix_wdata[3][1], fifo_matrix_wdata[2][1], fifo_matrix_wdata[1][1], fifo_matrix_wdata[0][1]}),
+        .fifo_matrix_tx_wlast({fifo_matrix_wlast[3][1], fifo_matrix_wlast[2][1], fifo_matrix_wlast[1][1], fifo_matrix_wlast[0][1]}),
+        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[3][1], fifo_matrix_wvalid[2][1], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[0][1]}),
+        .fifo_matrix_tx_wready({fifo_matrix_wready[3][1], fifo_matrix_wready[2][1], fifo_matrix_wready[1][1], fifo_matrix_wready[0][1]}),
 
-        .fifo_matrix_rx_wdata({fifo_matrix_wdata[1][0], fifo_matrix_wdata[1][1], fifo_matrix_wdata[1][2], fifo_matrix_wdata[1][3]}),
-        .fifo_matrix_rx_wlast({fifo_matrix_wlast[1][0], fifo_matrix_wlast[1][1], fifo_matrix_wlast[1][2], fifo_matrix_wlast[1][3]}),
-        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[1][0], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[1][2], fifo_matrix_wvalid[1][3]}),
-        .fifo_matrix_rx_wready({fifo_matrix_wready[1][0], fifo_matrix_wready[1][1], fifo_matrix_wready[1][2], fifo_matrix_wready[1][3]}),
+        // from current to X
+        .fifo_matrix_rx_wdata({fifo_matrix_wdata[1][3], fifo_matrix_wdata[1][2], fifo_matrix_wdata[1][1], fifo_matrix_wdata[1][1]}),
+        .fifo_matrix_rx_wlast({fifo_matrix_wlast[1][3], fifo_matrix_wlast[1][2], fifo_matrix_wlast[1][1], fifo_matrix_wlast[1][1]}),
+        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[1][3], fifo_matrix_wvalid[1][2], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[1][1]}),
+        .fifo_matrix_rx_wready({fifo_matrix_wready[1][3], fifo_matrix_wready[1][2], fifo_matrix_wready[1][1], fifo_matrix_wready[1][1]}),
 
         .gtx_clk(gtx_clk),
         .gtx_clk90(gtx_clk90),

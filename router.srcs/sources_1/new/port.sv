@@ -114,7 +114,6 @@ module port #(
     logic [`BYTE_WIDTH-1:0] tx_data_in;
     logic tx_data_busy;
     logic tx_data_wen;
-    logic tx_axis_mac_tvalid_last;
  
     // stores ethernet frame data
     xpm_fifo_async #(
@@ -166,46 +165,92 @@ module port #(
         .wr_rst_busy(tx_len_busy)
     );
 
+    // from fifo matrix to tx fifo
     // Round robin
     logic [`PORT_WIDTH-1:0] fifo_matrix_tx_index;
     logic fifo_matrix_tx_progress;
+    logic fifo_matrix_tx_last_wlast;
+    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
 
     always_ff @ (posedge clk) begin
         if (reset) begin
             fifo_matrix_tx_index <= 0;
             fifo_matrix_tx_wready <= 0;
             fifo_matrix_tx_progress <= 0;
+            fifo_matrix_tx_length <= 0;
+            tx_data_in <= 0;
+            tx_data_wen <= 0;
+            tx_len_in <= 0;
+            tx_len_wen <= 0;
         end else begin
+            fifo_matrix_tx_last_wlast <= fifo_matrix_tx_wlast[fifo_matrix_tx_index];
             if (!fifo_matrix_tx_progress) begin
                 if (fifo_matrix_tx_wvalid[fifo_matrix_tx_index] && !tx_len_busy && !tx_data_busy) begin
                     fifo_matrix_tx_progress <= 1;
                     fifo_matrix_tx_wready[fifo_matrix_tx_index] <= 1;
+                    fifo_matrix_tx_length <= 0;
                 end else begin
                     fifo_matrix_tx_index <= fifo_matrix_tx_index + 1;
                 end
+            end else if (!fifo_matrix_tx_wlast[fifo_matrix_tx_index] && !fifo_matrix_tx_last_wlast)  begin
+                tx_data_wen <= fifo_matrix_tx_length >= 1;
+                fifo_matrix_tx_length <= fifo_matrix_tx_length + 1;
+                tx_data_in <= fifo_matrix_tx_wdata[fifo_matrix_tx_index];
+            end else if (fifo_matrix_tx_last_wlast && !fifo_matrix_tx_wlast[fifo_matrix_tx_index]) begin
+                tx_data_in <= 0;
+                tx_data_wen <= 0;
+                tx_len_in <= 0;
+                tx_len_wen <= 0;
+                fifo_matrix_tx_progress <= 0;
+                fifo_matrix_tx_wready[fifo_matrix_tx_index] <= 0;
+            end else begin
+                tx_data_in <= fifo_matrix_tx_wdata[fifo_matrix_tx_index];
+                tx_data_wen <= 1;
+                tx_len_in <= fifo_matrix_tx_length;
+                tx_len_wen <= 1;
             end
         end
     end
 
+    // from tx fifo to MAC
+    logic tx_send;
+    logic [`LENGTH_WIDTH-1:0] tx_send_counter;
+    logic [`LENGTH_WIDTH-1:0] tx_send_length;
+
     always @ (posedge tx_mac_aclk) begin
         if (reset) begin
-            counter <= 0;
+            tx_len_ren <= 0;
+            tx_data_ren <= 0;
+            tx_send <= 0;
+            tx_send_counter <= 0;
+            tx_send_length <= 0;
         end else begin
-            if (counter == 0) begin
-                counter <= 16'hffffff;
-                tx_axis_mac_tdata <= 0;
-                tx_axis_mac_tvalid <= 0;
-                tx_axis_mac_tlast = 0;
-            end else begin
-                counter <= counter - 1;
-                if (counter < 16) begin
-                    tx_axis_mac_tdata <= 8'hff;
-                    tx_axis_mac_tvalid <= 1;
-                    tx_axis_mac_tlast = counter == 1;
-                end else begin
-                    tx_axis_mac_tdata <= 0;
+            if (!tx_send && !tx_len_empty) begin
+                tx_send <= 1;
+                tx_len_ren <= 1;
+                tx_data_ren <= 1;
+                tx_send_counter <= 1;
+                tx_send_length <= 0;
+            end else if (tx_send) begin
+                if (tx_axis_mac_tready) begin
+                    tx_send_counter <= tx_send_counter + 1;
+                end
+                tx_len_ren <= 0;
+                if (!tx_send_length && !tx_len_ren) begin
+                    tx_send_length <= tx_len_out;
+                end
+                if (tx_send_counter == tx_send_length + 2 && tx_send_length != 0) begin
+                    tx_send <= 0;
                     tx_axis_mac_tvalid <= 0;
-                    tx_axis_mac_tlast = 0;
+                    tx_axis_mac_tlast <= 0;
+                    tx_axis_mac_tdata <= 0;
+                    tx_data_ren <= 0;
+                end else begin
+                    if (tx_send_counter == tx_send_length + 1 && tx_send_length != 0) begin
+                        tx_axis_mac_tlast <= 1;
+                    end
+                    tx_axis_mac_tdata <= tx_data_out;
+                    tx_axis_mac_tvalid <= 1;
                 end
             end
         end
@@ -318,6 +363,7 @@ module port #(
     logic [`IPV4_WIDTH-1:0] rx_saved_arp_dst_ipv4_addr;
     logic [`ARP_OPCODE_COUNT*`BYTE_WIDTH-1:0] rx_saved_arp_opcode;
     logic [`ARP_RESPONSE_COUNT*`BYTE_WIDTH-1:0] rx_outbound_arp_response;
+    logic [`LENGTH_WIDTH-1:0] rx_outbound_length;
 
     // arp insertion is working
     logic arp_write;
@@ -340,6 +386,7 @@ module port #(
             arp_written <= 0;
             rx_outbound <= 0;
             rx_outbound_arp_response <= 0;
+            rx_outbound_length <= 0;
         end else begin
             if (!rx_len_empty && !rx_read && !arp_write && !rx_outbound) begin 
                 rx_read <= 1;
@@ -354,6 +401,10 @@ module port #(
                 arp_written <= 0;
                 rx_outbound <= 0;
                 rx_outbound_arp_response <= 0;
+                fifo_matrix_rx_wdata <= 0;
+                fifo_matrix_rx_wlast <= 0;
+                fifo_matrix_rx_wvalid <= 0;
+                rx_outbound_length <= 0;
             end else begin
                 // read len first, then data
                 rx_len_ren <= 0;
@@ -379,9 +430,11 @@ module port #(
                         rx_saved_arp_opcode <= {rx_saved_arp_opcode[`ARP_OPCODE_COUNT*`BYTE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
 
+                    if (rx_read_counter == rx_read_length - 3) begin
+                        rx_data_ren <= 0;
+                    end
                     if (rx_read_counter == rx_read_length - 2) begin
                         rx_read <= 0;
-                        rx_data_ren <= 0;
                     end
 
                     if (rx_saved_ethertype == `ARP_ETHERTYPE && rx_read_counter >= `ARP_DST_IPV4_END && !arp_write && !arp_written) begin
@@ -396,6 +449,9 @@ module port #(
                             // send arp reply
                             rx_outbound <= 1;
                             rx_outbound_arp_response <= {rx_saved_src_mac_addr, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REPLY, port_mac, port_ip, rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr};
+                            rx_outbound_length <= `ARP_RESPONSE_COUNT;
+                            // send to same port
+                            fifo_matrix_rx_wvalid[port_id] <= 1;
                         end
                     end
                 end
@@ -404,6 +460,22 @@ module port #(
                         arp_insert_valid <= 1;
                         arp_write <= 0;
                         arp_arbiter_req <= 0;
+                    end
+                end
+                if (rx_outbound && fifo_matrix_rx_wready[port_id]) begin
+                    if (rx_outbound_length > 0) begin
+                        rx_outbound_length <= rx_outbound_length - 1;
+                        rx_outbound_arp_response <= rx_outbound_arp_response << 8;
+                        fifo_matrix_rx_wdata[port_id] <= rx_outbound_arp_response[`ARP_RESPONSE_COUNT * `BYTE_WIDTH - 1:`ARP_RESPONSE_COUNT * `BYTE_WIDTH - `BYTE_WIDTH];
+                    end
+                    if (rx_outbound_length == 1) begin
+                        fifo_matrix_rx_wlast <= 1;
+                    end
+                    if (fifo_matrix_rx_wlast) begin
+                        fifo_matrix_rx_wlast <= 0;
+                        fifo_matrix_rx_wvalid <= 0;
+                        fifo_matrix_rx_wdata[port_id] <= 0;
+                        rx_outbound <= 0;
                     end
                 end
             end
