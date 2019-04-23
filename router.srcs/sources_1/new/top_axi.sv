@@ -176,7 +176,7 @@ module top_axi(
         .reset_n(reset_n),
         .port_id(2'b00),
         .port_ip(32'h0a000001), // 10.0.0.1
-        .port_mac(48'h020000000000), // 02:00:00:00:00:00
+        .port_mac(48'h020203030000), // 02:02:03:03:00:00
 
         .arp_arbiter_req(arp_arbiter_req[0]),
         .arp_arbiter_granted(arp_arbiter_grant[0]),
@@ -216,7 +216,7 @@ module top_axi(
         .reset_n(reset_n),
         .port_id(2'b01),
         .port_ip(32'h0a000201), // 10.0.1.1
-        .port_mac(48'h020000000001), // 02:00:00:00:00:01
+        .port_mac(48'h020203030001), // 02:02:03:03:00:01
 
         .arp_arbiter_req(arp_arbiter_req[1]),
         .arp_arbiter_granted(arp_arbiter_grant[1]),

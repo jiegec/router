@@ -74,6 +74,7 @@ module arbiter(
                 4'b??1? : rotate = 2'b10;
                 4'b?1?? : rotate = 2'b11;
                 4'b1??? : rotate = 2'b00;
+                4'b0000 : ;
             endcase
         end
     end
