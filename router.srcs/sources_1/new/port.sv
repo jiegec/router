@@ -232,9 +232,9 @@ module port #(
                 tx_send_counter <= 1;
                 tx_send_length <= 0;
             end else if (tx_send) begin
-                if (tx_axis_mac_tready) begin
-                    tx_send_counter <= tx_send_counter + 1;
-                end
+                //if (tx_axis_mac_tready) begin
+                tx_send_counter <= tx_send_counter + 1;
+                //end
                 tx_len_ren <= 0;
                 if (!tx_send_length && !tx_len_ren) begin
                     tx_send_length <= tx_len_out;
@@ -243,14 +243,15 @@ module port #(
                     tx_send <= 0;
                     tx_axis_mac_tvalid <= 0;
                     tx_axis_mac_tlast <= 0;
-                    tx_axis_mac_tdata <= 0;
                     tx_data_ren <= 0;
                 end else begin
                     if (tx_send_counter == tx_send_length + 1 && tx_send_length != 0) begin
                         tx_axis_mac_tlast <= 1;
                     end
                     tx_axis_mac_tdata <= tx_data_out;
-                    tx_axis_mac_tvalid <= 1;
+                    if (tx_send_counter >= 2) begin
+                        tx_axis_mac_tvalid <= 1;
+                    end
                 end
             end
         end
@@ -387,6 +388,9 @@ module port #(
             rx_outbound <= 0;
             rx_outbound_arp_response <= 0;
             rx_outbound_length <= 0;
+            fifo_matrix_rx_wdata <= 0;
+            fifo_matrix_rx_wlast <= 0;
+            fifo_matrix_rx_wvalid <= 0;
         end else begin
             if (!rx_len_empty && !rx_read && !arp_write && !rx_outbound) begin 
                 rx_read <= 1;
@@ -448,7 +452,7 @@ module port #(
                         if (rx_saved_arp_opcode == `ARP_OPCODE_REQUEST && rx_saved_arp_dst_ipv4_addr == port_ip) begin
                             // send arp reply
                             rx_outbound <= 1;
-                            rx_outbound_arp_response <= {rx_saved_src_mac_addr, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REPLY, port_mac, port_ip, rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr};
+                            rx_outbound_arp_response <= {140'h0, rx_saved_src_mac_addr, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REPLY, port_mac, port_ip, rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr};
                             rx_outbound_length <= `ARP_RESPONSE_COUNT;
                             // send to same port
                             fifo_matrix_rx_wvalid[port_id] <= 1;
@@ -467,11 +471,10 @@ module port #(
                         rx_outbound_length <= rx_outbound_length - 1;
                         rx_outbound_arp_response <= rx_outbound_arp_response << 8;
                         fifo_matrix_rx_wdata[port_id] <= rx_outbound_arp_response[`ARP_RESPONSE_COUNT * `BYTE_WIDTH - 1:`ARP_RESPONSE_COUNT * `BYTE_WIDTH - `BYTE_WIDTH];
-                    end
-                    if (rx_outbound_length == 1) begin
-                        fifo_matrix_rx_wlast <= 1;
-                    end
-                    if (fifo_matrix_rx_wlast) begin
+                        if (rx_outbound_length == 1) begin
+                            fifo_matrix_rx_wlast <= 1;
+                            end
+                    end else if (fifo_matrix_rx_wlast) begin
                         fifo_matrix_rx_wlast <= 0;
                         fifo_matrix_rx_wvalid <= 0;
                         fifo_matrix_rx_wdata[port_id] <= 0;
