@@ -121,6 +121,7 @@ module port #(
         .WRITE_DATA_WIDTH(`BYTE_WIDTH),
         .FIFO_WRITE_DEPTH(`MAX_FIFO_SIZE),
         .PROG_FULL_THRESH(`MAX_FIFO_SIZE - `MAX_ETHERNET_FRAME_BYTES),
+        .READ_MODE("fwft"), // special
         .FIFO_READ_LATENCY(0) // special
     ) xpm_fifo_zsync_inst_tx_data (
         .dout(tx_data_out),
