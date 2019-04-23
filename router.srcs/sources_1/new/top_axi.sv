@@ -81,7 +81,7 @@ module top_axi(
     logic [`PORT_COUNT-1:0] port_arp_insert_ready;
 
     arp_table arp_table_inst(
-        .clk(clk),
+        .clk(internal_clk),
         .rst(reset),
 
         .lookup_ip(arp_lookup_ip),
@@ -157,7 +157,7 @@ module top_axi(
     end
 
     arbiter arbiter_inst(
-        .clk(clk),
+        .clk(internal_clk),
         .rst(rst),
 
         .req(arbiter_req),
@@ -167,7 +167,7 @@ module top_axi(
     port #(
         .shared(0)
     ) port_inst_0 (
-        .clk(clk),
+        .clk(internal_clk),
         .reset_n(reset_n),
         .port_id(2'b00),
 
@@ -195,7 +195,7 @@ module top_axi(
     port #(
         .shared(1)
     ) port_inst_1 (
-        .clk(clk),
+        .clk(internal_clk),
         .reset_n(reset_n),
         .port_id(2'b01),
 

@@ -36,4 +36,14 @@ module routing_table(
     // Each item consists of (DST_IP,PREFIX_LEN,VIA_IP) tuple.
     // Represents DST_IP/PREFIX_LEN via VIA_IP
     logic data [`IPV4_WIDTH+`PREFIX_WIDTH+`IPV4_WIDTH-1:0][`BUCKET_INDEX_WIDTH-1:0];
+
+    initial begin
+        // 10.0.0.0/24 via 10.0.0.1
+        data[0] = `IPV4_WIDTH+`PREFIX_WIDTH+`IPV4_WIDTH'h0a000000180a000001;
+        // 10.0.1.0/24 via 10.0.1.1
+        data[1] = `IPV4_WIDTH+`PREFIX_WIDTH+`IPV4_WIDTH'h0a000000180a000001;
+    end
+
+    always_ff @ (posedge clk) begin
+    end
 endmodule
