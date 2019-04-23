@@ -40,10 +40,10 @@ module routing_table(
     logic [`BUCKET_INDEX_COUNT-1:0][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:0] data = 0;
 
     initial begin
-        // 10.0.0.0/24 via 10.0.0.1
-        data[0] = 96'h0a000000ffffff000a000001;
-        // 10.0.1.0/24 via 10.0.1.1
-        data[1] = 96'h0a000100ffffff000a000001;
+        // 10.0.0.0/24 via 10.0.0.2
+        data[0] = 96'h0a000000ffffff000a000002;
+        // 10.0.1.0/24 via 10.0.1.2
+        data[1] = 96'h0a000100ffffff000a000002;
     end
 
     logic [`BUCKET_INDEX_WIDTH-1:0] lookup_index;

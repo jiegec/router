@@ -27,7 +27,10 @@ module port #(
     input clk,
     input gtx_clk, // 125MHz
     input reset_n,
+
     input [`PORT_WIDTH-1:0] port_id,
+    input [`IPV4_WIDTH-1:0] port_ip,
+    input [`MAC_WIDTH-1:0] port_mac,
 
     // ARP table
     output logic arbiter_req,

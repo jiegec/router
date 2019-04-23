@@ -170,6 +170,8 @@ module top_axi(
         .clk(internal_clk),
         .reset_n(reset_n),
         .port_id(2'b00),
+        .port_ip(32'h0a000001), // 10.0.0.1
+        .port_mac(48'h020000000000), // 02:00:00:00:00:00
 
         .arbiter_req(arbiter_req[0]),
         .arbiter_granted(arbiter_grant[0]),
@@ -198,6 +200,8 @@ module top_axi(
         .clk(internal_clk),
         .reset_n(reset_n),
         .port_id(2'b01),
+        .port_ip(32'h0a000201), // 10.0.1.1
+        .port_mac(48'h020000000001), // 02:00:00:00:00:01
 
         .arbiter_req(arbiter_req[1]),
         .arbiter_granted(arbiter_grant[1]),
