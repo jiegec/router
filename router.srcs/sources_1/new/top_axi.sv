@@ -98,11 +98,11 @@ module top_axi(
         .insert_ready(arp_insert_ready)
     );
 
-    logic [`PORT_COUNT-1:0] arbiter_req;
-    logic [`PORT_COUNT-1:0] arbiter_grant;
+    logic [`PORT_COUNT-1:0] arp_arbiter_req;
+    logic [`PORT_COUNT-1:0] arp_arbiter_grant;
 
     always_comb begin
-        unique casez (arbiter_grant)
+        unique casez (arp_arbiter_grant)
             4'b???1: begin
                 port_arp_insert_ready[0] = arp_insert_ready;
                 port_arp_insert_ready[1] = 0;
@@ -156,13 +156,18 @@ module top_axi(
         endcase
     end
 
-    arbiter arbiter_inst(
+    arbiter arbiter_inst_arp(
         .clk(internal_clk),
-        .rst(rst),
+        .rst(reset),
 
-        .req(arbiter_req),
-        .grant(arbiter_grant)
+        .req(arp_arbiter_req),
+        .grant(arp_arbiter_grant)
     );
+
+    logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0][`BYTE_WIDTH-1:0] fifo_matrix_wdata;
+    logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0] fifo_matrix_wlast;
+    logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0] fifo_matrix_wvalid;
+    logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0] fifo_matrix_wready;
 
     port #(
         .shared(0)
@@ -173,13 +178,23 @@ module top_axi(
         .port_ip(32'h0a000001), // 10.0.0.1
         .port_mac(48'h020000000000), // 02:00:00:00:00:00
 
-        .arbiter_req(arbiter_req[0]),
-        .arbiter_granted(arbiter_grant[0]),
+        .arp_arbiter_req(arp_arbiter_req[0]),
+        .arp_arbiter_granted(arp_arbiter_grant[0]),
         .arp_insert_ip(port_arp_insert_ip[0]),
         .arp_insert_mac(port_arp_insert_mac[0]),
         .arp_insert_port(port_arp_insert_port[0]),
         .arp_insert_valid(port_arp_insert_valid[0]),
         .arp_insert_ready(port_arp_insert_ready[0]),
+
+        .fifo_matrix_tx_wdata({fifo_matrix_wdata[0][0], fifo_matrix_wdata[1][0], fifo_matrix_wdata[2][0], fifo_matrix_wdata[3][0]}),
+        .fifo_matrix_tx_wlast({fifo_matrix_wlast[0][0], fifo_matrix_wlast[1][0], fifo_matrix_wlast[2][0], fifo_matrix_wlast[3][0]}),
+        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[0][0], fifo_matrix_wvalid[1][0], fifo_matrix_wvalid[2][0], fifo_matrix_wvalid[3][0]}),
+        .fifo_matrix_tx_wready({fifo_matrix_wready[0][0], fifo_matrix_wready[1][0], fifo_matrix_wready[2][0], fifo_matrix_wready[3][0]}),
+
+        .fifo_matrix_rx_wdata({fifo_matrix_wdata[0][0], fifo_matrix_wdata[0][1], fifo_matrix_wdata[0][2], fifo_matrix_wdata[0][3]}),
+        .fifo_matrix_rx_wlast({fifo_matrix_wlast[0][0], fifo_matrix_wlast[0][1], fifo_matrix_wlast[0][2], fifo_matrix_wlast[0][3]}),
+        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[0][0], fifo_matrix_wvalid[0][1], fifo_matrix_wvalid[0][2], fifo_matrix_wvalid[0][3]}),
+        .fifo_matrix_rx_wready({fifo_matrix_wready[0][0], fifo_matrix_wready[0][1], fifo_matrix_wready[0][2], fifo_matrix_wready[0][3]}),
 
         .gtx_clk(gtx_clk_in),
         .gtx_clk_out(gtx_clk),
@@ -203,13 +218,23 @@ module top_axi(
         .port_ip(32'h0a000201), // 10.0.1.1
         .port_mac(48'h020000000001), // 02:00:00:00:00:01
 
-        .arbiter_req(arbiter_req[1]),
-        .arbiter_granted(arbiter_grant[1]),
+        .arp_arbiter_req(arp_arbiter_req[1]),
+        .arp_arbiter_granted(arp_arbiter_grant[1]),
         .arp_insert_ip(port_arp_insert_ip[1]),
         .arp_insert_mac(port_arp_insert_mac[1]),
         .arp_insert_port(port_arp_insert_port[1]),
         .arp_insert_valid(port_arp_insert_valid[1]),
         .arp_insert_ready(port_arp_insert_ready[1]),
+
+        .fifo_matrix_tx_wdata({fifo_matrix_wdata[0][1], fifo_matrix_wdata[1][1], fifo_matrix_wdata[2][1], fifo_matrix_wdata[3][1]}),
+        .fifo_matrix_tx_wlast({fifo_matrix_wlast[0][1], fifo_matrix_wlast[1][1], fifo_matrix_wlast[2][1], fifo_matrix_wlast[3][1]}),
+        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[0][1], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[2][1], fifo_matrix_wvalid[3][1]}),
+        .fifo_matrix_tx_wready({fifo_matrix_wready[0][1], fifo_matrix_wready[1][1], fifo_matrix_wready[2][1], fifo_matrix_wready[3][1]}),
+
+        .fifo_matrix_rx_wdata({fifo_matrix_wdata[1][0], fifo_matrix_wdata[1][1], fifo_matrix_wdata[1][2], fifo_matrix_wdata[1][3]}),
+        .fifo_matrix_rx_wlast({fifo_matrix_wlast[1][0], fifo_matrix_wlast[1][1], fifo_matrix_wlast[1][2], fifo_matrix_wlast[1][3]}),
+        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[1][0], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[1][2], fifo_matrix_wvalid[1][3]}),
+        .fifo_matrix_rx_wready({fifo_matrix_wready[1][0], fifo_matrix_wready[1][1], fifo_matrix_wready[1][2], fifo_matrix_wready[1][3]}),
 
         .gtx_clk(gtx_clk),
         .gtx_clk90(gtx_clk90),

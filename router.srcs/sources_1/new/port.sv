@@ -33,13 +33,25 @@ module port #(
     input [`MAC_WIDTH-1:0] port_mac,
 
     // ARP table
-    output logic arbiter_req,
-    input arbiter_granted,
+    output logic arp_arbiter_req,
+    input arp_arbiter_granted,
     output logic [`IPV4_WIDTH-1:0] arp_insert_ip,
     output logic [`MAC_WIDTH-1:0] arp_insert_mac,
     output logic [`PORT_WIDTH-1:0] arp_insert_port,
     output logic arp_insert_valid,
     input logic arp_insert_ready,
+
+    // fifo matrix
+    // tx
+    input  [`PORT_COUNT-1:0][`BYTE_WIDTH-1:0] fifo_matrix_tx_wdata,
+    input [`PORT_COUNT-1:0]fifo_matrix_tx_wlast ,
+    input [`PORT_COUNT-1:0]fifo_matrix_tx_wvalid,
+    output [`PORT_COUNT-1:0]fifo_matrix_tx_wready,
+    // rx
+    output [`PORT_COUNT-1:0][`BYTE_WIDTH-1:0] fifo_matrix_rx_wdata,
+    output [`PORT_COUNT-1:0]fifo_matrix_rx_wlast,
+    output [`PORT_COUNT-1:0]fifo_matrix_rx_wvalid,
+    input [`PORT_COUNT-1:0]fifo_matrix_rx_wready,
 
     // shared=1
     input gtx_clk90, // 125MHz, 90 deg shift
@@ -271,7 +283,7 @@ module port #(
                     if (rx_saved_ethertype == `ARP_ETHERTYPE && rx_read_counter > `ARP_SRC_IPV4_END && !arp_write && !arp_written) begin
                         arp_written <= 1;
                         arp_write <= 1;
-                        arbiter_req <= 1;
+                        arp_arbiter_req <= 1;
                         arp_insert_valid <= 0;
                         arp_insert_ip <= rx_saved_arp_src_ipv4_addr;
                         arp_insert_mac <= rx_saved_src_mac_addr;
@@ -279,10 +291,10 @@ module port #(
                     end
                 end
                 if (arp_write) begin
-                    if (arbiter_granted && arp_insert_ready) begin
+                    if (arp_arbiter_granted && arp_insert_ready) begin
                         arp_insert_valid <= 1;
                         arp_write <= 0;
-                        arbiter_req <= 0;
+                        arp_arbiter_req <= 0;
                     end
                 end
             end

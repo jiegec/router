@@ -14,8 +14,8 @@
 `define IPV4_WIDTH 32
 `define MAC_WIDTH 48
 `define ETHERTYPE_WIDTH 16
-`define PORT_WIDTH 2
 `define PORT_COUNT 4
+`define PORT_WIDTH 2
 
 `define SOURCE_MAC_BEGIN 6
 `define SOURCE_MAC_END 12
