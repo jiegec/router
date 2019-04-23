@@ -189,6 +189,15 @@ module testbench_arp_table(
         lookup_ip_valid <= 0;
         if (lookup_mac != `MAC_WIDTH'hcccccccccccc) $finish;
         if (lookup_port != 2'b01) $finish;
+
+        // insert 255.0.0.1
+        repeat (10) @ (posedge clk);
+        insert_ip <= 32'hff000001; // 255.0.0.1
+        insert_mac <= 48'h00000000;
+        insert_port <= 2'b10;
+        insert_valid <= 1;
+        repeat (1) @ (posedge clk);
+        insert_valid <= 0;
     end
     
     always clk = #10 ~clk; // 50MHz

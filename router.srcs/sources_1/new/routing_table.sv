@@ -23,27 +23,63 @@
 
 module routing_table(
     input clk,
-    input reset,
+    input rst,
 
     input [`IPV4_WIDTH-1:0] lookup_dest_ip,
-    output [`IPV4_WIDTH-1:0] lookup_via_ip,
+    output logic [`IPV4_WIDTH-1:0] lookup_via_ip,
     input lookup_valid,
-    output lookup_ready
+    output logic lookup_ready,
+    output logic lookup_output_valid,
+    output logic lookup_not_found
 
     );
 
     // A array table with BUCKET_INDEX_WIDTH buckets
-    // Each item consists of (DST_IP,PREFIX_LEN,VIA_IP) tuple.
+    // Each item consists of (DST_IP,PREFIX_MASK,VIA_IP) tuple.
     // Represents DST_IP/PREFIX_LEN via VIA_IP
-    logic data [`IPV4_WIDTH+`PREFIX_WIDTH+`IPV4_WIDTH-1:0][`BUCKET_INDEX_WIDTH-1:0];
+    logic [`BUCKET_INDEX_COUNT-1:0][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:0] data = 0;
 
     initial begin
         // 10.0.0.0/24 via 10.0.0.1
-        data[0] = `IPV4_WIDTH+`PREFIX_WIDTH+`IPV4_WIDTH'h0a000000180a000001;
+        data[0] = 96'h0a000000ffffff000a000001;
         // 10.0.1.0/24 via 10.0.1.1
-        data[1] = `IPV4_WIDTH+`PREFIX_WIDTH+`IPV4_WIDTH'h0a000000180a000001;
+        data[1] = 96'h0a000100ffffff000a000001;
     end
 
+    logic [`BUCKET_INDEX_WIDTH-1:0] lookup_index;
+    logic [`IPV4_WIDTH-1:0] saved_dest_ip;
+
     always_ff @ (posedge clk) begin
+        if (rst) begin
+            lookup_via_ip <= 0;
+            lookup_ready <= 1;
+            lookup_output_valid <= 0;
+            lookup_not_found <= 0;
+            lookup_index <= 0;
+            saved_dest_ip <= 0;
+        end else begin
+            if (lookup_ready) begin
+                if (lookup_valid) begin
+                    lookup_ready <= 0;
+                    saved_dest_ip <= lookup_dest_ip;
+                end
+                lookup_index <= 0;
+                lookup_via_ip <= 0;
+                lookup_not_found <= 0;
+                lookup_output_valid <= 0;
+            end else if (!lookup_ready) begin
+                if (data[lookup_index] == 0) begin
+                    lookup_ready <= 1;
+                    lookup_not_found <= 1;
+                end else if (data[lookup_index][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:`IPV4_WIDTH+`IPV4_WIDTH] == (saved_dest_ip & data[lookup_index][`IPV4_WIDTH+`IPV4_WIDTH-1:`IPV4_WIDTH])) begin
+                    lookup_ready <= 1;
+                    lookup_output_valid <= 1;
+                    lookup_not_found <= 0;
+                    lookup_via_ip <= data[lookup_index][`IPV4_WIDTH-1:0];
+                end else begin
+                    lookup_index <= lookup_index + 1;
+                end
+            end
+        end
     end
 endmodule

@@ -40,13 +40,13 @@ module arp_table(
     );
 
     logic [`BUCKET_INDEX_WIDTH-1:0] lookup_bucket_index;
-    assign lookup_bucket_index = {lookup_ip[31], lookup_ip[30], lookup_ip[29], lookup_ip[28]};
+    assign lookup_bucket_index = {lookup_ip[31], lookup_ip[30], lookup_ip[29]};
 
     logic [`BUCKET_DEPTH_WIDTH-1:0] lookup_current_bucket_depth;
 
     // A hash table with BUCKET_INDEX_WIDTH buckets, each bucket can have at most BUCKET_DEPTH_WIDTH items
     // Each item consists of (IP, MAC, PORT) tuple.
-    logic [`BUCKET_INDEX_WIDTH-1:0][`BUCKET_DEPTH_WIDTH-1:0][`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] data = 0;
+    logic [`BUCKET_INDEX_COUNT-1:0][`BUCKET_DEPTH_COUNT-1:0][`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] data = 0;
 
     logic searching = 0;
 
@@ -74,7 +74,7 @@ module arp_table(
                     lookup_mac_valid <= 1;
                     lookup_mac <= data[lookup_bucket_index][lookup_current_bucket_depth][`MAC_WIDTH+`PORT_WIDTH-1:`PORT_WIDTH];
                     lookup_port <= data[lookup_bucket_index][lookup_current_bucket_depth][`PORT_WIDTH-1:0];
-                end else if (lookup_current_bucket_depth < `MAX_BUCKET_DEPTH) begin
+                end else if (lookup_current_bucket_depth < `BUCKET_DEPTH_COUNT - 1) begin
                     lookup_current_bucket_depth <= lookup_current_bucket_depth + 1;
                 end else begin
                     lookup_mac_not_found <= 1;
@@ -120,7 +120,7 @@ module arp_table(
                     second_pass <= 0;
                     data[insert_bucket_index][insert_current_bucket_depth] = {saved_insert_ip, saved_insert_mac, saved_insert_port};
                     insert_ready <= 1;
-                end else if (insert_current_bucket_depth < `MAX_BUCKET_DEPTH) begin
+                end else if (insert_current_bucket_depth < `BUCKET_DEPTH_COUNT - 1) begin
                     insert_current_bucket_depth <= insert_current_bucket_depth + 1;
                 end else begin
                     first_pass <= 0;
@@ -129,7 +129,7 @@ module arp_table(
                     temp_data <= {saved_insert_ip, saved_insert_mac, saved_insert_port};
                 end
             end else if (second_pass) begin
-                if (insert_current_bucket_depth < `MAX_BUCKET_DEPTH) begin
+                if (insert_current_bucket_depth < `BUCKET_DEPTH_COUNT - 1) begin
                     temp_data <= data[insert_bucket_index][insert_current_bucket_depth];
                     data[insert_bucket_index][insert_current_bucket_depth] <= temp_data;
                     insert_current_bucket_depth <= insert_current_bucket_depth + 1;
