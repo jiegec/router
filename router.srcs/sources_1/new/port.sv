@@ -228,11 +228,8 @@ module port #(
     logic tx_send;
     logic [`LENGTH_WIDTH-1:0] tx_send_counter;
     logic [`LENGTH_WIDTH-1:0] tx_send_length;
-    logic tx_send_data_ren_mask;
-    logic tx_send_data_ren_set;
 
     assign tx_axis_mac_tdata = tx_data_out;
-    //assign tx_data_ren = (tx_axis_mac_tready & tx_send_data_ren_mask) | tx_send_data_ren_set;
     assign tx_data_ren = tx_axis_mac_tready;
 
     always @ (posedge tx_mac_aclk) begin
@@ -241,16 +238,12 @@ module port #(
             tx_send <= 0;
             tx_send_counter <= 0;
             tx_send_length <= 0;
-            tx_send_data_ren_mask <= 0;
-            tx_send_data_ren_set <= 0;
         end else begin
             if (!tx_send && !tx_len_empty) begin
                 tx_send <= 1;
                 tx_len_ren <= 1;
                 tx_send_counter <= 0;
                 tx_send_length <= 0;
-                tx_send_data_ren_mask <= 0;
-                tx_send_data_ren_set <= 0;
             end else if (tx_send) begin
                 if (tx_axis_mac_tready) begin
                     tx_send_counter <= tx_send_counter + 1;
@@ -270,8 +263,6 @@ module port #(
                 if (!tx_send_length && !tx_len_ren) begin
                     tx_send_length <= tx_len_out;
                 end
-                tx_send_data_ren_set <= tx_send_counter == 1;
-                tx_send_data_ren_mask <= tx_send_counter != 3;
                 tx_len_ren <= 0;
             end
         end
@@ -395,6 +386,7 @@ module port #(
 
     logic [`IPV4_WIDTH-1:0] rx_nexthop_ipv4_addr;
     logic [`MAX_ETHERNET_FRAME_BYTES*`IPV4_WIDTH-1:0] rx_saved_ipv4_packet;
+    logic rx_found_nexthop_ipv4;
 
     logic [`ARP_RESPONSE_COUNT*`BYTE_WIDTH-1:0] rx_outbound_arp_response;
     logic [`LENGTH_WIDTH-1:0] rx_outbound_length;
@@ -405,6 +397,7 @@ module port #(
     // ip routing is working
     logic ip_routing;
     logic ip_routed;
+    logic ip_lookup_routing;
     // data transfer is working
     logic rx_outbound;
 
@@ -428,6 +421,7 @@ module port #(
             rx_saved_ipv4_dst_addr <= 0;
             rx_saved_ipv4_packet <= 0;
             rx_nexthop_ipv4_addr <= 0;
+            rx_found_nexthop_ipv4 <= 0;
 
             arp_write <= 0;
             arp_insert_valid <= 0;
@@ -435,6 +429,7 @@ module port #(
 
             ip_routed <= 0;
             ip_routing <= 0;
+            ip_lookup_routing <= 0;
             routing_lookup_valid <= 0;
 
             rx_outbound <= 0;
@@ -464,11 +459,13 @@ module port #(
                 rx_saved_ipv4_dst_addr <= 0;
                 rx_saved_ipv4_packet <= 0;
                 rx_nexthop_ipv4_addr <= 0;
+                rx_found_nexthop_ipv4 <= 0;
 
                 arp_written <= 0;
 
                 ip_routed <= 0;
                 ip_routing <= 0;
+                ip_lookup_routing <= 0;
 
                 rx_outbound <= 0;
                 rx_outbound_arp_response <= 0;
@@ -553,6 +550,7 @@ module port #(
                     if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_saved_ipv4_dst_addr != port_ip && rx_read_counter >= `IPV4_DST_IP_END && !ip_routing && !ip_routed) begin
                         ip_routed <= 1;
                         ip_routing <= 1;
+                        ip_lookup_routing <= 0;
                         routing_arbiter_req <= 1;
                         routing_lookup_valid <= 0;
                     end
@@ -564,7 +562,8 @@ module port #(
                         arp_arbiter_req <= 0;
                     end
                 end
-                if (ip_routing) begin
+                // lookup via ip
+                if (ip_routing && !ip_lookup_routing) begin
                     if (routing_arbiter_granted && routing_lookup_ready && !routing_lookup_valid) begin
                         routing_lookup_dest_ip <= rx_saved_ipv4_dst_addr;
                         routing_lookup_valid <= 1;
@@ -572,11 +571,17 @@ module port #(
                         ip_routing <= 0;
                         routing_lookup_valid <= 0;
                         routing_arbiter_req <= 0;
+                        ip_lookup_routing <= 1;
                     end else if (routing_arbiter_granted && routing_lookup_output_valid) begin
                         rx_nexthop_ipv4_addr <= routing_lookup_via_ip;
                         routing_lookup_valid <= 0;
                         routing_arbiter_req <= 0;
+                        rx_found_nexthop_ipv4 <= 1;
+                        ip_lookup_routing <= 1;
                     end
+                end
+                if (ip_routing && rx_found_nexthop_ipv4 && ip_lookup_routing) begin
+                    // next hop is found, lookup its mac and port now
                 end
                 if (rx_outbound && fifo_matrix_rx_wready[port_id]) begin
                     if (rx_outbound_length > 0) begin

@@ -26,6 +26,13 @@ module arp_table_bus(
     input [`PORT_COUNT-1:0] arp_arbiter_req,
     output logic [`PORT_COUNT-1:0] arp_arbiter_grant,
 
+    input [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_arp_lookup_ip,
+    output logic [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_arp_lookup_mac,
+    output logic [`PORT_COUNT-1:0][`PORT_WIDTH-1:0] port_arp_lookup_port,
+    input [`PORT_COUNT-1:0] port_arp_lookup_ip_valid,
+    output logic [`PORT_COUNT-1:0] port_arp_lookup_mac_valid,
+    output logic [`PORT_COUNT-1:0] port_arp_lookup_mac_not_found,
+
     input [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_arp_insert_ip,
     input [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_arp_insert_mac,
     input [`PORT_COUNT-1:0][`PORT_WIDTH-1:0] port_arp_insert_port,
@@ -35,7 +42,7 @@ module arp_table_bus(
 
     logic [`IPV4_WIDTH-1:0] arp_lookup_ip;
     logic [`MAC_WIDTH-1:0] arp_lookup_mac;
-    logic [1:0] arp_lookup_port;
+    logic [`PORT_WIDTH-1:0] arp_lookup_port;
     logic arp_lookup_ip_valid;
     logic arp_lookup_mac_valid;
     logic arp_lookup_mac_not_found;
@@ -69,6 +76,25 @@ module arp_table_bus(
     always_comb begin
         unique casez (arp_arbiter_grant)
             4'b???1: begin
+                port_arp_lookup_mac[0] = arp_lookup_mac;
+                port_arp_lookup_mac[1] = 0;
+                port_arp_lookup_mac[2] = 0;
+                port_arp_lookup_mac[3] = 0;
+                port_arp_lookup_port[0] = arp_lookup_port;
+                port_arp_lookup_port[1] = 0;
+                port_arp_lookup_port[2] = 0;
+                port_arp_lookup_port[3] = 0;
+                port_arp_lookup_mac_valid[0] = arp_lookup_mac_valid;
+                port_arp_lookup_mac_valid[1] = 0;
+                port_arp_lookup_mac_valid[2] = 0;
+                port_arp_lookup_mac_valid[3] = 0;
+                port_arp_lookup_mac_not_found[0] = arp_lookup_mac_not_found;
+                port_arp_lookup_mac_not_found[1] = 0;
+                port_arp_lookup_mac_not_found[2] = 0;
+                port_arp_lookup_mac_not_found[3] = 0;
+                arp_lookup_ip = port_arp_lookup_ip[0];
+                arp_lookup_ip_valid = port_arp_lookup_ip_valid[0];
+
                 port_arp_insert_ready[0] = arp_insert_ready;
                 port_arp_insert_ready[1] = 0;
                 port_arp_insert_ready[2] = 0;
@@ -79,6 +105,25 @@ module arp_table_bus(
                 arp_insert_port = port_arp_insert_port[0];
             end
             4'b??1?: begin
+                port_arp_lookup_mac[0] = 0;
+                port_arp_lookup_mac[1] = arp_lookup_mac;
+                port_arp_lookup_mac[2] = 0;
+                port_arp_lookup_mac[3] = 0;
+                port_arp_lookup_port[0] = 0;
+                port_arp_lookup_port[1] = arp_lookup_port;
+                port_arp_lookup_port[2] = 0;
+                port_arp_lookup_port[3] = 0;
+                port_arp_lookup_mac_valid[0] = 0;
+                port_arp_lookup_mac_valid[1] = arp_lookup_mac_valid;
+                port_arp_lookup_mac_valid[2] = 0;
+                port_arp_lookup_mac_valid[3] = 0;
+                port_arp_lookup_mac_not_found[0] = 0;
+                port_arp_lookup_mac_not_found[1] = arp_lookup_mac_not_found;
+                port_arp_lookup_mac_not_found[2] = 0;
+                port_arp_lookup_mac_not_found[3] = 0;
+                arp_lookup_ip = port_arp_lookup_ip[1];
+                arp_lookup_ip_valid = port_arp_lookup_ip_valid[1];
+
                 port_arp_insert_ready[0] = 0;
                 port_arp_insert_ready[1] = arp_insert_ready;
                 port_arp_insert_ready[2] = 0;
@@ -89,6 +134,25 @@ module arp_table_bus(
                 arp_insert_port = port_arp_insert_port[1];
             end
             4'b?1??: begin
+                port_arp_lookup_mac[0] = 0;
+                port_arp_lookup_mac[1] = 0;
+                port_arp_lookup_mac[2] = arp_lookup_mac;
+                port_arp_lookup_mac[3] = 0;
+                port_arp_lookup_port[0] = 0;
+                port_arp_lookup_port[1] = 0;
+                port_arp_lookup_port[2] = arp_lookup_port;
+                port_arp_lookup_port[3] = 0;
+                port_arp_lookup_mac_valid[0] = 0;
+                port_arp_lookup_mac_valid[1] = 0;
+                port_arp_lookup_mac_valid[2] = arp_lookup_mac_valid;
+                port_arp_lookup_mac_valid[3] = 0;
+                port_arp_lookup_mac_not_found[0] = 0;
+                port_arp_lookup_mac_not_found[1] = 0;
+                port_arp_lookup_mac_not_found[2] = arp_lookup_mac_not_found;
+                port_arp_lookup_mac_not_found[3] = 0;
+                arp_lookup_ip = port_arp_lookup_ip[2];
+                arp_lookup_ip_valid = port_arp_lookup_ip_valid[2];
+
                 port_arp_insert_ready[0] = 0;
                 port_arp_insert_ready[1] = 0;
                 port_arp_insert_ready[2] = arp_insert_ready;
@@ -99,6 +163,25 @@ module arp_table_bus(
                 arp_insert_port = port_arp_insert_port[2];
             end
             4'b1???: begin
+                port_arp_lookup_mac[0] = 0;
+                port_arp_lookup_mac[1] = 0;
+                port_arp_lookup_mac[2] = 0;
+                port_arp_lookup_mac[3] = arp_lookup_mac;
+                port_arp_lookup_port[0] = 0;
+                port_arp_lookup_port[1] = 0;
+                port_arp_lookup_port[2] = 0;
+                port_arp_lookup_port[3] = arp_lookup_port;
+                port_arp_lookup_mac_valid[0] = 0;
+                port_arp_lookup_mac_valid[1] = 0;
+                port_arp_lookup_mac_valid[2] = 0;
+                port_arp_lookup_mac_valid[3] = arp_lookup_mac_valid;
+                port_arp_lookup_mac_not_found[0] = 0;
+                port_arp_lookup_mac_not_found[1] = 0;
+                port_arp_lookup_mac_not_found[2] = 0;
+                port_arp_lookup_mac_not_found[3] = arp_lookup_mac_not_found;
+                arp_lookup_ip = port_arp_lookup_ip[3];
+                arp_lookup_ip_valid = port_arp_lookup_ip_valid[3];
+
                 port_arp_insert_ready[0] = 0;
                 port_arp_insert_ready[1] = 0;
                 port_arp_insert_ready[2] = 0;
@@ -109,6 +192,25 @@ module arp_table_bus(
                 arp_insert_port = port_arp_insert_port[3];
             end
             4'b0000: begin
+                port_arp_lookup_mac[0] = 0;
+                port_arp_lookup_mac[1] = 0;
+                port_arp_lookup_mac[2] = 0;
+                port_arp_lookup_mac[3] = 0;
+                port_arp_lookup_port[0] = 0;
+                port_arp_lookup_port[1] = 0;
+                port_arp_lookup_port[2] = 0;
+                port_arp_lookup_port[3] = 0;
+                port_arp_lookup_mac_valid[0] = 0;
+                port_arp_lookup_mac_valid[1] = 0;
+                port_arp_lookup_mac_valid[2] = 0;
+                port_arp_lookup_mac_valid[3] = 0;
+                port_arp_lookup_mac_not_found[0] = 0;
+                port_arp_lookup_mac_not_found[1] = 0;
+                port_arp_lookup_mac_not_found[2] = 0;
+                port_arp_lookup_mac_not_found[3] = 0;
+                arp_lookup_ip = 0;
+                arp_lookup_ip_valid = 0;
+
                 port_arp_insert_ready[0] = 0;
                 port_arp_insert_ready[1] = 0;
                 port_arp_insert_ready[2] = 0;

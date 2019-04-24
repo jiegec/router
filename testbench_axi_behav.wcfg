@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="testbench_axi_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="testbench_axi" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="1700000001fs"></ZoomEndTime>
+      <Cursor1Time time="0fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="281"></NameColumnWidth>
+      <ValueColumnWidth column_width="126"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="45" />
+   <wvobject type="logic" fp_name="/testbench_axi/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/rx_clk">
+      <obj_property name="ElementShortName">rx_clk</obj_property>
+      <obj_property name="ObjectShortName">rx_clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/rx_clk_90deg">
+      <obj_property name="ElementShortName">rx_clk_90deg</obj_property>
+      <obj_property name="ObjectShortName">rx_clk_90deg</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/packet_clk">
+      <obj_property name="ElementShortName">packet_clk</obj_property>
+      <obj_property name="ObjectShortName">packet_clk</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/count">
+      <obj_property name="ElementShortName">count[7:0]</obj_property>
+      <obj_property name="ObjectShortName">count[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_1/rx_statistics_vector">
+      <obj_property name="ElementShortName">rx_statistics_vector[27:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_statistics_vector[27:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_1/tx_statistics_vector">
+      <obj_property name="ElementShortName">tx_statistics_vector[31:0]</obj_property>
+      <obj_property name="ObjectShortName">tx_statistics_vector[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/rgmii1_rd">
+      <obj_property name="ElementShortName">rgmii1_rd[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rgmii1_rd[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/rgmii1_rx_ctl">
+      <obj_property name="ElementShortName">rgmii1_rx_ctl</obj_property>
+      <obj_property name="ObjectShortName">rgmii1_rx_ctl</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/rgmii1_rxc">
+      <obj_property name="ElementShortName">rgmii1_rxc</obj_property>
+      <obj_property name="ObjectShortName">rgmii1_rxc</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/rgmii1_td">
+      <obj_property name="ElementShortName">rgmii1_td[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rgmii1_td[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/rgmii1_tx_ctl">
+      <obj_property name="ElementShortName">rgmii1_tx_ctl</obj_property>
+      <obj_property name="ObjectShortName">rgmii1_tx_ctl</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/rgmii1_txc">
+      <obj_property name="ElementShortName">rgmii1_txc</obj_property>
+      <obj_property name="ObjectShortName">rgmii1_txc</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_data_out">
+      <obj_property name="ElementShortName">rx_data_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_data_out[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/rx_data_ren">
+      <obj_property name="ElementShortName">rx_data_ren</obj_property>
+      <obj_property name="ObjectShortName">rx_data_ren</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_len_out">
+      <obj_property name="ElementShortName">rx_len_out[13:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_len_out[13:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/rx_len_ren">
+      <obj_property name="ElementShortName">rx_len_ren</obj_property>
+      <obj_property name="ObjectShortName">rx_len_ren</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_read_data">
+      <obj_property name="ElementShortName">rx_read_data[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_read_data[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_dst_mac_addr">
+      <obj_property name="ElementShortName">rx_saved_dst_mac_addr[47:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_dst_mac_addr[47:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_src_mac_addr">
+      <obj_property name="ElementShortName">rx_saved_src_mac_addr[47:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_src_mac_addr[47:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_ethertype">
+      <obj_property name="ElementShortName">rx_saved_ethertype[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_ethertype[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_arp_src_ipv4_addr">
+      <obj_property name="ElementShortName">rx_saved_arp_src_ipv4_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_arp_src_ipv4_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_arp_dst_ipv4_addr">
+      <obj_property name="ElementShortName">rx_saved_arp_dst_ipv4_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_arp_dst_ipv4_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_arp_opcode">
+      <obj_property name="ElementShortName">rx_saved_arp_opcode[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_arp_opcode[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_ipv4_ttl">
+      <obj_property name="ElementShortName">rx_saved_ipv4_ttl[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_ipv4_ttl[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_ipv4_checksum">
+      <obj_property name="ElementShortName">rx_saved_ipv4_checksum[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_ipv4_checksum[15:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_ipv4_src_addr">
+      <obj_property name="ElementShortName">rx_saved_ipv4_src_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_ipv4_src_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_ipv4_dst_addr">
+      <obj_property name="ElementShortName">rx_saved_ipv4_dst_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_ipv4_dst_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_nexthop_ipv4_addr">
+      <obj_property name="ElementShortName">rx_nexthop_ipv4_addr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_nexthop_ipv4_addr[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/ip_routing">
+      <obj_property name="ElementShortName">ip_routing</obj_property>
+      <obj_property name="ObjectShortName">ip_routing</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/ip_routed">
+      <obj_property name="ElementShortName">ip_routed</obj_property>
+      <obj_property name="ObjectShortName">ip_routed</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/routing_lookup_dest_ip">
+      <obj_property name="ElementShortName">routing_lookup_dest_ip[31:0]</obj_property>
+      <obj_property name="ObjectShortName">routing_lookup_dest_ip[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/routing_lookup_via_ip">
+      <obj_property name="ElementShortName">routing_lookup_via_ip[31:0]</obj_property>
+      <obj_property name="ObjectShortName">routing_lookup_via_ip[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/routing_lookup_valid">
+      <obj_property name="ElementShortName">routing_lookup_valid</obj_property>
+      <obj_property name="ObjectShortName">routing_lookup_valid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/routing_lookup_ready">
+      <obj_property name="ElementShortName">routing_lookup_ready</obj_property>
+      <obj_property name="ObjectShortName">routing_lookup_ready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/routing_lookup_output_valid">
+      <obj_property name="ElementShortName">routing_lookup_output_valid</obj_property>
+      <obj_property name="ObjectShortName">routing_lookup_output_valid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/routing_lookup_not_found">
+      <obj_property name="ElementShortName">routing_lookup_not_found</obj_property>
+      <obj_property name="ObjectShortName">routing_lookup_not_found</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/routing_arbiter_req">
+      <obj_property name="ElementShortName">routing_arbiter_req</obj_property>
+      <obj_property name="ObjectShortName">routing_arbiter_req</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/routing_arbiter_granted">
+      <obj_property name="ElementShortName">routing_arbiter_granted</obj_property>
+      <obj_property name="ObjectShortName">routing_arbiter_granted</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/routing_table_bus_inst/routing_table_inst/lookup_dest_ip">
+      <obj_property name="ElementShortName">lookup_dest_ip[31:0]</obj_property>
+      <obj_property name="ObjectShortName">lookup_dest_ip[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/routing_table_bus_inst/routing_table_inst/lookup_via_ip">
+      <obj_property name="ElementShortName">lookup_via_ip[31:0]</obj_property>
+      <obj_property name="ObjectShortName">lookup_via_ip[31:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/routing_table_bus_inst/routing_table_inst/lookup_valid">
+      <obj_property name="ElementShortName">lookup_valid</obj_property>
+      <obj_property name="ObjectShortName">lookup_valid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/routing_table_bus_inst/routing_table_inst/lookup_ready">
+      <obj_property name="ElementShortName">lookup_ready</obj_property>
+      <obj_property name="ObjectShortName">lookup_ready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/routing_table_bus_inst/routing_table_inst/lookup_output_valid">
+      <obj_property name="ElementShortName">lookup_output_valid</obj_property>
+      <obj_property name="ObjectShortName">lookup_output_valid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/routing_table_bus_inst/routing_table_inst/lookup_not_found">
+      <obj_property name="ElementShortName">lookup_not_found</obj_property>
+      <obj_property name="ObjectShortName">lookup_not_found</obj_property>
+   </wvobject>
+</wave_config>
