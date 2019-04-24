@@ -368,11 +368,21 @@ module port #(
     logic [`LENGTH_WIDTH-1:0] rx_read_length;
     logic [`BYTE_WIDTH-1:0] rx_read_data;
     logic [`LENGTH_WIDTH-1:0] rx_read_counter;
+
+    // Ethernet
+    logic [`MAC_WIDTH-1:0] rx_saved_dst_mac_addr;
     logic [`MAC_WIDTH-1:0] rx_saved_src_mac_addr;
     logic [`ETHERTYPE_WIDTH-1:0] rx_saved_ethertype;
+    // ARP
     logic [`IPV4_WIDTH-1:0] rx_saved_arp_src_ipv4_addr;
     logic [`IPV4_WIDTH-1:0] rx_saved_arp_dst_ipv4_addr;
     logic [`ARP_OPCODE_COUNT*`BYTE_WIDTH-1:0] rx_saved_arp_opcode;
+    // IPV4
+    logic [`IPV4_TTL_COUNT*`BYTE_WIDTH-1:0] rx_saved_ipv4_ttl;
+    logic [`IPV4_CHECKSUM_COUNT*`BYTE_WIDTH-1:0] rx_saved_ipv4_checksum;
+    logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_src_addr;
+    logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_dst_addr;
+
     logic [`ARP_RESPONSE_COUNT*`BYTE_WIDTH-1:0] rx_outbound_arp_response;
     logic [`LENGTH_WIDTH-1:0] rx_outbound_length;
 
@@ -387,11 +397,20 @@ module port #(
             rx_len_ren <= 0;
             rx_data_ren <= 0;
             rx_read <= 0;
+
+            rx_saved_dst_mac_addr <= 0;
             rx_saved_src_mac_addr <= 0;
             rx_saved_ethertype <= 0;
+
             rx_saved_arp_src_ipv4_addr <= 0;
             rx_saved_arp_dst_ipv4_addr <= 0;
             rx_saved_arp_opcode <= 0;
+
+            rx_saved_ipv4_ttl <= 0;
+            rx_saved_ipv4_checksum <= 0;
+            rx_saved_ipv4_src_addr <= 0;
+            rx_saved_ipv4_dst_addr <= 0;
+
             arp_write <= 0;
             arp_insert_valid <= 0;
             arp_written <= 0;
@@ -407,11 +426,20 @@ module port #(
                 rx_len_ren <= 1;
                 rx_data_ren <= 1;
                 rx_read_counter <= -2;
+
+                rx_saved_dst_mac_addr <= 0;
                 rx_saved_src_mac_addr <= 0;
                 rx_saved_ethertype <= 0;
+
                 rx_saved_arp_src_ipv4_addr <= 0;
                 rx_saved_arp_dst_ipv4_addr <= 0;
                 rx_saved_arp_opcode <= 0;
+
+                rx_saved_ipv4_ttl <= 0;
+                rx_saved_ipv4_checksum <= 0;
+                rx_saved_ipv4_src_addr <= 0;
+                rx_saved_ipv4_dst_addr <= 0;
+
                 arp_written <= 0;
                 rx_outbound <= 0;
                 rx_outbound_arp_response <= 0;
@@ -428,12 +456,26 @@ module port #(
                     end
                     rx_read_counter <= rx_read_counter + 1;
                     rx_read_data <= rx_data_out;
-                    if (rx_read_counter >= `SOURCE_MAC_BEGIN && rx_read_counter < `SOURCE_MAC_END) begin
+
+                    if (rx_read_counter == rx_read_length - 3) begin
+                        rx_data_ren <= 0;
+                    end
+                    if (rx_read_counter == rx_read_length - 2) begin
+                        rx_read <= 0;
+                    end
+
+                    // Ethernet Handling
+                    if (rx_read_counter >= `DST_MAC_BEGIN && rx_read_counter < `DST_MAC_END) begin
+                        rx_saved_dst_mac_addr <= {rx_saved_dst_mac_addr[`MAC_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
+                    end
+                    if (rx_read_counter >= `SRC_MAC_BEGIN && rx_read_counter < `SRC_MAC_END) begin
                         rx_saved_src_mac_addr <= {rx_saved_src_mac_addr[`MAC_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
                     if (rx_read_counter >= `ETHERTYPE_BEGIN && rx_read_counter < `ETHERTYPE_END) begin
                         rx_saved_ethertype <= {rx_saved_ethertype[`ETHERTYPE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
+
+                    // ARP Handling
                     if (rx_read_counter >= `ARP_SRC_IPV4_BEGIN && rx_read_counter < `ARP_SRC_IPV4_END) begin
                         rx_saved_arp_src_ipv4_addr <= {rx_saved_arp_src_ipv4_addr[`IPV4_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
@@ -442,13 +484,6 @@ module port #(
                     end
                     if (rx_read_counter >= `ARP_OPCODE_BEGIN && rx_read_counter < `ARP_OPCODE_END) begin
                         rx_saved_arp_opcode <= {rx_saved_arp_opcode[`ARP_OPCODE_COUNT*`BYTE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
-                    end
-
-                    if (rx_read_counter == rx_read_length - 3) begin
-                        rx_data_ren <= 0;
-                    end
-                    if (rx_read_counter == rx_read_length - 2) begin
-                        rx_read <= 0;
                     end
 
                     if (rx_saved_ethertype == `ARP_ETHERTYPE && rx_read_counter >= `ARP_DST_IPV4_END && !arp_write && !arp_written) begin
@@ -467,6 +502,20 @@ module port #(
                             // send to same port
                             fifo_matrix_rx_wvalid[port_id] <= 1;
                         end
+                    end
+
+                    // IPV4 Handling
+                    if (rx_read_counter >= `IPV4_TTL_BEGIN && rx_read_counter < `IPV4_TTL_END) begin
+                        rx_saved_ipv4_ttl <= {rx_saved_ipv4_ttl[`IPV4_TTL_COUNT*`BYTE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
+                    end
+                    if (rx_read_counter >= `IPV4_CHECKSUM_BEGIN && rx_read_counter < `IPV4_CHECKSUM_END) begin
+                        rx_saved_ipv4_checksum <= {rx_saved_ipv4_checksum[`IPV4_CHECKSUM_COUNT*`BYTE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
+                    end
+                    if (rx_read_counter >= `IPV4_SRC_IP_BEGIN && rx_read_counter < `IPV4_SRC_IP_END) begin
+                        rx_saved_ipv4_src_addr <= {rx_saved_ipv4_src_addr[`IPV4_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
+                    end
+                    if (rx_read_counter >= `IPV4_DST_IP_BEGIN && rx_read_counter < `IPV4_DST_IP_END) begin
+                        rx_saved_ipv4_dst_addr <= {rx_saved_ipv4_dst_addr[`IPV4_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
                 end
                 if (arp_write) begin
