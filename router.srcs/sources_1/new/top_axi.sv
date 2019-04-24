@@ -217,7 +217,7 @@ module top_axi(
         .clk(internal_clk),
         .reset_n(reset_n),
         .port_id(2'b01),
-        .port_ip(32'h0a000201), // 10.0.1.1
+        .port_ip(32'h0a000101), // 10.0.1.1
         .port_mac(48'h020203030001), // 02:02:03:03:00:01
 
         .arp_arbiter_req(arp_arbiter_req[1]),

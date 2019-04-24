@@ -482,11 +482,11 @@ module port #(
                         rx_outbound_arp_response <= rx_outbound_arp_response << 8;
                         fifo_matrix_rx_wdata[port_id] <= rx_outbound_arp_response[`ARP_RESPONSE_COUNT * `BYTE_WIDTH - 1:`ARP_RESPONSE_COUNT * `BYTE_WIDTH - `BYTE_WIDTH];
                         if (rx_outbound_length == 1) begin
-                            fifo_matrix_rx_wlast <= 1;
-                            end
-                    end else if (fifo_matrix_rx_wlast) begin
-                        fifo_matrix_rx_wlast <= 0;
-                        fifo_matrix_rx_wvalid <= 0;
+                            fifo_matrix_rx_wlast[port_id] <= 1;
+                        end
+                    end else if (fifo_matrix_rx_wlast[port_id]) begin
+                        fifo_matrix_rx_wlast[port_id] <= 0;
+                        fifo_matrix_rx_wvalid[port_id] <= 0;
                         fifo_matrix_rx_wdata[port_id] <= 0;
                         rx_outbound <= 0;
                     end
