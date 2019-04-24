@@ -41,6 +41,7 @@
 `define ARP_DST_IPV4_END 42
 
 // IPv4
+`define IPV4_BEGIN 14
 `define IPV4_TTL_BEGIN 22
 `define IPV4_TTL_END 23
 `define IPV4_TTL_COUNT 2

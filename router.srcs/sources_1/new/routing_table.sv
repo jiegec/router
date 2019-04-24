@@ -68,11 +68,14 @@ module routing_table(
                 lookup_not_found <= 0;
                 lookup_output_valid <= 0;
             end else if (!lookup_ready) begin
-                if (data[lookup_index] == 0) begin
+                if (lookup_output_valid) begin
+                    lookup_ready <= 0;
+                    lookup_output_valid <= 0;
+                    lookup_index <= 0;
+                else if (data[lookup_index] == 0) begin
                     lookup_ready <= 1;
                     lookup_not_found <= 1;
                 end else if (data[lookup_index][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:`IPV4_WIDTH+`IPV4_WIDTH] == (saved_dest_ip & data[lookup_index][`IPV4_WIDTH+`IPV4_WIDTH-1:`IPV4_WIDTH])) begin
-                    lookup_ready <= 1;
                     lookup_output_valid <= 1;
                     lookup_not_found <= 0;
                     lookup_via_ip <= data[lookup_index][`IPV4_WIDTH-1:0];

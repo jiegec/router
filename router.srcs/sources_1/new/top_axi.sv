@@ -105,7 +105,8 @@ module top_axi(
         .port_lookup_dest_ip(port_lookup_dest_ip),
         .port_lookup_via_ip(port_lookup_via_ip),
         .port_lookup_valid(port_lookup_valid),
-        .port_lookup_output_valid(port_lookup_valid),
+        .port_lookup_ready(port_lookup_ready),
+        .port_lookup_output_valid(port_lookup_output_valid),
         .port_lookup_not_found(port_lookup_not_found)
     );
 
@@ -138,6 +139,7 @@ module top_axi(
         .routing_arbiter_granted(routing_arbiter_grant[0]),
         .routing_lookup_dest_ip(port_lookup_dest_ip[0]),
         .routing_lookup_via_ip(port_lookup_via_ip[0]),
+        .routing_lookup_valid(port_lookup_valid[0]),
         .routing_lookup_ready(port_lookup_ready[0]),
         .routing_lookup_output_valid(port_lookup_output_valid[0]),
         .routing_lookup_not_found(port_lookup_not_found[0]),
@@ -190,6 +192,7 @@ module top_axi(
         .routing_arbiter_granted(routing_arbiter_grant[1]),
         .routing_lookup_dest_ip(port_lookup_dest_ip[1]),
         .routing_lookup_via_ip(port_lookup_via_ip[1]),
+        .routing_lookup_valid(port_lookup_valid[1]),
         .routing_lookup_ready(port_lookup_ready[1]),
         .routing_lookup_output_valid(port_lookup_output_valid[1]),
         .routing_lookup_not_found(port_lookup_not_found[1]),

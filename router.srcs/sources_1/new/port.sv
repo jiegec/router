@@ -45,11 +45,11 @@ module port #(
     output logic routing_arbiter_req,
     input routing_arbiter_granted,
     output logic [`IPV4_WIDTH-1:0] routing_lookup_dest_ip,
-    input logic [`IPV4_WIDTH-1:0] routing_lookup_via_ip,
-    output routing_lookup_valid,
-    input logic routing_lookup_ready,
-    input logic routing_lookup_output_valid,
-    input logic routing_lookup_not_found,
+    input [`IPV4_WIDTH-1:0] routing_lookup_via_ip,
+    output logic routing_lookup_valid,
+    input routing_lookup_ready,
+    input routing_lookup_output_valid,
+    input routing_lookup_not_found,
 
     // fifo matrix
     // tx
@@ -393,12 +393,18 @@ module port #(
     logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_src_addr;
     logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_dst_addr;
 
+    logic [`IPV4_WIDTH-1:0] rx_nexthop_ipv4_addr;
+    logic [`MAX_ETHERNET_FRAME_BYTES*`IPV4_WIDTH-1:0] rx_saved_ipv4_packet;
+
     logic [`ARP_RESPONSE_COUNT*`BYTE_WIDTH-1:0] rx_outbound_arp_response;
     logic [`LENGTH_WIDTH-1:0] rx_outbound_length;
 
     // arp insertion is working
     logic arp_write;
     logic arp_written;
+    // ip routing is working
+    logic ip_routing;
+    logic ip_routed;
     // data transfer is working
     logic rx_outbound;
 
@@ -420,10 +426,17 @@ module port #(
             rx_saved_ipv4_checksum <= 0;
             rx_saved_ipv4_src_addr <= 0;
             rx_saved_ipv4_dst_addr <= 0;
+            rx_saved_ipv4_packet <= 0;
+            rx_nexthop_ipv4_addr <= 0;
 
             arp_write <= 0;
             arp_insert_valid <= 0;
             arp_written <= 0;
+
+            ip_routed <= 0;
+            ip_routing <= 0;
+            routing_lookup_valid <= 0;
+
             rx_outbound <= 0;
             rx_outbound_arp_response <= 0;
             rx_outbound_length <= 0;
@@ -431,7 +444,7 @@ module port #(
             fifo_matrix_rx_wlast <= 0;
             fifo_matrix_rx_wvalid <= 0;
         end else begin
-            if (!rx_len_empty && !rx_read && !arp_write && !rx_outbound) begin 
+            if (!rx_len_empty && !rx_read && !arp_write && !ip_routing && !rx_outbound) begin 
                 rx_read <= 1;
                 rx_len_ren <= 1;
                 rx_data_ren <= 1;
@@ -449,8 +462,14 @@ module port #(
                 rx_saved_ipv4_checksum <= 0;
                 rx_saved_ipv4_src_addr <= 0;
                 rx_saved_ipv4_dst_addr <= 0;
+                rx_saved_ipv4_packet <= 0;
+                rx_nexthop_ipv4_addr <= 0;
 
                 arp_written <= 0;
+
+                ip_routed <= 0;
+                ip_routing <= 0;
+
                 rx_outbound <= 0;
                 rx_outbound_arp_response <= 0;
                 fifo_matrix_rx_wdata <= 0;
@@ -527,6 +546,16 @@ module port #(
                     if (rx_read_counter >= `IPV4_DST_IP_BEGIN && rx_read_counter < `IPV4_DST_IP_END) begin
                         rx_saved_ipv4_dst_addr <= {rx_saved_ipv4_dst_addr[`IPV4_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
+                    if (rx_read_counter >= `IPV4_BEGIN) begin
+                        rx_saved_ipv4_packet <= rx_saved_ipv4_packet || (rx_read_data << (rx_read_counter - `IPV4_BEGIN));
+                    end
+
+                    if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_saved_ipv4_dst_addr != port_ip && rx_read_counter >= `IPV4_DST_IP_END && !ip_routing && !ip_routed) begin
+                        ip_routed <= 1;
+                        ip_routing <= 1;
+                        routing_arbiter_req <= 1;
+                        routing_lookup_valid <= 0;
+                    end
                 end
                 if (arp_write) begin
                     if (arp_arbiter_granted && arp_insert_ready) begin
@@ -535,11 +564,27 @@ module port #(
                         arp_arbiter_req <= 0;
                     end
                 end
+                if (ip_routing) begin
+                    if (routing_arbiter_granted && routing_lookup_ready && !routing_lookup_valid) begin
+                        routing_lookup_dest_ip <= rx_saved_ipv4_dst_addr;
+                        routing_lookup_valid <= 1;
+                    end else if (routing_arbiter_granted && routing_lookup_not_found) begin
+                        ip_routing <= 0;
+                        routing_lookup_valid <= 0;
+                        routing_arbiter_req <= 0;
+                    end else if (routing_arbiter_granted && routing_lookup_output_valid) begin
+                        rx_nexthop_ipv4_addr <= routing_lookup_via_ip;
+                        routing_lookup_valid <= 0;
+                        routing_arbiter_req <= 0;
+                    end
+                end
                 if (rx_outbound && fifo_matrix_rx_wready[port_id]) begin
                     if (rx_outbound_length > 0) begin
                         rx_outbound_length <= rx_outbound_length - 1;
-                        rx_outbound_arp_response <= rx_outbound_arp_response << 8;
-                        fifo_matrix_rx_wdata[port_id] <= rx_outbound_arp_response[`ARP_RESPONSE_COUNT * `BYTE_WIDTH - 1:`ARP_RESPONSE_COUNT * `BYTE_WIDTH - `BYTE_WIDTH];
+                        if (arp_written) begin
+                            rx_outbound_arp_response <= rx_outbound_arp_response << 8;
+                            fifo_matrix_rx_wdata[port_id] <= rx_outbound_arp_response[`ARP_RESPONSE_COUNT * `BYTE_WIDTH - 1:`ARP_RESPONSE_COUNT * `BYTE_WIDTH - `BYTE_WIDTH];
+                        end
                         if (rx_outbound_length == 1) begin
                             fifo_matrix_rx_wlast[port_id] <= 1;
                         end
