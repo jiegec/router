@@ -41,6 +41,16 @@ module port #(
     output logic arp_insert_valid,
     input logic arp_insert_ready,
 
+    // Routing table
+    output logic routing_arbiter_req,
+    input routing_arbiter_granted,
+    output logic [`IPV4_WIDTH-1:0] routing_lookup_dest_ip,
+    input logic [`IPV4_WIDTH-1:0] routing_lookup_via_ip,
+    output routing_lookup_valid,
+    input logic routing_lookup_ready,
+    input logic routing_lookup_output_valid,
+    input logic routing_lookup_not_found,
+
     // fifo matrix
     // tx
     // sender set valid = 1 for a transfer

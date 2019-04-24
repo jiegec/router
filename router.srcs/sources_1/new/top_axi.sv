@@ -72,7 +72,7 @@ module top_axi(
     logic [`PORT_COUNT-1:0] port_arp_insert_ready;
 
 
-    arp_table_bus arp_table_bus(
+    arp_table_bus arp_table_bus_inst(
         .clk(internal_clk),
         .reset(reset),
         .arp_arbiter_req(arp_arbiter_req),
@@ -83,6 +83,30 @@ module top_axi(
         .port_arp_insert_port(port_arp_insert_port),
         .port_arp_insert_valid(port_arp_insert_valid),
         .port_arp_insert_ready(port_arp_insert_ready)
+    );
+
+    // routing table with arbiter
+    logic [`PORT_COUNT-1:0] routing_arbiter_req;
+    logic [`PORT_COUNT-1:0] routing_arbiter_grant;
+
+    logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_lookup_dest_ip;
+    logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_lookup_via_ip;
+    logic [`PORT_COUNT-1:0]port_lookup_valid;
+    logic [`PORT_COUNT-1:0]port_lookup_ready;
+    logic [`PORT_COUNT-1:0]port_lookup_output_valid;
+    logic [`PORT_COUNT-1:0]port_lookup_not_found;
+
+    routing_table_bus routing_table_bus_inst(
+        .clk(internal_clk),
+        .reset(reset),
+        .routing_arbiter_req(routing_arbiter_req),
+        .routing_arbiter_grant(routing_arbiter_grant),
+
+        .port_lookup_dest_ip(port_lookup_dest_ip),
+        .port_lookup_via_ip(port_lookup_via_ip),
+        .port_lookup_valid(port_lookup_valid),
+        .port_lookup_output_valid(port_lookup_valid),
+        .port_lookup_not_found(port_lookup_not_found)
     );
 
     // ports
@@ -100,6 +124,7 @@ module top_axi(
         .port_ip(32'h0a000001), // 10.0.0.1
         .port_mac(48'h020203030000), // 02:02:03:03:00:00
 
+        // arp
         .arp_arbiter_req(arp_arbiter_req[0]),
         .arp_arbiter_granted(arp_arbiter_grant[0]),
         .arp_insert_ip(port_arp_insert_ip[0]),
@@ -107,6 +132,15 @@ module top_axi(
         .arp_insert_port(port_arp_insert_port[0]),
         .arp_insert_valid(port_arp_insert_valid[0]),
         .arp_insert_ready(port_arp_insert_ready[0]),
+
+        // routing
+        .routing_arbiter_req(routing_arbiter_req[0]),
+        .routing_arbiter_granted(routing_arbiter_grant[0]),
+        .routing_lookup_dest_ip(port_lookup_dest_ip[0]),
+        .routing_lookup_via_ip(port_lookup_via_ip[0]),
+        .routing_lookup_ready(port_lookup_ready[0]),
+        .routing_lookup_output_valid(port_lookup_output_valid[0]),
+        .routing_lookup_not_found(port_lookup_not_found[0]),
 
         // from X to current
         .fifo_matrix_tx_wdata({fifo_matrix_wdata[3][0], fifo_matrix_wdata[2][0], fifo_matrix_wdata[1][0], fifo_matrix_wdata[0][0]}),
@@ -142,6 +176,7 @@ module top_axi(
         .port_ip(32'h0a000101), // 10.0.1.1
         .port_mac(48'h020203030001), // 02:02:03:03:00:01
 
+        // arp
         .arp_arbiter_req(arp_arbiter_req[1]),
         .arp_arbiter_granted(arp_arbiter_grant[1]),
         .arp_insert_ip(port_arp_insert_ip[1]),
@@ -149,6 +184,15 @@ module top_axi(
         .arp_insert_port(port_arp_insert_port[1]),
         .arp_insert_valid(port_arp_insert_valid[1]),
         .arp_insert_ready(port_arp_insert_ready[1]),
+
+        // routing
+        .routing_arbiter_req(routing_arbiter_req[1]),
+        .routing_arbiter_granted(routing_arbiter_grant[1]),
+        .routing_lookup_dest_ip(port_lookup_dest_ip[1]),
+        .routing_lookup_via_ip(port_lookup_via_ip[1]),
+        .routing_lookup_ready(port_lookup_ready[1]),
+        .routing_lookup_output_valid(port_lookup_output_valid[1]),
+        .routing_lookup_not_found(port_lookup_not_found[1]),
 
         // from X to current
         .fifo_matrix_tx_wdata({fifo_matrix_wdata[3][1], fifo_matrix_wdata[2][1], fifo_matrix_wdata[1][1], fifo_matrix_wdata[0][1]}),
