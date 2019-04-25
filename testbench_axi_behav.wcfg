@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0fs"></ZoomStartTime>
-      <ZoomEndTime time="3235000001fs"></ZoomEndTime>
-      <Cursor1Time time="1000000000fs"></Cursor1Time>
+      <ZoomStartTime time="34594071983fs"></ZoomStartTime>
+      <ZoomEndTime time="34718278053fs"></ZoomEndTime>
+      <Cursor1Time time="34678100000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="281"></NameColumnWidth>
       <ValueColumnWidth column_width="122"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="55" />
+   <WVObjectSize size="58" />
    <wvobject type="logic" fp_name="/testbench_axi/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -72,6 +72,18 @@
       <obj_property name="ElementShortName">rgmii1_txc</obj_property>
       <obj_property name="ObjectShortName">rgmii1_txc</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/rgmii2_td">
+      <obj_property name="ElementShortName">rgmii2_td[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rgmii2_td[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/rgmii2_tx_ctl">
+      <obj_property name="ElementShortName">rgmii2_tx_ctl</obj_property>
+      <obj_property name="ObjectShortName">rgmii2_tx_ctl</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/rgmii2_txc">
+      <obj_property name="ElementShortName">rgmii2_txc</obj_property>
+      <obj_property name="ObjectShortName">rgmii2_txc</obj_property>
+   </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_data_out">
       <obj_property name="ElementShortName">rx_data_out[7:0]</obj_property>
       <obj_property name="ObjectShortName">rx_data_out[7:0]</obj_property>
@@ -117,8 +129,8 @@
       <obj_property name="ObjectShortName">rx_saved_arp_opcode[15:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_ipv4_ttl">
-      <obj_property name="ElementShortName">rx_saved_ipv4_ttl[15:0]</obj_property>
-      <obj_property name="ObjectShortName">rx_saved_ipv4_ttl[15:0]</obj_property>
+      <obj_property name="ElementShortName">rx_saved_ipv4_ttl[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_saved_ipv4_ttl[7:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_saved_ipv4_checksum">
       <obj_property name="ElementShortName">rx_saved_ipv4_checksum[15:0]</obj_property>
@@ -227,6 +239,7 @@
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wdata">
       <obj_property name="ElementShortName">fifo_matrix_rx_wdata[3:0][7:0]</obj_property>
       <obj_property name="ObjectShortName">fifo_matrix_rx_wdata[3:0][7:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wlast">
       <obj_property name="ElementShortName">fifo_matrix_rx_wlast[3:0]</obj_property>
@@ -235,6 +248,7 @@
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wvalid">
       <obj_property name="ElementShortName">fifo_matrix_rx_wvalid[3:0]</obj_property>
       <obj_property name="ObjectShortName">fifo_matrix_rx_wvalid[3:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wready">
       <obj_property name="ElementShortName">fifo_matrix_rx_wready[3:0]</obj_property>

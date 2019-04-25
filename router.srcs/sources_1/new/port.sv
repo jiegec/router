@@ -385,7 +385,7 @@ module port #(
     logic [`IPV4_WIDTH-1:0] rx_saved_arp_dst_ipv4_addr;
     logic [`ARP_OPCODE_COUNT*`BYTE_WIDTH-1:0] rx_saved_arp_opcode;
     // IPV4
-    logic [`IPV4_TTL_COUNT*`BYTE_WIDTH-1:0] rx_saved_ipv4_ttl;
+    logic [`BYTE_WIDTH-1:0] rx_saved_ipv4_ttl;
     logic [`IPV4_CHECKSUM_COUNT*`BYTE_WIDTH-1:0] rx_saved_ipv4_checksum;
     logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_src_addr;
     logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_dst_addr;
@@ -552,7 +552,7 @@ module port #(
 
                     // IPV4 Handling
                     if (rx_read_counter >= `IPV4_TTL_BEGIN && rx_read_counter < `IPV4_TTL_END) begin
-                        rx_saved_ipv4_ttl <= {rx_saved_ipv4_ttl[`IPV4_TTL_COUNT*`BYTE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
+                        rx_saved_ipv4_ttl <= rx_read_data;
                     end
                     if (rx_read_counter >= `IPV4_CHECKSUM_BEGIN && rx_read_counter < `IPV4_CHECKSUM_END) begin
                         rx_saved_ipv4_checksum <= {rx_saved_ipv4_checksum[`IPV4_CHECKSUM_COUNT*`BYTE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
@@ -564,12 +564,10 @@ module port #(
                         rx_saved_ipv4_dst_addr <= {rx_saved_ipv4_dst_addr[`IPV4_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
                     if (rx_read_counter >= `IPV4_BEGIN) begin
-                        rx_saved_ipv4_packet <= rx_saved_ipv4_packet | ({`MAX_ETHERNET_FRAME_BYTES*`BYTE_WIDTH'b0,rx_read_data} << ((rx_read_counter - `IPV4_BEGIN) * `BYTE_WIDTH));
-                        //rx_saved_ipv4_packet <= {rx_read_data, rx_saved_ipv4_packet[(rx_read_counter - `IPV4_BEGIN)*`BYTE_WIDTH-1:0]};
-                        //rx_saved_ipv4_packet[(rx_read_counter - `IPV4_BEGIN)*`BYTE_WIDTH-1:(rx_read_counter - `IPV4_BEGIN)*`BYTE_WIDTH-`BYTE_WIDTH] <= rx_read_data;
+                        rx_saved_ipv4_packet <= rx_saved_ipv4_packet | ({`MAX_ETHERNET_FRAME_BYTES*`BYTE_WIDTH'b0, rx_read_data} << ((rx_read_counter - `IPV4_BEGIN) * `BYTE_WIDTH));
                     end
 
-                    if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_saved_ipv4_dst_addr != port_ip && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed) begin
+                    if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_saved_ipv4_dst_addr != port_ip && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed && rx_saved_ipv4_ttl > 1) begin
                         ip_routed <= 1;
                         ip_routing <= 1;
                         ip_lookup_routing <= 0;
@@ -615,11 +613,17 @@ module port #(
                         arp_arbiter_req <= 0;
                         ip_lookup_routing <= 0;
                         rx_outbound <= 1;
-                        rx_outbound_length <= rx_read_length;
+                        rx_outbound_length <= rx_read_length - 18;
                         rx_outbound_port_id <= arp_lookup_port;
                         fifo_matrix_rx_wvalid[arp_lookup_port] <= 1;
                         ip_routing <= 0;
-                        rx_saved_ipv4_packet <= {rx_saved_ipv4_packet, `IPV4_ETHERTYPE_REV,
+                        rx_saved_ipv4_packet <= {
+                            rx_saved_ipv4_packet[`MAX_ETHERNET_FRAME_BYTES*`BYTE_WIDTH-1:`IPV4_CHECKSUM_END*`BYTE_WIDTH],
+                            // ignore overflow for now
+                            rx_saved_ipv4_checksum[7:0] + 1'h1, rx_saved_ipv4_checksum[15:8], 
+                            rx_saved_ipv4_packet[(`IPV4_CHECKSUM_BEGIN-`IPV4_BEGIN)*`BYTE_WIDTH-1:(`IPV4_TTL_END-`IPV4_BEGIN)*`BYTE_WIDTH],
+                            rx_saved_ipv4_ttl - 1'h1,
+                            rx_saved_ipv4_packet[(`IPV4_TTL_BEGIN-`IPV4_BEGIN)*`BYTE_WIDTH-1:0], `IPV4_ETHERTYPE_REV,
                             port_mac[7:0], port_mac[15:8], port_mac[23:16], port_mac[31:24], port_mac[39:32], port_mac[47:40],
                             arp_lookup_mac[7:0], arp_lookup_mac[15:8], arp_lookup_mac[23:16], arp_lookup_mac[31:24], arp_lookup_mac[39:32], arp_lookup_mac[47:40]
                             };

@@ -40,7 +40,7 @@ module testbench_axi(
     logic rx_ctl_oddr_2;
     logic [7:0] example1 [71:0];
     logic [7:0] example2 [71:0];
-    logic [7:0] example3 [101:0];
+    logic [7:0] example3 [109:0];
     logic selector = 0;
     
     initial begin
@@ -74,7 +74,7 @@ module testbench_axi(
             data1_1 <= packet_clk ? example1[count][3:0] : 4'b0000;
             data2_1 <= packet_clk ? example1[count][7:4] : 4'b0000;
         end else begin
-            trans_1 <= packet_clk && count < 8'd102;
+            trans_1 <= packet_clk && count < 8'd110;
             data1_1 <= packet_clk ? example3[count][3:0] : 4'b0000;
             data2_1 <= packet_clk ? example3[count][7:4] : 4'b0000;
         end
