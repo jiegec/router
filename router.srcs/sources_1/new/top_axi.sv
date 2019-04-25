@@ -65,6 +65,13 @@ module top_axi(
     logic [`PORT_COUNT-1:0] arp_arbiter_req;
     logic [`PORT_COUNT-1:0] arp_arbiter_grant;
 
+    logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_arp_lookup_ip;
+    logic [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_arp_lookup_mac;
+    logic [`PORT_COUNT-1:0][`PORT_WIDTH-1:0] port_arp_lookup_port;
+    logic [`PORT_COUNT-1:0] port_arp_lookup_ip_valid;
+    logic [`PORT_COUNT-1:0] port_arp_lookup_mac_valid;
+    logic [`PORT_COUNT-1:0] port_arp_lookup_mac_not_found;
+
     logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_arp_insert_ip;
     logic [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_arp_insert_mac;
     logic [`PORT_COUNT-1:0][`PORT_WIDTH-1:0] port_arp_insert_port;
@@ -77,6 +84,13 @@ module top_axi(
         .reset(reset),
         .arp_arbiter_req(arp_arbiter_req),
         .arp_arbiter_grant(arp_arbiter_grant),
+
+        .port_arp_lookup_ip(port_arp_lookup_ip),
+        .port_arp_lookup_mac(port_arp_lookup_mac),
+        .port_arp_lookup_port(port_arp_lookup_port),
+        .port_arp_lookup_ip_valid(port_arp_lookup_ip_valid),
+        .port_arp_lookup_mac_valid(port_arp_lookup_mac_valid),
+        .port_arp_lookup_mac_not_found(port_arp_lookup_mac_not_found),
 
         .port_arp_insert_ip(port_arp_insert_ip),
         .port_arp_insert_mac(port_arp_insert_mac),
@@ -128,6 +142,12 @@ module top_axi(
         // arp
         .arp_arbiter_req(arp_arbiter_req[0]),
         .arp_arbiter_granted(arp_arbiter_grant[0]),
+        .arp_lookup_ip(port_arp_lookup_ip[0]),
+        .arp_lookup_mac(port_arp_lookup_mac[0]),
+        .arp_lookup_port(port_arp_lookup_port[0]),
+        .arp_lookup_ip_valid(port_arp_lookup_ip_valid[0]),
+        .arp_lookup_mac_valid(port_arp_lookup_mac_valid[0]),
+        .arp_lookup_mac_not_found(port_arp_lookup_mac_not_found[0]),
         .arp_insert_ip(port_arp_insert_ip[0]),
         .arp_insert_mac(port_arp_insert_mac[0]),
         .arp_insert_port(port_arp_insert_port[0]),
@@ -181,6 +201,12 @@ module top_axi(
         // arp
         .arp_arbiter_req(arp_arbiter_req[1]),
         .arp_arbiter_granted(arp_arbiter_grant[1]),
+        .arp_lookup_ip(port_arp_lookup_ip[1]),
+        .arp_lookup_mac(port_arp_lookup_mac[1]),
+        .arp_lookup_port(port_arp_lookup_port[1]),
+        .arp_lookup_ip_valid(port_arp_lookup_ip_valid[1]),
+        .arp_lookup_mac_valid(port_arp_lookup_mac_valid[1]),
+        .arp_lookup_mac_not_found(port_arp_lookup_mac_not_found[1]),
         .arp_insert_ip(port_arp_insert_ip[1]),
         .arp_insert_mac(port_arp_insert_mac[1]),
         .arp_insert_port(port_arp_insert_port[1]),
