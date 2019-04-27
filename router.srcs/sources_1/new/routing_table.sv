@@ -37,14 +37,12 @@ module routing_table(
     // A array table with BUCKET_INDEX_WIDTH buckets
     // Each item consists of (DST_IP,PREFIX_MASK,VIA_IP) tuple.
     // Represents DST_IP/PREFIX_LEN via VIA_IP
-    logic [`BUCKET_INDEX_COUNT-1:0][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:0] data = 0;
-
-    initial begin
+    logic [`BUCKET_INDEX_COUNT-1:0][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:0] data = {
         // 10.0.0.0/24 via 10.0.0.2
-        data[0] = 96'h0a000000ffffff000a000002;
+        96'h0a000000ffffff000a000002,
         // 10.0.1.0/24 via 10.0.1.2
-        data[1] = 96'h0a000100ffffff000a000102;
-    end
+        96'h0a000100ffffff000a000102
+    };
 
     logic [`BUCKET_INDEX_WIDTH-1:0] lookup_index;
     logic [`IPV4_WIDTH-1:0] saved_dest_ip;

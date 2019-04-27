@@ -96,11 +96,11 @@ module port #(
     logic rx_statistics_valid;
 
     logic rx_mac_aclk;
-    (*mark_debug = "true"*) logic rx_reset;
-    (*mark_debug = "true"*) logic [7:0] rx_axis_mac_tdata;
-    (*mark_debug = "true"*) logic rx_axis_mac_tvalid;
-    (*mark_debug = "true"*) logic rx_axis_mac_tlast;
-    (*mark_debug = "true"*) logic rx_axis_mac_tuser;
+    logic rx_reset;
+    logic [7:0] rx_axis_mac_tdata;
+    logic rx_axis_mac_tvalid;
+    logic rx_axis_mac_tlast;
+    logic rx_axis_mac_tuser;
 
     logic tx_enable;
 
@@ -275,13 +275,13 @@ module port #(
     end
 
     logic [`BYTE_WIDTH-1:0] rx_data_out;
-    (*mark_debug = "true"*) logic rx_data_ren = 0;
+    logic rx_data_ren = 0;
 
-    (*mark_debug = "true"*) logic rx_data_full;
-    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_data_in;
-    (*mark_debug = "true"*) logic rx_data_busy;
-    (*mark_debug = "true"*) logic rx_data_wen;
-    (*mark_debug = "true"*) logic rx_axis_mac_tvalid_last;
+    logic rx_data_full;
+    logic [`BYTE_WIDTH-1:0] rx_data_in;
+    logic rx_data_busy;
+    logic rx_data_wen;
+    logic rx_axis_mac_tvalid_last;
 
     // stores ethernet frame data
     xpm_fifo_async #(
@@ -371,7 +371,7 @@ module port #(
         end
     end
 
-    logic rx_read;
+    (*mark_debug = "true"*) logic rx_read;
     logic [`LENGTH_WIDTH-1:0] rx_read_length;
     logic [`BYTE_WIDTH-1:0] rx_read_data;
     logic [`LENGTH_WIDTH-1:0] rx_read_counter;
@@ -390,16 +390,16 @@ module port #(
     logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_src_addr;
     logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_dst_addr;
 
-    logic [`IPV4_WIDTH-1:0] rx_nexthop_ipv4_addr;
-    logic [`MAC_WIDTH-1:0] rx_nexthop_mac_addr;
+    (*mark_debug = "true"*) logic [`IPV4_WIDTH-1:0] rx_nexthop_ipv4_addr;
+    (*mark_debug = "true"*) logic [`MAC_WIDTH-1:0] rx_nexthop_mac_addr;
     //logic [`MAX_ETHERNET_FRAME_BYTES*`BYTE_WIDTH-1:0] rx_saved_ipv4_packet;
-    logic rx_found_nexthop_ipv4;
-    logic rx_lookup_nexthop_mac;
+    (*mark_debug = "true"*) logic rx_found_nexthop_ipv4;
+    (*mark_debug = "true"*) logic rx_lookup_nexthop_mac;
 
-    logic [`BYTE_WIDTH-1:0] rx_saved_ipv4_in;
-    logic [`BYTE_WIDTH-1:0] rx_saved_ipv4_out;
-    logic [`LENGTH_WIDTH-1:0] rx_saved_ipv4_addr;
-    logic rx_saved_ipv4_wen;
+    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_saved_ipv4_in;
+    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_saved_ipv4_out;
+    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] rx_saved_ipv4_addr;
+    (*mark_debug = "true"*) logic rx_saved_ipv4_wen;
 
     // stores the current ethernet frame temporarily
     xpm_memory_spram #(
@@ -420,19 +420,19 @@ module port #(
     );
 
     logic [`ARP_RESPONSE_COUNT*`BYTE_WIDTH-1:0] rx_outbound_arp_response;
-    logic [`LENGTH_WIDTH-1:0] rx_outbound_length;
-    logic [`LENGTH_WIDTH-1:0] rx_outbound_counter;
+    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] rx_outbound_length;
+    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] rx_outbound_counter;
 
     // arp insertion is working
-    logic arp_write;
-    logic arp_written;
+    (*mark_debug = "true"*) logic arp_write;
+    (*mark_debug = "true"*) logic arp_written;
     // ip routing is working
-    logic ip_routing;
-    logic ip_routed;
-    logic ip_lookup_routing;
+    (*mark_debug = "true"*) logic ip_routing;
+    (*mark_debug = "true"*) logic ip_routed;
+    (*mark_debug = "true"*) logic ip_lookup_routing;
     // data transfer is working
-    logic rx_outbound;
-    logic rx_outbound_port_id;
+    (*mark_debug = "true"*) logic rx_outbound;
+    (*mark_debug = "true"*) logic rx_outbound_port_id;
 
     always_ff @ (posedge clk) begin
         if (reset) begin

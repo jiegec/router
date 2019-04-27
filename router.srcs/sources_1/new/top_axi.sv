@@ -62,21 +62,21 @@ module top_axi(
     logic gtx_clk90; // 125MHz, 90 deg shift
 
     // arp table with arbiter
-    logic [`PORT_COUNT-1:0] arp_arbiter_req;
-    logic [`PORT_COUNT-1:0] arp_arbiter_grant;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0] arp_arbiter_req;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0] arp_arbiter_grant;
 
-    logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_arp_lookup_ip;
-    logic [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_arp_lookup_mac;
-    logic [`PORT_COUNT-1:0][`PORT_WIDTH-1:0] port_arp_lookup_port;
-    logic [`PORT_COUNT-1:0] port_arp_lookup_ip_valid;
-    logic [`PORT_COUNT-1:0] port_arp_lookup_mac_valid;
-    logic [`PORT_COUNT-1:0] port_arp_lookup_mac_not_found;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_arp_lookup_ip;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_arp_lookup_mac;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0][`PORT_WIDTH-1:0] port_arp_lookup_port;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0] port_arp_lookup_ip_valid;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0] port_arp_lookup_mac_valid;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0] port_arp_lookup_mac_not_found;
 
-    logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_arp_insert_ip;
-    logic [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_arp_insert_mac;
-    logic [`PORT_COUNT-1:0][`PORT_WIDTH-1:0] port_arp_insert_port;
-    logic [`PORT_COUNT-1:0] port_arp_insert_valid;
-    logic [`PORT_COUNT-1:0] port_arp_insert_ready;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_arp_insert_ip;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_arp_insert_mac;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0][`PORT_WIDTH-1:0] port_arp_insert_port;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0] port_arp_insert_valid;
+    (*mark_debug = "true"*) logic [`PORT_COUNT-1:0] port_arp_insert_ready;
 
 
     arp_table_bus arp_table_bus_inst(
