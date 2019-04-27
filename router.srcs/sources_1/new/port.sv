@@ -663,7 +663,7 @@ module port #(
                         ip_routing <= 0;
                         rx_nexthop_mac_addr <= arp_lookup_mac;
                         // TODO: Handle overflow
-                        rx_saved_ipv4_checksum <= rx_saved_ipv4_checksum + 1;
+                        rx_saved_ipv4_checksum <= rx_saved_ipv4_checksum + `16'h0100;
                     end else if (rx_lookup_nexthop_mac && arp_arbiter_granted && arp_lookup_mac_not_found) begin
                         arp_lookup_ip_valid <= 0;
                         arp_arbiter_req <= 0;
