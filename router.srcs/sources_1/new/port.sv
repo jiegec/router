@@ -439,6 +439,7 @@ module port #(
             rx_len_ren <= 0;
             rx_data_ren <= 0;
             rx_read <= 0;
+            rx_read_data <= 0;
 
             rx_saved_dst_mac_addr <= 0;
             rx_saved_src_mac_addr <= 0;
@@ -466,6 +467,7 @@ module port #(
             ip_lookup_routing <= 0;
             routing_lookup_valid <= 0;
             routing_lookup_dest_ip <= 0;
+            routing_arbiter_req <= 0;
             arp_lookup_ip_valid <= 0;
             arp_lookup_ip <= 0;
 
@@ -600,7 +602,6 @@ module port #(
                         rx_saved_ipv4_dst_addr <= {rx_saved_ipv4_dst_addr[`IPV4_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
                     if (rx_read_counter >= `IPV4_BEGIN) begin
-                        //rx_saved_ipv4_packet <= rx_saved_ipv4_packet | ({`MAX_ETHERNET_FRAME_BYTES*`BYTE_WIDTH'b0, rx_read_data} << ((rx_read_counter - `IPV4_BEGIN) * `BYTE_WIDTH));
                         rx_saved_ipv4_addr <= rx_read_counter - `IPV4_BEGIN;
                         rx_saved_ipv4_in <= rx_read_data;
                         if (rx_read_counter == rx_read_length - 2) begin
@@ -662,8 +663,15 @@ module port #(
                         fifo_matrix_rx_wvalid[arp_lookup_port] <= 1;
                         ip_routing <= 0;
                         rx_nexthop_mac_addr <= arp_lookup_mac;
-                        // TODO: Handle overflow
-                        rx_saved_ipv4_checksum <= rx_saved_ipv4_checksum + 16'h0100;
+                        // Consider overflow
+                        // rx_saved_ipv4_checksum <= rx_saved_ipv4_checksum + 16'h0100;
+                        if (rx_saved_ipv4_checksum == 16'hffff) begin
+                            rx_saved_ipv4_checksum <= 16'h0100;
+                        end else if (rx_saved_ipv4_checksum >= 16'hff00) begin
+                            rx_saved_ipv4_checksum <= rx_saved_ipv4_checksum[7:0] + 1;
+                        end else begin
+                            rx_saved_ipv4_checksum <= rx_saved_ipv4_checksum + 16'h0100;
+                        end
                     end else if (rx_lookup_nexthop_mac && arp_arbiter_granted && arp_lookup_mac_not_found) begin
                         arp_lookup_ip_valid <= 0;
                         arp_arbiter_req <= 0;
