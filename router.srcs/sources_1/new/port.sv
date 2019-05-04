@@ -52,6 +52,7 @@ module port #(
     input routing_arbiter_granted,
     output logic [`IPV4_WIDTH-1:0] routing_lookup_dest_ip,
     input [`IPV4_WIDTH-1:0] routing_lookup_via_ip,
+    input [`PORT_WIDTH-1:0] routing_lookup_via_port,
     output logic routing_lookup_valid,
     input routing_lookup_ready,
     input routing_lookup_output_valid,
@@ -391,6 +392,7 @@ module port #(
     logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_dst_addr;
 
     (*mark_debug = "true"*) logic [`IPV4_WIDTH-1:0] rx_nexthop_ipv4_addr;
+    (*mark_debug = "true"*) logic [`PORT_WIDTH-1:0] rx_nexthop_port;
     (*mark_debug = "true"*) logic [`MAC_WIDTH-1:0] rx_nexthop_mac_addr;
     //logic [`MAX_ETHERNET_FRAME_BYTES*`BYTE_WIDTH-1:0] rx_saved_ipv4_packet;
     (*mark_debug = "true"*) logic rx_found_nexthop_ipv4;
@@ -454,6 +456,7 @@ module port #(
             rx_saved_ipv4_src_addr <= 0;
             rx_saved_ipv4_dst_addr <= 0;
             rx_nexthop_ipv4_addr <= 0;
+            rx_nexthop_port <= 0;
             rx_nexthop_mac_addr <= 0;
             rx_found_nexthop_ipv4 <= 0;
             rx_lookup_nexthop_mac <= 0;
@@ -503,6 +506,7 @@ module port #(
                 rx_saved_ipv4_src_addr <= 0;
                 rx_saved_ipv4_dst_addr <= 0;
                 rx_nexthop_ipv4_addr <= 0;
+                rx_nexthop_port <= 0;
                 rx_nexthop_mac_addr <= 0;
                 rx_found_nexthop_ipv4 <= 0;
                 rx_lookup_nexthop_mac <= 0;
@@ -638,6 +642,7 @@ module port #(
                         ip_lookup_routing <= 1;
                     end else if (routing_arbiter_granted && routing_lookup_output_valid) begin
                         rx_nexthop_ipv4_addr <= routing_lookup_via_ip;
+                        rx_nexthop_port <= routing_lookup_via_port;
                         routing_lookup_valid <= 0;
                         routing_arbiter_req <= 0;
                         rx_found_nexthop_ipv4 <= 1;
@@ -677,6 +682,15 @@ module port #(
                         arp_arbiter_req <= 0;
                         ip_lookup_routing <= 0;
                         ip_routing <= 0;
+                        // send arp request
+                        arp_written <= 1;
+                        rx_outbound <= 1;
+                        rx_outbound_arp_response <= {`MAC_WIDTH'hffffffffffff, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REQUEST, port_mac, port_ip, `MAC_WIDTH'h0, rx_nexthop_ipv4_addr};
+                        rx_outbound_length <= `ARP_RESPONSE_COUNT;
+                        rx_outbound_counter <= 0;
+                        rx_outbound_port_id <= rx_nexthop_port;
+                        // send to next hop port
+                        fifo_matrix_rx_wvalid[rx_nexthop_port] <= 1;
                     end
                 end
                 if (rx_outbound && fifo_matrix_rx_wready[rx_outbound_port_id]) begin
@@ -684,10 +698,10 @@ module port #(
                         rx_outbound_length <= rx_outbound_length - 1;
                         rx_outbound_counter <= rx_outbound_counter + 1;
                         if (arp_written) begin
+                            // reply or request
                             rx_outbound_arp_response <= rx_outbound_arp_response << `BYTE_WIDTH;
                             fifo_matrix_rx_wdata[rx_outbound_port_id] <= rx_outbound_arp_response[`ARP_RESPONSE_COUNT * `BYTE_WIDTH - 1:`ARP_RESPONSE_COUNT * `BYTE_WIDTH - `BYTE_WIDTH];
-                        end
-                        if (ip_routed) begin
+                        end else if (ip_routed) begin
                             rx_saved_ipv4_addr <= rx_outbound_counter >= `IPV4_BEGIN - 2 ? (rx_outbound_counter - `IPV4_BEGIN + 2) : 0;
                             if (rx_outbound_counter >= `DST_MAC_BEGIN && rx_outbound_counter < `DST_MAC_END) begin
                                 fifo_matrix_rx_wdata[rx_outbound_port_id] <= rx_nexthop_mac_addr[`MAC_WIDTH-1:`MAC_WIDTH-`BYTE_WIDTH];

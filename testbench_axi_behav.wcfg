@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="34594071983fs"></ZoomStartTime>
-      <ZoomEndTime time="34718278053fs"></ZoomEndTime>
-      <Cursor1Time time="34678100000fs"></Cursor1Time>
+      <ZoomStartTime time="9028610000fs"></ZoomStartTime>
+      <ZoomEndTime time="67128610001fs"></ZoomEndTime>
+      <Cursor1Time time="61000000000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="281"></NameColumnWidth>
-      <ValueColumnWidth column_width="122"></ValueColumnWidth>
+      <ValueColumnWidth column_width="118"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="58" />
+   <WVObjectSize size="61" />
    <wvobject type="logic" fp_name="/testbench_axi/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -148,6 +148,14 @@
       <obj_property name="ElementShortName">rx_nexthop_ipv4_addr[31:0]</obj_property>
       <obj_property name="ObjectShortName">rx_nexthop_ipv4_addr[31:0]</obj_property>
    </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_nexthop_port">
+      <obj_property name="ElementShortName">rx_nexthop_port[1:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_nexthop_port[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/rx_nexthop_mac_addr">
+      <obj_property name="ElementShortName">rx_nexthop_mac_addr[47:0]</obj_property>
+      <obj_property name="ObjectShortName">rx_nexthop_mac_addr[47:0]</obj_property>
+   </wvobject>
    <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/ip_routing">
       <obj_property name="ElementShortName">ip_routing</obj_property>
       <obj_property name="ObjectShortName">ip_routing</obj_property>
@@ -254,5 +262,9 @@
       <obj_property name="ElementShortName">fifo_matrix_rx_wready[3:0]</obj_property>
       <obj_property name="ObjectShortName">fifo_matrix_rx_wready[3:0]</obj_property>
       <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/arp_written">
+      <obj_property name="ElementShortName">arp_written</obj_property>
+      <obj_property name="ObjectShortName">arp_written</obj_property>
    </wvobject>
 </wave_config>

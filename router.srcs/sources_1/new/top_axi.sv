@@ -105,6 +105,7 @@ module top_axi(
 
     logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_lookup_dest_ip;
     logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_lookup_via_ip;
+    logic [`PORT_COUNT-1:0][`PORT_WIDTH-1:0] port_lookup_via_port;
     logic [`PORT_COUNT-1:0]port_lookup_valid;
     logic [`PORT_COUNT-1:0]port_lookup_ready;
     logic [`PORT_COUNT-1:0]port_lookup_output_valid;
@@ -118,6 +119,7 @@ module top_axi(
 
         .port_lookup_dest_ip(port_lookup_dest_ip),
         .port_lookup_via_ip(port_lookup_via_ip),
+        .port_lookup_via_port(port_lookup_via_port),
         .port_lookup_valid(port_lookup_valid),
         .port_lookup_ready(port_lookup_ready),
         .port_lookup_output_valid(port_lookup_output_valid),
@@ -159,6 +161,7 @@ module top_axi(
         .routing_arbiter_granted(routing_arbiter_grant[0]),
         .routing_lookup_dest_ip(port_lookup_dest_ip[0]),
         .routing_lookup_via_ip(port_lookup_via_ip[0]),
+        .routing_lookup_via_port(port_lookup_via_port[0]),
         .routing_lookup_valid(port_lookup_valid[0]),
         .routing_lookup_ready(port_lookup_ready[0]),
         .routing_lookup_output_valid(port_lookup_output_valid[0]),
@@ -218,6 +221,7 @@ module top_axi(
         .routing_arbiter_granted(routing_arbiter_grant[1]),
         .routing_lookup_dest_ip(port_lookup_dest_ip[1]),
         .routing_lookup_via_ip(port_lookup_via_ip[1]),
+        .routing_lookup_via_port(port_lookup_via_port[1]),
         .routing_lookup_valid(port_lookup_valid[1]),
         .routing_lookup_ready(port_lookup_ready[1]),
         .routing_lookup_output_valid(port_lookup_output_valid[1]),

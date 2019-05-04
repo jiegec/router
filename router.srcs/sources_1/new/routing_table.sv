@@ -27,6 +27,7 @@ module routing_table(
 
     input [`IPV4_WIDTH-1:0] lookup_dest_ip,
     output logic [`IPV4_WIDTH-1:0] lookup_via_ip,
+    output logic [`PORT_WIDTH-1:0] lookup_via_port,
     input lookup_valid,
     output logic lookup_ready,
     output logic lookup_output_valid,
@@ -37,11 +38,11 @@ module routing_table(
     // A array table with BUCKET_INDEX_WIDTH buckets
     // Each item consists of (DST_IP,PREFIX_MASK,VIA_IP) tuple.
     // Represents DST_IP/PREFIX_LEN via VIA_IP
-    logic [`BUCKET_INDEX_COUNT-1:0][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:0] data = {
-        // 10.0.0.0/24 via 10.0.0.2
-        96'h0a000000ffffff000a000002,
-        // 10.0.1.0/24 via 10.0.1.2
-        96'h0a000100ffffff000a000102
+    logic [`BUCKET_INDEX_COUNT-1:0][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH+`PORT_WIDTH-1:0] data = {
+        // 10.0.0.0/24 via 10.0.0.2 port 0
+        {96'h0a000000ffffff000a000002, `PORT_WIDTH'b00},
+        // 10.0.1.0/24 via 10.0.1.2 port 1
+        {96'h0a000100ffffff000a000102, `PORT_WIDTH'b01}
     };
 
     logic [`BUCKET_INDEX_WIDTH-1:0] lookup_index;
@@ -50,6 +51,7 @@ module routing_table(
     always_ff @ (posedge clk) begin
         if (rst) begin
             lookup_via_ip <= 0;
+            lookup_via_port <= 0;
             lookup_ready <= 1;
             lookup_output_valid <= 0;
             lookup_not_found <= 0;
@@ -63,6 +65,7 @@ module routing_table(
                 end
                 lookup_index <= 0;
                 lookup_via_ip <= 0;
+                lookup_via_port <= 0;
                 lookup_not_found <= 0;
                 lookup_output_valid <= 0;
             end else if (!lookup_ready) begin
@@ -73,10 +76,11 @@ module routing_table(
                 end else if (data[lookup_index] == 0) begin
                     lookup_ready <= 1;
                     lookup_not_found <= 1;
-                end else if (data[lookup_index][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:`IPV4_WIDTH+`IPV4_WIDTH] == (saved_dest_ip & data[lookup_index][`IPV4_WIDTH+`IPV4_WIDTH-1:`IPV4_WIDTH])) begin
+                end else if (data[lookup_index][`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH+`PORT_WIDTH-1:`IPV4_WIDTH+`IPV4_WIDTH+`PORT_WIDTH] == (saved_dest_ip & data[lookup_index][`IPV4_WIDTH+`IPV4_WIDTH+`PORT_WIDTH-1:`IPV4_WIDTH+`PORT_WIDTH])) begin
                     lookup_output_valid <= 1;
                     lookup_not_found <= 0;
-                    lookup_via_ip <= data[lookup_index][`IPV4_WIDTH-1:0];
+                    lookup_via_ip <= data[lookup_index][`IPV4_WIDTH+`PORT_WIDTH-1:`PORT_WIDTH];
+                    lookup_via_port <= data[lookup_index][`PORT_WIDTH-1:0];
                 end else begin
                     lookup_index <= lookup_index + 1;
                 end
