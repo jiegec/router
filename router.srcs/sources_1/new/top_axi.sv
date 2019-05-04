@@ -132,13 +132,18 @@ module top_axi(
     logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0] fifo_matrix_wvalid;
     logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0] fifo_matrix_wready;
 
+    logic [`PORT_COUNT-1:0][`MAC_WIDTH-1:0] port_ip = {
+        `IPV4_WIDTH'h0a000101,// port 1 10.0.1.1
+        `IPV4_WIDTH'h0a000001 // port 0 10.0.0.1
+    };
+
     port #(
         .shared(0)
     ) port_inst_0 (
         .clk(internal_clk),
         .reset_n(reset_n),
         .port_id(2'b00),
-        .port_ip(32'h0a000001), // 10.0.0.1
+        .port_ip(port_ip), // 10.0.0.1
         .port_mac(48'h020203030000), // 02:02:03:03:00:00
 
         // arp
@@ -198,7 +203,7 @@ module top_axi(
         .clk(internal_clk),
         .reset_n(reset_n),
         .port_id(2'b01),
-        .port_ip(32'h0a000101), // 10.0.1.1
+        .port_ip(port_ip), // 10.0.1.1
         .port_mac(48'h020203030000), // 02:02:03:03:00:00
 
         // arp

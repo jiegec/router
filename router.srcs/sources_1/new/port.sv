@@ -29,7 +29,7 @@ module port #(
     input reset_n,
 
     input [`PORT_WIDTH-1:0] port_id,
-    input [`IPV4_WIDTH-1:0] port_ip,
+    input [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_ip,
     input [`MAC_WIDTH-1:0] port_mac,
 
     // ARP table
@@ -581,10 +581,10 @@ module port #(
                         arp_insert_mac <= rx_saved_src_mac_addr;
                         arp_insert_port <= port_id;
                         rx_outbound_port_id <= port_id;
-                        if (rx_saved_arp_opcode == `ARP_OPCODE_REQUEST && rx_saved_arp_dst_ipv4_addr == port_ip) begin
+                        if (rx_saved_arp_opcode == `ARP_OPCODE_REQUEST && rx_saved_arp_dst_ipv4_addr == port_ip[port_id]) begin
                             // send arp reply
                             rx_outbound <= 1;
-                            rx_outbound_arp_response <= {rx_saved_src_mac_addr, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REPLY, port_mac, port_ip, rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr};
+                            rx_outbound_arp_response <= {rx_saved_src_mac_addr, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REPLY, port_mac, port_ip[port_id], rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr};
                             rx_outbound_length <= `ARP_RESPONSE_COUNT;
                             rx_outbound_counter <= 0;
                             // send to same port
@@ -615,7 +615,7 @@ module port #(
                         end
                     end
 
-                    if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_saved_ipv4_dst_addr != port_ip && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed && rx_saved_ipv4_ttl > 1) begin
+                    if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_saved_ipv4_dst_addr != port_ip[port_id] && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed && rx_saved_ipv4_ttl > 1) begin
                         ip_routed <= 1;
                         ip_routing <= 1;
                         ip_lookup_routing <= 0;
@@ -685,7 +685,7 @@ module port #(
                         // send arp request
                         arp_written <= 1;
                         rx_outbound <= 1;
-                        rx_outbound_arp_response <= {`MAC_WIDTH'hffffffffffff, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REQUEST, port_mac, port_ip, `MAC_WIDTH'h0, rx_nexthop_ipv4_addr};
+                        rx_outbound_arp_response <= {`MAC_WIDTH'hffffffffffff, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REQUEST, port_mac, port_ip[rx_nexthop_port], `MAC_WIDTH'h0, rx_nexthop_ipv4_addr};
                         rx_outbound_length <= `ARP_RESPONSE_COUNT;
                         rx_outbound_counter <= 0;
                         rx_outbound_port_id <= rx_nexthop_port;
