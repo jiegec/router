@@ -67,9 +67,12 @@ module arp_table(
             end else if (searching && !lookup_ip_valid) begin
                 searching <= 0;
                 lookup_mac_valid <= 0;
+                lookup_mac_not_found <= 0;
+                lookup_mac <= 0;
+                lookup_port <= 0;
             end
 
-            if (searching && !lookup_mac_valid) begin
+            if (searching && !lookup_mac_valid && !lookup_mac_not_found) begin
                 if (data[lookup_bucket_index][lookup_current_bucket_depth][`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:`MAC_WIDTH+`PORT_WIDTH] == lookup_ip) begin
                     lookup_mac_valid <= 1;
                     lookup_mac <= data[lookup_bucket_index][lookup_current_bucket_depth][`MAC_WIDTH+`PORT_WIDTH-1:`PORT_WIDTH];
@@ -94,6 +97,7 @@ module arp_table(
     logic second_pass;
     logic [`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] temp_data;
 
+    integer i, j;
     always_ff @ (posedge clk) begin
         if (rst) begin
             saved_insert_ip <= 0;
@@ -105,7 +109,11 @@ module arp_table(
             insert_current_bucket_depth <= 0;
             first_pass <= 0;
             second_pass <= 0;
-            data <= 0;
+            for (i = 0;i < `BUCKET_INDEX_COUNT;i++) begin
+                for (j = 0;j < `BUCKET_DEPTH_COUNT;j++) begin
+                    data[i][j] <= `IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH'b0;
+                end
+            end
         end else if (insert_valid && insert_ready) begin
             insert_ready <= 0;
             saved_insert_ip <= insert_ip;
