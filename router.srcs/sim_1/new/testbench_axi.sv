@@ -132,11 +132,56 @@ module testbench_axi(
         .Q(rx_ctl_oddr_2),
         .R(1'b0)
     );
+
+`ifndef HARDWARE_CONTROL_PLANE
+    logic axi_clk = 0; // 25MHz
+    always axi_clk = #20 ~axi_clk;
+
+    logic s_axis_tvalid;
+    logic s_axis_tready;
+    logic [7:0]s_axis_tdata;
+    logic s_axis_tlast;
+    logic m_axis_aclk;
+    logic m_axis_tvalid;
+    logic m_axis_tready;
+    logic [7:0]m_axis_tdata;
+    logic m_axis_tlast;
+
+    // loopback
+    axis_data_fifo_0 axis_data_fifo_0_inst (
+        .s_axis_aresetn(1'b1),
+        .m_axis_aresetn(1'b1),
+        .s_axis_aclk(axi_clk),
+        .s_axis_tvalid(s_axis_tvalid),
+        .s_axis_tready(s_axis_tready),
+        .s_axis_tdata(s_axis_tdata),
+        .s_axis_tlast(s_axis_tlast),
+        .m_axis_aclk(axi_clk),
+        .m_axis_tvalid(m_axis_tvalid),
+        .m_axis_tready(m_axis_tready),
+        .m_axis_tdata(m_axis_tdata),
+        .m_axis_tlast(m_axis_tlast)
+    );
+`endif
     
 
     top_axi top_axi (
         .clk(clk),
         .reset_n_in(1'b1),
+
+`ifndef HARDWARE_CONTROL_PLANE
+        .axis_clk(axi_clk),
+        .axis_rxd_tdata(s_axis_tdata),
+        .axis_rxd_tlast(s_axis_tlast),
+        .axis_rxd_tready(s_axis_tready),
+        .axis_rxd_tvalid(s_axis_tvalid),
+
+        .axis_txd_tdata(m_axis_tdata),
+        .axis_txd_tlast(m_axis_tlast),
+        .axis_txd_tready(m_axis_tready),
+        .axis_txd_tvalid(m_axis_tvalid),
+`endif
+
         .rgmii1_rd(rd_1),
         .rgmii1_rx_ctl(rx_ctl_oddr_1),
         .rgmii1_rxc(rx_clk_90deg),

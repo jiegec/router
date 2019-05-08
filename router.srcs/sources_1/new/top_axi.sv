@@ -142,10 +142,10 @@ module top_axi(
     );
 
     // ports
-    logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0][`BYTE_WIDTH-1:0] fifo_matrix_wdata;
-    logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0] fifo_matrix_wlast;
-    logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0] fifo_matrix_wvalid;
-    logic [`PORT_COUNT-1:0][`PORT_COUNT-1:0] fifo_matrix_wready;
+    logic [`PORT_OS_COUNT-1:0][`PORT_OS_COUNT-1:0][`BYTE_WIDTH-1:0] fifo_matrix_wdata;
+    logic [`PORT_OS_COUNT-1:0][`PORT_OS_COUNT-1:0] fifo_matrix_wlast;
+    logic [`PORT_OS_COUNT-1:0][`PORT_OS_COUNT-1:0] fifo_matrix_wvalid;
+    logic [`PORT_OS_COUNT-1:0][`PORT_OS_COUNT-1:0] fifo_matrix_wready;
 
     logic [`PORT_COUNT-1:0][`IPV4_WIDTH-1:0] port_ip = {
         `IPV4_WIDTH'h0a000101,// port 1 10.0.1.1
@@ -189,16 +189,16 @@ module top_axi(
         .routing_lookup_not_found(port_lookup_not_found[0]),
 
         // from X to current
-        .fifo_matrix_tx_wdata({fifo_matrix_wdata[3][0], fifo_matrix_wdata[2][0], fifo_matrix_wdata[1][0], fifo_matrix_wdata[0][0]}),
-        .fifo_matrix_tx_wlast({fifo_matrix_wlast[3][0], fifo_matrix_wlast[2][0], fifo_matrix_wlast[1][0], fifo_matrix_wlast[0][0]}),
-        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[3][0], fifo_matrix_wvalid[2][0], fifo_matrix_wvalid[1][0], fifo_matrix_wvalid[0][0]}),
-        .fifo_matrix_tx_wready({fifo_matrix_wready[3][0], fifo_matrix_wready[2][0], fifo_matrix_wready[1][0], fifo_matrix_wready[0][0]}),
+        .fifo_matrix_tx_wdata({fifo_matrix_wdata[4][0], fifo_matrix_wdata[3][0], fifo_matrix_wdata[2][0], fifo_matrix_wdata[1][0], fifo_matrix_wdata[0][0]}),
+        .fifo_matrix_tx_wlast({fifo_matrix_wlast[4][0], fifo_matrix_wlast[3][0], fifo_matrix_wlast[2][0], fifo_matrix_wlast[1][0], fifo_matrix_wlast[0][0]}),
+        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[4][0], fifo_matrix_wvalid[3][0], fifo_matrix_wvalid[2][0], fifo_matrix_wvalid[1][0], fifo_matrix_wvalid[0][0]}),
+        .fifo_matrix_tx_wready({fifo_matrix_wready[4][0], fifo_matrix_wready[3][0], fifo_matrix_wready[2][0], fifo_matrix_wready[1][0], fifo_matrix_wready[0][0]}),
 
         // from current to X
-        .fifo_matrix_rx_wdata({fifo_matrix_wdata[0][3], fifo_matrix_wdata[0][2], fifo_matrix_wdata[0][1], fifo_matrix_wdata[0][0]}),
-        .fifo_matrix_rx_wlast({fifo_matrix_wlast[0][3], fifo_matrix_wlast[0][2], fifo_matrix_wlast[0][1], fifo_matrix_wlast[0][0]}),
-        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[0][3], fifo_matrix_wvalid[0][2], fifo_matrix_wvalid[0][1], fifo_matrix_wvalid[0][0]}),
-        .fifo_matrix_rx_wready({fifo_matrix_wready[0][3], fifo_matrix_wready[0][2], fifo_matrix_wready[0][1], fifo_matrix_wready[0][0]}),
+        .fifo_matrix_rx_wdata({fifo_matrix_wdata[0][4], fifo_matrix_wdata[0][3], fifo_matrix_wdata[0][2], fifo_matrix_wdata[0][1], fifo_matrix_wdata[0][0]}),
+        .fifo_matrix_rx_wlast({fifo_matrix_wlast[0][4], fifo_matrix_wlast[0][3], fifo_matrix_wlast[0][2], fifo_matrix_wlast[0][1], fifo_matrix_wlast[0][0]}),
+        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[0][4], fifo_matrix_wvalid[0][3], fifo_matrix_wvalid[0][2], fifo_matrix_wvalid[0][1], fifo_matrix_wvalid[0][0]}),
+        .fifo_matrix_rx_wready({fifo_matrix_wready[0][4], fifo_matrix_wready[0][3], fifo_matrix_wready[0][2], fifo_matrix_wready[0][1], fifo_matrix_wready[0][0]}),
 
         .gtx_clk(gtx_clk_in),
         .gtx_clk_out(gtx_clk),
@@ -250,16 +250,16 @@ module top_axi(
         .routing_lookup_not_found(port_lookup_not_found[1]),
 
         // from X to current
-        .fifo_matrix_tx_wdata({fifo_matrix_wdata[3][1], fifo_matrix_wdata[2][1], fifo_matrix_wdata[1][1], fifo_matrix_wdata[0][1]}),
-        .fifo_matrix_tx_wlast({fifo_matrix_wlast[3][1], fifo_matrix_wlast[2][1], fifo_matrix_wlast[1][1], fifo_matrix_wlast[0][1]}),
-        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[3][1], fifo_matrix_wvalid[2][1], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[0][1]}),
-        .fifo_matrix_tx_wready({fifo_matrix_wready[3][1], fifo_matrix_wready[2][1], fifo_matrix_wready[1][1], fifo_matrix_wready[0][1]}),
+        .fifo_matrix_tx_wdata({fifo_matrix_wdata[4][1], fifo_matrix_wdata[3][1], fifo_matrix_wdata[2][1], fifo_matrix_wdata[1][1], fifo_matrix_wdata[0][1]}),
+        .fifo_matrix_tx_wlast({fifo_matrix_wlast[4][1], fifo_matrix_wlast[3][1], fifo_matrix_wlast[2][1], fifo_matrix_wlast[1][1], fifo_matrix_wlast[0][1]}),
+        .fifo_matrix_tx_wvalid({fifo_matrix_wvalid[4][1], fifo_matrix_wvalid[3][1], fifo_matrix_wvalid[2][1], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[0][1]}),
+        .fifo_matrix_tx_wready({fifo_matrix_wready[4][1], fifo_matrix_wready[3][1], fifo_matrix_wready[2][1], fifo_matrix_wready[1][1], fifo_matrix_wready[0][1]}),
 
         // from current to X
-        .fifo_matrix_rx_wdata({fifo_matrix_wdata[1][3], fifo_matrix_wdata[1][2], fifo_matrix_wdata[1][1], fifo_matrix_wdata[1][0]}),
-        .fifo_matrix_rx_wlast({fifo_matrix_wlast[1][3], fifo_matrix_wlast[1][2], fifo_matrix_wlast[1][1], fifo_matrix_wlast[1][0]}),
-        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[1][3], fifo_matrix_wvalid[1][2], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[1][0]}),
-        .fifo_matrix_rx_wready({fifo_matrix_wready[1][3], fifo_matrix_wready[1][2], fifo_matrix_wready[1][1], fifo_matrix_wready[1][0]}),
+        .fifo_matrix_rx_wdata({fifo_matrix_wdata[1][4], fifo_matrix_wdata[1][3], fifo_matrix_wdata[1][2], fifo_matrix_wdata[1][1], fifo_matrix_wdata[1][0]}),
+        .fifo_matrix_rx_wlast({fifo_matrix_wlast[1][4], fifo_matrix_wlast[1][3], fifo_matrix_wlast[1][2], fifo_matrix_wlast[1][1], fifo_matrix_wlast[1][0]}),
+        .fifo_matrix_rx_wvalid({fifo_matrix_wvalid[1][4], fifo_matrix_wvalid[1][3], fifo_matrix_wvalid[1][2], fifo_matrix_wvalid[1][1], fifo_matrix_wvalid[1][0]}),
+        .fifo_matrix_rx_wready({fifo_matrix_wready[1][4], fifo_matrix_wready[1][3], fifo_matrix_wready[1][2], fifo_matrix_wready[1][1], fifo_matrix_wready[1][0]}),
 
         .gtx_clk(gtx_clk),
         .gtx_clk90(gtx_clk90),
@@ -280,7 +280,75 @@ module top_axi(
     logic [`PORT_WIDTH-1:0] fifo_matrix_rx_index;
     logic fifo_matrix_rx_progress;
 
+    logic [7:0] os_rxd_tdata;
+    logic os_rxd_tvalid;
+    logic os_rxd_tready;
+    logic os_rxd_tlast;
+
+    assign os_rxd_tdata = fifo_matrix_rx_progress ? fifo_matrix_wdata[fifo_matrix_rx_index][`OS_PORT_ID] : `BYTE_WIDTH'b0;
+    assign os_rxd_tlast = fifo_matrix_rx_progress ? fifo_matrix_wlast[fifo_matrix_rx_index][`OS_PORT_ID] : 0;
+
+    axis_data_fifo_0 axis_data_fifo_0_rx (
+        .s_axis_aresetn(reset_n),
+        .m_axis_aresetn(reset_n),
+        .s_axis_aclk(internal_clk),
+        .s_axis_tvalid(os_rxd_tvalid),
+        .s_axis_tready(os_rxd_tready),
+        .s_axis_tdata(os_rxd_tdata),
+        .s_axis_tlast(os_rxd_tlast),
+        .m_axis_aclk(axis_clk),
+        .m_axis_tvalid(axis_rxd_tvalid),
+        .m_axis_tready(axis_rxd_tready),
+        .m_axis_tdata(axis_rxd_tdata),
+        .m_axis_tlast(axis_rxd_tlast)
+    );
+
     always_ff @ (posedge internal_clk) begin
+        if (reset) begin
+            os_rxd_tvalid <= 0;
+            axis_txd_tready <= 0;
+
+            fifo_matrix_rx_index <= 0;
+            fifo_matrix_rx_progress <= 0;
+
+            fifo_matrix_wready[0][`OS_PORT_ID] <= 0;
+            fifo_matrix_wready[1][`OS_PORT_ID] <= 0;
+            fifo_matrix_wready[2][`OS_PORT_ID] <= 0;
+            fifo_matrix_wready[3][`OS_PORT_ID] <= 0;
+            fifo_matrix_wdata[`OS_PORT_ID][0] <= 0;
+            fifo_matrix_wdata[`OS_PORT_ID][1] <= 0;
+            fifo_matrix_wdata[`OS_PORT_ID][2] <= 0;
+            fifo_matrix_wdata[`OS_PORT_ID][3] <= 0;
+            fifo_matrix_wlast[`OS_PORT_ID][0] <= 0;
+            fifo_matrix_wlast[`OS_PORT_ID][1] <= 0;
+            fifo_matrix_wlast[`OS_PORT_ID][2] <= 0;
+            fifo_matrix_wlast[`OS_PORT_ID][3] <= 0;
+            fifo_matrix_wvalid[`OS_PORT_ID][0] <= 0;
+            fifo_matrix_wvalid[`OS_PORT_ID][1] <= 0;
+            fifo_matrix_wvalid[`OS_PORT_ID][2] <= 0;
+            fifo_matrix_wvalid[`OS_PORT_ID][3] <= 0;
+        end else begin
+            if (!fifo_matrix_rx_progress && os_rxd_tready) begin
+                // can send to os now
+                if (fifo_matrix_wvalid[fifo_matrix_rx_index][`OS_PORT_ID]) begin
+                    // begin to recv data
+                    fifo_matrix_rx_progress <= 1;
+                    fifo_matrix_wready[fifo_matrix_rx_index][`OS_PORT_ID] <= 1;
+                end else begin
+                    // round robin
+                    fifo_matrix_rx_index <= fifo_matrix_rx_index + 1;
+                    os_rxd_tvalid <= 0;
+                    fifo_matrix_wready[fifo_matrix_rx_index][`OS_PORT_ID] <= 0;
+                end
+            end else if (fifo_matrix_rx_progress) begin
+                if (fifo_matrix_wlast[fifo_matrix_rx_index][`OS_PORT_ID]) begin
+                    fifo_matrix_rx_progress <= 0;
+                    os_rxd_tvalid <= 0;
+                end else begin
+                    os_rxd_tvalid <= 1;
+                end
+            end
+        end
     end
 `endif
 

@@ -63,15 +63,15 @@ module port #(
     // sender set valid = 1 for a transfer
     // valid & ready = 1, transfer starts one cycle later
     // last = 1 for last byte in the transfer
-    input [`PORT_COUNT-1:0][`BYTE_WIDTH-1:0] fifo_matrix_tx_wdata,
-    input [`PORT_COUNT-1:0]fifo_matrix_tx_wlast ,
-    input [`PORT_COUNT-1:0]fifo_matrix_tx_wvalid,
-    output logic [`PORT_COUNT-1:0]fifo_matrix_tx_wready,
+    input [`PORT_OS_COUNT-1:0][`BYTE_WIDTH-1:0] fifo_matrix_tx_wdata,
+    input [`PORT_OS_COUNT-1:0]fifo_matrix_tx_wlast ,
+    input [`PORT_OS_COUNT-1:0]fifo_matrix_tx_wvalid,
+    output logic [`PORT_OS_COUNT-1:0]fifo_matrix_tx_wready,
     // rx
-    output logic [`PORT_COUNT-1:0][`BYTE_WIDTH-1:0] fifo_matrix_rx_wdata,
-    output logic [`PORT_COUNT-1:0]fifo_matrix_rx_wlast,
-    output logic [`PORT_COUNT-1:0]fifo_matrix_rx_wvalid,
-    input [`PORT_COUNT-1:0]fifo_matrix_rx_wready,
+    output logic [`PORT_OS_COUNT-1:0][`BYTE_WIDTH-1:0] fifo_matrix_rx_wdata,
+    output logic [`PORT_OS_COUNT-1:0]fifo_matrix_rx_wlast,
+    output logic [`PORT_OS_COUNT-1:0]fifo_matrix_rx_wvalid,
+    input [`PORT_OS_COUNT-1:0]fifo_matrix_rx_wready,
 
     // shared=1
     input gtx_clk90, // 125MHz, 90 deg shift
@@ -434,7 +434,7 @@ module port #(
     (*mark_debug = "true"*) logic ip_lookup_routing;
     // data transfer is working
     (*mark_debug = "true"*) logic rx_outbound;
-    (*mark_debug = "true"*) logic rx_outbound_port_id;
+    (*mark_debug = "true"*) logic [`PORT_OS_COUNT-1:0] rx_outbound_port_id;
 
     always_ff @ (posedge clk) begin
         if (reset) begin
