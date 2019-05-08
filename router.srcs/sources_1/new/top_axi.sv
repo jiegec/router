@@ -25,6 +25,21 @@ module top_axi(
     input logic clk,
     input logic reset_n_in,
     output logic led,
+
+`ifndef HARDWARE_CONTROL_PLANE
+    input axis_clk,
+    // from router to os
+    output logic [`BYTE_WIDTH-1:0] axis_rxd_tdata,
+    output logic axis_rxd_tlast,
+    input axis_rxd_tready,
+    output logic axis_rxd_tvalid,
+
+    // from os to router
+    input [`BYTE_WIDTH-1:0] axis_txd_tdata,
+    input axis_txd_tlast,
+    output logic axis_txd_tready,
+    input axis_txd_tvalid,
+`endif
     
     input logic [3:0] rgmii1_rd,
     input logic rgmii1_rx_ctl,
@@ -137,6 +152,7 @@ module top_axi(
         `IPV4_WIDTH'h0a000001 // port 0 10.0.0.1
     };
 
+    // port 0
     port #(
         .shared(0)
     ) port_inst_0 (
@@ -197,6 +213,7 @@ module top_axi(
         .rgmii_rxc(rgmii1_rxc)
     );
 
+    // port 1
     port #(
         .shared(1)
     ) port_inst_1 (
@@ -254,5 +271,17 @@ module top_axi(
         .rgmii_rx_ctl(rgmii2_rx_ctl),
         .rgmii_rxc(rgmii2_rxc)
     );
+
+`ifndef HARDWARE_CONTROL_PLANE
+    // port 4 is os
+
+    // from fifo matrix to os rx fifo
+    // Round robin
+    logic [`PORT_WIDTH-1:0] fifo_matrix_rx_index;
+    logic fifo_matrix_rx_progress;
+
+    always_ff @ (posedge internal_clk) begin
+    end
+`endif
 
 endmodule

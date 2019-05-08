@@ -572,8 +572,6 @@ module port #(
                         rx_saved_arp_opcode <= {rx_saved_arp_opcode[`ARP_OPCODE_COUNT*`BYTE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
 
-                    // TODO: when HARDWARE_CONTROL_PLANE = 0, send packets to OS directly when ip matches
-                    // TODO: when HARDWARE_CONTROL_PLANE = 1, handle RIP packets
                     if (rx_saved_ethertype == `ARP_ETHERTYPE && rx_read_counter >= `ARP_DST_IPV4_END && !arp_write && !arp_written) begin
                         arp_written <= 1;
                         arp_write <= 1;
@@ -582,16 +580,32 @@ module port #(
                         arp_insert_ip <= rx_saved_arp_src_ipv4_addr;
                         arp_insert_mac <= rx_saved_src_mac_addr;
                         arp_insert_port <= port_id;
-                        rx_outbound_port_id <= port_id;
-                        if (rx_saved_arp_opcode == `ARP_OPCODE_REQUEST && rx_saved_arp_dst_ipv4_addr == port_ip[port_id]) begin
-                            // send arp reply
-                            rx_outbound <= 1;
-                            rx_outbound_arp_response <= {rx_saved_src_mac_addr, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REPLY, port_mac, port_ip[port_id], rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr};
-                            rx_outbound_length <= `ARP_RESPONSE_COUNT;
-                            rx_outbound_counter <= 0;
-                            // send to same port
-                            fifo_matrix_rx_wvalid[port_id] <= 1;
-                        end
+                        `ifdef HARDWARE_CONTROL_PLANE
+                            if (rx_saved_arp_opcode == `ARP_OPCODE_REQUEST && rx_saved_arp_dst_ipv4_addr == port_ip[port_id]) begin
+                                // send arp reply
+                                rx_outbound <= 1;
+                                rx_outbound_port_id <= port_id;
+                                rx_outbound_arp_response <= {rx_saved_src_mac_addr, port_mac, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REPLY, port_mac, port_ip[port_id], rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr};
+                                rx_outbound_length <= `ARP_RESPONSE_COUNT;
+                                rx_outbound_counter <= 0;
+                                // send to same port
+                                fifo_matrix_rx_wvalid[port_id] <= 1;
+                            end
+                            // TODO: when HARDWARE_CONTROL_PLANE is defined, handle RIP packets
+                        `else
+                            // when HARDWARE_CONTROL_PLANE is not defined, send packets to OS directly when ip matches
+                            if (rx_saved_arp_opcode == `ARP_OPCODE_REQUEST && rx_saved_arp_dst_ipv4_addr == port_ip[port_id]) begin
+                                // send arp reply
+                                rx_outbound <= 1;
+                                rx_outbound_port_id <= `OS_PORT_ID;
+                                // pass original request to os
+                                rx_outbound_arp_response <= {port_mac, rx_saved_src_mac_addr, `ARP_ETHERTYPE, 16'h0001, `IPV4_ETHERTYPE, 8'h06, 8'h04, `ARP_OPCODE_REQUEST, rx_saved_src_mac_addr, rx_saved_arp_src_ipv4_addr, port_mac, port_ip[port_id]};
+                                rx_outbound_length <= `ARP_RESPONSE_COUNT;
+                                rx_outbound_counter <= 0;
+                                // send to os port
+                                fifo_matrix_rx_wvalid[`OS_PORT_ID] <= 1;
+                            end
+                        `endif
                     end
 
                     // IPV4 Handling
