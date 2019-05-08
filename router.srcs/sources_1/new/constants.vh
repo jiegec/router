@@ -1,6 +1,9 @@
 // 7 preamble + 1 sfd + 12 mac + 2 ethertype + 1500 payload + 4 fcs
 `define MAX_ETHERNET_FRAME_BYTES 1526
 
+// controls whether the control logic is handled in hardware or software
+`define HARDWARE_CONTROL_PLANE 1
+
 `define MAX_FIFO_SIZE 8192
 
 `define BYTE_WIDTH 8

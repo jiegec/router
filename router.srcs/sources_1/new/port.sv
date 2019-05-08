@@ -572,6 +572,8 @@ module port #(
                         rx_saved_arp_opcode <= {rx_saved_arp_opcode[`ARP_OPCODE_COUNT*`BYTE_WIDTH-`BYTE_WIDTH-1:0], rx_read_data};
                     end
 
+                    // TODO: when HARDWARE_CONTROL_PLANE = 0, send packets to OS directly when ip matches
+                    // TODO: when HARDWARE_CONTROL_PLANE = 1, handle RIP packets
                     if (rx_saved_ethertype == `ARP_ETHERTYPE && rx_read_counter >= `ARP_DST_IPV4_END && !arp_write && !arp_written) begin
                         arp_written <= 1;
                         arp_write <= 1;
