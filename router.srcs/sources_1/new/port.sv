@@ -186,7 +186,7 @@ module port #(
 
     // from fifo matrix to tx fifo
     // Round robin
-    logic [`PORT_WIDTH-1:0] fifo_matrix_tx_index;
+    logic [`PORT_OS_WIDTH-1:0] fifo_matrix_tx_index;
     logic fifo_matrix_tx_progress;
     logic fifo_matrix_tx_last_wlast;
     logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;

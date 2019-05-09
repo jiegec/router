@@ -306,7 +306,6 @@ module top_axi(
     always_ff @ (posedge internal_clk) begin
         if (reset) begin
             os_rxd_tvalid <= 0;
-            axis_txd_tready <= 0;
 
             fifo_matrix_rx_index <= 0;
             fifo_matrix_rx_progress <= 0;
@@ -350,6 +349,120 @@ module top_axi(
             end
         end
     end
+
+    // from os to fifo matrix to os tx fifo
+    // broadcast to enable fifos
+    logic [`PORT_WIDTH-1:0] fifo_matrix_tx_index;
+    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
+    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_counter;
+    logic fifo_matrix_tx_progress;
+
+    logic [7:0] os_txd_tdata;
+    logic os_txd_tvalid;
+    logic os_txd_tready;
+    logic os_txd_tlast;
+
+    axis_data_fifo_0 axis_data_fifo_0_tx (
+        .s_axis_aresetn(reset_n),
+        .m_axis_aresetn(reset_n),
+        .m_axis_aclk(internal_clk),
+        .m_axis_tvalid(os_txd_tvalid),
+        .m_axis_tready(os_txd_tready),
+        .m_axis_tdata(os_txd_tdata),
+        .m_axis_tlast(os_txd_tlast),
+        .s_axis_aclk(axis_clk),
+        .s_axis_tvalid(axis_txd_tvalid),
+        .s_axis_tready(axis_txd_tready),
+        .s_axis_tdata(axis_txd_tdata),
+        .s_axis_tlast(axis_txd_tlast)
+    );
+
+    logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_douta;
+    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_addra;
+    logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_dina;
+    logic fifo_matrix_tx_wea;
+
+    // stores the current ethernet frame temporarily
+    // index start from 1
+    xpm_memory_spram #(
+        .ADDR_WIDTH_A(`LENGTH_WIDTH),
+        .BYTE_WRITE_WIDTH_A(`BYTE_WIDTH),
+        .MEMORY_SIZE(`MAX_ETHERNET_FRAME_BYTES * `BYTE_WIDTH),
+        .READ_DATA_WIDTH_A(`BYTE_WIDTH),
+        .READ_LATENCY_A(0),
+        .WRITE_DATA_WIDTH_A(`BYTE_WIDTH)
+    ) xpm_memory_spram_inst_tx (
+        .douta(fifo_matrix_tx_douta),
+        .addra(fifo_matrix_tx_addra),
+        .clka(internal_clk),
+        .dina(fifo_matrix_tx_dina),
+        .ena(1'b1),
+        .rsta(reset),
+        .wea(fifo_matrix_tx_wea)
+    );
+
+    always @ (posedge internal_clk) begin
+        if (reset) begin
+            fifo_matrix_tx_index <= 0;
+            fifo_matrix_tx_progress <= 0;
+
+            fifo_matrix_tx_addra <= 0;
+            fifo_matrix_tx_dina <= 0;
+            fifo_matrix_tx_wea <= 0;
+
+            os_txd_tready <= 1;
+        end else begin
+            // save data whenever tvalid is 1
+            // and begin to send when tlast is 1
+            if (os_txd_tvalid && !fifo_matrix_tx_progress) begin
+                fifo_matrix_tx_dina <= os_txd_tdata;
+                fifo_matrix_tx_wea <= 1;
+                fifo_matrix_tx_addra <= fifo_matrix_tx_addra + 1;
+                if (os_txd_tlast) begin
+                    os_txd_tready <= 0;
+                    fifo_matrix_tx_progress <= 1;
+                    fifo_matrix_tx_index <= 0;
+                    fifo_matrix_tx_length <= fifo_matrix_tx_addra + 1;
+                    fifo_matrix_tx_counter <= 0;
+                    fifo_matrix_wvalid[`OS_PORT_ID][0] <= 1;
+                end 
+            end else if (!fifo_matrix_tx_progress) begin
+                fifo_matrix_tx_dina <= 0;
+                fifo_matrix_tx_wea <= 0;
+                fifo_matrix_tx_addra <= 0;
+            end else begin
+                if (fifo_matrix_tx_addra == fifo_matrix_tx_length) begin
+                    fifo_matrix_tx_addra <= 1;
+                end
+                fifo_matrix_tx_wea <= 0;
+                if (fifo_matrix_wready[`OS_PORT_ID][fifo_matrix_tx_index]) begin
+                    if (fifo_matrix_tx_counter < fifo_matrix_tx_length) begin
+                        fifo_matrix_tx_counter <= fifo_matrix_tx_counter + 1;
+                        fifo_matrix_tx_addra <= fifo_matrix_tx_counter + 2;
+                        fifo_matrix_wdata[`OS_PORT_ID][fifo_matrix_tx_index] <= fifo_matrix_tx_douta;
+                        if (fifo_matrix_tx_counter == fifo_matrix_tx_length - 1) begin
+                            fifo_matrix_wlast[`OS_PORT_ID][fifo_matrix_tx_index] <= 1;
+                        end
+                    end else begin
+                        fifo_matrix_wvalid[`OS_PORT_ID][fifo_matrix_tx_index] <= 0;
+                        fifo_matrix_wdata[`OS_PORT_ID][fifo_matrix_tx_index] <= 0;
+                        fifo_matrix_wlast[`OS_PORT_ID][fifo_matrix_tx_index] <= 0;
+                        if (fifo_matrix_tx_index == `ENABLE_PORT_COUNT - 1) begin
+                            fifo_matrix_tx_progress <= 0;
+                            fifo_matrix_tx_index <= 0;
+                            fifo_matrix_tx_addra <= 1;
+                        end else begin
+                            fifo_matrix_tx_index <= fifo_matrix_tx_index + 1;
+                            fifo_matrix_wvalid[`OS_PORT_ID][fifo_matrix_tx_index + 1] <= 1;
+                            fifo_matrix_tx_addra <= 0;
+                            fifo_matrix_tx_counter <= 0;
+                        end
+                    end
+                end
+            end
+        end
+    end
+
 `endif
 
 endmodule

@@ -22,6 +22,7 @@
 `define ETHERTYPE_WIDTH 16
 `define PORT_COUNT 4
 `define PORT_WIDTH 2
+`define ENABLE_PORT_COUNT 2
 
 // Ethernet
 `define DST_MAC_BEGIN 0
