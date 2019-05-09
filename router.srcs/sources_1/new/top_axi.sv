@@ -450,7 +450,8 @@ module top_axi(
                         if (fifo_matrix_tx_index == `ENABLE_PORT_COUNT - 1) begin
                             fifo_matrix_tx_progress <= 0;
                             fifo_matrix_tx_index <= 0;
-                            fifo_matrix_tx_addra <= 1;
+                            fifo_matrix_tx_addra <= 0;
+                            os_txd_tready <= 1;
                         end else begin
                             fifo_matrix_tx_index <= fifo_matrix_tx_index + 1;
                             fifo_matrix_wvalid[`OS_PORT_ID][fifo_matrix_tx_index + 1] <= 1;
