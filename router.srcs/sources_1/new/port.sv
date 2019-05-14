@@ -351,7 +351,7 @@ module port #(
                 rx_data_in <= rx_axis_mac_tdata;
                 rx_len_wen <= 0;
                 rx_len_in <= 0;
-            end else if (!rx_axis_mac_tvalid && rx_axis_mac_tvalid_last) begin
+            end else if (!rx_axis_mac_tvalid && rx_axis_mac_tvalid_last && rx_data_wen) begin
                 // end
                 rx_data_wen <= 0;
                 rx_data_in <= 0;
@@ -591,7 +591,6 @@ module port #(
                                 // send to same port
                                 fifo_matrix_rx_wvalid[port_id] <= 1;
                             end
-                            // TODO: when HARDWARE_CONTROL_PLANE is defined, handle RIP packets
                         `else
                             // when HARDWARE_CONTROL_PLANE is not defined, send packets to OS directly when ip matches
                             if (rx_saved_arp_opcode == `ARP_OPCODE_REQUEST && rx_saved_arp_dst_ipv4_addr == port_ip[port_id]) begin
@@ -631,12 +630,18 @@ module port #(
                         end
                     end
 
-                    if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_saved_ipv4_dst_addr != port_ip[port_id] && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed && rx_saved_ipv4_ttl > 1) begin
-                        ip_routed <= 1;
-                        ip_routing <= 1;
-                        ip_lookup_routing <= 0;
-                        routing_arbiter_req <= 1;
-                        routing_lookup_valid <= 0;
+                    if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed && rx_saved_ipv4_ttl > 1) begin
+                        if (rx_saved_ipv4_dst_addr != port_ip[port_id]) begin
+                            ip_routed <= 1;
+                            ip_routing <= 1;
+                            ip_lookup_routing <= 0;
+                            routing_arbiter_req <= 1;
+                            routing_lookup_valid <= 0;
+                        end
+                        `ifndef HARDWARE_CONTROL_PLANE
+                        else begin
+                        end
+                        `endif
                     end
                 end
                 if (arp_write) begin
