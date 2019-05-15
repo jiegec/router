@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Tue May 14 21:01:50 2019
+-- Date        : Tue May 14 22:51:53 2019
 -- Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 -- Command     : write_vhdl -force -mode funcsim -rename_top clk_wiz_0 -prefix
 --               clk_wiz_0_ clk_wiz_0_sim_netlist.vhdl
@@ -111,7 +111,7 @@ mmcm_adv_inst: unisim.vcomponents.MMCME2_ADV
       CLKOUT1_DUTY_CYCLE => 0.500000,
       CLKOUT1_PHASE => 90.000000,
       CLKOUT1_USE_FINE_PS => false,
-      CLKOUT2_DIVIDE => 5,
+      CLKOUT2_DIVIDE => 4,
       CLKOUT2_DUTY_CYCLE => 0.500000,
       CLKOUT2_PHASE => 0.000000,
       CLKOUT2_USE_FINE_PS => false,
