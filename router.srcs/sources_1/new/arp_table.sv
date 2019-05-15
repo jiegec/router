@@ -163,21 +163,20 @@ module arp_table(
             data_web <= 0;
         end else if (!insert_ready) begin
             if (first_pass) begin
+                data_dinb <= {saved_insert_ip, saved_insert_mac, saved_insert_port};
                 if (data_doutb[`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:`MAC_WIDTH+`PORT_WIDTH] == saved_insert_ip) begin
                     first_pass <= 0;
                     second_pass <= 0;
-                    data_dinb <= {saved_insert_ip, saved_insert_mac, saved_insert_port};
                     data_web <= 1;
                     insert_ready <= 1;
                 end else if (insert_current_bucket_depth != `BUCKET_DEPTH_COUNT - 1) begin
                     insert_current_bucket_depth <= insert_current_bucket_depth + 1;
+                    data_web <= 0;
                 end else begin
                     first_pass <= 0;
                     second_pass <= 1;
                     insert_current_bucket_depth <= 0;
                     data_web <= 1;
-                    //data_dinb <= temp_data;
-                    data_dinb <= {saved_insert_ip, saved_insert_mac, saved_insert_port};
                 end
             end else if (second_pass) begin
                 if (insert_current_bucket_depth != `BUCKET_DEPTH_COUNT - 1) begin
