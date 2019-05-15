@@ -288,8 +288,8 @@ module port #(
     xpm_fifo_async #(
         .READ_DATA_WIDTH(`BYTE_WIDTH),
         .WRITE_DATA_WIDTH(`BYTE_WIDTH),
-        .FIFO_WRITE_DEPTH(`MAX_FIFO_SIZE),
-        .PROG_FULL_THRESH(`MAX_FIFO_SIZE - `MAX_ETHERNET_FRAME_BYTES)
+        .FIFO_WRITE_DEPTH(`MAX_INPUT_FIFO_SIZE),
+        .PROG_FULL_THRESH(`MAX_INPUT_FIFO_SIZE - `MAX_ETHERNET_FRAME_BYTES)
     ) xpm_fifo_async_inst_rx_data (
         .dout(rx_data_out),
         .rd_en(rx_data_ren),
@@ -640,6 +640,7 @@ module port #(
                         end
                         `ifndef HARDWARE_CONTROL_PLANE
                         else begin
+                            // should send to os
                         end
                         `endif
                     end

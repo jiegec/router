@@ -143,15 +143,6 @@ module testbench_arp_table(
         if (lookup_mac != `MAC_WIDTH'hcccccccccccc) $finish;
         if (lookup_port != 2'b01) $finish;
 
-        // insert 10.0.0.4
-        repeat (10) @ (posedge clk);
-        insert_ip <= 32'h0a000004; // 10.0.0.4
-        insert_mac <= 48'h111111111111;
-        insert_port <= 2'b00;
-        insert_valid <= 1;
-        repeat (1) @ (posedge clk);
-        insert_valid <= 0;
-
         // lookup 10.0.0.1, no overflow yet
         repeat (10) @ (posedge clk);
         insert_valid <= 0;
@@ -162,11 +153,11 @@ module testbench_arp_table(
         if (lookup_mac != `MAC_WIDTH'hcafed00dbeef) $finish;
         if (lookup_port != 2'b10) $finish;
 
-        // insert 10.0.0.5
+        // insert 10.0.0.4
         repeat (10) @ (posedge clk);
-        insert_ip <= 32'h0a000005; // 10.0.0.5
-        insert_mac <= 48'h222222222222;
-        insert_port <= 2'b11;
+        insert_ip <= 32'h0a000004; // 10.0.0.4
+        insert_mac <= 48'h111111111111;
+        insert_port <= 2'b00;
         insert_valid <= 1;
         repeat (1) @ (posedge clk);
         insert_valid <= 0;
@@ -179,6 +170,15 @@ module testbench_arp_table(
         repeat (10) @ (posedge clk);
         lookup_ip_valid <= 0;
         if (!lookup_mac_not_found) $finish;
+
+        // insert 10.0.0.5
+        repeat (10) @ (posedge clk);
+        insert_ip <= 32'h0a000005; // 10.0.0.5
+        insert_mac <= 48'h222222222222;
+        insert_port <= 2'b11;
+        insert_valid <= 1;
+        repeat (1) @ (posedge clk);
+        insert_valid <= 0;
 
         // lookup 10.0.0.2, on the top
         repeat (1) @ (posedge clk);
