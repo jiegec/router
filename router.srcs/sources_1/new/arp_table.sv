@@ -67,7 +67,7 @@ module arp_table(
         .WRITE_DATA_WIDTH_B(`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH),
         .BYTE_WRITE_WIDTH_B(`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH),
         .MEMORY_SIZE(`BUCKET_INDEX_COUNT*`BUCKET_DEPTH_COUNT*(`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH)),
-        .READ_LATENCY_A(0),
+        .READ_LATENCY_A(1),
         .READ_LATENCY_B(0)
     ) xpm_memory_tdpram_inst (
         .dina(data_dina),
@@ -89,8 +89,9 @@ module arp_table(
 
     logic searching = 0;
 
-    assign lookup_mac = data_douta[`MAC_WIDTH+`PORT_WIDTH-1:`PORT_WIDTH];
-    assign lookup_port = data_douta[`PORT_WIDTH-1:0];
+    logic [`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] last_data_douta;
+    logic data_avail;
+    logic ip_matches;
 
     always_ff @ (posedge clk) begin
         if (rst) begin
@@ -99,25 +100,41 @@ module arp_table(
             lookup_current_bucket_depth <= 0;
             lookup_mac_not_found <= 0;
         end else begin
+            last_data_douta <= data_douta;
+            ip_matches <= data_douta[`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:`MAC_WIDTH+`PORT_WIDTH] == lookup_ip;
             if (!searching && lookup_ip_valid) begin
                 searching <= 1;
                 lookup_current_bucket_depth <= 0;
-                lookup_mac_not_found <= 0;
-            end else if (searching && !lookup_ip_valid) begin
-                searching <= 0;
                 lookup_mac_valid <= 0;
                 lookup_mac_not_found <= 0;
-            end
-
-            if (searching && !lookup_mac_valid && !lookup_mac_not_found) begin
-                if (data_douta[`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:`MAC_WIDTH+`PORT_WIDTH] == lookup_ip) begin
-                    lookup_mac_valid <= 1;
-                end else if (lookup_current_bucket_depth < `BUCKET_DEPTH_COUNT - 1) begin
-                    lookup_current_bucket_depth <= lookup_current_bucket_depth + 1;
-                end else begin
-                    lookup_mac_not_found <= 1;
+                lookup_mac <= 0;
+                lookup_port <= 0;
+            end else if (searching) begin
+                if (!lookup_ip_valid) begin
+                    searching <= 0;
+                    lookup_mac_valid <= 0;
+                    lookup_mac_not_found <= 0;
+                    lookup_current_bucket_depth <= 0;
+                    data_avail <= 1;
+                end else if (!lookup_mac_valid && !lookup_mac_not_found) begin
+                    if (data_avail) begin
+                        data_avail <= 0;
+                        if (ip_matches) begin
+                            lookup_mac_valid <= 1;
+                            lookup_mac <= data_douta[`MAC_WIDTH+`PORT_WIDTH-1:`PORT_WIDTH];
+                            lookup_port <= data_douta[`PORT_WIDTH-1:0];
+                        end
+                    end else begin
+                        if (lookup_current_bucket_depth != `BUCKET_DEPTH_COUNT - 1) begin
+                            lookup_current_bucket_depth <= lookup_current_bucket_depth + 1;
+                        end else begin
+                            lookup_mac_not_found <= 1;
+                        end
+                        data_avail <= 1;
+                    end
                 end
             end
+
         end
     end
 
