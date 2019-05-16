@@ -180,15 +180,15 @@ module testbench_arp_table(
         repeat (1) @ (posedge clk);
         insert_valid <= 0;
 
-        // lookup 10.0.0.2, on the top
-        repeat (1) @ (posedge clk);
+        // lookup 10.0.0.3, on the top
+        repeat (10) @ (posedge clk);
         insert_valid <= 0;
-        lookup_ip <= 32'h0a000002; // 10.0.0.2
+        lookup_ip <= 32'h0a000003; // 10.0.0.3
         lookup_ip_valid <= 1;
         repeat (10) @ (posedge clk);
         lookup_ip_valid <= 0;
-        if (lookup_mac != `MAC_WIDTH'hcccccccccccc) $finish;
-        if (lookup_port != 2'b01) $finish;
+        if (lookup_mac != `MAC_WIDTH'h101010101010) $finish;
+        if (lookup_port != 2'b00) $finish;
 
         // insert 255.0.0.1
         repeat (10) @ (posedge clk);
