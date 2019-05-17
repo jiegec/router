@@ -52,7 +52,7 @@ module testbench_arp_table(
         rst = 0;
 
         // lookup 10.0.0.1, not found
-        repeat (2) @ (posedge clk);
+        repeat (10) @ (posedge clk);
         lookup_ip <= 32'h0a000001; // 10.0.0.1
         lookup_ip_valid <= 1;
         repeat (10) @ (posedge clk);
@@ -60,7 +60,7 @@ module testbench_arp_table(
         if (!lookup_mac_not_found) $finish;
 
         // insert 10.0.0.1
-        repeat (2) @ (posedge clk);
+        repeat (10) @ (posedge clk);
         insert_ip <= 32'h0a000001; // 10.0.0.1
         insert_mac <= 48'hcafed00dbeef;
         insert_port <= 2'b10;
@@ -96,7 +96,7 @@ module testbench_arp_table(
         if (lookup_port != 2'b10) $finish;
 
         // lookup 10.0.0.2
-        repeat (1) @ (posedge clk);
+        repeat (10) @ (posedge clk);
         lookup_ip <= 32'h0a000002; // 10.0.0.2
         lookup_ip_valid <= 1;
         repeat (10) @ (posedge clk);
@@ -105,7 +105,7 @@ module testbench_arp_table(
         if (lookup_port != 2'b11) $finish;
 
         // lookup 10.0.0.1
-        repeat (1) @ (posedge clk);
+        repeat (10) @ (posedge clk);
         insert_valid <= 0;
         lookup_ip <= 32'h0a000001; // 10.0.0.1
         lookup_ip_valid <= 1;
@@ -115,7 +115,7 @@ module testbench_arp_table(
         if (lookup_port != 2'b10) $finish;
 
         // lookup 10.0.0.3
-        repeat (1) @ (posedge clk);
+        repeat (10) @ (posedge clk);
         insert_valid <= 0;
         lookup_ip <= 32'h0a000003; // 10.0.0.3
         lookup_ip_valid <= 1;
@@ -134,7 +134,7 @@ module testbench_arp_table(
         insert_valid <= 0;
 
         // lookup 10.0.0.2
-        repeat (1) @ (posedge clk);
+        repeat (10) @ (posedge clk);
         insert_valid <= 0;
         lookup_ip <= 32'h0a000002; // 10.0.0.2
         lookup_ip_valid <= 1;

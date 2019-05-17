@@ -47,10 +47,10 @@ module arp_table(
     // a for lookup, b for insert
     logic [`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] data_dina;
     logic [`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] data_douta;
-    logic [`BUCKET_INDEX_WIDTH+`BUCKET_INDEX_WIDTH-1:0] data_addra;
+    logic [`BUCKET_INDEX_WIDTH+`BUCKET_DEPTH_WIDTH-1:0] data_addra;
     logic [`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] data_dinb;
     logic [`IPV4_WIDTH+`MAC_WIDTH+`PORT_WIDTH-1:0] data_doutb;
-    logic [`BUCKET_INDEX_WIDTH+`BUCKET_INDEX_WIDTH-1:0] data_addrb;
+    logic [`BUCKET_INDEX_WIDTH+`BUCKET_DEPTH_WIDTH-1:0] data_addrb;
     logic data_web;
 
     assign data_addra = {lookup_bucket_index, lookup_current_bucket_depth};

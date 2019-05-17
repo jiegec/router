@@ -22,7 +22,7 @@
 `include "constants.vh"
 
 module top_axi(
-    input logic clk,
+    input logic clk, // 50MHz
     input logic reset_n_in,
     output logic led,
 
@@ -57,20 +57,29 @@ module top_axi(
     );
     
     logic reset;
+    logic reset_n_0;
+    logic reset_n_1;
     logic reset_n;
+    assign reset_n = reset_n_0 & reset_n_1;
     assign reset = ~reset_n;
     
-    logic internal_clk; // 10MHz
+    logic internal_clk;
     logic gtx_clk_in; // 125MHz
     logic refclk; // 200MHz
     
-    clk_wiz_0 mmcm_inst(
+    clk_wiz_0 mmcm_inst_0(
         .clk_in1(clk),
         .clk_out1(gtx_clk_in),
-        .clk_out3(internal_clk),
-        .clk_out4(refclk),
+        .clk_out3(refclk),
         .reset(~reset_n_in),
-        .locked(reset_n)
+        .locked(reset_n_0)
+    );
+
+    clk_wiz_1 mmcm_inst_1(
+        .clk_in1(refclk),
+        .clk_out1(internal_clk),
+        .reset(~reset_n_in),
+        .locked(reset_n_1)
     );
 
     logic gtx_clk; // 125MHz
