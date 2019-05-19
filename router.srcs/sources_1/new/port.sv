@@ -630,8 +630,8 @@ module port #(
                         end
                     end
 
-                    if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed && rx_saved_ipv4_ttl > 1) begin
-                        if (rx_saved_ipv4_dst_addr != port_ip[port_id]) begin
+                    if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed) begin
+                        if (rx_saved_ipv4_dst_addr == port_ip[port_id] && rx_saved_ipv4_ttl > 1) begin
                             ip_routed <= 1;
                             ip_routing <= 1;
                             ip_lookup_routing <= 0;
@@ -641,6 +641,21 @@ module port #(
                         `ifndef HARDWARE_CONTROL_PLANE
                         else begin
                             // should send to os
+                            ip_routed <= 1;
+                            ip_routing <= 1;
+                            ip_lookup_routing <= 0;
+                            rx_found_nexthop_ipv4 <= 0;
+                            rx_outbound <= 1;
+                            rx_outbound_length <= rx_read_length - 4; // skip fcs
+                            rx_outbound_counter <= 0;
+                            // reversed, see below
+                            rx_nexthop_mac_addr <= rx_saved_dst_mac_addr;
+                            rx_saved_dst_mac_addr <= rx_saved_src_mac_addr;
+                            // will minus 1 later
+                            rx_saved_ipv4_ttl <= rx_saved_ipv4_ttl + 1;
+                            // send to os port
+                            rx_outbound_port_id <= `OS_PORT_ID;
+                            fifo_matrix_rx_wvalid[`OS_PORT_ID] <= 1;
                         end
                         `endif
                     end
