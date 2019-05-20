@@ -631,7 +631,7 @@ module port #(
                     end
 
                     if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed) begin
-                        if (rx_saved_ipv4_dst_addr == port_ip[port_id] && rx_saved_ipv4_ttl > 1) begin
+                        if (rx_saved_ipv4_dst_addr != port_ip[port_id] && rx_saved_ipv4_ttl > 1) begin
                             ip_routed <= 1;
                             ip_routing <= 1;
                             ip_lookup_routing <= 0;
@@ -642,7 +642,7 @@ module port #(
                         else begin
                             // should send to os
                             ip_routed <= 1;
-                            ip_routing <= 1;
+                            ip_routing <= 0;
                             ip_lookup_routing <= 0;
                             rx_found_nexthop_ipv4 <= 0;
                             rx_outbound <= 1;
