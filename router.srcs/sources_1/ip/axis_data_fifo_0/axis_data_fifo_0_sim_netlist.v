@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Wed May  8 21:35:12 2019
+// Date        : Wed May  8 21:35:11 2019
 // Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
-// Command     : write_verilog -force -mode funcsim
-//               /home/oslab/router/router.srcs/sources_1/ip/axis_data_fifo_0/axis_data_fifo_0_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top axis_data_fifo_0 -prefix
+//               axis_data_fifo_0_ axis_data_fifo_0_sim_netlist.v
 // Design      : axis_data_fifo_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -190,12 +190,12 @@ endmodule
 (* G_MASK_SS_TKEEP = "8" *) (* G_MASK_SS_TLAST = "16" *) (* G_MASK_SS_TREADY = "1" *) 
 (* G_MASK_SS_TSTRB = "4" *) (* G_MASK_SS_TUSER = "128" *) (* G_TASK_SEVERITY_ERR = "2" *) 
 (* G_TASK_SEVERITY_INFO = "0" *) (* G_TASK_SEVERITY_WARNING = "1" *) (* LP_M_ACLKEN_CAN_TOGGLE = "0" *) 
-(* LP_S_ACLKEN_CAN_TOGGLE = "0" *) (* ORIG_REF_NAME = "axis_data_fifo_v1_1_17_axis_data_fifo" *) (* P_APPLICATION_TYPE_AXIS = "0" *) 
-(* P_AXIS_PAYLOAD_WIDTH = "9" *) (* P_COMMON_CLOCK = "0" *) (* P_FIFO_COUNT_WIDTH = "12" *) 
-(* P_FIFO_TYPE = "1" *) (* P_IMPLEMENTATION_TYPE_AXIS = "11" *) (* P_MSGON_VAL = "0" *) 
-(* P_TDATA_EXISTS = "1" *) (* P_TDEST_EXISTS = "0" *) (* P_TID_EXISTS = "0" *) 
-(* P_TKEEP_EXISTS = "0" *) (* P_TLAST_EXISTS = "1" *) (* P_TREADY_EXISTS = "1" *) 
-(* P_TSTRB_EXISTS = "0" *) (* P_TUSER_EXISTS = "0" *) (* P_WR_PNTR_WIDTH = "11" *) 
+(* LP_S_ACLKEN_CAN_TOGGLE = "0" *) (* P_APPLICATION_TYPE_AXIS = "0" *) (* P_AXIS_PAYLOAD_WIDTH = "9" *) 
+(* P_COMMON_CLOCK = "0" *) (* P_FIFO_COUNT_WIDTH = "12" *) (* P_FIFO_TYPE = "1" *) 
+(* P_IMPLEMENTATION_TYPE_AXIS = "11" *) (* P_MSGON_VAL = "0" *) (* P_TDATA_EXISTS = "1" *) 
+(* P_TDEST_EXISTS = "0" *) (* P_TID_EXISTS = "0" *) (* P_TKEEP_EXISTS = "0" *) 
+(* P_TLAST_EXISTS = "1" *) (* P_TREADY_EXISTS = "1" *) (* P_TSTRB_EXISTS = "0" *) 
+(* P_TUSER_EXISTS = "0" *) (* P_WR_PNTR_WIDTH = "11" *) 
 module axis_data_fifo_0_axis_data_fifo_v1_1_17_axis_data_fifo
    (s_axis_aresetn,
     m_axis_aresetn,
@@ -929,10 +929,9 @@ module axis_data_fifo_0_axis_data_fifo_v1_1_17_axis_data_fifo
         .wr_rst_busy(\NLW_gen_fifo_generator.fifo_generator_inst_wr_rst_busy_UNCONNECTED ));
 endmodule
 
-(* DEST_SYNC_FF = "2" *) (* INIT_SYNC_FF = "0" *) (* ORIG_REF_NAME = "xpm_cdc_gray" *) 
-(* REG_OUTPUT = "1" *) (* SIM_ASSERT_CHK = "0" *) (* SIM_LOSSLESS_GRAY_CHK = "0" *) 
-(* VERSION = "0" *) (* WIDTH = "11" *) (* XPM_MODULE = "TRUE" *) 
-(* xpm_cdc = "GRAY" *) 
+(* DEST_SYNC_FF = "2" *) (* INIT_SYNC_FF = "0" *) (* REG_OUTPUT = "1" *) 
+(* SIM_ASSERT_CHK = "0" *) (* SIM_LOSSLESS_GRAY_CHK = "0" *) (* VERSION = "0" *) 
+(* WIDTH = "11" *) (* XPM_MODULE = "TRUE" *) (* xpm_cdc = "GRAY" *) 
 module axis_data_fifo_0_xpm_cdc_gray
    (src_clk,
     src_in_bin,
@@ -1941,9 +1940,9 @@ module axis_data_fifo_0_xpm_cdc_gray__1
         .R(1'b0));
 endmodule
 
-(* DEST_SYNC_FF = "5" *) (* INIT_SYNC_FF = "0" *) (* ORIG_REF_NAME = "xpm_cdc_single" *) 
-(* SIM_ASSERT_CHK = "0" *) (* SRC_INPUT_REG = "0" *) (* VERSION = "0" *) 
-(* XPM_MODULE = "TRUE" *) (* xpm_cdc = "SINGLE" *) 
+(* DEST_SYNC_FF = "5" *) (* INIT_SYNC_FF = "0" *) (* SIM_ASSERT_CHK = "0" *) 
+(* SRC_INPUT_REG = "0" *) (* VERSION = "0" *) (* XPM_MODULE = "TRUE" *) 
+(* xpm_cdc = "SINGLE" *) 
 module axis_data_fifo_0_xpm_cdc_single
    (src_clk,
     src_in,
@@ -2072,8 +2071,8 @@ module axis_data_fifo_0_xpm_cdc_single__1
 endmodule
 
 (* DEF_VAL = "1'b1" *) (* DEST_SYNC_FF = "2" *) (* INIT = "1" *) 
-(* INIT_SYNC_FF = "0" *) (* ORIG_REF_NAME = "xpm_cdc_sync_rst" *) (* SIM_ASSERT_CHK = "0" *) 
-(* VERSION = "0" *) (* XPM_MODULE = "TRUE" *) (* xpm_cdc = "SYNC_RST" *) 
+(* INIT_SYNC_FF = "0" *) (* SIM_ASSERT_CHK = "0" *) (* VERSION = "0" *) 
+(* XPM_MODULE = "TRUE" *) (* xpm_cdc = "SYNC_RST" *) 
 module axis_data_fifo_0_xpm_cdc_sync_rst
    (src_rst,
     dest_clk,
@@ -2257,7 +2256,6 @@ module axis_data_fifo_0_xpm_cdc_sync_rst__parameterized0__1
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
 module axis_data_fifo_0_blk_mem_gen_generic_cstr
    (D,
     ENB_dly_D,
@@ -2312,7 +2310,6 @@ module axis_data_fifo_0_blk_mem_gen_generic_cstr
         .s_axis_tvalid(s_axis_tvalid));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
 module axis_data_fifo_0_blk_mem_gen_prim_width
    (D,
     ENB_dly_D,
@@ -2498,7 +2495,6 @@ module axis_data_fifo_0_blk_mem_gen_prim_width
         .s_axis_tvalid(s_axis_tvalid));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
 module axis_data_fifo_0_blk_mem_gen_prim_wrapper
    (D,
     s_aclk,
@@ -2682,7 +2678,6 @@ module axis_data_fifo_0_blk_mem_gen_prim_wrapper
         .O(ENA_I));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_top" *) 
 module axis_data_fifo_0_blk_mem_gen_top
    (D,
     ENB_dly_D,
@@ -2737,7 +2732,6 @@ module axis_data_fifo_0_blk_mem_gen_top
         .s_axis_tvalid(s_axis_tvalid));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_4_1" *) 
 module axis_data_fifo_0_blk_mem_gen_v8_4_1
    (D,
     ENB_dly_D,
@@ -2792,7 +2786,6 @@ module axis_data_fifo_0_blk_mem_gen_v8_4_1
         .s_axis_tvalid(s_axis_tvalid));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_4_1_synth" *) 
 module axis_data_fifo_0_blk_mem_gen_v8_4_1_synth
    (D,
     ENB_dly_D,
@@ -2847,7 +2840,6 @@ module axis_data_fifo_0_blk_mem_gen_v8_4_1_synth
         .s_axis_tvalid(s_axis_tvalid));
 endmodule
 
-(* ORIG_REF_NAME = "clk_x_pntrs" *) 
 module axis_data_fifo_0_clk_x_pntrs
    (S,
     WR_PNTR_RD,
@@ -3240,7 +3232,6 @@ module axis_data_fifo_0_clk_x_pntrs
         .src_in_bin(\gic0.gc0.count_d2_reg[10] ));
 endmodule
 
-(* ORIG_REF_NAME = "compare" *) 
 module axis_data_fifo_0_compare
    (comp1,
     \dest_out_bin_ff_reg[8] ,
@@ -3457,7 +3448,6 @@ module axis_data_fifo_0_compare_2
         .S({\NLW_gmux.gm[4].gms.ms_CARRY4_S_UNCONNECTED [3:2],\dest_out_bin_ff_reg[10] ,v1_reg_0[4]}));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_ramfifo" *) 
 module axis_data_fifo_0_fifo_generator_ramfifo
    (Q,
     axis_rd_data_count,
@@ -3608,7 +3598,6 @@ module axis_data_fifo_0_fifo_generator_ramfifo
         .\syncstages_ff_reg[0]_0 (rstblk_n_1));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_top" *) 
 module axis_data_fifo_0_fifo_generator_top
    (Q,
     axis_rd_data_count,
@@ -3730,7 +3719,7 @@ endmodule
 (* C_WR_DEPTH_WRCH = "16" *) (* C_WR_FREQ = "1" *) (* C_WR_PNTR_WIDTH = "10" *) 
 (* C_WR_PNTR_WIDTH_AXIS = "11" *) (* C_WR_PNTR_WIDTH_RACH = "4" *) (* C_WR_PNTR_WIDTH_RDCH = "10" *) 
 (* C_WR_PNTR_WIDTH_WACH = "4" *) (* C_WR_PNTR_WIDTH_WDCH = "10" *) (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
-(* C_WR_RESPONSE_LATENCY = "1" *) (* ORIG_REF_NAME = "fifo_generator_v13_2_2" *) 
+(* C_WR_RESPONSE_LATENCY = "1" *) 
 module axis_data_fifo_0_fifo_generator_v13_2_2
    (backup,
     backup_marker,
@@ -4754,7 +4743,6 @@ module axis_data_fifo_0_fifo_generator_v13_2_2
         .s_axis_tvalid(s_axis_tvalid));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_v13_2_2_synth" *) 
 module axis_data_fifo_0_fifo_generator_v13_2_2_synth
    (Q,
     axis_rd_data_count,
@@ -4809,7 +4797,6 @@ module axis_data_fifo_0_fifo_generator_v13_2_2_synth
         .s_axis_tvalid(s_axis_tvalid));
 endmodule
 
-(* ORIG_REF_NAME = "memory" *) 
 module axis_data_fifo_0_memory
    (ENB_dly_D,
     \m_axis_tdata[7] ,
@@ -4940,7 +4927,6 @@ module axis_data_fifo_0_memory
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "rd_bin_cntr" *) 
 module axis_data_fifo_0_rd_bin_cntr
    (Q,
     v1_reg,
@@ -5289,7 +5275,6 @@ module axis_data_fifo_0_rd_bin_cntr
         .O(v1_reg[4]));
 endmodule
 
-(* ORIG_REF_NAME = "rd_dc_fwft_ext_as" *) 
 module axis_data_fifo_0_rd_dc_fwft_ext_as
    (axis_rd_data_count,
     diff_wr_rd__0,
@@ -5457,7 +5442,6 @@ module axis_data_fifo_0_rd_dc_fwft_ext_as
         .S({1'b0,\dest_out_bin_ff_reg[10] }));
 endmodule
 
-(* ORIG_REF_NAME = "rd_fwft" *) 
 module axis_data_fifo_0_rd_fwft
    (out,
     ENB_I,
@@ -5687,7 +5671,6 @@ module axis_data_fifo_0_rd_fwft
         .O(m_axis_tvalid));
 endmodule
 
-(* ORIG_REF_NAME = "rd_logic" *) 
 module axis_data_fifo_0_rd_logic
    (axis_rd_data_count,
     diff_wr_rd__0,
@@ -5802,7 +5785,6 @@ module axis_data_fifo_0_rd_logic
         .v1_reg(\c1/v1_reg ));
 endmodule
 
-(* ORIG_REF_NAME = "rd_status_flags_as" *) 
 module axis_data_fifo_0_rd_status_flags_as
    (out,
     v1_reg,
@@ -5873,7 +5855,6 @@ module axis_data_fifo_0_rd_status_flags_as
         .S(\ngwrdrst.grst.g7serrst.gsckt_wrst.gic_rst.sckt_rd_rst_ic_reg ));
 endmodule
 
-(* ORIG_REF_NAME = "reset_blk_ramfifo" *) 
 module axis_data_fifo_0_reset_blk_ramfifo
    (\syncstages_ff_reg[0] ,
     \syncstages_ff_reg[0]_0 ,
@@ -6094,7 +6075,6 @@ module axis_data_fifo_0_reset_blk_ramfifo
         .O(inverted_reset));
 endmodule
 
-(* ORIG_REF_NAME = "wr_bin_cntr" *) 
 module axis_data_fifo_0_wr_bin_cntr
    (S,
     Q,
@@ -6700,7 +6680,6 @@ module axis_data_fifo_0_wr_bin_cntr
         .O(D[8]));
 endmodule
 
-(* ORIG_REF_NAME = "wr_dc_fwft_ext_as" *) 
 module axis_data_fifo_0_wr_dc_fwft_ext_as
    (O,
     \wr_data_count_i_reg[11]_0 ,
@@ -6869,7 +6848,6 @@ module axis_data_fifo_0_wr_dc_fwft_ext_as
         .R(\ngwrdrst.grst.g7serrst.gsckt_wrst.gic_rst.sckt_wr_rst_ic_reg ));
 endmodule
 
-(* ORIG_REF_NAME = "wr_logic" *) 
 module axis_data_fifo_0_wr_logic
    (out,
     Q,
@@ -6992,7 +6970,6 @@ module axis_data_fifo_0_wr_logic
         .\wr_data_count_i_reg[11]_0 ({wpntr_n_19,wpntr_n_20,wpntr_n_21}));
 endmodule
 
-(* ORIG_REF_NAME = "wr_status_flags_as" *) 
 module axis_data_fifo_0_wr_status_flags_as
    (out,
     E,

@@ -294,7 +294,7 @@ module top_axi(
     logic os_rxd_tready;
     logic os_rxd_tlast;
 
-    assign os_rxd_tdata = fifo_matrix_rx_progress ? fifo_matrix_wdata[fifo_matrix_rx_index][`OS_PORT_ID] : `BYTE_WIDTH'b0;
+    assign os_rxd_tdata = fifo_matrix_rx_progress ? fifo_matrix_wdata[fifo_matrix_rx_index][`OS_PORT_ID] : fifo_matrix_rx_index;
     assign os_rxd_tlast = fifo_matrix_rx_progress ? fifo_matrix_wlast[fifo_matrix_rx_index][`OS_PORT_ID] : 0;
 
     axis_data_fifo_0 axis_data_fifo_0_rx (
@@ -328,8 +328,11 @@ module top_axi(
                 // can send to os now
                 if (fifo_matrix_wvalid[fifo_matrix_rx_index][`OS_PORT_ID]) begin
                     // begin to recv data
-                    fifo_matrix_rx_progress <= 1;
+                    if (os_rxd_tvalid) begin
+                        fifo_matrix_rx_progress <= 1;
+                    end
                     fifo_matrix_wready[fifo_matrix_rx_index][`OS_PORT_ID] <= 1;
+                    os_rxd_tvalid <= 1;
                 end else begin
                     // round robin
                     fifo_matrix_rx_index <= fifo_matrix_rx_index + 1;
@@ -428,13 +431,15 @@ module top_axi(
                 fifo_matrix_tx_dina <= os_txd_tdata;
                 fifo_matrix_tx_wea <= 1;
                 fifo_matrix_tx_addra <= fifo_matrix_tx_addra + 1;
+                if (fifo_matrix_tx_addra == 0) begin
+                    fifo_matrix_tx_index <= os_txd_tdata;
+                end
                 if (os_txd_tlast) begin
                     os_txd_tready <= 0;
                     fifo_matrix_tx_progress <= 1;
-                    fifo_matrix_tx_index <= 0;
                     fifo_matrix_tx_length <= fifo_matrix_tx_addra + 1;
                     fifo_matrix_tx_counter <= 0;
-                    fifo_matrix_wvalid[`OS_PORT_ID][0] <= 1;
+                    fifo_matrix_wvalid[`OS_PORT_ID][fifo_matrix_tx_index] <= 1;
                 end 
             end else if (!fifo_matrix_tx_progress) begin
                 fifo_matrix_tx_dina <= 0;
@@ -457,17 +462,10 @@ module top_axi(
                         fifo_matrix_wvalid[`OS_PORT_ID][fifo_matrix_tx_index] <= 0;
                         fifo_matrix_wdata[`OS_PORT_ID][fifo_matrix_tx_index] <= 0;
                         fifo_matrix_wlast[`OS_PORT_ID][fifo_matrix_tx_index] <= 0;
-                        if (fifo_matrix_tx_index == `ENABLE_PORT_COUNT - 1) begin
-                            fifo_matrix_tx_progress <= 0;
-                            fifo_matrix_tx_index <= 0;
-                            fifo_matrix_tx_addra <= 0;
-                            os_txd_tready <= 1;
-                        end else begin
-                            fifo_matrix_tx_index <= fifo_matrix_tx_index + 1;
-                            fifo_matrix_wvalid[`OS_PORT_ID][fifo_matrix_tx_index + 1] <= 1;
-                            fifo_matrix_tx_addra <= 0;
-                            fifo_matrix_tx_counter <= 0;
-                        end
+                        fifo_matrix_tx_progress <= 0;
+                        fifo_matrix_tx_index <= 0;
+                        fifo_matrix_tx_addra <= 0;
+                        os_txd_tready <= 1;
                     end
                 end
             end

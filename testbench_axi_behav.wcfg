@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="129252000000fs"></ZoomStartTime>
-      <ZoomEndTime time="148172000001fs"></ZoomEndTime>
-      <Cursor1Time time="144072000000fs"></Cursor1Time>
+      <ZoomStartTime time="6301560000fs"></ZoomStartTime>
+      <ZoomEndTime time="12246560001fs"></ZoomEndTime>
+      <Cursor1Time time="9610100000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="281"></NameColumnWidth>
-      <ValueColumnWidth column_width="98"></ValueColumnWidth>
+      <ValueColumnWidth column_width="94"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="92" />
+   <WVObjectSize size="118" />
    <wvobject type="logic" fp_name="/testbench_axi/top_axi/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -355,22 +355,27 @@
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wdata">
       <obj_property name="ElementShortName">fifo_matrix_rx_wdata[4:0][7:0]</obj_property>
       <obj_property name="ObjectShortName">fifo_matrix_rx_wdata[4:0][7:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wlast">
       <obj_property name="ElementShortName">fifo_matrix_rx_wlast[4:0]</obj_property>
       <obj_property name="ObjectShortName">fifo_matrix_rx_wlast[4:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wvalid">
       <obj_property name="ElementShortName">fifo_matrix_rx_wvalid[4:0]</obj_property>
       <obj_property name="ObjectShortName">fifo_matrix_rx_wvalid[4:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wready">
       <obj_property name="ElementShortName">fifo_matrix_rx_wready[4:0]</obj_property>
       <obj_property name="ObjectShortName">fifo_matrix_rx_wready[4:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_tx_wdata">
       <obj_property name="ElementShortName">fifo_matrix_tx_wdata[4:0][7:0]</obj_property>
       <obj_property name="ObjectShortName">fifo_matrix_tx_wdata[4:0][7:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_tx_wlast">
       <obj_property name="ElementShortName">fifo_matrix_tx_wlast[4:0]</obj_property>
@@ -387,5 +392,109 @@
    <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/arp_written">
       <obj_property name="ElementShortName">arp_written</obj_property>
       <obj_property name="ObjectShortName">arp_written</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/axi_clk">
+      <obj_property name="ElementShortName">axi_clk</obj_property>
+      <obj_property name="ObjectShortName">axi_clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/s_axis_tvalid">
+      <obj_property name="ElementShortName">s_axis_tvalid</obj_property>
+      <obj_property name="ObjectShortName">s_axis_tvalid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/s_axis_tready">
+      <obj_property name="ElementShortName">s_axis_tready</obj_property>
+      <obj_property name="ObjectShortName">s_axis_tready</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/s_axis_tdata">
+      <obj_property name="ElementShortName">s_axis_tdata[7:0]</obj_property>
+      <obj_property name="ObjectShortName">s_axis_tdata[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/s_axis_tlast">
+      <obj_property name="ElementShortName">s_axis_tlast</obj_property>
+      <obj_property name="ObjectShortName">s_axis_tlast</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/m_axis_aclk">
+      <obj_property name="ElementShortName">m_axis_aclk</obj_property>
+      <obj_property name="ObjectShortName">m_axis_aclk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/m_axis_tvalid">
+      <obj_property name="ElementShortName">m_axis_tvalid</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tvalid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/m_axis_tready">
+      <obj_property name="ElementShortName">m_axis_tready</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tready</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/m_axis_tdata">
+      <obj_property name="ElementShortName">m_axis_tdata[7:0]</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tdata[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/m_axis_tlast">
+      <obj_property name="ElementShortName">m_axis_tlast</obj_property>
+      <obj_property name="ObjectShortName">m_axis_tlast</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/os_rxd_tdata">
+      <obj_property name="ElementShortName">os_rxd_tdata[7:0]</obj_property>
+      <obj_property name="ObjectShortName">os_rxd_tdata[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/os_rxd_tvalid">
+      <obj_property name="ElementShortName">os_rxd_tvalid</obj_property>
+      <obj_property name="ObjectShortName">os_rxd_tvalid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/os_rxd_tready">
+      <obj_property name="ElementShortName">os_rxd_tready</obj_property>
+      <obj_property name="ObjectShortName">os_rxd_tready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/os_rxd_tlast">
+      <obj_property name="ElementShortName">os_rxd_tlast</obj_property>
+      <obj_property name="ObjectShortName">os_rxd_tlast</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/fifo_matrix_tx_index">
+      <obj_property name="ElementShortName">fifo_matrix_tx_index[1:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_index[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/fifo_matrix_tx_length">
+      <obj_property name="ElementShortName">fifo_matrix_tx_length[13:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_length[13:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/fifo_matrix_tx_counter">
+      <obj_property name="ElementShortName">fifo_matrix_tx_counter[13:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_counter[13:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/fifo_matrix_tx_progress">
+      <obj_property name="ElementShortName">fifo_matrix_tx_progress</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_progress</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/os_txd_tdata">
+      <obj_property name="ElementShortName">os_txd_tdata[7:0]</obj_property>
+      <obj_property name="ObjectShortName">os_txd_tdata[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/os_txd_tvalid">
+      <obj_property name="ElementShortName">os_txd_tvalid</obj_property>
+      <obj_property name="ObjectShortName">os_txd_tvalid</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/os_txd_tready">
+      <obj_property name="ElementShortName">os_txd_tready</obj_property>
+      <obj_property name="ObjectShortName">os_txd_tready</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/os_txd_tlast">
+      <obj_property name="ElementShortName">os_txd_tlast</obj_property>
+      <obj_property name="ObjectShortName">os_txd_tlast</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/fifo_matrix_tx_douta">
+      <obj_property name="ElementShortName">fifo_matrix_tx_douta[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_douta[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/fifo_matrix_tx_addra">
+      <obj_property name="ElementShortName">fifo_matrix_tx_addra[13:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_addra[13:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/fifo_matrix_tx_dina">
+      <obj_property name="ElementShortName">fifo_matrix_tx_dina[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_dina[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/testbench_axi/top_axi/fifo_matrix_tx_wea">
+      <obj_property name="ElementShortName">fifo_matrix_tx_wea</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_wea</obj_property>
    </wvobject>
 </wave_config>
