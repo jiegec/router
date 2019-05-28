@@ -465,8 +465,53 @@
         <spirit:componentRef spirit:library="ip" spirit:name="processing_system7" spirit:vendor="xilinx.com" spirit:version="5.5"/>
         <spirit:configurableElementValues>
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_processing_system7_0_0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_DDR_RAM_HIGHADDR">0x3FFFFFFF</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_UART_PERIPHERAL_FREQMHZ">100</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_APU_PERIPHERAL_FREQMHZ">666.666687</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_UIPARAM_ACT_DDR_FREQ_MHZ">533.333374</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_DCI_PERIPHERAL_FREQMHZ">10.158730</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_QSPI_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_SMC_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_ENET0_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_ENET1_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_SDIO_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_UART_PERIPHERAL_FREQMHZ">100.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_SPI_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_CAN_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_WDT_PERIPHERAL_FREQMHZ">111.111115</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_PCAP_PERIPHERAL_FREQMHZ">200.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_TPIU_PERIPHERAL_FREQMHZ">200.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_FPGA0_PERIPHERAL_FREQMHZ">50.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_FPGA1_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_FPGA2_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_FPGA3_PERIPHERAL_FREQMHZ">10.000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_TTC0_CLK0_PERIPHERAL_FREQMHZ">111.111115</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_TTC0_CLK1_PERIPHERAL_FREQMHZ">111.111115</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_TTC0_CLK2_PERIPHERAL_FREQMHZ">111.111115</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_TTC1_CLK0_PERIPHERAL_FREQMHZ">111.111115</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_TTC1_CLK1_PERIPHERAL_FREQMHZ">111.111115</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_ACT_TTC1_CLK2_PERIPHERAL_FREQMHZ">111.111115</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_CLK0_FREQ">50000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_CLK1_FREQ">10000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_CLK2_FREQ">10000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_CLK3_FREQ">10000000</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_UART_PERIPHERAL_VALID">1</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_USE_FABRIC_INTERRUPT">1</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_EN_UART1">1</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_IRQ_F2P_INTR">1</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_PRESET_BANK1_VOLTAGE">LVCMOS 1.8V</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_UIPARAM_DDR_PARTNO">MT41J256M16 RE-125</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_UART1_PERIPHERAL_ENABLE">1</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_UART1_UART1_IO">MIO 12 .. 13</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_UART1_GRP_FULL_ENABLE">0</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_MIO_12_PULLUP">enabled</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_MIO_12_IOTYPE">LVCMOS 3.3V</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_MIO_12_SLEW">slow</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_MIO_13_PULLUP">enabled</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_MIO_13_IOTYPE">LVCMOS 3.3V</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_MIO_13_SLEW">slow</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_MIO_TREE_PERIPHERALS">unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#UART 1#UART 1#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned</spirit:configurableElementValue>
+          <spirit:configurableElementValue spirit:referenceId="PCW_MIO_TREE_SIGNALS">unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#tx#rx#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned#unassigned</spirit:configurableElementValue>
           <spirit:configurableElementValue spirit:referenceId="PCW_FPGA_FCLK0_ENABLE">1</spirit:configurableElementValue>
         </spirit:configurableElementValues>
       </spirit:componentInstance>
