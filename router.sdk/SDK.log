@@ -93,3 +93,18 @@ con
 ----------------End of Script----------------
 
 20:53:15 INFO  : Launch script is exported to file '/home/oslab/router/router.sdk/.sdk/launch_scripts/xilinx_c-c++_application_(system_debugger)/system_debugger_using_debug_router.elf_on_local.tcl'
+20:57:59 INFO  : Example project router_bsp_xllfifo_polling_example_1 has been created successfully.
+20:57:59 INFO  : Example project router_bsp_xllfifo_interrupt_example_1 has been created successfully.
+20:58:12 INFO  : SDK has detected change in the last modified timestamps for source hardware specification file Source:1559048239000,  Project:1559047687000
+20:58:12 INFO  : Project top_hw_platform_0's source hardware specification located at /home/oslab/router/router.sdk/top.hdf is now different from the local copy.
+		 The local copy will be replaced with the source specification and your workspace will be updated.
+20:58:25 INFO  : Copied contents of /home/oslab/router/router.sdk/top.hdf into /top_hw_platform_0/system.hdf.
+20:58:26 INFO  : Synchronizing projects in the workspace with the hardware platform specification changes.
+20:58:27 INFO  : 
+20:58:32 INFO  : Updating hardware inferred compiler options for router.
+20:58:33 INFO  : Updating hardware inferred compiler options for router_bsp_xllfifo_interrupt_example_1.
+20:58:34 INFO  : Updating hardware inferred compiler options for router_bsp_xllfifo_polling_example_1.
+20:58:34 INFO  : Clearing existing target manager status.
+20:58:34 INFO  : Closing and re-opening the MSS file of ther project router_bsp
+20:58:34 INFO  : Workspace synchronized with the new hardware specification file. Cleaning dependent projects...
+20:58:36 WARN  : Linker script will not be updated automatically. Users need to update it manually.

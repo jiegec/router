@@ -1,0 +1,23 @@
+20:58:41 **** Build of configuration Debug for project router_bsp_xllfifo_interrupt_example_1 ****
+make pre-build main-build 
+a9-linaro-pre-build-step
+ 
+Building file: ../src/xllfifo_interrupt_example.c
+Invoking: ARM v7 gcc compiler
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/xllfifo_interrupt_example.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -I../../router_bsp/ps7_cortexa9_0/include -MMD -MP -MF"src/xllfifo_interrupt_example.d" -MT"src/xllfifo_interrupt_example.o" -o "src/xllfifo_interrupt_example.o" "../src/xllfifo_interrupt_example.c"
+Finished building: ../src/xllfifo_interrupt_example.c
+ 
+Building target: router_bsp_xllfifo_interrupt_example_1.elf
+Invoking: ARM v7 gcc linker
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -L../../router_bsp/ps7_cortexa9_0/lib -o "router_bsp_xllfifo_interrupt_example_1.elf"  ./src/xllfifo_interrupt_example.o   -Wl,--start-group,-lxil,-lgcc,-lc,--end-group
+Finished building target: router_bsp_xllfifo_interrupt_example_1.elf
+ 
+Invoking: ARM v7 Print Size
+arm-none-eabi-size router_bsp_xllfifo_interrupt_example_1.elf  |tee "router_bsp_xllfifo_interrupt_example_1.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+  30064	   2736	  30904	  63704	   f8d8	router_bsp_xllfifo_interrupt_example_1.elf
+Finished building: router_bsp_xllfifo_interrupt_example_1.elf.size
+ 
+
+20:58:42 Build Finished (took 511ms)
+
