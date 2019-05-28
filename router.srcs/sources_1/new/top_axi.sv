@@ -351,7 +351,6 @@ module top_axi(
     end
 
     // from os to fifo matrix to os tx fifo
-    // broadcast to enable fifos
     logic [`PORT_WIDTH-1:0] fifo_matrix_tx_index;
     logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
     logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_counter;
@@ -437,7 +436,7 @@ module top_axi(
                 if (os_txd_tlast) begin
                     os_txd_tready <= 0;
                     fifo_matrix_tx_progress <= 1;
-                    fifo_matrix_tx_length <= fifo_matrix_tx_addra + 1;
+                    fifo_matrix_tx_length <= fifo_matrix_tx_addra;
                     fifo_matrix_tx_counter <= 0;
                     fifo_matrix_wvalid[`OS_PORT_ID][fifo_matrix_tx_index] <= 1;
                 end 
@@ -446,14 +445,14 @@ module top_axi(
                 fifo_matrix_tx_wea <= 0;
                 fifo_matrix_tx_addra <= 0;
             end else begin
-                if (fifo_matrix_tx_addra == fifo_matrix_tx_length) begin
-                    fifo_matrix_tx_addra <= 1;
+                if (fifo_matrix_tx_addra == fifo_matrix_tx_length + 1) begin
+                    fifo_matrix_tx_addra <= 2;
                 end
                 fifo_matrix_tx_wea <= 0;
                 if (fifo_matrix_wready[`OS_PORT_ID][fifo_matrix_tx_index]) begin
                     if (fifo_matrix_tx_counter < fifo_matrix_tx_length) begin
                         fifo_matrix_tx_counter <= fifo_matrix_tx_counter + 1;
-                        fifo_matrix_tx_addra <= fifo_matrix_tx_counter + 2;
+                        fifo_matrix_tx_addra <= fifo_matrix_tx_counter + 3;
                         fifo_matrix_wdata[`OS_PORT_ID][fifo_matrix_tx_index] <= fifo_matrix_tx_douta;
                         if (fifo_matrix_tx_counter == fifo_matrix_tx_length - 1) begin
                             fifo_matrix_wlast[`OS_PORT_ID][fifo_matrix_tx_index] <= 1;
