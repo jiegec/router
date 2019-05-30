@@ -51,14 +51,82 @@
 #include "xllfifo.h"
 #include "xstatus.h"
 
+XLlFifo fifoInstance;
+
+u16 bswap16(u16 i) {
+    return (i >> 8) | ((i & 0xFF) << 8);
+}
+
+void sendToFifo(u8 port, u8 *data, u32 length) {
+    printf("Sending data to port %d of length %d\n", port, length);
+    while (!XLlFifo_iTxVacancy(&fifoInstance));
+    XLlFifo_TxPutWord(&fifoInstance, (u32)port);
+    for (u32 i = 0;i < length;i++) {
+        printf("%02lx", data[i]);
+        XLlFifo_TxPutWord(&fifoInstance, (u32)data[i]);
+    }
+    printf("\n");
+    XLlFifo_iTxSetLen(&fifoInstance, (length + 1) * 4);
+    while(!XLlFifo_IsTxDone(&fifoInstance));
+}
+
+struct EthernetFrame {
+    u8 dstMAC[6];
+    u8 srcMAC[6];
+    u16 etherType;
+};
+
+struct ArpResponse {
+    u8 dstMAC[6];
+    u8 srcMAC[6];
+    u16 etherType;
+    u16 hardwareType;
+    u16 protocolType;
+    u8 hardwareSize;
+    u8 protocolSize;
+    u16 opcode;
+    u8 senderMAC[6];
+    u8 senderIP[4];
+    u8 targetMAC[6];
+    u8 targetIP[4];
+};
+
+void handleEthernetFrame(u8 port, u8 *data) {
+    struct EthernetFrame *ether = (struct EthernetFrame *)data;
+    struct ArpResponse *arp = (struct ArpResponse *)data;
+    u8 buffer[2048];
+    u16 etherType = bswap16(ether->etherType);
+    if (etherType == 0x0806) {
+        u16 opcode = bswap16(arp->opcode);
+        if (opcode == 0x0001) {
+            printf("Got ARP request\n");
+            struct ArpResponse *arpResp = (struct ArpResponse *)buffer;
+            memcpy(arpResp->dstMAC, arp->srcMAC, 6);
+            memcpy(arpResp->srcMAC, arp->dstMAC, 6);
+            arpResp->etherType = bswap16(0x0806);
+            arpResp->hardwareType = bswap16(1);
+            arpResp->protocolType = bswap16(0x0800);
+            arpResp->hardwareSize = 6;
+            arpResp->protocolSize = 4;
+            arpResp->opcode = bswap16(2);
+            memcpy(arpResp->targetMAC, arp->senderMAC, 6);
+            memcpy(arpResp->targetIP, arp->senderIP, 4);
+            // Filled by router in fact
+            memcpy(arpResp->senderMAC, arp->dstMAC, 6);
+            memcpy(arpResp->senderIP, arp->targetIP, 4);
+
+            sendToFifo(port, buffer, sizeof(struct ArpResponse));
+        }
+    }
+}
+
 int main()
 {
-    XLlFifo fifoInstance;
     XLlFifo_Config *Config;
     int Status;
     u32 receiveLength;
     u32 i;
-    u32 buffer[2048];
+    u8 buffer[2048];
     u32 count = 0;
 
     init_platform();
@@ -85,15 +153,10 @@ int main()
             printf("%d: Got length %ld\nData: ", ++count, receiveLength);
             for (i = 0;i < receiveLength;i++) {
                 u32 word = XLlFifo_RxGetWord(&fifoInstance);
+                buffer[i] = word;
                 printf("%02lx", word);
-
-                while (!XLlFifo_iTxVacancy(&fifoInstance));
-                XLlFifo_TxPutWord(&fifoInstance, word);
             }
-            printf("\nSending\n");
-
-            XLlFifo_iTxSetLen(&fifoInstance, receiveLength * 4);
-            while(!XLlFifo_IsTxDone(&fifoInstance));
+            handleEthernetFrame(buffer[0], &buffer[1]);
         }
     }
 
