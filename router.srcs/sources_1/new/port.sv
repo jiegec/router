@@ -124,13 +124,13 @@ module port #(
 
     logic [15:0] counter = 0;
 
-    logic [`BYTE_WIDTH-1:0] tx_data_out;
-    logic tx_data_ren;
+    (* mark_debug = "true" *) logic [`BYTE_WIDTH-1:0] tx_data_out;
+    (* mark_debug = "true" *) logic tx_data_ren;
 
-    logic tx_data_full;
-    logic [`BYTE_WIDTH-1:0] tx_data_in;
-    logic tx_data_busy;
-    logic tx_data_wen;
+    (* mark_debug = "true" *) logic tx_data_full;
+    (* mark_debug = "true" *) logic [`BYTE_WIDTH-1:0] tx_data_in;
+    (* mark_debug = "true" *) logic tx_data_busy;
+    (* mark_debug = "true" *) logic tx_data_wen;
  
     // stores ethernet frame data
     xpm_fifo_async #(
@@ -153,16 +153,16 @@ module port #(
         .wr_rst_busy(tx_data_busy)
     );
 
-    logic [`LENGTH_WIDTH-1:0] tx_len_out;
-    logic tx_len_ren = 0;
-    logic tx_len_empty;
+    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] tx_len_out;
+    (* mark_debug = "true" *) logic tx_len_ren = 0;
+    (* mark_debug = "true" *) logic tx_len_empty;
 
-    logic tx_len_full;
-    logic [`LENGTH_WIDTH-1:0] tx_len_in;
-    logic tx_len_busy;
-    logic tx_len_wen;
+    (* mark_debug = "true" *) logic tx_len_full;
+    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] tx_len_in;
+    (* mark_debug = "true" *) logic tx_len_busy;
+    (* mark_debug = "true" *) logic tx_len_wen;
 
-    logic [`LENGTH_WIDTH-1:0] tx_length;
+    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] tx_length;
 
     // stores ethernet frame length
     xpm_fifo_async #(
@@ -186,10 +186,10 @@ module port #(
 
     // from fifo matrix to tx fifo
     // Round robin
-    logic [`PORT_OS_WIDTH-1:0] fifo_matrix_tx_index;
-    logic fifo_matrix_tx_progress;
-    logic fifo_matrix_tx_last_wlast;
-    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
+    (* mark_debug = "true" *) logic [`PORT_OS_WIDTH-1:0] fifo_matrix_tx_index;
+    (* mark_debug = "true" *) logic fifo_matrix_tx_progress;
+    (* mark_debug = "true" *) logic fifo_matrix_tx_last_wlast;
+    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
 
     always_ff @ (posedge clk) begin
         if (reset) begin
@@ -372,7 +372,7 @@ module port #(
         end
     end
 
-    (*mark_debug = "true"*) logic rx_read;
+    logic rx_read;
     logic [`LENGTH_WIDTH-1:0] rx_read_length;
     logic [`BYTE_WIDTH-1:0] rx_read_data;
     logic [`LENGTH_WIDTH-1:0] rx_read_counter;
@@ -391,17 +391,17 @@ module port #(
     logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_src_addr;
     logic [`IPV4_WIDTH-1:0] rx_saved_ipv4_dst_addr;
 
-    (*mark_debug = "true"*) logic [`IPV4_WIDTH-1:0] rx_nexthop_ipv4_addr;
-    (*mark_debug = "true"*) logic [`PORT_WIDTH-1:0] rx_nexthop_port;
-    (*mark_debug = "true"*) logic [`MAC_WIDTH-1:0] rx_nexthop_mac_addr;
+    logic [`IPV4_WIDTH-1:0] rx_nexthop_ipv4_addr;
+    logic [`PORT_WIDTH-1:0] rx_nexthop_port;
+    logic [`MAC_WIDTH-1:0] rx_nexthop_mac_addr;
     //logic [`MAX_ETHERNET_FRAME_BYTES*`BYTE_WIDTH-1:0] rx_saved_ipv4_packet;
-    (*mark_debug = "true"*) logic rx_found_nexthop_ipv4;
-    (*mark_debug = "true"*) logic rx_lookup_nexthop_mac;
+    logic rx_found_nexthop_ipv4;
+    logic rx_lookup_nexthop_mac;
 
-    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_saved_ipv4_in;
-    (*mark_debug = "true"*) logic [`BYTE_WIDTH-1:0] rx_saved_ipv4_out;
-    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] rx_saved_ipv4_addr;
-    (*mark_debug = "true"*) logic rx_saved_ipv4_wen;
+    logic [`BYTE_WIDTH-1:0] rx_saved_ipv4_in;
+    logic [`BYTE_WIDTH-1:0] rx_saved_ipv4_out;
+    logic [`LENGTH_WIDTH-1:0] rx_saved_ipv4_addr;
+    logic rx_saved_ipv4_wen;
 
     // stores the current ethernet frame temporarily
     xpm_memory_spram #(
@@ -422,19 +422,19 @@ module port #(
     );
 
     logic [`ARP_RESPONSE_COUNT*`BYTE_WIDTH-1:0] rx_outbound_arp_response;
-    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] rx_outbound_length;
-    (*mark_debug = "true"*) logic [`LENGTH_WIDTH-1:0] rx_outbound_counter;
+    logic [`LENGTH_WIDTH-1:0] rx_outbound_length;
+    logic [`LENGTH_WIDTH-1:0] rx_outbound_counter;
 
     // arp insertion is working
-    (*mark_debug = "true"*) logic arp_write;
-    (*mark_debug = "true"*) logic arp_written;
+    logic arp_write;
+    logic arp_written;
     // ip routing is working
-    (*mark_debug = "true"*) logic ip_routing;
-    (*mark_debug = "true"*) logic ip_routed;
-    (*mark_debug = "true"*) logic ip_lookup_routing;
+    logic ip_routing;
+    logic ip_routed;
+    logic ip_lookup_routing;
     // data transfer is working
-    (*mark_debug = "true"*) logic rx_outbound;
-    (*mark_debug = "true"*) logic [`PORT_OS_COUNT-1:0] rx_outbound_port_id;
+    logic rx_outbound;
+    logic [`PORT_OS_COUNT-1:0] rx_outbound_port_id;
 
     always_ff @ (posedge clk) begin
         if (reset) begin

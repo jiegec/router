@@ -59,29 +59,30 @@ int main()
     u32 receiveLength;
     u32 i;
     u32 buffer[2048];
+    u32 count = 0;
 
     init_platform();
 
-    print("Lookup config\n\r");
+    print("Lookup config\n");
     Config = XLlFfio_LookupConfig(XPAR_AXI_FIFO_0_DEVICE_ID);
     if (!Config) {
-        print("No config found\n\r");
+        print("No config found\n");
         goto fail;
     }
 
     Status = XLlFifo_CfgInitialize(&fifoInstance, Config, Config->BaseAddress);
     if (Status != XST_SUCCESS) {
-        print("Init failed\n\r");
+        print("Init failed\n");
         goto fail;
     }
 
 	XLlFifo_IntClear(&fifoInstance,0xffffffff);
 
-    print("Waiting for data\n\r");
+    print("Waiting for data\n");
     for (;;) {
         if (XLlFifo_iRxOccupancy(&fifoInstance)) {
             receiveLength = XLlFifo_iRxGetLen(&fifoInstance) / 4;
-            printf("Got length %ld\n\rData: ", receiveLength);
+            printf("%d: Got length %ld\nData: ", ++count, receiveLength);
             for (i = 0;i < receiveLength;i++) {
                 u32 word = XLlFifo_RxGetWord(&fifoInstance);
                 printf("%02lx", word);
@@ -89,7 +90,7 @@ int main()
                 while (!XLlFifo_iTxVacancy(&fifoInstance));
                 XLlFifo_TxPutWord(&fifoInstance, word);
             }
-            printf("\n\rSending\n\r");
+            printf("\nSending\n");
 
             XLlFifo_iTxSetLen(&fifoInstance, receiveLength * 4);
             while(!XLlFifo_IsTxDone(&fifoInstance));
@@ -97,7 +98,7 @@ int main()
     }
 
 fail:
-    print("Leaving\n\r");
+    print("Leaving\n");
     cleanup_platform();
     return 0;
 }

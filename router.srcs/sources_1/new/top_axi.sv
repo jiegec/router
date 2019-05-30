@@ -350,16 +350,16 @@ module top_axi(
         end
     end
 
-    // from os to fifo matrix to os tx fifo
-    logic [`PORT_WIDTH-1:0] fifo_matrix_tx_index;
-    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
-    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_counter;
-    logic fifo_matrix_tx_progress;
+    // from os tx fifo to fifo matrix
+    (* mark_debug = "true" *) logic [`PORT_WIDTH-1:0] fifo_matrix_tx_index;
+    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
+    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_counter;
+    (* mark_debug = "true" *) logic fifo_matrix_tx_progress;
 
-    logic [7:0] os_txd_tdata;
-    logic os_txd_tvalid;
-    logic os_txd_tready;
-    logic os_txd_tlast;
+    (* mark_debug = "true" *) logic [7:0] os_txd_tdata;
+    (* mark_debug = "true" *) logic os_txd_tvalid;
+    (* mark_debug = "true" *) logic os_txd_tready;
+    (* mark_debug = "true" *) logic os_txd_tlast;
 
     axis_data_fifo_0 axis_data_fifo_0_tx (
         .s_axis_aresetn(reset_n),
@@ -376,10 +376,10 @@ module top_axi(
         .s_axis_tlast(axis_txd_tlast)
     );
 
-    logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_douta;
-    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_addra;
-    logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_dina;
-    logic fifo_matrix_tx_wea;
+    (* mark_debug = "true" *) logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_douta;
+    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_addra;
+    (* mark_debug = "true" *) logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_dina;
+    (* mark_debug = "true" *) logic fifo_matrix_tx_wea;
 
     // stores the current ethernet frame temporarily
     // index start from 1

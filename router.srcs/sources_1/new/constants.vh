@@ -4,7 +4,7 @@
 // controls whether the control logic is handled in hardware or software
 // `define HARDWARE_CONTROL_PLANE 1
 `define OS_PORT_ID 3'b100
-`define PORT_OS_COUNT 5
+`define PORT_OS_COUNT 8
 `define PORT_OS_WIDTH 3
 
 `define MAX_FIFO_SIZE 8192
