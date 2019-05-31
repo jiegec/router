@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Fri May 31 17:53:09 2019
+//Date        : Fri May 31 23:05:09 2019
 //Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -40,6 +40,13 @@ module design_1_wrapper
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
+    routing_table_addr,
+    routing_table_clk,
+    routing_table_din,
+    routing_table_dout,
+    routing_table_en,
+    routing_table_rst,
+    routing_table_we,
     rx_bytes_tri_i,
     rx_packets_tri_i,
     tx_bytes_tri_i,
@@ -74,6 +81,13 @@ module design_1_wrapper
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
+  output [13:0]routing_table_addr;
+  output routing_table_clk;
+  output [127:0]routing_table_din;
+  input [127:0]routing_table_dout;
+  output routing_table_en;
+  output routing_table_rst;
+  output [15:0]routing_table_we;
   input [31:0]rx_bytes_tri_i;
   input [31:0]rx_packets_tri_i;
   input [31:0]tx_bytes_tri_i;
@@ -109,6 +123,13 @@ module design_1_wrapper
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
+  wire [13:0]routing_table_addr;
+  wire routing_table_clk;
+  wire [127:0]routing_table_din;
+  wire [127:0]routing_table_dout;
+  wire routing_table_en;
+  wire routing_table_rst;
+  wire [15:0]routing_table_we;
   wire [31:0]rx_bytes_tri_i;
   wire [31:0]rx_packets_tri_i;
   wire [31:0]tx_bytes_tri_i;
@@ -145,6 +166,13 @@ module design_1_wrapper
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
+        .routing_table_addr(routing_table_addr),
+        .routing_table_clk(routing_table_clk),
+        .routing_table_din(routing_table_din),
+        .routing_table_dout(routing_table_dout),
+        .routing_table_en(routing_table_en),
+        .routing_table_rst(routing_table_rst),
+        .routing_table_we(routing_table_we),
         .rx_bytes_tri_i(rx_bytes_tri_i),
         .rx_packets_tri_i(rx_packets_tri_i),
         .tx_bytes_tri_i(tx_bytes_tri_i),

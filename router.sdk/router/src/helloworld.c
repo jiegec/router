@@ -53,6 +53,7 @@
 #include "xscugic.h"
 #include "xscutimer.h"
 #include "xstatus.h"
+#include "xbram.h"
 #include "xparameters.h"
 #include "xil_exception.h"
 
@@ -61,6 +62,7 @@ XGpio gpioRxInstance;
 XGpio gpioTxInstance;
 XScuGic gicInstance;
 XScuTimer timerInstance;
+XBram bramInstance;
 
 u16 bswap16(u16 i) {
     return (i >> 8) | ((i & 0xFF) << 8);
@@ -217,6 +219,15 @@ void FifoInterruptHandler(void *data) {
     print("Got fifo interrupt\n");
 }
 
+
+void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
+    printf("data read:\n");
+    for (int i = 0;i < 32;i++) {
+        printf("%x ", XBram_In32(bramConfig->MemBaseAddress + i * 4));
+    }
+    printf("\n");
+}
+
 void TimerInterruptHandler(void *data) {
     static u32 time = 0;
     u32 chanR1 = XGpio_DiscreteRead(&gpioRxInstance, 1);
@@ -224,6 +235,7 @@ void TimerInterruptHandler(void *data) {
     u32 chanT1 = XGpio_DiscreteRead(&gpioTxInstance, 1);
     u32 chanT2 = XGpio_DiscreteRead(&gpioTxInstance, 2);
     printf("%d: Rx %d bytes %d packets, Tx %d bytes %d packets\n", ++time, chanR1, chanR2, chanT1, chanT2);
+    PrintCurrentRoutingTable(data);
 }
 
 int main()
@@ -233,6 +245,7 @@ int main()
     XGpio_Config *gpioTxConfig;
     XScuGic_Config *gicConfig;
     XScuTimer_Config *timerConfig;
+    XBram_Config *bramConfig;
 
     u32 receiveLength;
     u32 i;
@@ -268,6 +281,15 @@ int main()
 
     XGpio_CfgInitialize(&gpioTxInstance, gpioTxConfig, gpioTxConfig->BaseAddress);
 
+    bramConfig = XBram_LookupConfig(XPAR_BRAM_0_DEVICE_ID);
+    if (!bramConfig) {
+        print("No config found\n");
+        goto fail;
+    }
+
+    XBram_CfgInitialize(&bramInstance, bramConfig, bramConfig->CtrlBaseAddress);
+    PrintCurrentRoutingTable(bramConfig);
+
     timerConfig = XScuTimer_LookupConfig(XPAR_PS7_SCUTIMER_0_DEVICE_ID);
     if (!timerConfig) {
         print("No timer config found\n");
@@ -293,7 +315,7 @@ int main()
 
     XScuGic_Connect(&gicInstance, XPAR_FABRIC_AXI_FIFO_MM_S_0_INTERRUPT_INTR, (Xil_ExceptionHandler)FifoInterruptHandler, NULL);
     XScuGic_Enable(&gicInstance, XPAR_FABRIC_AXI_FIFO_MM_S_0_INTERRUPT_INTR);
-    XScuGic_Connect(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR, (Xil_ExceptionHandler)TimerInterruptHandler, NULL);
+    XScuGic_Connect(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR, (Xil_ExceptionHandler)TimerInterruptHandler, bramConfig);
     XScuGic_Enable(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR);
     XScuTimer_EnableInterrupt(&timerInstance);
 

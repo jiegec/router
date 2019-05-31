@@ -92,6 +92,15 @@ module top(
     assign stats_total_tx_packets = stats_tx_packets[0] + stats_tx_packets[1];
     assign stats_total_tx_bytes = stats_tx_bytes[0] + stats_tx_bytes[1];
 
+    // accessing routing table
+    logic os_clk;
+    logic [`BUCKET_INDEX_WIDTH-1:0] os_addr;
+    logic [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_din;
+    logic [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_dout;
+    logic [(`ROUTING_TABLE_ENTRY_WIDTH)/`BYTE_WIDTH-1:0] os_wea;
+    logic os_rst;
+    logic os_en;
+
     top_axi top_axi_inst(
         .clk(clk),
         .reset_n_in(reset_n_in),
@@ -124,7 +133,15 @@ module top(
         .stats_rx_bytes(stats_rx_bytes),
         .stats_rx_packets(stats_rx_packets),
         .stats_tx_bytes(stats_tx_bytes),
-        .stats_tx_packets(stats_tx_packets)
+        .stats_tx_packets(stats_tx_packets),
+
+        .os_clk(os_clk),
+        .os_addr(os_addr),
+        .os_din(os_din),
+        .os_dout(os_dout),
+        .os_wea(os_wea),
+        .os_rst(os_rst),
+        .os_en(os_en)
     );
 
     design_1_wrapper design_1_inst(
@@ -166,6 +183,14 @@ module top(
         .rx_packets_tri_i(stats_total_rx_packets),
 
         .tx_bytes_tri_i(stats_total_tx_bytes),
-        .tx_packets_tri_i(stats_total_tx_packets)
+        .tx_packets_tri_i(stats_total_tx_packets),
+
+        .routing_table_addr(os_addr),
+        .routing_table_clk(os_clk),
+        .routing_table_din(os_din),
+        .routing_table_dout(os_dout),
+        .routing_table_en(os_en),
+        .routing_table_rst(os_rst),
+        .routing_table_we(os_wea)
     );
 endmodule

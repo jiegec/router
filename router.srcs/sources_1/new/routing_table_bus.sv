@@ -33,8 +33,15 @@ module routing_table_bus(
     input [`PORT_COUNT-1:0]port_lookup_valid,
     output logic [`PORT_COUNT-1:0]port_lookup_ready,
     output logic [`PORT_COUNT-1:0]port_lookup_output_valid,
-    output logic [`PORT_COUNT-1:0]port_lookup_not_found
+    output logic [`PORT_COUNT-1:0]port_lookup_not_found,
 
+    input os_clk,
+    input [`BUCKET_INDEX_WIDTH-1:0] os_addr,
+    input [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_din,
+    output [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_dout,
+    input [(`ROUTING_TABLE_ENTRY_WIDTH)/`BYTE_WIDTH-1:0] os_wea,
+    input os_rst,
+    input os_en
     );
 
     logic [`IPV4_WIDTH-1:0] lookup_dest_ip;
@@ -55,7 +62,15 @@ module routing_table_bus(
         .lookup_valid(lookup_valid),
         .lookup_ready(lookup_ready),
         .lookup_output_valid(lookup_output_valid),
-        .lookup_not_found(lookup_not_found)
+        .lookup_not_found(lookup_not_found),
+
+        .os_clk(os_clk),
+        .os_addr(os_addr),
+        .os_din(os_din),
+        .os_dout(os_dout),
+        .os_wea(os_wea),
+        .os_rst(os_rst),
+        .os_en(os_en)
     );
 
 

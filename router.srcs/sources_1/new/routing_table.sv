@@ -31,43 +31,55 @@ module routing_table(
     input lookup_valid,
     output logic lookup_ready,
     output logic lookup_output_valid,
-    output logic lookup_not_found
+    output logic lookup_not_found,
 
+    input os_clk,
+    input [`BUCKET_INDEX_WIDTH-1:0] os_addr,
+    input [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_din,
+    output [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_dout,
+    input [(`ROUTING_TABLE_ENTRY_WIDTH)/`BYTE_WIDTH-1:0] os_wea,
+    input os_rst,
+    input os_en
     );
 
     // Each item consists of (PORT,DST_IP,PREFIX_MASK,VIA_IP) tuple.
     // Represents DST_IP/PREFIX_LEN via VIA_IP if PORT
-    // a for write, b for read
-    logic [`PORT_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:0] data_dina;
-    logic [`PORT_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH-1:0] data_doutb;
-    logic [`BUCKET_INDEX_WIDTH-1:0] data_addra;
-    logic data_wea = 0;
-
+    logic [`ROUTING_TABLE_ENTRY_WIDTH-1:0] data_doutb;
     logic [`BUCKET_INDEX_WIDTH-1:0] lookup_index;
     logic [`IPV4_WIDTH-1:0] saved_dest_ip;
 
-    xpm_memory_sdpram #(
+    // a for os, b for lookup
+    xpm_memory_tdpram #(
         .ADDR_WIDTH_A(`BUCKET_INDEX_WIDTH),
+        .WRITE_DATA_WIDTH_A(`ROUTING_TABLE_ENTRY_WIDTH),
+        .BYTE_WRITE_WIDTH_A(`ROUTING_TABLE_ENTRY_WIDTH),
+        .READ_DATA_WIDTH_A(`ROUTING_TABLE_ENTRY_WIDTH),
         .ADDR_WIDTH_B(`BUCKET_INDEX_WIDTH),
-        .BYTE_WRITE_WIDTH_A(`PORT_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH),
-        .MEMORY_SIZE(`BUCKET_INDEX_COUNT * (`PORT_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH)),
-        .READ_DATA_WIDTH_B(`PORT_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH),
+        .READ_LATENCY_A(1),
+        .WRITE_DATA_WIDTH_B(`ROUTING_TABLE_ENTRY_WIDTH),
+        .BYTE_WRITE_WIDTH_B(`ROUTING_TABLE_ENTRY_WIDTH),
+        .READ_DATA_WIDTH_B(`ROUTING_TABLE_ENTRY_WIDTH),
         .READ_LATENCY_B(0),
-        .WRITE_DATA_WIDTH_A(`PORT_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH+`IPV4_WIDTH),
+        .MEMORY_SIZE(`BUCKET_INDEX_COUNT * `ROUTING_TABLE_ENTRY_WIDTH),
         // 10.0.0.0/24 via 10.0.0.2 port 0
         // 10.0.1.0/24 via 10.0.1.2 port 1
-        .MEMORY_INIT_PARAM("00a000000ffffff000a000002, 10a000100ffffff000a000102, 0000000000000000000000000")
-    ) xpm_memory_sdpram_data (
-        .dina(data_dina),
-        .addra(data_addra),
-        .addrb(lookup_index),
-        .doutb(data_doutb),
+        .MEMORY_INIT_PARAM("00a000000ffffff000a000002,10a000100ffffff000a000102,0000000000000000000000000")
+    ) xpm_memory_tdpram_data (
+        .dina(os_din),
+        .addra(os_addr),
+        .wea(os_wea), // note wea width does not match
+        .douta(os_dout),
         .clka(clk),
+        .rsta(os_rst),
+        .ena(os_en),
+
+        .dinb(0),
+        .addrb(lookup_index),
+        .enb(1'b1),
+        .doutb(data_doutb),
         .clkb(clk),
         .rstb(rst),
-        .ena(1'b1),
-        .enb(1'b1),
-        .wea(data_wea)
+        .web(1'b0)
     );
 
     always_ff @ (posedge clk) begin

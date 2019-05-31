@@ -58,7 +58,15 @@ module top_axi(
     output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_rx_packets,
     output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_rx_bytes,
     output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_packets,
-    output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_bytes
+    output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_bytes,
+
+    input os_clk,
+    input [`BUCKET_INDEX_WIDTH-1:0] os_addr,
+    input [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_din,
+    output [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_dout,
+    input [(`ROUTING_TABLE_ENTRY_WIDTH)/`BYTE_WIDTH-1:0] os_wea,
+    input os_rst,
+    input os_en
     );
     
     logic reset;
@@ -152,7 +160,15 @@ module top_axi(
         .port_lookup_valid(port_lookup_valid),
         .port_lookup_ready(port_lookup_ready),
         .port_lookup_output_valid(port_lookup_output_valid),
-        .port_lookup_not_found(port_lookup_not_found)
+        .port_lookup_not_found(port_lookup_not_found),
+
+        .os_clk(os_clk),
+        .os_addr(os_addr),
+        .os_din(os_din),
+        .os_dout(os_dout),
+        .os_wea(os_wea),
+        .os_rst(os_rst),
+        .os_en(os_en)
     );
 
     // ports
