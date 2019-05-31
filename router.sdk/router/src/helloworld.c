@@ -50,10 +50,16 @@
 #include "xil_printf.h"
 #include "xllfifo.h"
 #include "xgpio.h"
+#include "xscugic.h"
+#include "xscutimer.h"
 #include "xstatus.h"
+#include "xparameters.h"
+#include "xil_exception.h"
 
 XLlFifo fifoInstance;
 XGpio gpioInstance;
+XScuGic gicInstance;
+XScuTimer timerInstance;
 
 u16 bswap16(u16 i) {
     return (i >> 8) | ((i & 0xFF) << 8);
@@ -65,6 +71,7 @@ void sendToFifo(u8 port, u8 *data, u32 length) {
     XLlFifo_TxPutWord(&fifoInstance, (u32)port);
     for (u32 i = 0;i < length;i++) {
         printf("%02x", data[i]);
+        while (!XLlFifo_iTxVacancy(&fifoInstance));
         XLlFifo_TxPutWord(&fifoInstance, (u32)data[i]);
     }
     printf("\n");
@@ -205,11 +212,24 @@ void handleEthernetFrame(u8 port, u8 *data) {
     }
 }
 
+void FifoInterruptHandler(void *data) {
+    print("Got fifo interrupt\n");
+}
+
+void TimerInterruptHandler(void *data) {
+    static u32 time = 0;
+    u32 chan1 = XGpio_DiscreteRead(&gpioInstance, 1);
+    u32 chan2 = XGpio_DiscreteRead(&gpioInstance, 2);
+    printf("%d: Rx %d bytes %d packets\n", ++time, chan1, chan2);
+}
+
 int main()
 {
     XLlFifo_Config *fifoConfig;
     XGpio_Config *gpioConfig;
-    int Status;
+    XScuGic_Config *gicConfig;
+    XScuTimer_Config *timerConfig;
+
     u32 receiveLength;
     u32 i;
     u8 buffer[2048];
@@ -224,11 +244,7 @@ int main()
         goto fail;
     }
 
-    Status = XLlFifo_CfgInitialize(&fifoInstance, fifoConfig, fifoConfig->BaseAddress);
-    if (Status != XST_SUCCESS) {
-        print("Init failed\n");
-        goto fail;
-    }
+    XLlFifo_CfgInitialize(&fifoInstance, fifoConfig, fifoConfig->BaseAddress);
 
 	XLlFifo_IntClear(&fifoInstance,0xffffffff);
 
@@ -238,11 +254,38 @@ int main()
         goto fail;
     }
 
-    Status = XGpio_CfgInitialize(&gpioInstance, gpioConfig, gpioConfig->BaseAddress);
-    if (Status != XST_SUCCESS) {
-        print("Init failed\n");
+    XGpio_CfgInitialize(&gpioInstance, gpioConfig, gpioConfig->BaseAddress);
+
+    timerConfig = XScuTimer_LookupConfig(XPAR_PS7_SCUTIMER_0_DEVICE_ID);
+    if (!gpioConfig) {
+        print("No timer config found\n");
         goto fail;
     }
+
+    XScuTimer_CfgInitialize(&timerInstance, timerConfig, timerConfig->BaseAddr);
+    XScuTimer_SelfTest(&timerInstance);
+    XScuTimer_EnableAutoReload(&timerInstance);
+    XScuTimer_LoadTimer(&timerInstance, 0x13D92D3F); // 1s
+    XScuTimer_Start(&timerInstance);
+
+    gicConfig = XScuGic_LookupConfig(XPAR_PS7_SCUGIC_0_DEVICE_ID);
+    if (!gpioConfig) {
+        print("No config found\n");
+        goto fail;
+    }
+
+    XScuGic_CfgInitialize(&gicInstance, gicConfig, gicConfig->CpuBaseAddress);
+
+    Xil_ExceptionInit();
+    Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler) XScuGic_InterruptHandler, &gicInstance);
+
+    XScuGic_Connect(&gicInstance, XPAR_FABRIC_AXI_FIFO_MM_S_0_INTERRUPT_INTR, (Xil_ExceptionHandler)FifoInterruptHandler, NULL);
+    XScuGic_Enable(&gicInstance, XPAR_FABRIC_AXI_FIFO_MM_S_0_INTERRUPT_INTR);
+    XScuGic_Connect(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR, (Xil_ExceptionHandler)TimerInterruptHandler, NULL);
+    XScuGic_Enable(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR);
+    XScuTimer_EnableInterrupt(&timerInstance);
+
+    Xil_ExceptionEnable();
 
     print("Waiting for data\n");
     for (int time = 0;;time++) {
@@ -256,11 +299,6 @@ int main()
             }
             printf("\n");
             handleEthernetFrame(buffer[0], &buffer[1]);
-        }
-        if (time % 1000000 == 0) {
-            u32 chan1 = XGpio_DiscreteRead(&gpioInstance, 1);
-            u32 chan2 = XGpio_DiscreteRead(&gpioInstance, 2);
-            printf("Rx %d bytes %d packets\n", chan1, chan2);
         }
     }
 
