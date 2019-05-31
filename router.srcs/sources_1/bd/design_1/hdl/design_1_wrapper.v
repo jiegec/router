@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Fri May 31 15:01:57 2019
+//Date        : Fri May 31 17:53:09 2019
 //Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -41,7 +41,9 @@ module design_1_wrapper
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
     rx_bytes_tri_i,
-    rx_packets_tri_i);
+    rx_packets_tri_i,
+    tx_bytes_tri_i,
+    tx_packets_tri_i);
   input [31:0]AXI_STR_RXD_0_tdata;
   input AXI_STR_RXD_0_tlast;
   output AXI_STR_RXD_0_tready;
@@ -74,6 +76,8 @@ module design_1_wrapper
   inout FIXED_IO_ps_srstb;
   input [31:0]rx_bytes_tri_i;
   input [31:0]rx_packets_tri_i;
+  input [31:0]tx_bytes_tri_i;
+  input [31:0]tx_packets_tri_i;
 
   wire [31:0]AXI_STR_RXD_0_tdata;
   wire AXI_STR_RXD_0_tlast;
@@ -107,6 +111,8 @@ module design_1_wrapper
   wire FIXED_IO_ps_srstb;
   wire [31:0]rx_bytes_tri_i;
   wire [31:0]rx_packets_tri_i;
+  wire [31:0]tx_bytes_tri_i;
+  wire [31:0]tx_packets_tri_i;
 
   design_1 design_1_i
        (.AXI_STR_RXD_0_tdata(AXI_STR_RXD_0_tdata),
@@ -140,5 +146,7 @@ module design_1_wrapper
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
         .rx_bytes_tri_i(rx_bytes_tri_i),
-        .rx_packets_tri_i(rx_packets_tri_i));
+        .rx_packets_tri_i(rx_packets_tri_i),
+        .tx_bytes_tri_i(tx_bytes_tri_i),
+        .tx_packets_tri_i(tx_packets_tri_i));
 endmodule

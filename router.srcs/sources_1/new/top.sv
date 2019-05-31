@@ -153,6 +153,9 @@ module top(
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
 
         .rx_bytes_tri_i(stats_rx_bytes[0]),
-        .rx_packets_tri_i(stats_rx_packets[0])
+        .rx_packets_tri_i(stats_rx_packets[0]),
+
+        .tx_bytes_tri_i(stats_tx_bytes[0]),
+        .tx_packets_tri_i(stats_tx_packets[0])
     );
 endmodule

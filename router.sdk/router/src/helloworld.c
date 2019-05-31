@@ -57,7 +57,8 @@
 #include "xil_exception.h"
 
 XLlFifo fifoInstance;
-XGpio gpioInstance;
+XGpio gpioRxInstance;
+XGpio gpioTxInstance;
 XScuGic gicInstance;
 XScuTimer timerInstance;
 
@@ -218,15 +219,18 @@ void FifoInterruptHandler(void *data) {
 
 void TimerInterruptHandler(void *data) {
     static u32 time = 0;
-    u32 chan1 = XGpio_DiscreteRead(&gpioInstance, 1);
-    u32 chan2 = XGpio_DiscreteRead(&gpioInstance, 2);
-    printf("%d: Rx %d bytes %d packets\n", ++time, chan1, chan2);
+    u32 chanR1 = XGpio_DiscreteRead(&gpioRxInstance, 1);
+    u32 chanR2 = XGpio_DiscreteRead(&gpioRxInstance, 2);
+    u32 chanT1 = XGpio_DiscreteRead(&gpioTxInstance, 1);
+    u32 chanT2 = XGpio_DiscreteRead(&gpioTxInstance, 2);
+    printf("%d: Rx %d bytes %d packets, Tx %d bytes %d packets\n", ++time, chanR1, chanR2, chanT1, chanT2);
 }
 
 int main()
 {
     XLlFifo_Config *fifoConfig;
-    XGpio_Config *gpioConfig;
+    XGpio_Config *gpioRxConfig;
+    XGpio_Config *gpioTxConfig;
     XScuGic_Config *gicConfig;
     XScuTimer_Config *timerConfig;
 
@@ -248,16 +252,24 @@ int main()
 
 	XLlFifo_IntClear(&fifoInstance,0xffffffff);
 
-    gpioConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_DEVICE_ID);
-    if (!gpioConfig) {
+    gpioRxConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_DEVICE_ID);
+    if (!gpioRxConfig) {
         print("No config found\n");
         goto fail;
     }
 
-    XGpio_CfgInitialize(&gpioInstance, gpioConfig, gpioConfig->BaseAddress);
+    XGpio_CfgInitialize(&gpioRxInstance, gpioRxConfig, gpioRxConfig->BaseAddress);
+
+    gpioTxConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_1_DEVICE_ID);
+    if (!gpioTxConfig) {
+        print("No config found\n");
+        goto fail;
+    }
+
+    XGpio_CfgInitialize(&gpioTxInstance, gpioTxConfig, gpioTxConfig->BaseAddress);
 
     timerConfig = XScuTimer_LookupConfig(XPAR_PS7_SCUTIMER_0_DEVICE_ID);
-    if (!gpioConfig) {
+    if (!timerConfig) {
         print("No timer config found\n");
         goto fail;
     }
@@ -269,7 +281,7 @@ int main()
     XScuTimer_Start(&timerInstance);
 
     gicConfig = XScuGic_LookupConfig(XPAR_PS7_SCUGIC_0_DEVICE_ID);
-    if (!gpioConfig) {
+    if (!gicConfig) {
         print("No config found\n");
         goto fail;
     }
