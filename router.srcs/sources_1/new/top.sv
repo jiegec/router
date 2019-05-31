@@ -77,6 +77,11 @@ module top(
     logic axis_txd_tready;
     logic axis_txd_tvalid;
 
+    logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_rx_packets;
+    logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_rx_bytes;
+    logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_packets;
+    logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_bytes;
+
     top_axi top_axi_inst(
         .clk(clk),
         .reset_n_in(reset_n_in),
@@ -104,7 +109,12 @@ module top(
         .rgmii2_rxc(rgmii2_rxc),
         .rgmii2_td(rgmii2_td),
         .rgmii2_tx_ctl(rgmii2_tx_ctl),
-        .rgmii2_txc(rgmii2_txc)
+        .rgmii2_txc(rgmii2_txc),
+
+        .stats_rx_bytes(stats_rx_bytes),
+        .stats_rx_packets(stats_rx_packets),
+        .stats_tx_bytes(stats_tx_bytes),
+        .stats_tx_packets(stats_tx_packets)
     );
 
     design_1_wrapper design_1_inst(
@@ -140,6 +150,9 @@ module top(
         .FIXED_IO_mio(FIXED_IO_mio),
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
-        .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb)
+        .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
+
+        .rx_bytes_tri_i(stats_rx_bytes[0]),
+        .rx_packets_tri_i(stats_rx_packets[0])
     );
 endmodule

@@ -53,7 +53,12 @@ module top_axi(
     input logic rgmii2_rxc,
     output logic [3:0] rgmii2_td,
     output logic rgmii2_tx_ctl,
-    output logic rgmii2_txc
+    output logic rgmii2_txc,
+
+    output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_rx_packets,
+    output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_rx_bytes,
+    output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_packets,
+    output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_bytes
     );
     
     logic reset;
@@ -219,7 +224,12 @@ module top_axi(
         .rgmii_txc(rgmii1_txc),
         .rgmii_rd(rgmii1_rd),
         .rgmii_rx_ctl(rgmii1_rx_ctl),
-        .rgmii_rxc(rgmii1_rxc)
+        .rgmii_rxc(rgmii1_rxc),
+        
+        .stats_rx_bytes(stats_rx_bytes[0]),
+        .stats_rx_packets(stats_rx_packets[0]),
+        .stats_tx_bytes(stats_tx_bytes[0]),
+        .stats_tx_packets(stats_tx_packets[0])
     );
 
     // port 1
@@ -278,7 +288,12 @@ module top_axi(
         .rgmii_txc(rgmii2_txc),
         .rgmii_rd(rgmii2_rd),
         .rgmii_rx_ctl(rgmii2_rx_ctl),
-        .rgmii_rxc(rgmii2_rxc)
+        .rgmii_rxc(rgmii2_rxc),
+
+        .stats_rx_bytes(stats_rx_bytes[1]),
+        .stats_rx_packets(stats_rx_packets[1]),
+        .stats_tx_bytes(stats_tx_bytes[1]),
+        .stats_tx_packets(stats_tx_packets[1])
     );
 
 `ifndef HARDWARE_CONTROL_PLANE
@@ -351,15 +366,15 @@ module top_axi(
     end
 
     // from os tx fifo to fifo matrix
-    (* mark_debug = "true" *) logic [`PORT_WIDTH-1:0] fifo_matrix_tx_index;
-    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
-    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_counter;
-    (* mark_debug = "true" *) logic fifo_matrix_tx_progress;
+    logic [`PORT_WIDTH-1:0] fifo_matrix_tx_index;
+    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
+    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_counter;
+    logic fifo_matrix_tx_progress;
 
-    (* mark_debug = "true" *) logic [7:0] os_txd_tdata;
-    (* mark_debug = "true" *) logic os_txd_tvalid;
-    (* mark_debug = "true" *) logic os_txd_tready;
-    (* mark_debug = "true" *) logic os_txd_tlast;
+    logic [7:0] os_txd_tdata;
+    logic os_txd_tvalid;
+    logic os_txd_tready;
+    logic os_txd_tlast;
 
     axis_data_fifo_0 axis_data_fifo_0_tx (
         .s_axis_aresetn(reset_n),
@@ -376,10 +391,10 @@ module top_axi(
         .s_axis_tlast(axis_txd_tlast)
     );
 
-    (* mark_debug = "true" *) logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_douta;
-    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_addra;
-    (* mark_debug = "true" *) logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_dina;
-    (* mark_debug = "true" *) logic fifo_matrix_tx_wea;
+    logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_douta;
+    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_addra;
+    logic [`BYTE_WIDTH-1:0] fifo_matrix_tx_dina;
+    logic fifo_matrix_tx_wea;
 
     // stores the current ethernet frame temporarily
     // index start from 1

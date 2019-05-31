@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="6301560000fs"></ZoomStartTime>
-      <ZoomEndTime time="12246560001fs"></ZoomEndTime>
-      <Cursor1Time time="9610100000fs"></Cursor1Time>
+      <ZoomStartTime time="119082546000fs"></ZoomStartTime>
+      <ZoomEndTime time="131042546001fs"></ZoomEndTime>
+      <Cursor1Time time="124082546000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="281"></NameColumnWidth>
-      <ValueColumnWidth column_width="94"></ValueColumnWidth>
+      <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="118" />
+   <WVObjectSize size="122" />
    <wvobject type="logic" fp_name="/testbench_axi/top_axi/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -353,41 +353,41 @@
       <obj_property name="ObjectShortName">rx_outbound_arp_response[335:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wdata">
-      <obj_property name="ElementShortName">fifo_matrix_rx_wdata[4:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_matrix_rx_wdata[4:0][7:0]</obj_property>
+      <obj_property name="ElementShortName">fifo_matrix_rx_wdata[7:0][7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_rx_wdata[7:0][7:0]</obj_property>
       <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wlast">
-      <obj_property name="ElementShortName">fifo_matrix_rx_wlast[4:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_matrix_rx_wlast[4:0]</obj_property>
+      <obj_property name="ElementShortName">fifo_matrix_rx_wlast[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_rx_wlast[7:0]</obj_property>
       <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wvalid">
-      <obj_property name="ElementShortName">fifo_matrix_rx_wvalid[4:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_matrix_rx_wvalid[4:0]</obj_property>
+      <obj_property name="ElementShortName">fifo_matrix_rx_wvalid[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_rx_wvalid[7:0]</obj_property>
       <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_rx_wready">
-      <obj_property name="ElementShortName">fifo_matrix_rx_wready[4:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_matrix_rx_wready[4:0]</obj_property>
+      <obj_property name="ElementShortName">fifo_matrix_rx_wready[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_rx_wready[7:0]</obj_property>
       <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_tx_wdata">
-      <obj_property name="ElementShortName">fifo_matrix_tx_wdata[4:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_matrix_tx_wdata[4:0][7:0]</obj_property>
+      <obj_property name="ElementShortName">fifo_matrix_tx_wdata[7:0][7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_wdata[7:0][7:0]</obj_property>
       <obj_property name="isExpanded"></obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_tx_wlast">
-      <obj_property name="ElementShortName">fifo_matrix_tx_wlast[4:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_matrix_tx_wlast[4:0]</obj_property>
+      <obj_property name="ElementShortName">fifo_matrix_tx_wlast[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_wlast[7:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_tx_wvalid">
-      <obj_property name="ElementShortName">fifo_matrix_tx_wvalid[4:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_matrix_tx_wvalid[4:0]</obj_property>
+      <obj_property name="ElementShortName">fifo_matrix_tx_wvalid[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_wvalid[7:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/fifo_matrix_tx_wready">
-      <obj_property name="ElementShortName">fifo_matrix_tx_wready[4:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_matrix_tx_wready[4:0]</obj_property>
+      <obj_property name="ElementShortName">fifo_matrix_tx_wready[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fifo_matrix_tx_wready[7:0]</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/testbench_axi/top_axi/port_inst_0/arp_written">
       <obj_property name="ElementShortName">arp_written</obj_property>
@@ -496,5 +496,21 @@
    <wvobject type="logic" fp_name="/testbench_axi/top_axi/fifo_matrix_tx_wea">
       <obj_property name="ElementShortName">fifo_matrix_tx_wea</obj_property>
       <obj_property name="ObjectShortName">fifo_matrix_tx_wea</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/stats_rx_packets">
+      <obj_property name="ElementShortName">stats_rx_packets[63:0]</obj_property>
+      <obj_property name="ObjectShortName">stats_rx_packets[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/stats_rx_bytes">
+      <obj_property name="ElementShortName">stats_rx_bytes[63:0]</obj_property>
+      <obj_property name="ObjectShortName">stats_rx_bytes[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/stats_tx_packets">
+      <obj_property name="ElementShortName">stats_tx_packets[63:0]</obj_property>
+      <obj_property name="ObjectShortName">stats_tx_packets[63:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/testbench_axi/top_axi/port_inst_0/stats_tx_bytes">
+      <obj_property name="ElementShortName">stats_tx_bytes[63:0]</obj_property>
+      <obj_property name="ObjectShortName">stats_tx_bytes[63:0]</obj_property>
    </wvobject>
 </wave_config>
