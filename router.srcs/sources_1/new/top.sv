@@ -82,6 +82,16 @@ module top(
     logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_packets;
     logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_bytes;
 
+    logic [`STATS_WIDTH-1:0] stats_total_rx_packets;
+    logic [`STATS_WIDTH-1:0] stats_total_rx_bytes;
+    logic [`STATS_WIDTH-1:0] stats_total_tx_packets;
+    logic [`STATS_WIDTH-1:0] stats_total_tx_bytes;
+
+    assign stats_total_rx_packets = stats_rx_packets[0] + stats_rx_packets[1];
+    assign stats_total_rx_bytes = stats_rx_bytes[0] + stats_rx_bytes[1];
+    assign stats_total_tx_packets = stats_tx_packets[0] + stats_tx_packets[1];
+    assign stats_total_tx_bytes = stats_tx_bytes[0] + stats_tx_bytes[1];
+
     top_axi top_axi_inst(
         .clk(clk),
         .reset_n_in(reset_n_in),
@@ -152,10 +162,10 @@ module top(
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
 
-        .rx_bytes_tri_i(stats_rx_bytes[0]),
-        .rx_packets_tri_i(stats_rx_packets[0]),
+        .rx_bytes_tri_i(stats_total_rx_bytes),
+        .rx_packets_tri_i(stats_total_rx_packets),
 
-        .tx_bytes_tri_i(stats_tx_bytes[0]),
-        .tx_packets_tri_i(stats_tx_packets[0])
+        .tx_bytes_tri_i(stats_total_tx_bytes),
+        .tx_packets_tri_i(stats_total_tx_packets)
     );
 endmodule
