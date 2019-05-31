@@ -94,7 +94,7 @@ module top(
 
     // accessing routing table
     logic os_clk;
-    logic [`BUCKET_INDEX_WIDTH-1:0] os_addr;
+    logic [16-1:0] os_addr;
     logic [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_din;
     logic [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_dout;
     logic [(`ROUTING_TABLE_ENTRY_WIDTH)/`BYTE_WIDTH-1:0] os_wea;
@@ -136,7 +136,7 @@ module top(
         .stats_tx_packets(stats_tx_packets),
 
         .os_clk(os_clk),
-        .os_addr(os_addr),
+        .os_addr(os_addr[15:4]),
         .os_din(os_din),
         .os_dout(os_dout),
         .os_wea(os_wea),

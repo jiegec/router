@@ -69,17 +69,17 @@ module routing_table(
         .addra(os_addr),
         .wea(os_wea), // note wea width does not match
         .douta(os_dout),
-        .clka(clk),
+        .clka(os_clk),
         .rsta(os_rst),
         .ena(os_en),
 
         .dinb(0),
         .addrb(lookup_index),
-        .enb(1'b1),
+        .web(1'b0),
         .doutb(data_doutb),
         .clkb(clk),
         .rstb(rst),
-        .web(1'b0)
+        .enb(1'b1)
     );
 
     always_ff @ (posedge clk) begin

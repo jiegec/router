@@ -219,13 +219,38 @@ void FifoInterruptHandler(void *data) {
     print("Got fifo interrupt\n");
 }
 
+void PrintIP(u32 ip) {
+    int p1 = ip >> 24, p2 = (ip >> 16) & 0xFF, p3 = (ip >> 8) & 0xFF, p4 = ip & 0xFF;
+    printf("%d.%d.%d.%d", p1, p2, p3, p4);
+}
 
 void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
     printf("data read:\n");
-    for (int i = 0;i < 32;i++) {
-        printf("%x ", XBram_In32(bramConfig->MemBaseAddress + i * 4));
+    u32 offset = 0;
+    u32 all_routes[1024][4];
+    int j = 0;
+    for (int flag = 1;flag;j++) {
+        u32 route[4];
+        flag = 0;
+        for (u32 i = 0;i < 4;i++) {
+            route[i] = XBram_In32(bramConfig->MemBaseAddress + offset + i * 4);
+            if (route[i]) {
+                flag = 1;
+            }
+        }
+        offset += 16;
+        memcpy(all_routes[j], route, sizeof(route));
     }
-    printf("\n");
+    j--;
+    for (int i = 0;i < j;i++) {
+        printf("%d: ", i);
+        PrintIP(all_routes[i][0]);
+        printf(" netmask ");
+        PrintIP(all_routes[i][1]);
+        printf(" via ");
+        PrintIP(all_routes[i][2]);
+        printf(" dev port%ld\n", all_routes[i][3]);
+    }
 }
 
 void TimerInterruptHandler(void *data) {
@@ -234,7 +259,7 @@ void TimerInterruptHandler(void *data) {
     u32 chanR2 = XGpio_DiscreteRead(&gpioRxInstance, 2);
     u32 chanT1 = XGpio_DiscreteRead(&gpioTxInstance, 1);
     u32 chanT2 = XGpio_DiscreteRead(&gpioTxInstance, 2);
-    printf("%d: Rx %d bytes %d packets, Tx %d bytes %d packets\n", ++time, chanR1, chanR2, chanT1, chanT2);
+    printf("%lu: Rx %lu bytes %lu packets, Tx %lu bytes %lu packets\n", ++time, chanR1, chanR2, chanT1, chanT2);
     PrintCurrentRoutingTable(data);
 }
 
@@ -325,7 +350,7 @@ int main()
     for (int time = 0;;time++) {
         if (XLlFifo_iRxOccupancy(&fifoInstance)) {
             receiveLength = XLlFifo_iRxGetLen(&fifoInstance) / 4;
-            printf("%d: Got length %ld\nData: ", ++count, receiveLength);
+            printf("%ld: Got length %ld\nData: ", ++count, receiveLength);
             for (i = 0;i < receiveLength;i++) {
                 u32 word = XLlFifo_RxGetWord(&fifoInstance);
                 buffer[i] = word;
