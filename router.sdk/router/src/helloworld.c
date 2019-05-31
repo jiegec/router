@@ -156,6 +156,7 @@ int main()
                 buffer[i] = word;
                 printf("%02lx", word);
             }
+            printf("\n");
             handleEthernetFrame(buffer[0], &buffer[1]);
         }
     }

@@ -631,7 +631,12 @@ module port #(
                     end
 
                     if (rx_saved_ethertype == `IPV4_ETHERTYPE && rx_read_counter == rx_read_length - 2 && !ip_routing && !ip_routed) begin
+                        `ifndef HARDWARE_CONTROL_PLANE
+                        // multicast should be sent to os
+                        if (rx_saved_ipv4_dst_addr != port_ip[port_id] && rx_saved_ipv4_ttl > 1 && rx_saved_ipv4_dst_addr[`IPV4_WIDTH-1:`IPV4_WIDTH-4] != 4'b1110) begin
+                        `else
                         if (rx_saved_ipv4_dst_addr != port_ip[port_id] && rx_saved_ipv4_ttl > 1) begin
+                        `endif
                             ip_routed <= 1;
                             ip_routing <= 1;
                             ip_lookup_routing <= 0;
