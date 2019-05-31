@@ -85,7 +85,13 @@ module port #(
     input logic rgmii_rxc,
     output logic [3:0] rgmii_td,
     output logic rgmii_tx_ctl,
-    output logic rgmii_txc
+    output logic rgmii_txc,
+
+    // statistics
+    output logic [`STATS_WIDTH-1:0] stats_rx_packets,
+    output logic [`STATS_WIDTH-1:0] stats_rx_bytes,
+    output logic [`STATS_WIDTH-1:0] stats_tx_packets,
+    output logic [`STATS_WIDTH-1:0] stats_tx_bytes
     );
 
     logic reset;
@@ -124,13 +130,13 @@ module port #(
 
     logic [15:0] counter = 0;
 
-    (* mark_debug = "true" *) logic [`BYTE_WIDTH-1:0] tx_data_out;
-    (* mark_debug = "true" *) logic tx_data_ren;
+    logic [`BYTE_WIDTH-1:0] tx_data_out;
+    logic tx_data_ren;
 
-    (* mark_debug = "true" *) logic tx_data_full;
-    (* mark_debug = "true" *) logic [`BYTE_WIDTH-1:0] tx_data_in;
-    (* mark_debug = "true" *) logic tx_data_busy;
-    (* mark_debug = "true" *) logic tx_data_wen;
+    logic tx_data_full;
+    logic [`BYTE_WIDTH-1:0] tx_data_in;
+    logic tx_data_busy;
+    logic tx_data_wen;
  
     // stores ethernet frame data
     xpm_fifo_async #(
@@ -153,16 +159,16 @@ module port #(
         .wr_rst_busy(tx_data_busy)
     );
 
-    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] tx_len_out;
-    (* mark_debug = "true" *) logic tx_len_ren = 0;
-    (* mark_debug = "true" *) logic tx_len_empty;
+    logic [`LENGTH_WIDTH-1:0] tx_len_out;
+    logic tx_len_ren = 0;
+    logic tx_len_empty;
 
-    (* mark_debug = "true" *) logic tx_len_full;
-    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] tx_len_in;
-    (* mark_debug = "true" *) logic tx_len_busy;
-    (* mark_debug = "true" *) logic tx_len_wen;
+    logic tx_len_full;
+    logic [`LENGTH_WIDTH-1:0] tx_len_in;
+    logic tx_len_busy;
+    logic tx_len_wen;
 
-    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] tx_length;
+    logic [`LENGTH_WIDTH-1:0] tx_length;
 
     // stores ethernet frame length
     xpm_fifo_async #(
@@ -186,10 +192,10 @@ module port #(
 
     // from fifo matrix to tx fifo
     // Round robin
-    (* mark_debug = "true" *) logic [`PORT_OS_WIDTH-1:0] fifo_matrix_tx_index;
-    (* mark_debug = "true" *) logic fifo_matrix_tx_progress;
-    (* mark_debug = "true" *) logic fifo_matrix_tx_last_wlast;
-    (* mark_debug = "true" *) logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
+    logic [`PORT_OS_WIDTH-1:0] fifo_matrix_tx_index;
+    logic fifo_matrix_tx_progress;
+    logic fifo_matrix_tx_last_wlast;
+    logic [`LENGTH_WIDTH-1:0] fifo_matrix_tx_length;
 
     always_ff @ (posedge clk) begin
         if (reset) begin
@@ -245,12 +251,17 @@ module port #(
             tx_send <= 0;
             tx_send_counter <= 0;
             tx_send_length <= 0;
+
+            stats_tx_packets <= 0;
+            stats_tx_bytes <= 0;
         end else begin
             if (!tx_send && !tx_len_empty) begin
                 tx_send <= 1;
                 tx_len_ren <= 1;
                 tx_send_counter <= 0;
                 tx_send_length <= 0;
+
+                stats_tx_packets <= stats_tx_packets + 1;
             end else if (tx_send) begin
                 if (tx_axis_mac_tready) begin
                     tx_send_counter <= tx_send_counter + 1;
@@ -269,6 +280,10 @@ module port #(
                 end
                 if (!tx_send_length && !tx_len_ren) begin
                     tx_send_length <= tx_len_out;
+                end
+
+                if (tx_len_ren) begin
+                    stats_tx_bytes <= stats_tx_bytes + tx_len_out;
                 end
                 tx_len_ren <= 0;
             end
@@ -342,6 +357,9 @@ module port #(
             rx_length <= 0;
             rx_len_wen <= 0;
             rx_len_in <= 0;
+
+            stats_rx_packets <= 0;
+            stats_rx_bytes <= 0;
         end else begin
             rx_axis_mac_tvalid_last <= rx_axis_mac_tvalid;
             if (rx_axis_mac_tvalid && !rx_axis_mac_tvalid_last && !rx_data_busy && !rx_data_full && !rx_len_busy && !rx_len_full) begin
@@ -357,6 +375,9 @@ module port #(
                 rx_data_in <= 0;
                 rx_len_wen <= 1;
                 rx_len_in <= rx_length;
+
+                stats_rx_packets <= stats_rx_packets + 1;
+                stats_rx_bytes <= stats_rx_bytes + rx_length;
             end else begin
                 // progress
                 if (rx_data_wen) begin

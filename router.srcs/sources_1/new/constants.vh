@@ -7,6 +7,8 @@
 `define PORT_OS_COUNT 8
 `define PORT_OS_WIDTH 3
 
+`define STATS_WIDTH 64
+
 `define MAX_FIFO_SIZE 8192
 `define MAX_INPUT_FIFO_SIZE 32768
 
