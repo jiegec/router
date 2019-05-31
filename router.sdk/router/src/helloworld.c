@@ -49,9 +49,11 @@
 #include "platform.h"
 #include "xil_printf.h"
 #include "xllfifo.h"
+#include "xgpio.h"
 #include "xstatus.h"
 
 XLlFifo fifoInstance;
+XGpio gpioInstance;
 
 u16 bswap16(u16 i) {
     return (i >> 8) | ((i & 0xFF) << 8);
@@ -205,7 +207,8 @@ void handleEthernetFrame(u8 port, u8 *data) {
 
 int main()
 {
-    XLlFifo_Config *Config;
+    XLlFifo_Config *fifoConfig;
+    XGpio_Config *gpioConfig;
     int Status;
     u32 receiveLength;
     u32 i;
@@ -215,13 +218,13 @@ int main()
     init_platform();
 
     print("Lookup config\n");
-    Config = XLlFfio_LookupConfig(XPAR_AXI_FIFO_0_DEVICE_ID);
-    if (!Config) {
+    fifoConfig = XLlFfio_LookupConfig(XPAR_AXI_FIFO_0_DEVICE_ID);
+    if (!fifoConfig) {
         print("No config found\n");
         goto fail;
     }
 
-    Status = XLlFifo_CfgInitialize(&fifoInstance, Config, Config->BaseAddress);
+    Status = XLlFifo_CfgInitialize(&fifoInstance, fifoConfig, fifoConfig->BaseAddress);
     if (Status != XST_SUCCESS) {
         print("Init failed\n");
         goto fail;
@@ -229,8 +232,20 @@ int main()
 
 	XLlFifo_IntClear(&fifoInstance,0xffffffff);
 
+    gpioConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_DEVICE_ID);
+    if (!gpioConfig) {
+        print("No config found\n");
+        goto fail;
+    }
+
+    Status = XGpio_CfgInitialize(&gpioInstance, gpioConfig, gpioConfig->BaseAddress);
+    if (Status != XST_SUCCESS) {
+        print("Init failed\n");
+        goto fail;
+    }
+
     print("Waiting for data\n");
-    for (;;) {
+    for (int time = 0;;time++) {
         if (XLlFifo_iRxOccupancy(&fifoInstance)) {
             receiveLength = XLlFifo_iRxGetLen(&fifoInstance) / 4;
             printf("%d: Got length %ld\nData: ", ++count, receiveLength);
@@ -241,6 +256,11 @@ int main()
             }
             printf("\n");
             handleEthernetFrame(buffer[0], &buffer[1]);
+        }
+        if (time % 1000000 == 0) {
+            u32 chan1 = XGpio_DiscreteRead(&gpioInstance, 1);
+            u32 chan2 = XGpio_DiscreteRead(&gpioInstance, 2);
+            printf("Rx %d bytes %d packets\n", chan1, chan2);
         }
     }
 
