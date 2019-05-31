@@ -58,11 +58,11 @@ u16 bswap16(u16 i) {
 }
 
 void sendToFifo(u8 port, u8 *data, u32 length) {
-    printf("Sending data to port %d of length %d\n", port, length);
+    printf("Sending data to port %d of length %ld\n", port, length);
     while (!XLlFifo_iTxVacancy(&fifoInstance));
     XLlFifo_TxPutWord(&fifoInstance, (u32)port);
     for (u32 i = 0;i < length;i++) {
-        printf("%02lx", data[i]);
+        printf("%02x", data[i]);
         XLlFifo_TxPutWord(&fifoInstance, (u32)data[i]);
     }
     printf("\n");
@@ -91,12 +91,62 @@ struct ArpResponse {
     u8 targetIP[4];
 };
 
+struct Icmp {
+    u8 type;
+    u8 code;
+    u16 checksum;
+    u8 data[0];
+};
+
+struct Ip {
+    struct EthernetFrame ethernet;
+    u8 versionIHL;
+    u8 dfs;
+    u16 totalLength;
+    u16 identification;
+    u16 flags;
+    u8 ttl;
+    u8 protocol;
+    u16 headerChecksum;
+    u8 sourceIP[4];
+    u8 destIP[4];
+    union {
+        u8 bytes[0];
+        struct Icmp icmp;
+    } payload;
+};
+
+
+u8 portMAC[6] = {2, 2, 3, 3, 0, 0};
+
+u16 checksumAdd(u16 orig, u16 add) {
+    u32 ans = orig;
+    ans += add;
+    ans = (ans >> 16) + (ans & 0xFFFF);
+    ans = (ans >> 16) + (ans & 0xFFFF);
+    return (u16)ans;
+}
+
+void fillIpChecksum(struct Ip *ip) {
+    // skip ethernet
+    u16 *data = ((u16 *)ip) + 7;
+    ip->headerChecksum = 0;
+    u16 checksum = 0;
+    for (int i = 0;i < 10;i++) {
+        checksum = checksumAdd(checksum, data[i]);
+    }
+    ip->headerChecksum = ~checksum;
+}
+
 void handleEthernetFrame(u8 port, u8 *data) {
+    u8 portIP[4] = {10, 0, port, 1};
+
     struct EthernetFrame *ether = (struct EthernetFrame *)data;
     struct ArpResponse *arp = (struct ArpResponse *)data;
     u8 buffer[2048];
     u16 etherType = bswap16(ether->etherType);
     if (etherType == 0x0806) {
+        // ARP
         u16 opcode = bswap16(arp->opcode);
         if (opcode == 0x0001) {
             printf("Got ARP request\n");
@@ -116,6 +166,39 @@ void handleEthernetFrame(u8 port, u8 *data) {
             memcpy(arpResp->senderIP, arp->targetIP, 4);
 
             sendToFifo(port, buffer, sizeof(struct ArpResponse));
+        }
+    } else if (etherType == 0x0800) {
+        // IP
+        struct Ip *ip = (struct Ip *)data;
+        struct Ip *ipResp = (struct Ip *)buffer;
+        if (ip->protocol == 1) {
+            // ICMP
+            if (ip->payload.icmp.type == 8) {
+                printf("Got ICMP echo request\n");
+                memcpy(ipResp->ethernet.dstMAC, ip->ethernet.srcMAC, 6);
+                memcpy(ipResp->ethernet.srcMAC, portMAC, 6);
+                ipResp->ethernet.etherType = bswap16(0x0800);
+                ipResp->versionIHL = 0x45;
+                ipResp->dfs = 0;
+                u16 totalLength = bswap16(ip->totalLength);
+                ipResp->totalLength = ip->totalLength;
+                ipResp->identification = 0;
+                ipResp->flags = 0;
+                ipResp->ttl = 64;
+                ipResp->protocol = 1;
+                ipResp->headerChecksum = 0;
+                memcpy(ipResp->sourceIP, portIP, 4);
+                memcpy(ipResp->destIP, ip->sourceIP, 4);
+                ipResp->payload.icmp.type = 0;
+                ipResp->payload.icmp.code = 0;
+                // type: 8 -> 0
+                ipResp->payload.icmp.checksum = checksumAdd(ip->payload.icmp.checksum, 8);
+                // assuming IHL=5
+                memcpy(ipResp->payload.icmp.data, ip->payload.icmp.data, totalLength - 20 - 4);
+
+                fillIpChecksum(ipResp);
+                sendToFifo(port, buffer, totalLength + 14);
+            }
         }
     }
 }
