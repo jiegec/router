@@ -68,6 +68,10 @@ u16 bswap16(u16 i) {
     return (i >> 8) | ((i & 0xFF) << 8);
 }
 
+u32 bswap32(u32 i) {
+    return (i >> 24) | ((i & 0xFF0000) >> 8) | ((i & 0xFF00) << 8) | ((i & 0xFF) << 24);
+}
+
 void sendToFifo(u8 port, u8 *data, u32 length) {
     printf("Sending data to port %d of length %ld\n", port, length);
     while (!XLlFifo_iTxVacancy(&fifoInstance));
@@ -86,7 +90,7 @@ struct EthernetFrame {
     u8 dstMAC[6];
     u8 srcMAC[6];
     u16 etherType;
-};
+} __attribute__ ((packed));
 
 struct ArpResponse {
     u8 dstMAC[6];
@@ -101,19 +105,46 @@ struct ArpResponse {
     u8 senderIP[4];
     u8 targetMAC[6];
     u8 targetIP[4];
-};
+} __attribute__ ((packed));
 
 struct Icmp {
     u8 type;
     u8 code;
     u16 checksum;
     u8 data[0];
-};
+} __attribute__ ((packed));
+
+struct RipRoute {
+    u16 family;
+    u16 routeTag;
+    u32 ip;
+    u32 netmask;
+    u32 nexthop;
+    u32 metric;
+} __attribute__ ((packed));
+
+struct Rip {
+    u8 command;
+    u8 version;
+    u16 zero;
+    struct RipRoute routes[0];
+} __attribute__ ((packed));
+
+struct Udp {
+    u16 srcPort;
+    u16 dstPort;
+    u16 length;
+    u16 checksum;
+    union {
+        u8 bytes[0];
+        struct Rip rip;
+    } payload;
+} __attribute__ ((packed));
 
 struct Ip {
     struct EthernetFrame ethernet;
     u8 versionIHL;
-    u8 dfs;
+    u8 dsf;
     u16 totalLength;
     u16 identification;
     u16 flags;
@@ -125,11 +156,14 @@ struct Ip {
     union {
         u8 bytes[0];
         struct Icmp icmp;
+        struct Udp udp;
     } payload;
-};
+} __attribute__ ((packed));
 
 
 u8 portMAC[6] = {2, 2, 3, 3, 0, 0};
+u8 ripMAC[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+const int ENABLE_PORT = 2;
 
 u16 checksumAdd(u16 orig, u16 add) {
     u32 ans = orig;
@@ -155,7 +189,7 @@ void handleEthernetFrame(u8 port, u8 *data) {
 
     struct EthernetFrame *ether = (struct EthernetFrame *)data;
     struct ArpResponse *arp = (struct ArpResponse *)data;
-    u8 buffer[2048];
+    u32 buffer[512];
     u16 etherType = bswap16(ether->etherType);
     if (etherType == 0x0806) {
         // ARP
@@ -191,7 +225,7 @@ void handleEthernetFrame(u8 port, u8 *data) {
                 memcpy(ipResp->ethernet.srcMAC, portMAC, 6);
                 ipResp->ethernet.etherType = bswap16(0x0800);
                 ipResp->versionIHL = 0x45;
-                ipResp->dfs = 0;
+                ipResp->dsf = 0;
                 u16 totalLength = bswap16(ip->totalLength);
                 ipResp->totalLength = ip->totalLength;
                 ipResp->identification = 0;
@@ -252,25 +286,47 @@ void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
     }
 
     static u32 time = 0;
-    time ++;
 
-    if (time % 2) {
-        // insert 10.0.2.0/24 via 10.0.1.2 port 1
-        XBram_Out32(bramConfig->MemBaseAddress + 3 * 16 + 0 * 4, 0);
-        XBram_Out32(bramConfig->MemBaseAddress + 3 * 16 + 1 * 4, 0);
-        XBram_Out32(bramConfig->MemBaseAddress + 3 * 16 + 2 * 4, 0);
-        XBram_Out32(bramConfig->MemBaseAddress + 3 * 16 + 3 * 4, 0);
-        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 0 * 4, 0x0a000102);
-        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 1 * 4, 0xffffff00);
-        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 2 * 4, 0x0a000200);
-        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 3 * 4, 1);
-    } else {
-        // remove
-        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 0 * 4, 0);
-        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 1 * 4, 0);
-        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 2 * 4, 0);
-        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 3 * 4, 0);
+    if ((time % 5) == 0) {
+        // send RIP request
+        u32 buffer[512];
+        for (u8 port = 0;port < ENABLE_PORT;port++) {
+            u8 portIP[] = {10, 0, port, 1};
+            u8 ripIP[4] = {10, 0, port, 255};
+            struct Ip *ip = (struct Ip *) buffer;
+            memcpy(ip->ethernet.dstMAC, ripMAC, 6);
+            memcpy(ip->ethernet.srcMAC, portMAC, 6);
+            ip->ethernet.etherType = bswap16(0x0800);
+            ip->versionIHL = 0x45;
+            ip->dsf = 0;
+            u16 totalLength = 20 + 8 + 4 + 20;
+            ip->totalLength = bswap16(totalLength);
+            ip->identification = 0;
+            ip->flags = 0;
+            ip->ttl = 64;
+            ip->protocol = 17; // UDP
+            memcpy(ip->sourceIP, portIP, 4);
+            memcpy(ip->destIP, ripIP, 4);
+            ip->payload.udp.srcPort = bswap16(520);
+            ip->payload.udp.dstPort = bswap16(520);
+            ip->payload.udp.length = bswap16(totalLength - 20);
+            ip->payload.udp.checksum = 0;
+            ip->payload.udp.payload.rip.command = 2;
+            ip->payload.udp.payload.rip.version = 2;
+            ip->payload.udp.payload.rip.zero = 0;
+            ip->payload.udp.payload.rip.routes[0].family = bswap16(2);
+            ip->payload.udp.payload.rip.routes[0].routeTag = 0;
+            ip->payload.udp.payload.rip.routes[0].ip = bswap32(0x0a000000);
+            ip->payload.udp.payload.rip.routes[0].netmask = bswap32(0xffffff00);
+            ip->payload.udp.payload.rip.routes[0].nexthop = bswap32(0);
+            ip->payload.udp.payload.rip.routes[0].metric = bswap32(1);
+
+            fillIpChecksum(ip);
+            sendToFifo(port, buffer, totalLength + 14);
+        }
     }
+
+    time ++;
 }
 
 void TimerInterruptHandler(void *data) {
