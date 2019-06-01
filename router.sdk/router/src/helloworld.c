@@ -46,6 +46,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "platform.h"
 #include "xil_printf.h"
 #include "xllfifo.h"
@@ -160,6 +161,15 @@ struct Ip {
     } payload;
 } __attribute__ ((packed));
 
+struct Route {
+    u32 ip;
+    u32 netmask;
+    u32 metric;
+    u32 nexthop;
+    u32 port;
+} routingTable[1024];
+
+int routingTableSize = 0;
 
 u8 portMAC[6] = {2, 2, 3, 3, 0, 0};
 u8 ripMAC[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
@@ -200,7 +210,7 @@ void handleEthernetFrame(u8 port, u8 *data) {
         // ARP
         u16 opcode = bswap16(arp->opcode);
         if (opcode == 0x0001) {
-            printf("Got ARP request\n");
+            //printf("Got ARP request\n");
             struct ArpResponse *arpResp = (struct ArpResponse *)buffer;
             memcpy(arpResp->dstMAC, arp->srcMAC, 6);
             memcpy(arpResp->srcMAC, arp->dstMAC, 6);
@@ -225,7 +235,7 @@ void handleEthernetFrame(u8 port, u8 *data) {
         if (ip->protocol == 1) {
             // ICMP
             if (ip->payload.icmp.type == 8) {
-                printf("Got ICMP echo request\n");
+                //printf("Got ICMP echo request\n");
                 memcpy(ipResp->ethernet.dstMAC, ip->ethernet.srcMAC, 6);
                 memcpy(ipResp->ethernet.srcMAC, portMAC, 6);
                 ipResp->ethernet.etherType = bswap16(0x0800);
@@ -254,33 +264,142 @@ void handleEthernetFrame(u8 port, u8 *data) {
             // UDP
             if (ip->payload.udp.srcPort == bswap16(520) && ip->payload.udp.dstPort == bswap16(520)) {
                 // RIP
+                printf("Got RIP response:\n");
                 u16 totalLength = bswap16(ip->totalLength);
                 int totalRoutes = (totalLength - 20 - 8 - 4) / 20;
                 for (int routes = 0;routes < totalRoutes;routes++) {
-                    printf("Got announced route: ");
-                    printIP(bswap32(ip->payload.udp.payload.rip.routes[routes].ip));
-                    printf(" netmask ");
-                    printIP(bswap32(ip->payload.udp.payload.rip.routes[routes].netmask));
-                    printf(" nexthop ");
+                    u32 ip_net = bswap32(ip->payload.udp.payload.rip.routes[routes].ip);
+                    u32 netmask = bswap32(ip->payload.udp.payload.rip.routes[routes].netmask);
                     u32 nexthop = bswap32(ip->payload.udp.payload.rip.routes[routes].nexthop);
                     if (nexthop == 0) {
                         memcpy(&nexthop, ip->sourceIP, 4);
                         nexthop = bswap32(nexthop);
                     }
+                    u32 metric = bswap32(ip->payload.udp.payload.rip.routes[routes].metric);
+
+                    printf("\t%d:", routes);
+                    printIP(ip_net);
+                    printf(" netmask ");
+                    printIP(netmask);
+                    printf(" nexthop ");
                     printIP(nexthop);
-                    printf("\n");
+                    printf(" metric %ld\n", metric);
+
+                    int flag = 0;
+                    for (int i = 0;i < routingTableSize;i++) {
+                        if (routingTable[i].ip == ip_net && routingTable[i].netmask == netmask) {
+                            if (metric == 16) {
+                                // remove this entry
+                                memmove(&routingTable[i], &routingTable[i+1], sizeof(struct Route) * (routingTableSize - i - 1));
+                                routingTableSize --;
+                                i --;
+                            } else if (metric < routingTable[i].metric) {
+                                // update this entry
+                                routingTable[i].metric = metric + 1;
+                                routingTable[i].nexthop = nexthop;
+                                routingTable[i].port = port;
+                            }
+                            flag = 1;
+                            break;
+                        }
+                    }
+                    
+                    if (!flag) {
+                        // add this entry
+                        routingTable[routingTableSize].ip = ip_net;
+                        routingTable[routingTableSize].netmask = netmask;
+                        routingTable[routingTableSize].nexthop = nexthop;
+                        routingTable[routingTableSize].port = port;
+                        routingTable[routingTableSize].metric = metric + 1;
+                        routingTableSize ++;
+                    }
                 }
             }
         }
     }
 }
 
-void FifoInterruptHandler(void *data) {
+void fifoInterruptHandler(void *data) {
     print("Got fifo interrupt\n");
 }
 
+void sendRIPReponse() {
+    // send RIP response
+    u32 buffer[512];
+    for (u8 port = 0;port < ENABLE_PORT;port++) {
+        u8 portIP[] = {10, 0, port, 1};
+        u8 ripIP[4] = {10, 0, port, 255};
+        struct Ip *ip = (struct Ip *) buffer;
+        memcpy(ip->ethernet.dstMAC, ripMAC, 6);
+        memcpy(ip->ethernet.srcMAC, portMAC, 6);
+        ip->ethernet.etherType = bswap16(0x0800);
+        ip->versionIHL = 0x45;
+        ip->dsf = 0;
 
-void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
+        int routes = 0;
+        for (int r = 0;r < routingTableSize;r++) {
+            if (routingTable[r].port != port) {
+                // not this port
+                ip->payload.udp.payload.rip.routes[routes].family = bswap16(2);
+                ip->payload.udp.payload.rip.routes[routes].routeTag = 0;
+                ip->payload.udp.payload.rip.routes[routes].ip = bswap32(routingTable[r].ip);
+                ip->payload.udp.payload.rip.routes[routes].netmask = bswap32(routingTable[r].netmask);
+                ip->payload.udp.payload.rip.routes[routes].nexthop = bswap32(0);
+                ip->payload.udp.payload.rip.routes[routes].metric = bswap32(routingTable[r].metric);
+                routes++;
+            }
+        }
+
+        u16 totalLength = 20 + 8 + 4 + 20 * routes;
+
+        ip->totalLength = bswap16(totalLength);
+        ip->identification = 0;
+        ip->flags = 0;
+        ip->ttl = 64;
+        ip->protocol = 17; // UDP
+        memcpy(ip->sourceIP, portIP, 4);
+        memcpy(ip->destIP, ripIP, 4);
+        ip->payload.udp.srcPort = bswap16(520);
+        ip->payload.udp.dstPort = bswap16(520);
+        ip->payload.udp.length = bswap16(totalLength - 20);
+        ip->payload.udp.checksum = 0;
+        ip->payload.udp.payload.rip.command = 2;
+        ip->payload.udp.payload.rip.version = 2;
+        ip->payload.udp.payload.rip.zero = 0;
+
+
+        fillIpChecksum(ip);
+        sendToFifo(port, buffer, totalLength + 14);
+    }
+}
+
+
+int routingTableCmp(const void *a, const void *b) {
+    struct Route *aa = (struct Route *)a;
+    struct Route *bb = (struct Route *)b;
+    if (aa->netmask > bb->netmask)
+        return -1;
+    else if (aa->netmask < bb->netmask)
+        return 1;
+    else
+        return 0;
+}
+
+void applyCurrentRoutingTable(XBram_Config *bramConfig) {
+    qsort(routingTable, routingTableSize, sizeof(struct Route), routingTableCmp);
+    // add all-zero route as the end
+    for (int i = 0;i < 4;i ++) {
+        XBram_Out32(bramConfig->MemBaseAddress + routingTableSize * 16 + i * 4, 0);
+    }
+    for (int i = routingTableSize - 1;i >= 0;i--) {
+        XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 0 * 4, routingTable[i].nexthop);
+        XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 1 * 4, routingTable[i].netmask);
+        XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 2 * 4, routingTable[i].ip);
+        XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 3 * 4, routingTable[i].port);
+    }
+}
+
+void printCurrentRoutingTable(XBram_Config *bramConfig) {
     u32 offset = 0;
     u32 all_routes[1024][4];
     int j = 0;
@@ -297,8 +416,9 @@ void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
         memcpy(all_routes[j], route, sizeof(route));
     }
     j--;
+    printf("Hardware table:\n");
     for (int i = 0;i < j;i++) {
-        printf("%d: ", i);
+        printf("\t%d: ", i);
         printIP(all_routes[i][2]);
         printf(" netmask ");
         printIP(all_routes[i][1]);
@@ -306,70 +426,30 @@ void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
         printIP(all_routes[i][0]);
         printf(" dev port%ld\n", all_routes[i][3]);
     }
-
-    static u32 time = 0;
-
-    if ((time % 5) == 0) {
-        // send RIP request
-        u32 buffer[512];
-        for (u8 port = 0;port < ENABLE_PORT;port++) {
-            u8 portIP[] = {10, 0, port, 1};
-            u8 ripIP[4] = {10, 0, port, 255};
-            struct Ip *ip = (struct Ip *) buffer;
-            memcpy(ip->ethernet.dstMAC, ripMAC, 6);
-            memcpy(ip->ethernet.srcMAC, portMAC, 6);
-            ip->ethernet.etherType = bswap16(0x0800);
-            ip->versionIHL = 0x45;
-            ip->dsf = 0;
-
-            int routes = 0;
-            for (int r = 0;r < j;r++) {
-                if (all_routes[r][3] != port) {
-                    // not this port
-                    ip->payload.udp.payload.rip.routes[routes].family = bswap16(2);
-                    ip->payload.udp.payload.rip.routes[routes].routeTag = 0;
-                    ip->payload.udp.payload.rip.routes[routes].ip = bswap32(all_routes[r][2]);
-                    ip->payload.udp.payload.rip.routes[routes].netmask = bswap32(all_routes[r][1]);
-                    ip->payload.udp.payload.rip.routes[routes].nexthop = bswap32(0);
-                    ip->payload.udp.payload.rip.routes[routes].metric = bswap32(1);
-                    routes++;
-                }
-            }
-
-            u16 totalLength = 20 + 8 + 4 + 20 * routes;
-
-            ip->totalLength = bswap16(totalLength);
-            ip->identification = 0;
-            ip->flags = 0;
-            ip->ttl = 64;
-            ip->protocol = 17; // UDP
-            memcpy(ip->sourceIP, portIP, 4);
-            memcpy(ip->destIP, ripIP, 4);
-            ip->payload.udp.srcPort = bswap16(520);
-            ip->payload.udp.dstPort = bswap16(520);
-            ip->payload.udp.length = bswap16(totalLength - 20);
-            ip->payload.udp.checksum = 0;
-            ip->payload.udp.payload.rip.command = 2;
-            ip->payload.udp.payload.rip.version = 2;
-            ip->payload.udp.payload.rip.zero = 0;
-
-
-            fillIpChecksum(ip);
-            sendToFifo(port, buffer, totalLength + 14);
-        }
+    printf("Software table:\n");
+    for (int i = 0;i < routingTableSize;i++) {
+        printf("\t%d: ", i);
+        printIP(routingTable[i].ip);
+        printf(" netmask ");
+        printIP(routingTable[i].netmask);
+        printf(" via ");
+        printIP(routingTable[i].nexthop);
+        printf(" dev port%ld metric %ld\n", routingTable[i].port, routingTable[i].metric);
     }
-
-    time ++;
+    applyCurrentRoutingTable(bramConfig);
 }
 
-void TimerInterruptHandler(void *data) {
+void timerInterruptHandler(void *data) {
     static u32 time = 0;
     u32 chanR1 = XGpio_DiscreteRead(&gpioRxInstance, 1);
     u32 chanR2 = XGpio_DiscreteRead(&gpioRxInstance, 2);
     u32 chanT1 = XGpio_DiscreteRead(&gpioTxInstance, 1);
     u32 chanT2 = XGpio_DiscreteRead(&gpioTxInstance, 2);
     printf("%lu: Rx %lu bytes %lu packets, Tx %lu bytes %lu packets\n", ++time, chanR1, chanR2, chanT1, chanT2);
-    PrintCurrentRoutingTable(data);
+    if ((time % 5) == 0) {
+        sendRIPReponse();
+    }
+    printCurrentRoutingTable(data);
 }
 
 int main()
@@ -384,7 +464,6 @@ int main()
     u32 receiveLength;
     u32 i;
     u8 buffer[2048];
-    u32 count = 0;
 
     init_platform();
 
@@ -422,7 +501,6 @@ int main()
     }
 
     XBram_CfgInitialize(&bramInstance, bramConfig, bramConfig->CtrlBaseAddress);
-    PrintCurrentRoutingTable(bramConfig);
 
     timerConfig = XScuTimer_LookupConfig(XPAR_PS7_SCUTIMER_0_DEVICE_ID);
     if (!timerConfig) {
@@ -447,9 +525,9 @@ int main()
     Xil_ExceptionInit();
     Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT, (Xil_ExceptionHandler) XScuGic_InterruptHandler, &gicInstance);
 
-    XScuGic_Connect(&gicInstance, XPAR_FABRIC_AXI_FIFO_MM_S_0_INTERRUPT_INTR, (Xil_ExceptionHandler)FifoInterruptHandler, NULL);
+    XScuGic_Connect(&gicInstance, XPAR_FABRIC_AXI_FIFO_MM_S_0_INTERRUPT_INTR, (Xil_ExceptionHandler)fifoInterruptHandler, NULL);
     XScuGic_Enable(&gicInstance, XPAR_FABRIC_AXI_FIFO_MM_S_0_INTERRUPT_INTR);
-    XScuGic_Connect(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR, (Xil_ExceptionHandler)TimerInterruptHandler, bramConfig);
+    XScuGic_Connect(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR, (Xil_ExceptionHandler)timerInterruptHandler, bramConfig);
     XScuGic_Enable(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR);
     XScuTimer_EnableInterrupt(&timerInstance);
 
@@ -459,13 +537,13 @@ int main()
     for (int time = 0;;time++) {
         if (XLlFifo_iRxOccupancy(&fifoInstance)) {
             receiveLength = XLlFifo_iRxGetLen(&fifoInstance) / 4;
-            printf("%ld: Got length %ld\nData: ", ++count, receiveLength);
+            //printf("%ld: Got length %ld\nData: ", ++count, receiveLength);
             for (i = 0;i < receiveLength;i++) {
                 u32 word = XLlFifo_RxGetWord(&fifoInstance);
                 buffer[i] = word;
-                printf("%02lx", word);
+                //printf("%02lx", word);
             }
-            printf("\n");
+            //printf("\n");
             handleEthernetFrame(buffer[0], &buffer[1]);
         }
     }
