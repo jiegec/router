@@ -299,7 +299,23 @@ void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
             ip->ethernet.etherType = bswap16(0x0800);
             ip->versionIHL = 0x45;
             ip->dsf = 0;
-            u16 totalLength = 20 + 8 + 4 + 20;
+
+            int routes = 0;
+            for (int r = 0;r < j;r++) {
+                if (all_routes[r][3] != port) {
+                    // not this port
+                    ip->payload.udp.payload.rip.routes[routes].family = bswap16(2);
+                    ip->payload.udp.payload.rip.routes[routes].routeTag = 0;
+                    ip->payload.udp.payload.rip.routes[routes].ip = bswap32(all_routes[r][2]);
+                    ip->payload.udp.payload.rip.routes[routes].netmask = bswap32(all_routes[r][1]);
+                    ip->payload.udp.payload.rip.routes[routes].nexthop = bswap32(0);
+                    ip->payload.udp.payload.rip.routes[routes].metric = bswap32(1);
+                    routes++;
+                }
+            }
+
+            u16 totalLength = 20 + 8 + 4 + 20 * routes;
+
             ip->totalLength = bswap16(totalLength);
             ip->identification = 0;
             ip->flags = 0;
@@ -314,12 +330,7 @@ void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
             ip->payload.udp.payload.rip.command = 2;
             ip->payload.udp.payload.rip.version = 2;
             ip->payload.udp.payload.rip.zero = 0;
-            ip->payload.udp.payload.rip.routes[0].family = bswap16(2);
-            ip->payload.udp.payload.rip.routes[0].routeTag = 0;
-            ip->payload.udp.payload.rip.routes[0].ip = bswap32(0x0a000000);
-            ip->payload.udp.payload.rip.routes[0].netmask = bswap32(0xffffff00);
-            ip->payload.udp.payload.rip.routes[0].nexthop = bswap32(0);
-            ip->payload.udp.payload.rip.routes[0].metric = bswap32(1);
+
 
             fillIpChecksum(ip);
             sendToFifo(port, buffer, totalLength + 14);
