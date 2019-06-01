@@ -73,15 +73,15 @@ u32 bswap32(u32 i) {
 }
 
 void sendToFifo(u8 port, u8 *data, u32 length) {
-    printf("Sending data to port %d of length %ld\n", port, length);
+    //printf("Sending data to port %d of length %ld\n", port, length);
     while (!XLlFifo_iTxVacancy(&fifoInstance));
     XLlFifo_TxPutWord(&fifoInstance, (u32)port);
     for (u32 i = 0;i < length;i++) {
-        printf("%02x", data[i]);
+        //printf("%02x", data[i]);
         while (!XLlFifo_iTxVacancy(&fifoInstance));
         XLlFifo_TxPutWord(&fifoInstance, (u32)data[i]);
     }
-    printf("\n");
+    //printf("\n");
     XLlFifo_iTxSetLen(&fifoInstance, (length + 1) * 4);
     while(!XLlFifo_IsTxDone(&fifoInstance));
 }
@@ -184,6 +184,11 @@ void fillIpChecksum(struct Ip *ip) {
     ip->headerChecksum = ~checksum;
 }
 
+void printIP(u32 ip) {
+    int p1 = ip >> 24, p2 = (ip >> 16) & 0xFF, p3 = (ip >> 8) & 0xFF, p4 = ip & 0xFF;
+    printf("%d.%d.%d.%d", p1, p2, p3, p4);
+}
+
 void handleEthernetFrame(u8 port, u8 *data) {
     u8 portIP[4] = {10, 0, port, 1};
 
@@ -245,6 +250,27 @@ void handleEthernetFrame(u8 port, u8 *data) {
                 fillIpChecksum(ipResp);
                 sendToFifo(port, buffer, totalLength + 14);
             }
+        } else if (ip->protocol == 17) {
+            // UDP
+            if (ip->payload.udp.srcPort == bswap16(520) && ip->payload.udp.dstPort == bswap16(520)) {
+                // RIP
+                u16 totalLength = bswap16(ip->totalLength);
+                int totalRoutes = (totalLength - 20 - 8 - 4) / 20;
+                for (int routes = 0;routes < totalRoutes;routes++) {
+                    printf("Got announced route: ");
+                    printIP(bswap32(ip->payload.udp.payload.rip.routes[routes].ip));
+                    printf(" netmask ");
+                    printIP(bswap32(ip->payload.udp.payload.rip.routes[routes].netmask));
+                    printf(" nexthop ");
+                    u32 nexthop = bswap32(ip->payload.udp.payload.rip.routes[routes].nexthop);
+                    if (nexthop == 0) {
+                        memcpy(&nexthop, ip->sourceIP, 4);
+                        nexthop = bswap32(nexthop);
+                    }
+                    printIP(nexthop);
+                    printf("\n");
+                }
+            }
         }
     }
 }
@@ -253,10 +279,6 @@ void FifoInterruptHandler(void *data) {
     print("Got fifo interrupt\n");
 }
 
-void PrintIP(u32 ip) {
-    int p1 = ip >> 24, p2 = (ip >> 16) & 0xFF, p3 = (ip >> 8) & 0xFF, p4 = ip & 0xFF;
-    printf("%d.%d.%d.%d", p1, p2, p3, p4);
-}
 
 void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
     u32 offset = 0;
@@ -277,11 +299,11 @@ void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
     j--;
     for (int i = 0;i < j;i++) {
         printf("%d: ", i);
-        PrintIP(all_routes[i][2]);
+        printIP(all_routes[i][2]);
         printf(" netmask ");
-        PrintIP(all_routes[i][1]);
+        printIP(all_routes[i][1]);
         printf(" via ");
-        PrintIP(all_routes[i][0]);
+        printIP(all_routes[i][0]);
         printf(" dev port%ld\n", all_routes[i][3]);
     }
 
