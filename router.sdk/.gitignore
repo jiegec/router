@@ -2,3 +2,6 @@
 .sdk
 SDK.log
 router.hdf
+*.a
+*.o
+*.bit

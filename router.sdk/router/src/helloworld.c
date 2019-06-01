@@ -225,7 +225,6 @@ void PrintIP(u32 ip) {
 }
 
 void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
-    printf("data read:\n");
     u32 offset = 0;
     u32 all_routes[1024][4];
     int j = 0;
@@ -244,12 +243,33 @@ void PrintCurrentRoutingTable(XBram_Config *bramConfig) {
     j--;
     for (int i = 0;i < j;i++) {
         printf("%d: ", i);
-        PrintIP(all_routes[i][0]);
+        PrintIP(all_routes[i][2]);
         printf(" netmask ");
         PrintIP(all_routes[i][1]);
         printf(" via ");
-        PrintIP(all_routes[i][2]);
+        PrintIP(all_routes[i][0]);
         printf(" dev port%ld\n", all_routes[i][3]);
+    }
+
+    static u32 time = 0;
+    time ++;
+
+    if (time % 2) {
+        // insert 10.0.2.0/24 via 10.0.1.2 port 1
+        XBram_Out32(bramConfig->MemBaseAddress + 3 * 16 + 0 * 4, 0);
+        XBram_Out32(bramConfig->MemBaseAddress + 3 * 16 + 1 * 4, 0);
+        XBram_Out32(bramConfig->MemBaseAddress + 3 * 16 + 2 * 4, 0);
+        XBram_Out32(bramConfig->MemBaseAddress + 3 * 16 + 3 * 4, 0);
+        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 0 * 4, 0x0a000102);
+        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 1 * 4, 0xffffff00);
+        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 2 * 4, 0x0a000200);
+        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 3 * 4, 1);
+    } else {
+        // remove
+        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 0 * 4, 0);
+        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 1 * 4, 0);
+        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 2 * 4, 0);
+        XBram_Out32(bramConfig->MemBaseAddress + 2 * 16 + 3 * 4, 0);
     }
 }
 
