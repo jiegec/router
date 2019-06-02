@@ -65,6 +65,21 @@ XScuGic gicInstance;
 XScuTimer timerInstance;
 XBram bramInstance;
 
+XLlFifo_Config *fifoConfig;
+XGpio_Config *gpioRxConfig;
+XGpio_Config *gpioTxConfig;
+XScuGic_Config *gicConfig;
+XScuTimer_Config *timerConfig;
+XBram_Config *bramConfig;
+
+u32 time = 0;
+
+const u8 portMAC[6] = {2, 2, 3, 3, 0, 0};
+const u8 ripMAC[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
+const int ENABLE_PORT = 2;
+const int INVALID_TIME = 180;
+const int FLUSH_TIME = 240;
+
 u16 bswap16(u16 i) {
     return (i >> 8) | ((i & 0xFF) << 8);
 }
@@ -167,13 +182,10 @@ struct Route {
     u32 metric;
     u32 nexthop;
     u32 port;
+    u32 updateTime;
 } routingTable[1024];
 
 int routingTableSize = 0;
-
-u8 portMAC[6] = {2, 2, 3, 3, 0, 0};
-u8 ripMAC[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-const int ENABLE_PORT = 2;
 
 u16 checksumAdd(u16 orig, u16 add) {
     u32 ans = orig;
@@ -267,6 +279,8 @@ void handleEthernetFrame(u8 port, u8 *data) {
                 printf("Got RIP response:\n");
                 u16 totalLength = bswap16(ip->totalLength);
                 int totalRoutes = (totalLength - 20 - 8 - 4) / 20;
+                // Avoid racing
+                XScuTimer_DisableInterrupt(&timerInstance);
                 for (int routes = 0;routes < totalRoutes;routes++) {
                     u32 ip_net = bswap32(ip->payload.udp.payload.rip.routes[routes].ip);
                     u32 netmask = bswap32(ip->payload.udp.payload.rip.routes[routes].netmask);
@@ -298,6 +312,7 @@ void handleEthernetFrame(u8 port, u8 *data) {
                                 routingTable[i].metric = metric + 1;
                                 routingTable[i].nexthop = nexthop;
                                 routingTable[i].port = port;
+                                routingTable[i].updateTime = time;
                             }
                             flag = 1;
                             break;
@@ -311,9 +326,13 @@ void handleEthernetFrame(u8 port, u8 *data) {
                         routingTable[routingTableSize].nexthop = nexthop;
                         routingTable[routingTableSize].port = port;
                         routingTable[routingTableSize].metric = metric + 1;
+                        routingTable[routingTableSize].updateTime = time;
                         routingTableSize ++;
                     }
                 }
+
+                // avoid racing
+                XScuTimer_EnableInterrupt(&timerInstance);
             }
         }
     }
@@ -350,6 +369,16 @@ void sendRIPReponse() {
             }
         }
 
+        if (routes == 0) {
+            routes = 1;
+            ip->payload.udp.payload.rip.routes[0].family = 0;
+            ip->payload.udp.payload.rip.routes[0].routeTag = 0;
+            ip->payload.udp.payload.rip.routes[0].ip = 0;
+            ip->payload.udp.payload.rip.routes[0].netmask = 0;
+            ip->payload.udp.payload.rip.routes[0].nexthop = 0;
+            ip->payload.udp.payload.rip.routes[0].metric = 0;
+        }
+
         u16 totalLength = 20 + 8 + 4 + 20 * routes;
 
         ip->totalLength = bswap16(totalLength);
@@ -377,6 +406,13 @@ void sendRIPReponse() {
 int routingTableCmp(const void *a, const void *b) {
     struct Route *aa = (struct Route *)a;
     struct Route *bb = (struct Route *)b;
+    // unreachable last
+    if (aa->metric < 16 && bb->metric >= 16) {
+        return -1;
+    } else if (aa->metric >= 16 && bb->metric < 16) {
+        return 1;
+    }
+    // larget netmask first
     if (aa->netmask > bb->netmask)
         return -1;
     else if (aa->netmask < bb->netmask)
@@ -385,21 +421,28 @@ int routingTableCmp(const void *a, const void *b) {
         return 0;
 }
 
-void applyCurrentRoutingTable(XBram_Config *bramConfig) {
+void applyCurrentRoutingTable() {
     qsort(routingTable, routingTableSize, sizeof(struct Route), routingTableCmp);
     // add all-zero route as the end
     for (int i = 0;i < 4;i ++) {
         XBram_Out32(bramConfig->MemBaseAddress + routingTableSize * 16 + i * 4, 0);
     }
     for (int i = routingTableSize - 1;i >= 0;i--) {
-        XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 0 * 4, routingTable[i].nexthop);
-        XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 1 * 4, routingTable[i].netmask);
-        XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 2 * 4, routingTable[i].ip);
-        XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 3 * 4, routingTable[i].port);
+        if (routingTable[i].metric >= 16) {
+            XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 0 * 4, 0);
+            XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 1 * 4, 0);
+            XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 2 * 4, 0);
+            XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 3 * 4, 0);
+        } else {
+            XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 0 * 4, routingTable[i].nexthop);
+            XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 1 * 4, routingTable[i].netmask);
+            XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 2 * 4, routingTable[i].ip);
+            XBram_Out32(bramConfig->MemBaseAddress + i * 16 + 3 * 4, routingTable[i].port);
+        }
     }
 }
 
-void printCurrentRoutingTable(XBram_Config *bramConfig) {
+void printCurrentRoutingTable() {
     u32 offset = 0;
     u32 all_routes[1024][4];
     int j = 0;
@@ -434,33 +477,37 @@ void printCurrentRoutingTable(XBram_Config *bramConfig) {
         printIP(routingTable[i].netmask);
         printf(" via ");
         printIP(routingTable[i].nexthop);
-        printf(" dev port%ld metric %ld\n", routingTable[i].port, routingTable[i].metric);
+        printf(" dev port%ld metric %ld timer %ld\n", routingTable[i].port, routingTable[i].metric, time - routingTable[i].updateTime);
     }
-    applyCurrentRoutingTable(bramConfig);
+    applyCurrentRoutingTable();
 }
 
 void timerInterruptHandler(void *data) {
-    static u32 time = 0;
     u32 chanR1 = XGpio_DiscreteRead(&gpioRxInstance, 1);
     u32 chanR2 = XGpio_DiscreteRead(&gpioRxInstance, 2);
     u32 chanT1 = XGpio_DiscreteRead(&gpioTxInstance, 1);
     u32 chanT2 = XGpio_DiscreteRead(&gpioTxInstance, 2);
     printf("%lu: Rx %lu bytes %lu packets, Tx %lu bytes %lu packets\n", ++time, chanR1, chanR2, chanT1, chanT2);
-    if ((time % 5) == 0) {
+
+    for (int i = 0;i < routingTableSize;i++) {
+        if ((time - routingTable[i].updateTime) > INVALID_TIME) {
+            routingTable[i].metric = 16;
+        }
+        if (routingTable[i].metric == 16 && (time - routingTable[i].updateTime) > FLUSH_TIME) {
+            memmove(&routingTable[i], &routingTable[i+1], sizeof(struct Route) * (routingTableSize - i - 1));
+            routingTableSize --;
+            i --;
+        }
+    }
+
+    if ((time % 10) == 0) {
         sendRIPReponse();
     }
-    printCurrentRoutingTable(data);
+    printCurrentRoutingTable();
 }
 
 int main()
 {
-    XLlFifo_Config *fifoConfig;
-    XGpio_Config *gpioRxConfig;
-    XGpio_Config *gpioTxConfig;
-    XScuGic_Config *gicConfig;
-    XScuTimer_Config *timerConfig;
-    XBram_Config *bramConfig;
-
     u32 receiveLength;
     u32 i;
     u8 buffer[2048];
@@ -527,7 +574,7 @@ int main()
 
     XScuGic_Connect(&gicInstance, XPAR_FABRIC_AXI_FIFO_MM_S_0_INTERRUPT_INTR, (Xil_ExceptionHandler)fifoInterruptHandler, NULL);
     XScuGic_Enable(&gicInstance, XPAR_FABRIC_AXI_FIFO_MM_S_0_INTERRUPT_INTR);
-    XScuGic_Connect(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR, (Xil_ExceptionHandler)timerInterruptHandler, bramConfig);
+    XScuGic_Connect(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR, (Xil_ExceptionHandler)timerInterruptHandler, NULL);
     XScuGic_Enable(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR);
     XScuTimer_EnableInterrupt(&timerInstance);
 
