@@ -276,7 +276,7 @@ void handleEthernetFrame(u8 port, u8 *data) {
             // UDP
             if (ip->payload.udp.srcPort == bswap16(520) && ip->payload.udp.dstPort == bswap16(520)) {
                 // RIP
-                printf("Got RIP response:\n");
+                printf("Got RIP response from port %d:\n", port);
                 u16 totalLength = bswap16(ip->totalLength);
                 int totalRoutes = (totalLength - 20 - 8 - 4) / 20;
                 // Avoid racing
@@ -302,11 +302,13 @@ void handleEthernetFrame(u8 port, u8 *data) {
                     int flag = 0;
                     for (int i = 0;i < routingTableSize;i++) {
                         if (routingTable[i].ip == ip_net && routingTable[i].netmask == netmask) {
-                            if (metric == 16) {
-                                // remove this entry
-                                memmove(&routingTable[i], &routingTable[i+1], sizeof(struct Route) * (routingTableSize - i - 1));
-                                routingTableSize --;
-                                i --;
+                            if (metric >= 16) {
+                                if (routingTable[i].port == port) {
+                                    // remove this entry
+                                    memmove(&routingTable[i], &routingTable[i+1], sizeof(struct Route) * (routingTableSize - i - 1));
+                                    routingTableSize --;
+                                    i --;
+                                }
                             } else if (metric < routingTable[i].metric) {
                                 // update this entry
                                 routingTable[i].metric = metric + 1;
