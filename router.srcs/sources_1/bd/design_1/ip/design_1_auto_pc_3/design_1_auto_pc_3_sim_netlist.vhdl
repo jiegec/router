@@ -1,10 +1,10 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Fri May 31 23:09:01 2019
+-- Date        : Fri May 31 23:09:00 2019
 -- Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
--- Command     : write_vhdl -force -mode funcsim
---               /home/oslab/router/router.srcs/sources_1/bd/design_1/ip/design_1_auto_pc_3/design_1_auto_pc_3_sim_netlist.vhdl
+-- Command     : write_vhdl -force -mode funcsim -rename_top design_1_auto_pc_3 -prefix
+--               design_1_auto_pc_3_ design_1_auto_pc_3_sim_netlist.vhdl
 -- Design      : design_1_auto_pc_3
 -- Purpose     : This VHDL netlist is a functional simulation representation of the design and should not be modified or
 --               synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -143,8 +143,6 @@ entity design_1_auto_pc_3_axi_protocol_converter_v2_1_16_axi_protocol_converter 
   attribute C_TRANSLATION_MODE of design_1_auto_pc_3_axi_protocol_converter_v2_1_16_axi_protocol_converter : entity is 2;
   attribute DowngradeIPIdentifiedWarnings : string;
   attribute DowngradeIPIdentifiedWarnings of design_1_auto_pc_3_axi_protocol_converter_v2_1_16_axi_protocol_converter : entity is "yes";
-  attribute ORIG_REF_NAME : string;
-  attribute ORIG_REF_NAME of design_1_auto_pc_3_axi_protocol_converter_v2_1_16_axi_protocol_converter : entity is "axi_protocol_converter_v2_1_16_axi_protocol_converter";
   attribute P_AXI3 : integer;
   attribute P_AXI3 of design_1_auto_pc_3_axi_protocol_converter_v2_1_16_axi_protocol_converter : entity is 1;
   attribute P_AXI4 : integer;

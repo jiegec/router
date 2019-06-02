@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Fri May 31 23:05:09 2019
+//Date        : Sun Jun  2 21:47:48 2019
 //Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -82,7 +82,7 @@ module design_1
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_CLK" *) inout FIXED_IO_ps_clk;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_PORB" *) inout FIXED_IO_ps_porb;
   (* X_INTERFACE_INFO = "xilinx.com:display_processing_system7:fixedio:1.0 FIXED_IO PS_SRSTB" *) inout FIXED_IO_ps_srstb;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 routing_table " *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME routing_table, MASTER_TYPE BRAM_CTRL, MEM_ECC NONE, MEM_SIZE 16384, MEM_WIDTH 128" *) output [13:0]routing_table_addr;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 routing_table " *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME routing_table, MASTER_TYPE BRAM_CTRL, MEM_ECC NONE, MEM_SIZE 16384, MEM_WIDTH 128, READ_WRITE_MODE READ_WRITE" *) output [13:0]routing_table_addr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 routing_table " *) output routing_table_clk;
   (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 routing_table " *) output [127:0]routing_table_din;
   (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 routing_table " *) input [127:0]routing_table_dout;
