@@ -84,33 +84,49 @@ void sprintIP(u32 ip, char *buffer) {
     sprintf(buffer, "%d.%d.%d.%d", p1, p2, p3, p4);
 }
 
+void renderChar(int x, int y, int size, char ch) {
+    for (int xx = 0;xx < size; xx++) {
+        for (int yy = 0;yy < size;yy++) {
+            int real_x = xx + x;
+            int real_y = yy + y;
+            if (font8x8_basic[ch][(yy * 8) / ROUTE_SIZE] & (1 << (xx * 8 / ROUTE_SIZE))) {
+                actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 0] = 0;
+                actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 1] = 0;
+                actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 2] = 0;
+            } else {
+                actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 0] = 255;
+                actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 1] = 255;
+                actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 2] = 255;
+            }
+        }
+    }
+}
+
+void renderText(int x, int y, int size, char *str) {
+    int len = strlen(str);
+    for (int i = 0;i < len;i++) {
+        renderChar(x + i * size, y, size, str[i]);
+    }
+}
+
 void renderData(struct Route *routingTable, u32 routingTableSize) {
     clearFrameBuffer();
+    renderText(0, 0, ROUTE_SIZE, "Routing Table:");
     for (int i = 0;i < routingTableSize;i++) {
-        int y = ROUTE_SIZE * i;
+        int y = ROUTE_SIZE * (i + 1);
         char rowBuffer[128];
         char ipBuffer[64];
-        char netmaskBuffer[64];
         char nexthopBuffer[64];
         sprintIP(routingTable[i].ip, ipBuffer);
-        sprintIP(routingTable[i].netmask, netmaskBuffer);
+        int prefix = 0;
+        int netmask = routingTable[i].netmask;
+        for (;netmask;netmask<<=1, prefix++);
         sprintIP(routingTable[i].nexthop, nexthopBuffer);
-        sprintf(rowBuffer, "%d: %s netmask %s nexthop %s metric %d dev port%d", i, ipBuffer, netmaskBuffer, nexthopBuffer, routingTable[i].metric, routingTable[i].port);
+        sprintf(rowBuffer, "%d: %s/%d via %s metric %d dev port%d", i + 1, ipBuffer, prefix, nexthopBuffer, routingTable[i].metric, routingTable[i].port);
 
         for (int j = 0;j < strlen(rowBuffer);j++) {
             int x = ROUTE_SIZE * j;
-            char ch = rowBuffer[j];
-            for (int xx = 0;xx < ROUTE_SIZE; xx++) {
-                for (int yy = 0;yy < ROUTE_SIZE;yy++) {
-                    int real_x = xx + x;
-                    int real_y = yy + y;
-                    if (font8x8_basic[ch][(yy * 8) / ROUTE_SIZE] & (1 << (xx * 8 / ROUTE_SIZE))) {
-                        actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 0] = 0;
-                        actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 1] = 0;
-                        actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 2] = 0;
-                    }
-                }
-            }
+            renderChar(x, y, ROUTE_SIZE, rowBuffer[j]);
         }
     }
 
