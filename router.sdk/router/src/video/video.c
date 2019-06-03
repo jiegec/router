@@ -14,6 +14,7 @@
 #include "i2c/PS_i2c.h"
 #include "xgpio.h"
 #include "sleep.h"
+#include "font8x8_basic.h"
 
 XAxiVdma_Config *vdmaConfig;
 XIicPs iicInstance;
@@ -24,9 +25,24 @@ XAxiVdma vdmaInstance;
 #define BYTES_PER_PIXEL 3
 #define FRAME_BYTES (1920*1080*BYTES_PER_PIXEL)
 #define FRAME_STRIDE (1920*BYTES_PER_PIXEL)
+#define ROUTE_SIZE 16
 
 u8 frameBuf[DISPLAY_NUM_FRAMES][FRAME_BYTES] __attribute__ ((aligned(64)));
 u8 *pFrames[DISPLAY_NUM_FRAMES]; //array of pointers to the frame buffers
+u32 actualWidth, actualHeight, actualStride;
+u8 *actualFrame;
+
+void clearFrameBuffer() {
+    // all white
+    u32 offset = 0;
+    for (int i = 0;i < actualHeight;i++) {
+        for (int j = 0;j < actualWidth;j++) {
+            actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 0] = 255;
+            actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 1] = 255;
+            actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 2] = 255;
+        }
+    }
+}
 
 void initVideo() {
     for (int i = 0;i < DISPLAY_NUM_FRAMES;i++) {
@@ -52,9 +68,51 @@ void initVideo() {
     DisplayInitialize(&dispCtrl, &vdmaInstance, XPAR_VTC_0_DEVICE_ID, XPAR_AXI_DYNCLK_0_BASEADDR, pFrames, FRAME_STRIDE);
     DisplayStart(&dispCtrl);
 
-    printf("Display Started\n");
+    printf("Display Started (%ld x %ld)\n", dispCtrl.vMode.width, dispCtrl.vMode.height);
+
+    actualHeight = dispCtrl.vMode.height;
+    actualWidth = dispCtrl.vMode.width;
+    actualStride = dispCtrl.stride;
+    actualFrame = dispCtrl.framePtr[dispCtrl.curFrame];
+
+    clearFrameBuffer();
+    Xil_DCacheFlushRange((u32) actualFrame, FRAME_BYTES);
+}
+
+void sprintIP(u32 ip, char *buffer) {
+    int p1 = ip >> 24, p2 = (ip >> 16) & 0xFF, p3 = (ip >> 8) & 0xFF, p4 = ip & 0xFF;
+    sprintf(buffer, "%d.%d.%d.%d", p1, p2, p3, p4);
 }
 
 void renderData(struct Route *routingTable, u32 routingTableSize) {
+    clearFrameBuffer();
+    for (int i = 0;i < routingTableSize;i++) {
+        int y = ROUTE_SIZE * i;
+        char rowBuffer[128];
+        char ipBuffer[64];
+        char netmaskBuffer[64];
+        char nexthopBuffer[64];
+        sprintIP(routingTable[i].ip, ipBuffer);
+        sprintIP(routingTable[i].netmask, netmaskBuffer);
+        sprintIP(routingTable[i].nexthop, nexthopBuffer);
+        sprintf(rowBuffer, "%d: %s netmask %s nexthop %s metric %d dev port%d", i, ipBuffer, netmaskBuffer, nexthopBuffer, routingTable[i].metric, routingTable[i].port);
 
+        for (int j = 0;j < strlen(rowBuffer);j++) {
+            int x = ROUTE_SIZE * j;
+            char ch = rowBuffer[j];
+            for (int xx = 0;xx < ROUTE_SIZE; xx++) {
+                for (int yy = 0;yy < ROUTE_SIZE;yy++) {
+                    int real_x = xx + x;
+                    int real_y = yy + y;
+                    if (font8x8_basic[ch][(yy * 8) / ROUTE_SIZE] & (1 << (xx * 8 / ROUTE_SIZE))) {
+                        actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 0] = 0;
+                        actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 1] = 0;
+                        actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 2] = 0;
+                    }
+                }
+            }
+        }
+    }
+
+    Xil_DCacheFlushRange((u32) actualFrame, FRAME_BYTES);
 }

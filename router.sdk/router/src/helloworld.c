@@ -438,7 +438,6 @@ int main()
 
     init_platform();
 
-    printf("Init HDMI\n");
     initVideo();
 
     printf("Lookup config\n");
