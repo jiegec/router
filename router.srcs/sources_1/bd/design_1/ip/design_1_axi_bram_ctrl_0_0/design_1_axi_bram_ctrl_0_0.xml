@@ -732,7 +732,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI.FREQ_HZ">50000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="BUSIFPARAM_VALUE.S_AXI.FREQ_HZ">100000000</spirit:value>
           <spirit:vendorExtensions>
             <xilinx:parameterInfo>
               <xilinx:parameterUsage>none</xilinx:parameterUsage>
@@ -1264,7 +1264,7 @@
           <spirit:name>FREQ_HZ</spirit:name>
           <spirit:displayName>clock frequency</spirit:displayName>
           <spirit:description>specify frequency of the clock connected to port s_axi_aclk</spirit:description>
-          <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="BUSIFPARAM_VALUE.CLKIF.FREQ_HZ">50000000</spirit:value>
+          <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="BUSIFPARAM_VALUE.CLKIF.FREQ_HZ">100000000</spirit:value>
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>PHASE</spirit:name>
@@ -1880,7 +1880,7 @@ The register is automatically cleared after the fault has been injected.
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:1453f8bd</spirit:value>
+            <spirit:value>8:a0b20a89</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1894,11 +1894,11 @@ The register is automatically cleared after the fault has been injected.
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri May 31 15:05:10 UTC 2019</spirit:value>
+            <spirit:value>Mon Jun 03 13:26:58 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:1453f8bd</spirit:value>
+            <spirit:value>8:a0b20a89</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1914,11 +1914,11 @@ The register is automatically cleared after the fault has been injected.
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri May 31 15:05:10 UTC 2019</spirit:value>
+            <spirit:value>Mon Jun 03 13:26:58 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:1453f8bd</spirit:value>
+            <spirit:value>8:a0b20a89</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1940,7 +1940,7 @@ The register is automatically cleared after the fault has been injected.
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:1bb4812d</spirit:value>
+            <spirit:value>8:f82a46ec</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1956,11 +1956,11 @@ The register is automatically cleared after the fault has been injected.
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri May 31 15:05:10 UTC 2019</spirit:value>
+            <spirit:value>Mon Jun 03 13:26:58 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:1bb4812d</spirit:value>
+            <spirit:value>8:f82a46ec</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1974,11 +1974,11 @@ The register is automatically cleared after the fault has been injected.
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Fri May 31 15:07:30 UTC 2019</spirit:value>
+            <spirit:value>Mon Jun 03 13:29:30 UTC 2019</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>8:1453f8bd</spirit:value>
+            <spirit:value>8:a0b20a89</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>

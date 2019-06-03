@@ -341,7 +341,7 @@ void handleEthernetFrame(u8 port, u8 *data) {
 }
 
 void fifoInterruptHandler(void *data) {
-    print("Got fifo interrupt\n");
+    printf("Got fifo interrupt\n");
 }
 
 void sendRIPReponse() {
@@ -516,10 +516,10 @@ int main()
 
     init_platform();
 
-    print("Lookup config\n");
+    printf("Lookup config\n");
     fifoConfig = XLlFfio_LookupConfig(XPAR_AXI_FIFO_0_DEVICE_ID);
     if (!fifoConfig) {
-        print("No config found\n");
+        printf("No config found\n");
         goto fail;
     }
 
@@ -529,7 +529,7 @@ int main()
 
     gpioRxConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_DEVICE_ID);
     if (!gpioRxConfig) {
-        print("No config found\n");
+        printf("No config found\n");
         goto fail;
     }
 
@@ -537,7 +537,7 @@ int main()
 
     gpioTxConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_1_DEVICE_ID);
     if (!gpioTxConfig) {
-        print("No config found\n");
+        printf("No config found\n");
         goto fail;
     }
 
@@ -545,7 +545,7 @@ int main()
 
     bramConfig = XBram_LookupConfig(XPAR_BRAM_0_DEVICE_ID);
     if (!bramConfig) {
-        print("No config found\n");
+        printf("No config found\n");
         goto fail;
     }
 
@@ -553,7 +553,7 @@ int main()
 
     timerConfig = XScuTimer_LookupConfig(XPAR_PS7_SCUTIMER_0_DEVICE_ID);
     if (!timerConfig) {
-        print("No timer config found\n");
+        printf("No timer config found\n");
         goto fail;
     }
 
@@ -565,7 +565,7 @@ int main()
 
     gicConfig = XScuGic_LookupConfig(XPAR_PS7_SCUGIC_0_DEVICE_ID);
     if (!gicConfig) {
-        print("No config found\n");
+        printf("No config found\n");
         goto fail;
     }
 
@@ -582,7 +582,7 @@ int main()
 
     Xil_ExceptionEnable();
 
-    print("Waiting for data\n");
+    printf("Waiting for data\n");
     for (int time = 0;;time++) {
         if (XLlFifo_iRxOccupancy(&fifoInstance)) {
             receiveLength = XLlFifo_iRxGetLen(&fifoInstance) / 4;
@@ -598,7 +598,7 @@ int main()
     }
 
 fail:
-    print("Leaving\n");
+    printf("Leaving\n");
     cleanup_platform();
     return 0;
 }

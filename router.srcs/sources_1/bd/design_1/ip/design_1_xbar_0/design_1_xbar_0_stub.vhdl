@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Fri May 31 23:07:33 2019
+-- Date        : Mon Jun  3 21:28:38 2019
 -- Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 -- Command     : write_vhdl -force -mode synth_stub
 --               /home/oslab/router/router.srcs/sources_1/bd/design_1/ip/design_1_xbar_0/design_1_xbar_0_stub.vhdl
@@ -49,41 +49,41 @@ entity design_1_xbar_0 is
     s_axi_rlast : out STD_LOGIC_VECTOR ( 0 to 0 );
     s_axi_rvalid : out STD_LOGIC_VECTOR ( 0 to 0 );
     s_axi_rready : in STD_LOGIC_VECTOR ( 0 to 0 );
-    m_axi_awaddr : out STD_LOGIC_VECTOR ( 127 downto 0 );
-    m_axi_awlen : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    m_axi_awsize : out STD_LOGIC_VECTOR ( 11 downto 0 );
-    m_axi_awburst : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    m_axi_awlock : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_awcache : out STD_LOGIC_VECTOR ( 15 downto 0 );
-    m_axi_awprot : out STD_LOGIC_VECTOR ( 11 downto 0 );
-    m_axi_awregion : out STD_LOGIC_VECTOR ( 15 downto 0 );
-    m_axi_awqos : out STD_LOGIC_VECTOR ( 15 downto 0 );
-    m_axi_awvalid : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_awready : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_wdata : out STD_LOGIC_VECTOR ( 511 downto 0 );
-    m_axi_wstrb : out STD_LOGIC_VECTOR ( 63 downto 0 );
-    m_axi_wlast : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_wvalid : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_wready : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_bresp : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    m_axi_bvalid : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_bready : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_araddr : out STD_LOGIC_VECTOR ( 127 downto 0 );
-    m_axi_arlen : out STD_LOGIC_VECTOR ( 31 downto 0 );
-    m_axi_arsize : out STD_LOGIC_VECTOR ( 11 downto 0 );
-    m_axi_arburst : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    m_axi_arlock : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_arcache : out STD_LOGIC_VECTOR ( 15 downto 0 );
-    m_axi_arprot : out STD_LOGIC_VECTOR ( 11 downto 0 );
-    m_axi_arregion : out STD_LOGIC_VECTOR ( 15 downto 0 );
-    m_axi_arqos : out STD_LOGIC_VECTOR ( 15 downto 0 );
-    m_axi_arvalid : out STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_arready : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_rdata : in STD_LOGIC_VECTOR ( 511 downto 0 );
-    m_axi_rresp : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    m_axi_rlast : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_rvalid : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    m_axi_rready : out STD_LOGIC_VECTOR ( 3 downto 0 )
+    m_axi_awaddr : out STD_LOGIC_VECTOR ( 255 downto 0 );
+    m_axi_awlen : out STD_LOGIC_VECTOR ( 63 downto 0 );
+    m_axi_awsize : out STD_LOGIC_VECTOR ( 23 downto 0 );
+    m_axi_awburst : out STD_LOGIC_VECTOR ( 15 downto 0 );
+    m_axi_awlock : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_awcache : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m_axi_awprot : out STD_LOGIC_VECTOR ( 23 downto 0 );
+    m_axi_awregion : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m_axi_awqos : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m_axi_awvalid : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_awready : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_wdata : out STD_LOGIC_VECTOR ( 1023 downto 0 );
+    m_axi_wstrb : out STD_LOGIC_VECTOR ( 127 downto 0 );
+    m_axi_wlast : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_wvalid : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_wready : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_bresp : in STD_LOGIC_VECTOR ( 15 downto 0 );
+    m_axi_bvalid : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_bready : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_araddr : out STD_LOGIC_VECTOR ( 255 downto 0 );
+    m_axi_arlen : out STD_LOGIC_VECTOR ( 63 downto 0 );
+    m_axi_arsize : out STD_LOGIC_VECTOR ( 23 downto 0 );
+    m_axi_arburst : out STD_LOGIC_VECTOR ( 15 downto 0 );
+    m_axi_arlock : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_arcache : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m_axi_arprot : out STD_LOGIC_VECTOR ( 23 downto 0 );
+    m_axi_arregion : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m_axi_arqos : out STD_LOGIC_VECTOR ( 31 downto 0 );
+    m_axi_arvalid : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_arready : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_rdata : in STD_LOGIC_VECTOR ( 1023 downto 0 );
+    m_axi_rresp : in STD_LOGIC_VECTOR ( 15 downto 0 );
+    m_axi_rlast : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_rvalid : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    m_axi_rready : out STD_LOGIC_VECTOR ( 7 downto 0 )
   );
 
 end design_1_xbar_0;
@@ -92,7 +92,7 @@ architecture stub of design_1_xbar_0 is
 attribute syn_black_box : boolean;
 attribute black_box_pad_pin : string;
 attribute syn_black_box of stub : architecture is true;
-attribute black_box_pad_pin of stub : architecture is "aclk,aresetn,s_axi_awaddr[31:0],s_axi_awlen[7:0],s_axi_awsize[2:0],s_axi_awburst[1:0],s_axi_awlock[0:0],s_axi_awcache[3:0],s_axi_awprot[2:0],s_axi_awqos[3:0],s_axi_awvalid[0:0],s_axi_awready[0:0],s_axi_wdata[127:0],s_axi_wstrb[15:0],s_axi_wlast[0:0],s_axi_wvalid[0:0],s_axi_wready[0:0],s_axi_bresp[1:0],s_axi_bvalid[0:0],s_axi_bready[0:0],s_axi_araddr[31:0],s_axi_arlen[7:0],s_axi_arsize[2:0],s_axi_arburst[1:0],s_axi_arlock[0:0],s_axi_arcache[3:0],s_axi_arprot[2:0],s_axi_arqos[3:0],s_axi_arvalid[0:0],s_axi_arready[0:0],s_axi_rdata[127:0],s_axi_rresp[1:0],s_axi_rlast[0:0],s_axi_rvalid[0:0],s_axi_rready[0:0],m_axi_awaddr[127:0],m_axi_awlen[31:0],m_axi_awsize[11:0],m_axi_awburst[7:0],m_axi_awlock[3:0],m_axi_awcache[15:0],m_axi_awprot[11:0],m_axi_awregion[15:0],m_axi_awqos[15:0],m_axi_awvalid[3:0],m_axi_awready[3:0],m_axi_wdata[511:0],m_axi_wstrb[63:0],m_axi_wlast[3:0],m_axi_wvalid[3:0],m_axi_wready[3:0],m_axi_bresp[7:0],m_axi_bvalid[3:0],m_axi_bready[3:0],m_axi_araddr[127:0],m_axi_arlen[31:0],m_axi_arsize[11:0],m_axi_arburst[7:0],m_axi_arlock[3:0],m_axi_arcache[15:0],m_axi_arprot[11:0],m_axi_arregion[15:0],m_axi_arqos[15:0],m_axi_arvalid[3:0],m_axi_arready[3:0],m_axi_rdata[511:0],m_axi_rresp[7:0],m_axi_rlast[3:0],m_axi_rvalid[3:0],m_axi_rready[3:0]";
+attribute black_box_pad_pin of stub : architecture is "aclk,aresetn,s_axi_awaddr[31:0],s_axi_awlen[7:0],s_axi_awsize[2:0],s_axi_awburst[1:0],s_axi_awlock[0:0],s_axi_awcache[3:0],s_axi_awprot[2:0],s_axi_awqos[3:0],s_axi_awvalid[0:0],s_axi_awready[0:0],s_axi_wdata[127:0],s_axi_wstrb[15:0],s_axi_wlast[0:0],s_axi_wvalid[0:0],s_axi_wready[0:0],s_axi_bresp[1:0],s_axi_bvalid[0:0],s_axi_bready[0:0],s_axi_araddr[31:0],s_axi_arlen[7:0],s_axi_arsize[2:0],s_axi_arburst[1:0],s_axi_arlock[0:0],s_axi_arcache[3:0],s_axi_arprot[2:0],s_axi_arqos[3:0],s_axi_arvalid[0:0],s_axi_arready[0:0],s_axi_rdata[127:0],s_axi_rresp[1:0],s_axi_rlast[0:0],s_axi_rvalid[0:0],s_axi_rready[0:0],m_axi_awaddr[255:0],m_axi_awlen[63:0],m_axi_awsize[23:0],m_axi_awburst[15:0],m_axi_awlock[7:0],m_axi_awcache[31:0],m_axi_awprot[23:0],m_axi_awregion[31:0],m_axi_awqos[31:0],m_axi_awvalid[7:0],m_axi_awready[7:0],m_axi_wdata[1023:0],m_axi_wstrb[127:0],m_axi_wlast[7:0],m_axi_wvalid[7:0],m_axi_wready[7:0],m_axi_bresp[15:0],m_axi_bvalid[7:0],m_axi_bready[7:0],m_axi_araddr[255:0],m_axi_arlen[63:0],m_axi_arsize[23:0],m_axi_arburst[15:0],m_axi_arlock[7:0],m_axi_arcache[31:0],m_axi_arprot[23:0],m_axi_arregion[31:0],m_axi_arqos[31:0],m_axi_arvalid[7:0],m_axi_arready[7:0],m_axi_rdata[1023:0],m_axi_rresp[15:0],m_axi_rlast[7:0],m_axi_rvalid[7:0],m_axi_rready[7:0]";
 attribute X_CORE_INFO : string;
 attribute X_CORE_INFO of stub : architecture is "axi_crossbar_v2_1_17_axi_crossbar,Vivado 2018.1";
 begin

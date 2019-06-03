@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Sun Jun  2 21:47:49 2019
+//Date        : Mon Jun  3 21:26:44 2019
 //Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -40,6 +40,14 @@ module design_1_wrapper
     FIXED_IO_ps_clk,
     FIXED_IO_ps_porb,
     FIXED_IO_ps_srstb,
+    hdmi_i2c_scl_io,
+    hdmi_i2c_sda_io,
+    hdmi_out_clk,
+    hdmi_out_data,
+    hdmi_out_de,
+    hdmi_out_hs,
+    hdmi_out_vs,
+    hdmi_rstn_tri_o,
     routing_table_addr,
     routing_table_clk,
     routing_table_din,
@@ -81,6 +89,14 @@ module design_1_wrapper
   inout FIXED_IO_ps_clk;
   inout FIXED_IO_ps_porb;
   inout FIXED_IO_ps_srstb;
+  inout hdmi_i2c_scl_io;
+  inout hdmi_i2c_sda_io;
+  output hdmi_out_clk;
+  output [23:0]hdmi_out_data;
+  output hdmi_out_de;
+  output hdmi_out_hs;
+  output hdmi_out_vs;
+  output [0:0]hdmi_rstn_tri_o;
   output [13:0]routing_table_addr;
   output routing_table_clk;
   output [127:0]routing_table_din;
@@ -123,6 +139,20 @@ module design_1_wrapper
   wire FIXED_IO_ps_clk;
   wire FIXED_IO_ps_porb;
   wire FIXED_IO_ps_srstb;
+  wire hdmi_i2c_scl_i;
+  wire hdmi_i2c_scl_io;
+  wire hdmi_i2c_scl_o;
+  wire hdmi_i2c_scl_t;
+  wire hdmi_i2c_sda_i;
+  wire hdmi_i2c_sda_io;
+  wire hdmi_i2c_sda_o;
+  wire hdmi_i2c_sda_t;
+  wire hdmi_out_clk;
+  wire [23:0]hdmi_out_data;
+  wire hdmi_out_de;
+  wire hdmi_out_hs;
+  wire hdmi_out_vs;
+  wire [0:0]hdmi_rstn_tri_o;
   wire [13:0]routing_table_addr;
   wire routing_table_clk;
   wire [127:0]routing_table_din;
@@ -166,6 +196,18 @@ module design_1_wrapper
         .FIXED_IO_ps_clk(FIXED_IO_ps_clk),
         .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
         .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
+        .hdmi_i2c_scl_i(hdmi_i2c_scl_i),
+        .hdmi_i2c_scl_o(hdmi_i2c_scl_o),
+        .hdmi_i2c_scl_t(hdmi_i2c_scl_t),
+        .hdmi_i2c_sda_i(hdmi_i2c_sda_i),
+        .hdmi_i2c_sda_o(hdmi_i2c_sda_o),
+        .hdmi_i2c_sda_t(hdmi_i2c_sda_t),
+        .hdmi_out_clk(hdmi_out_clk),
+        .hdmi_out_data(hdmi_out_data),
+        .hdmi_out_de(hdmi_out_de),
+        .hdmi_out_hs(hdmi_out_hs),
+        .hdmi_out_vs(hdmi_out_vs),
+        .hdmi_rstn_tri_o(hdmi_rstn_tri_o),
         .routing_table_addr(routing_table_addr),
         .routing_table_clk(routing_table_clk),
         .routing_table_din(routing_table_din),
@@ -177,4 +219,14 @@ module design_1_wrapper
         .rx_packets_tri_i(rx_packets_tri_i),
         .tx_bytes_tri_i(tx_bytes_tri_i),
         .tx_packets_tri_i(tx_packets_tri_i));
+  IOBUF hdmi_i2c_scl_iobuf
+       (.I(hdmi_i2c_scl_o),
+        .IO(hdmi_i2c_scl_io),
+        .O(hdmi_i2c_scl_i),
+        .T(hdmi_i2c_scl_t));
+  IOBUF hdmi_i2c_sda_iobuf
+       (.I(hdmi_i2c_sda_o),
+        .IO(hdmi_i2c_sda_io),
+        .O(hdmi_i2c_sda_i),
+        .T(hdmi_i2c_sda_t));
 endmodule

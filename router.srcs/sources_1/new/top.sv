@@ -26,6 +26,7 @@ module top(
     input logic reset_n_in,
     output logic led,
 
+    // DDR & FIXEDIO for PS
     inout [14:0]DDR_addr,
     inout [2:0]DDR_ba,
     inout DDR_cas_n,
@@ -49,6 +50,7 @@ module top(
     inout FIXED_IO_ps_porb,
     inout FIXED_IO_ps_srstb,
 
+    // rgmii
     input logic [3:0] rgmii1_rd,
     input logic rgmii1_rx_ctl,
     input logic rgmii1_rxc,
@@ -61,7 +63,17 @@ module top(
     input logic rgmii2_rxc,
     output logic [3:0] rgmii2_td,
     output logic rgmii2_tx_ctl,
-    output logic rgmii2_txc
+    output logic rgmii2_txc,
+
+    // HDMI
+    inout hdmi_i2c_scl_io,
+    inout hdmi_i2c_sda_io,
+    output hdmi_out_clk,
+    output [23:0]hdmi_out_data,
+    output hdmi_out_de,
+    output hdmi_out_hs,
+    output hdmi_out_vs,
+    output [0:0]hdmi_rstn_tri_o
     );
 
     logic axis_clk;
@@ -191,6 +203,16 @@ module top(
         .routing_table_dout(os_dout),
         .routing_table_en(os_en),
         .routing_table_rst(os_rst),
-        .routing_table_we(os_wea)
+        .routing_table_we(os_wea),
+
+        // HDMI
+        .hdmi_i2c_scl_io(hdmi_i2c_scl_io),
+        .hdmi_i2c_sda_io(hdmi_i2c_sda_io),
+        .hdmi_out_clk(hdmi_out_clk),
+        .hdmi_out_data(hdmi_out_data),
+        .hdmi_out_de(hdmi_out_de),
+        .hdmi_out_hs(hdmi_out_hs),
+        .hdmi_out_vs(hdmi_out_vs),
+        .hdmi_rstn_tri_o(hdmi_rstn_tri_o)
     );
 endmodule

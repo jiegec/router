@@ -5,3 +5,4 @@ router.hdf
 *.a
 *.o
 *.bit
+webtalk/
