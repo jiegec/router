@@ -131,7 +131,7 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
 
     // lazy flush
     static u32 lastRoutingTableSize = 0;
-    clearFrameBuffer(fontHeight * (routingTableSize + 3), fontHeight * (lastRoutingTableSize + 3));
+    clearFrameBuffer(fontHeight * 3, fontHeight * (lastRoutingTableSize + 3));
     lastRoutingTableSize = routingTableSize;
 
     for (int i = 0;i < routingTableSize;i++) {
