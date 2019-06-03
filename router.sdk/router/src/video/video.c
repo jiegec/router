@@ -25,17 +25,23 @@ XAxiVdma vdmaInstance;
 #define BYTES_PER_PIXEL 3
 #define FRAME_BYTES (1920*1080*BYTES_PER_PIXEL)
 #define FRAME_STRIDE (1920*BYTES_PER_PIXEL)
-#define ROUTE_SIZE 16
+#define FONT_SIZE 10
 
 u8 frameBuf[DISPLAY_NUM_FRAMES][FRAME_BYTES] __attribute__ ((aligned(64)));
 u8 *pFrames[DISPLAY_NUM_FRAMES]; //array of pointers to the frame buffers
 u32 actualWidth, actualHeight, actualStride;
 u8 *actualFrame;
 
-void clearFrameBuffer() {
+void clearFrameBuffer(int fromRow, int toRow) {
     // all white
     u32 offset = 0;
-    for (int i = 0;i < actualHeight;i++) {
+    if (fromRow < 0) {
+        fromRow = 0;
+    }
+    if (toRow > actualHeight) {
+        toRow = actualHeight;
+    }
+    for (int i = fromRow;i < toRow;i++) {
         for (int j = 0;j < actualWidth;j++) {
             actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 0] = 255;
             actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 1] = 255;
@@ -75,7 +81,7 @@ void initVideo() {
     actualStride = dispCtrl.stride;
     actualFrame = dispCtrl.framePtr[dispCtrl.curFrame];
 
-    clearFrameBuffer();
+    clearFrameBuffer(0, actualHeight);
     Xil_DCacheFlushRange((u32) actualFrame, FRAME_BYTES);
 }
 
@@ -89,7 +95,7 @@ void renderChar(int x, int y, int size, char ch) {
         for (int yy = 0;yy < size;yy++) {
             int real_x = xx + x;
             int real_y = yy + y;
-            if (font8x8_basic[ch][(yy * 8) / ROUTE_SIZE] & (1 << (xx * 8 / ROUTE_SIZE))) {
+            if (font8x8_basic[ch][(yy * 8) / FONT_SIZE] & (1 << (xx * 8 / FONT_SIZE))) {
                 actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 0] = 0;
                 actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 1] = 0;
                 actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 2] = 0;
@@ -109,26 +115,34 @@ void renderText(int x, int y, int size, char *str) {
     }
 }
 
-void renderData(struct Route *routingTable, u32 routingTableSize) {
-    clearFrameBuffer();
-    renderText(0, 0, ROUTE_SIZE, "Routing Table:");
+char rowBuffer[256];
+char ipBuffer[256];
+char nexthopBuffer[256];
+void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u32 time) {
+    clearFrameBuffer(0, 3 * FONT_SIZE);
+    renderText(0, 0, FONT_SIZE, stats);
+    renderText(0, 2 * FONT_SIZE, FONT_SIZE, "Routing Table:");
+
+    // lazy flush
+    static lastRoutingTableSize = 0;
+    clearFrameBuffer(FONT_SIZE * (routingTableSize + 3), FONT_SIZE * (lastRoutingTableSize + 3));
+    lastRoutingTableSize = routingTableSize;
+
     for (int i = 0;i < routingTableSize;i++) {
-        int y = ROUTE_SIZE * (i + 1);
-        char rowBuffer[128];
-        char ipBuffer[64];
-        char nexthopBuffer[64];
+        int y = FONT_SIZE * (i + 3);
         sprintIP(routingTable[i].ip, ipBuffer);
         int prefix = 0;
         int netmask = routingTable[i].netmask;
         for (;netmask;netmask<<=1, prefix++);
         sprintIP(routingTable[i].nexthop, nexthopBuffer);
-        sprintf(rowBuffer, "%d: %s/%d via %s metric %d dev port%d", i + 1, ipBuffer, prefix, nexthopBuffer, routingTable[i].metric, routingTable[i].port);
+        sprintf(rowBuffer, "%s/%d via %s metric %ld port %ld timer %ld", ipBuffer, prefix, nexthopBuffer, routingTable[i].metric, routingTable[i].port, time - routingTable[i].updateTime);
 
         for (int j = 0;j < strlen(rowBuffer);j++) {
-            int x = ROUTE_SIZE * j;
-            renderChar(x, y, ROUTE_SIZE, rowBuffer[j]);
+            int x = FONT_SIZE * j;
+            renderChar(x, y, FONT_SIZE, rowBuffer[j]);
         }
     }
+
 
     Xil_DCacheFlushRange((u32) actualFrame, FRAME_BYTES);
 }

@@ -79,8 +79,8 @@ u32 time = 0;
 const u8 portMAC[6] = {2, 2, 3, 3, 0, 0};
 const u8 ripMAC[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
 const int ENABLE_PORT = 2;
-const int INVALID_TIME = 180;
-const int FLUSH_TIME = 240;
+const int INVALID_TIME = 30; // 180
+const int FLUSH_TIME = 60; // 240
 
 u16 bswap16(u16 i) {
     return (i >> 8) | ((i & 0xFF) << 8);
@@ -365,9 +365,9 @@ void applyCurrentRoutingTable() {
     }
 }
 
+u32 all_routes[1024][4];
 void printCurrentRoutingTable() {
     u32 offset = 0;
-    u32 all_routes[1024][4];
     int j = 0;
     for (int flag = 1;flag;j++) {
         u32 route[4];
@@ -405,12 +405,14 @@ void printCurrentRoutingTable() {
     applyCurrentRoutingTable();
 }
 
+char statsBuffer[512];
 void timerInterruptHandler(void *data) {
     u32 chanR1 = XGpio_DiscreteRead(&gpioRxInstance, 1);
     u32 chanR2 = XGpio_DiscreteRead(&gpioRxInstance, 2);
     u32 chanT1 = XGpio_DiscreteRead(&gpioTxInstance, 1);
     u32 chanT2 = XGpio_DiscreteRead(&gpioTxInstance, 2);
-    printf("%lu: Rx %lu bytes %lu packets, Tx %lu bytes %lu packets\n", ++time, chanR1, chanR2, chanT1, chanT2);
+    snprintf(statsBuffer, sizeof(statsBuffer), "%lu: Rx %lu bytes %lu packets, Tx %lu bytes %lu packets", ++time, chanR1, chanR2, chanT1, chanT2);
+    printf("%s\n", statsBuffer);
 
     for (int i = 0;i < routingTableSize;i++) {
         if ((time - routingTable[i].updateTime) > INVALID_TIME) {
@@ -427,7 +429,7 @@ void timerInterruptHandler(void *data) {
         sendRIPReponse();
     }
     printCurrentRoutingTable();
-    renderData(routingTable, routingTableSize);
+    renderData(routingTable, routingTableSize, statsBuffer, time);
 }
 
 int main()
