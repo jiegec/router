@@ -14,7 +14,8 @@
 #include "i2c/PS_i2c.h"
 #include "xgpio.h"
 #include "sleep.h"
-#include "font8x8_basic.h"
+
+#include "font.h"
 
 XAxiVdma_Config *vdmaConfig;
 XIicPs iicInstance;
@@ -25,7 +26,6 @@ XAxiVdma vdmaInstance;
 #define BYTES_PER_PIXEL 3
 #define FRAME_BYTES (1920*1080*BYTES_PER_PIXEL)
 #define FRAME_STRIDE (1920*BYTES_PER_PIXEL)
-#define FONT_SIZE 10
 
 u8 frameBuf[DISPLAY_NUM_FRAMES][FRAME_BYTES] __attribute__ ((aligned(64)));
 u8 *pFrames[DISPLAY_NUM_FRAMES]; //array of pointers to the frame buffers
@@ -90,12 +90,18 @@ void sprintIP(u32 ip, char *buffer) {
     sprintf(buffer, "%d.%d.%d.%d", p1, p2, p3, p4);
 }
 
-void renderChar(int x, int y, int size, char ch) {
-    for (int xx = 0;xx < size; xx++) {
-        for (int yy = 0;yy < size;yy++) {
+void renderChar(int x, int y, char ch) {
+    for (int xx = 0;xx < fontWidth; xx++) {
+        for (int yy = 0;yy < fontHeight;yy++) {
             int real_x = xx + x;
             int real_y = yy + y;
-            if (font8x8_basic[ch][(yy * 8) / FONT_SIZE] & (1 << (xx * 8 / FONT_SIZE))) {
+            int index = xx / 8;
+            int offset = xx % 8;
+            //int fontNum = 0;
+            //for (int i = 0;i < fontSpan;i++) {
+                //fontNum |= font[ch * fontHeight * fontSpan + yy * fontSpan + i] << (8 * i);
+            //}
+            if (font[ch * fontHeight * fontSpan + yy * fontSpan + index] & (1 << (7 - offset))) {
                 actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 0] = 0;
                 actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 1] = 0;
                 actualFrame[real_x * BYTES_PER_PIXEL + real_y * actualStride + 2] = 0;
@@ -108,10 +114,10 @@ void renderChar(int x, int y, int size, char ch) {
     }
 }
 
-void renderText(int x, int y, int size, char *str) {
+void renderText(int x, int y, char *str) {
     int len = strlen(str);
     for (int i = 0;i < len;i++) {
-        renderChar(x + i * size, y, size, str[i]);
+        renderChar(x + i * fontWidth, y, str[i]);
     }
 }
 
@@ -119,17 +125,17 @@ char rowBuffer[256];
 char ipBuffer[256];
 char nexthopBuffer[256];
 void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u32 time) {
-    clearFrameBuffer(0, 3 * FONT_SIZE);
-    renderText(0, 0, FONT_SIZE, stats);
-    renderText(0, 2 * FONT_SIZE, FONT_SIZE, "Routing Table:");
+    clearFrameBuffer(0, 3 * fontHeight);
+    renderText(0, 0, stats);
+    renderText(0, 2 * fontHeight, "Routing Table:");
 
     // lazy flush
-    static lastRoutingTableSize = 0;
-    clearFrameBuffer(FONT_SIZE * (routingTableSize + 3), FONT_SIZE * (lastRoutingTableSize + 3));
+    static u32 lastRoutingTableSize = 0;
+    clearFrameBuffer(fontHeight * (routingTableSize + 3), fontHeight * (lastRoutingTableSize + 3));
     lastRoutingTableSize = routingTableSize;
 
     for (int i = 0;i < routingTableSize;i++) {
-        int y = FONT_SIZE * (i + 3);
+        int y = fontHeight * (i + 3);
         sprintIP(routingTable[i].ip, ipBuffer);
         int prefix = 0;
         int netmask = routingTable[i].netmask;
@@ -138,11 +144,10 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
         sprintf(rowBuffer, "%s/%d via %s metric %ld port %ld timer %ld", ipBuffer, prefix, nexthopBuffer, routingTable[i].metric, routingTable[i].port, time - routingTable[i].updateTime);
 
         for (int j = 0;j < strlen(rowBuffer);j++) {
-            int x = FONT_SIZE * j;
-            renderChar(x, y, FONT_SIZE, rowBuffer[j]);
+            int x = fontWidth * j;
+            renderChar(x, y, rowBuffer[j]);
         }
     }
-
 
     Xil_DCacheFlushRange((u32) actualFrame, FRAME_BYTES);
 }
