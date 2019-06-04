@@ -61,7 +61,7 @@ module top_axi(
     output logic [`PORT_OS_COUNT-1:0][`STATS_WIDTH-1:0] stats_tx_bytes,
 
     input os_clk,
-    input [`BUCKET_INDEX_WIDTH-1:0] os_addr,
+    input [15:0] os_addr,
     input [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_din,
     output [`ROUTING_TABLE_ENTRY_WIDTH-1:0] os_dout,
     input [(`ROUTING_TABLE_ENTRY_WIDTH)/`BYTE_WIDTH-1:0] os_wea,
@@ -163,7 +163,7 @@ module top_axi(
         .port_lookup_not_found(port_lookup_not_found),
 
         .os_clk(os_clk),
-        .os_addr(os_addr),
+        .os_addr(os_addr[15:4]),
         .os_din(os_din),
         .os_dout(os_dout),
         .os_wea(os_wea),

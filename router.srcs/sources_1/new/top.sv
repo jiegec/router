@@ -148,7 +148,7 @@ module top(
         .stats_tx_packets(stats_tx_packets),
 
         .os_clk(os_clk),
-        .os_addr(os_addr[15:4]),
+        .os_addr(os_addr),
         .os_din(os_din),
         .os_dout(os_dout),
         .os_wea(os_wea),
