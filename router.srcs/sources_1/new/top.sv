@@ -116,7 +116,6 @@ module top(
     top_axi top_axi_inst(
         .clk(clk),
         .reset_n_in(reset_n_in),
-        .led(led),
 
         .axis_clk(axis_clk),
         .axis_rxd_tdata(axis_rxd_tdata),

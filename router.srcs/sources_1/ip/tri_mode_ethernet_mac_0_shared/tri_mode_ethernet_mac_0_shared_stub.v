@@ -1,10 +1,10 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Thu Apr 25 21:19:19 2019
+// Date        : Thu Apr 25 21:19:18 2019
 // Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
-// Command     : write_verilog -force -mode synth_stub
-//               /home/oslab/router/router.srcs/sources_1/ip/tri_mode_ethernet_mac_0_shared/tri_mode_ethernet_mac_0_shared_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top tri_mode_ethernet_mac_0_shared -prefix
+//               tri_mode_ethernet_mac_0_shared_ tri_mode_ethernet_mac_0_shared_stub.v
 // Design      : tri_mode_ethernet_mac_0_shared
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg484-2
