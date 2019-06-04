@@ -26,7 +26,6 @@ module router(
     input logic clk125M, // 125MHz
     input logic clk200M, // 200MHz
     input logic reset_n,
-    output logic led,
 
     input axis_clk,
     // from router to os
