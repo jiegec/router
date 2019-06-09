@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Mon Jun  3 21:26:44 2019
+//Date        : Sun Jun  9 18:14:12 2019
 //Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -10,15 +10,7 @@
 `timescale 1 ps / 1 ps
 
 module design_1_wrapper
-   (AXI_STR_RXD_0_tdata,
-    AXI_STR_RXD_0_tlast,
-    AXI_STR_RXD_0_tready,
-    AXI_STR_RXD_0_tvalid,
-    AXI_STR_TXD_0_tdata,
-    AXI_STR_TXD_0_tlast,
-    AXI_STR_TXD_0_tready,
-    AXI_STR_TXD_0_tvalid,
-    DDR_addr,
+   (DDR_addr,
     DDR_ba,
     DDR_cas_n,
     DDR_ck_n,
@@ -33,7 +25,6 @@ module design_1_wrapper
     DDR_ras_n,
     DDR_reset_n,
     DDR_we_n,
-    FCLK_CLK0,
     FIXED_IO_ddr_vrn,
     FIXED_IO_ddr_vrp,
     FIXED_IO_mio,
@@ -48,25 +39,31 @@ module design_1_wrapper
     hdmi_out_hs,
     hdmi_out_vs,
     hdmi_rstn_tri_o,
-    routing_table_addr,
-    routing_table_clk,
-    routing_table_din,
-    routing_table_dout,
-    routing_table_en,
-    routing_table_rst,
-    routing_table_we,
-    rx_bytes_tri_i,
-    rx_packets_tri_i,
-    tx_bytes_tri_i,
-    tx_packets_tri_i);
-  input [31:0]AXI_STR_RXD_0_tdata;
-  input AXI_STR_RXD_0_tlast;
-  output AXI_STR_RXD_0_tready;
-  input AXI_STR_RXD_0_tvalid;
-  output [31:0]AXI_STR_TXD_0_tdata;
-  output AXI_STR_TXD_0_tlast;
-  input AXI_STR_TXD_0_tready;
-  output AXI_STR_TXD_0_tvalid;
+    reset_n_in,
+    rgmii1_rd,
+    rgmii1_rx_ctl,
+    rgmii1_rxc,
+    rgmii1_td,
+    rgmii1_tx_ctl,
+    rgmii1_txc,
+    rgmii2_rd,
+    rgmii2_rx_ctl,
+    rgmii2_rxc,
+    rgmii2_td,
+    rgmii2_tx_ctl,
+    rgmii2_txc,
+    rgmii3_rd,
+    rgmii3_rx_ctl,
+    rgmii3_rxc,
+    rgmii3_td,
+    rgmii3_tx_ctl,
+    rgmii3_txc,
+    rgmii4_rd,
+    rgmii4_rx_ctl,
+    rgmii4_rxc,
+    rgmii4_td,
+    rgmii4_tx_ctl,
+    rgmii4_txc);
   inout [14:0]DDR_addr;
   inout [2:0]DDR_ba;
   inout DDR_cas_n;
@@ -82,7 +79,6 @@ module design_1_wrapper
   inout DDR_ras_n;
   inout DDR_reset_n;
   inout DDR_we_n;
-  output FCLK_CLK0;
   inout FIXED_IO_ddr_vrn;
   inout FIXED_IO_ddr_vrp;
   inout [53:0]FIXED_IO_mio;
@@ -97,26 +93,32 @@ module design_1_wrapper
   output hdmi_out_hs;
   output hdmi_out_vs;
   output [0:0]hdmi_rstn_tri_o;
-  output [13:0]routing_table_addr;
-  output routing_table_clk;
-  output [127:0]routing_table_din;
-  input [127:0]routing_table_dout;
-  output routing_table_en;
-  output routing_table_rst;
-  output [15:0]routing_table_we;
-  input [31:0]rx_bytes_tri_i;
-  input [31:0]rx_packets_tri_i;
-  input [31:0]tx_bytes_tri_i;
-  input [31:0]tx_packets_tri_i;
+  input reset_n_in;
+  input [3:0]rgmii1_rd;
+  input rgmii1_rx_ctl;
+  input rgmii1_rxc;
+  output [3:0]rgmii1_td;
+  output rgmii1_tx_ctl;
+  output rgmii1_txc;
+  input [3:0]rgmii2_rd;
+  input rgmii2_rx_ctl;
+  input rgmii2_rxc;
+  output [3:0]rgmii2_td;
+  output rgmii2_tx_ctl;
+  output rgmii2_txc;
+  input [3:0]rgmii3_rd;
+  input rgmii3_rx_ctl;
+  input rgmii3_rxc;
+  output [3:0]rgmii3_td;
+  output rgmii3_tx_ctl;
+  output rgmii3_txc;
+  input [3:0]rgmii4_rd;
+  input rgmii4_rx_ctl;
+  input rgmii4_rxc;
+  output [3:0]rgmii4_td;
+  output rgmii4_tx_ctl;
+  output rgmii4_txc;
 
-  wire [31:0]AXI_STR_RXD_0_tdata;
-  wire AXI_STR_RXD_0_tlast;
-  wire AXI_STR_RXD_0_tready;
-  wire AXI_STR_RXD_0_tvalid;
-  wire [31:0]AXI_STR_TXD_0_tdata;
-  wire AXI_STR_TXD_0_tlast;
-  wire AXI_STR_TXD_0_tready;
-  wire AXI_STR_TXD_0_tvalid;
   wire [14:0]DDR_addr;
   wire [2:0]DDR_ba;
   wire DDR_cas_n;
@@ -132,7 +134,6 @@ module design_1_wrapper
   wire DDR_ras_n;
   wire DDR_reset_n;
   wire DDR_we_n;
-  wire FCLK_CLK0;
   wire FIXED_IO_ddr_vrn;
   wire FIXED_IO_ddr_vrp;
   wire [53:0]FIXED_IO_mio;
@@ -153,28 +154,34 @@ module design_1_wrapper
   wire hdmi_out_hs;
   wire hdmi_out_vs;
   wire [0:0]hdmi_rstn_tri_o;
-  wire [13:0]routing_table_addr;
-  wire routing_table_clk;
-  wire [127:0]routing_table_din;
-  wire [127:0]routing_table_dout;
-  wire routing_table_en;
-  wire routing_table_rst;
-  wire [15:0]routing_table_we;
-  wire [31:0]rx_bytes_tri_i;
-  wire [31:0]rx_packets_tri_i;
-  wire [31:0]tx_bytes_tri_i;
-  wire [31:0]tx_packets_tri_i;
+  wire reset_n_in;
+  wire [3:0]rgmii1_rd;
+  wire rgmii1_rx_ctl;
+  wire rgmii1_rxc;
+  wire [3:0]rgmii1_td;
+  wire rgmii1_tx_ctl;
+  wire rgmii1_txc;
+  wire [3:0]rgmii2_rd;
+  wire rgmii2_rx_ctl;
+  wire rgmii2_rxc;
+  wire [3:0]rgmii2_td;
+  wire rgmii2_tx_ctl;
+  wire rgmii2_txc;
+  wire [3:0]rgmii3_rd;
+  wire rgmii3_rx_ctl;
+  wire rgmii3_rxc;
+  wire [3:0]rgmii3_td;
+  wire rgmii3_tx_ctl;
+  wire rgmii3_txc;
+  wire [3:0]rgmii4_rd;
+  wire rgmii4_rx_ctl;
+  wire rgmii4_rxc;
+  wire [3:0]rgmii4_td;
+  wire rgmii4_tx_ctl;
+  wire rgmii4_txc;
 
   design_1 design_1_i
-       (.AXI_STR_RXD_0_tdata(AXI_STR_RXD_0_tdata),
-        .AXI_STR_RXD_0_tlast(AXI_STR_RXD_0_tlast),
-        .AXI_STR_RXD_0_tready(AXI_STR_RXD_0_tready),
-        .AXI_STR_RXD_0_tvalid(AXI_STR_RXD_0_tvalid),
-        .AXI_STR_TXD_0_tdata(AXI_STR_TXD_0_tdata),
-        .AXI_STR_TXD_0_tlast(AXI_STR_TXD_0_tlast),
-        .AXI_STR_TXD_0_tready(AXI_STR_TXD_0_tready),
-        .AXI_STR_TXD_0_tvalid(AXI_STR_TXD_0_tvalid),
-        .DDR_addr(DDR_addr),
+       (.DDR_addr(DDR_addr),
         .DDR_ba(DDR_ba),
         .DDR_cas_n(DDR_cas_n),
         .DDR_ck_n(DDR_ck_n),
@@ -189,7 +196,6 @@ module design_1_wrapper
         .DDR_ras_n(DDR_ras_n),
         .DDR_reset_n(DDR_reset_n),
         .DDR_we_n(DDR_we_n),
-        .FCLK_CLK0(FCLK_CLK0),
         .FIXED_IO_ddr_vrn(FIXED_IO_ddr_vrn),
         .FIXED_IO_ddr_vrp(FIXED_IO_ddr_vrp),
         .FIXED_IO_mio(FIXED_IO_mio),
@@ -208,17 +214,31 @@ module design_1_wrapper
         .hdmi_out_hs(hdmi_out_hs),
         .hdmi_out_vs(hdmi_out_vs),
         .hdmi_rstn_tri_o(hdmi_rstn_tri_o),
-        .routing_table_addr(routing_table_addr),
-        .routing_table_clk(routing_table_clk),
-        .routing_table_din(routing_table_din),
-        .routing_table_dout(routing_table_dout),
-        .routing_table_en(routing_table_en),
-        .routing_table_rst(routing_table_rst),
-        .routing_table_we(routing_table_we),
-        .rx_bytes_tri_i(rx_bytes_tri_i),
-        .rx_packets_tri_i(rx_packets_tri_i),
-        .tx_bytes_tri_i(tx_bytes_tri_i),
-        .tx_packets_tri_i(tx_packets_tri_i));
+        .reset_n_in(reset_n_in),
+        .rgmii1_rd(rgmii1_rd),
+        .rgmii1_rx_ctl(rgmii1_rx_ctl),
+        .rgmii1_rxc(rgmii1_rxc),
+        .rgmii1_td(rgmii1_td),
+        .rgmii1_tx_ctl(rgmii1_tx_ctl),
+        .rgmii1_txc(rgmii1_txc),
+        .rgmii2_rd(rgmii2_rd),
+        .rgmii2_rx_ctl(rgmii2_rx_ctl),
+        .rgmii2_rxc(rgmii2_rxc),
+        .rgmii2_td(rgmii2_td),
+        .rgmii2_tx_ctl(rgmii2_tx_ctl),
+        .rgmii2_txc(rgmii2_txc),
+        .rgmii3_rd(rgmii3_rd),
+        .rgmii3_rx_ctl(rgmii3_rx_ctl),
+        .rgmii3_rxc(rgmii3_rxc),
+        .rgmii3_td(rgmii3_td),
+        .rgmii3_tx_ctl(rgmii3_tx_ctl),
+        .rgmii3_txc(rgmii3_txc),
+        .rgmii4_rd(rgmii4_rd),
+        .rgmii4_rx_ctl(rgmii4_rx_ctl),
+        .rgmii4_rxc(rgmii4_rxc),
+        .rgmii4_td(rgmii4_td),
+        .rgmii4_tx_ctl(rgmii4_tx_ctl),
+        .rgmii4_txc(rgmii4_txc));
   IOBUF hdmi_i2c_scl_iobuf
        (.I(hdmi_i2c_scl_o),
         .IO(hdmi_i2c_scl_io),
