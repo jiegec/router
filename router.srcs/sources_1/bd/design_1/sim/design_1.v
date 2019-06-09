@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Sun Jun  9 19:36:01 2019
+//Date        : Sun Jun  9 22:04:59 2019
 //Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=42,numReposBlks=32,numNonXlnxBlks=2,numHierBlks=10,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=9,da_board_cnt=5,da_bram_cntlr_cnt=1,da_clkrst_cnt=1,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
+(* CORE_GENERATION_INFO = "design_1,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=design_1,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=46,numReposBlks=36,numNonXlnxBlks=2,numHierBlks=10,maxHierDepth=0,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=0,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=9,da_board_cnt=5,da_bram_cntlr_cnt=1,da_clkrst_cnt=1,da_ps7_cnt=1,synth_mode=OOC_per_IP}" *) (* HW_HANDOFF = "design_1.hwdef" *) 
 module design_1
    (DDR_addr,
     DDR_ba,
@@ -426,10 +426,7 @@ module design_1
   wire [3:0]router_0_rgmii4_TD;
   wire router_0_rgmii4_TXC;
   wire router_0_rgmii4_TX_CTL;
-  wire [255:0]router_0_stats_rx_bytes;
   wire [255:0]router_0_stats_rx_packets;
-  wire [255:0]router_0_stats_tx_bytes;
-  wire [255:0]router_0_stats_tx_packets;
   wire [0:0]rst_ps7_0_142M_peripheral_aresetn;
   wire [0:0]rst_ps7_0_50M_interconnect_aresetn;
   wire [0:0]rst_ps7_0_50M_peripheral_aresetn;
@@ -444,6 +441,10 @@ module design_1
   wire v_tc_0_vtiming_out_VBLANK;
   wire v_tc_0_vtiming_out_VSYNC;
   wire [2:0]xlconcat_0_dout;
+  wire [31:0]xlslice_0_Dout;
+  wire [31:0]xlslice_1_Dout;
+  wire [31:0]xlslice_2_Dout;
+  wire [31:0]xlslice_3_Dout;
 
   assign hdmi_i2c_scl_o = processing_system7_0_IIC_0_SCL_O;
   assign hdmi_i2c_scl_t = processing_system7_0_IIC_0_SCL_T;
@@ -577,8 +578,8 @@ module design_1
         .s_axi_wstrb(ps7_0_axi_periph_M00_AXI_WSTRB),
         .s_axi_wvalid(ps7_0_axi_periph_M00_AXI_WVALID));
   design_1_axi_gpio_0_0 axi_gpio_0
-       (.gpio2_io_i(router_0_stats_rx_packets[31:0]),
-        .gpio_io_i(router_0_stats_rx_bytes[31:0]),
+       (.gpio2_io_i(xlslice_1_Dout),
+        .gpio_io_i(xlslice_0_Dout),
         .s_axi_aclk(processing_system7_0_FCLK_CLK0),
         .s_axi_araddr(ps7_0_axi_periph_M01_AXI_ARADDR[8:0]),
         .s_axi_aresetn(rst_ps7_0_50M_peripheral_aresetn),
@@ -599,8 +600,8 @@ module design_1
         .s_axi_wstrb(ps7_0_axi_periph_M01_AXI_WSTRB),
         .s_axi_wvalid(ps7_0_axi_periph_M01_AXI_WVALID));
   design_1_axi_gpio_1_0 axi_gpio_1
-       (.gpio2_io_i(router_0_stats_tx_packets[31:0]),
-        .gpio_io_i(router_0_stats_tx_bytes[31:0]),
+       (.gpio2_io_i(xlslice_2_Dout),
+        .gpio_io_i(xlslice_3_Dout),
         .s_axi_aclk(processing_system7_0_FCLK_CLK0),
         .s_axi_araddr(ps7_0_axi_periph_M02_AXI_ARADDR[8:0]),
         .s_axi_aresetn(rst_ps7_0_50M_peripheral_aresetn),
@@ -1078,10 +1079,7 @@ module design_1
         .rgmii4_td(router_0_rgmii4_TD),
         .rgmii4_tx_ctl(router_0_rgmii4_TX_CTL),
         .rgmii4_txc(router_0_rgmii4_TXC),
-        .stats_rx_bytes(router_0_stats_rx_bytes),
-        .stats_rx_packets(router_0_stats_rx_packets),
-        .stats_tx_bytes(router_0_stats_tx_bytes),
-        .stats_tx_packets(router_0_stats_tx_packets));
+        .stats_rx_packets(router_0_stats_rx_packets));
   design_1_rst_ps7_0_142M_0 rst_ps7_0_142M
        (.aux_reset_in(1'b1),
         .dcm_locked(1'b1),
@@ -1157,6 +1155,18 @@ module design_1
         .In1(v_tc_0_irq),
         .In2(axi_fifo_mm_s_0_interrupt),
         .dout(xlconcat_0_dout));
+  design_1_xlslice_0_0 xlslice_0
+       (.Din(router_0_stats_rx_packets),
+        .Dout(xlslice_0_Dout));
+  design_1_xlslice_0_1 xlslice_1
+       (.Din(router_0_stats_rx_packets),
+        .Dout(xlslice_1_Dout));
+  design_1_xlslice_0_2 xlslice_2
+       (.Din(router_0_stats_rx_packets),
+        .Dout(xlslice_2_Dout));
+  design_1_xlslice_1_0 xlslice_3
+       (.Din(router_0_stats_rx_packets),
+        .Dout(xlslice_3_Dout));
 endmodule
 
 module design_1_ps7_0_axi_periph_0

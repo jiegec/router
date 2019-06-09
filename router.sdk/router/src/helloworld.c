@@ -61,20 +61,21 @@
 #include "video/video.h"
 
 XLlFifo fifoInstance;
-XGpio gpioRxInstance;
-XGpio gpioTxInstance;
+XGpio gpio1Instance;
+XGpio gpio2Instance;
 XScuGic gicInstance;
 XScuTimer timerInstance;
 XBram bramInstance;
 
 XLlFifo_Config *fifoConfig;
-XGpio_Config *gpioRxConfig;
-XGpio_Config *gpioTxConfig;
+XGpio_Config *gpio1Config;
+XGpio_Config *gpio2Config;
 XScuGic_Config *gicConfig;
 XScuTimer_Config *timerConfig;
 XBram_Config *bramConfig;
 
 u32 time = 0;
+u32 tick = 0;
 
 const u8 portMAC[6] = {2, 2, 3, 3, 0, 0};
 const u8 ripMAC[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
@@ -407,29 +408,51 @@ void printCurrentRoutingTable() {
 
 char statsBuffer[512];
 void timerInterruptHandler(void *data) {
-    u32 chanR1 = XGpio_DiscreteRead(&gpioRxInstance, 1);
-    u32 chanR2 = XGpio_DiscreteRead(&gpioRxInstance, 2);
-    u32 chanT1 = XGpio_DiscreteRead(&gpioTxInstance, 1);
-    u32 chanT2 = XGpio_DiscreteRead(&gpioTxInstance, 2);
-    snprintf(statsBuffer, sizeof(statsBuffer), "%lu: Rx %lu bytes %lu packets, Tx %lu bytes %lu packets", ++time, chanR1, chanR2, chanT1, chanT2);
+    static u32 lastChan11 = 0, lastChan12 = 0, lastChan21 = 0, lastChan22 = 0;
+    static u32 lastTickChan11 = 0, lastTickChan12 = 0, lastTickChan21 = 0, lastTickChan22 = 0;
+    u32 chan11 = XGpio_DiscreteRead(&gpio1Instance, 1);
+    u32 chan12 = XGpio_DiscreteRead(&gpio1Instance, 2);
+    u32 chan21 = XGpio_DiscreteRead(&gpio2Instance, 1);
+    u32 chan22 = XGpio_DiscreteRead(&gpio2Instance, 2);
+    snprintf(statsBuffer, sizeof(statsBuffer), "%lu: Rx %lu, %lu, %lu, %lu packets/s", time, chan11 - lastChan11, chan12 - lastChan12, chan21 - lastChan21, chan22 - lastChan22);
     printf("%s\n", statsBuffer);
 
-    for (int i = 0;i < routingTableSize;i++) {
-        if ((time - routingTable[i].updateTime) > INVALID_TIME) {
-            routingTable[i].metric = 16;
+
+    tick ++;
+    if ((tick % 10) == 0) {
+        // 100ms tick
+        time ++;
+
+        lastChan11 = chan11;
+        lastChan12 = chan12;
+        lastChan21 = chan21;
+        lastChan22 = chan22;
+
+        for (int i = 0;i < routingTableSize;i++) {
+            if ((time - routingTable[i].updateTime) > INVALID_TIME) {
+                routingTable[i].metric = 16;
+            }
+            if (routingTable[i].metric == 16 && (time - routingTable[i].updateTime) > FLUSH_TIME) {
+                memmove(&routingTable[i], &routingTable[i+1], sizeof(struct Route) * (routingTableSize - i - 1));
+                routingTableSize --;
+                i --;
+            }
         }
-        if (routingTable[i].metric == 16 && (time - routingTable[i].updateTime) > FLUSH_TIME) {
-            memmove(&routingTable[i], &routingTable[i+1], sizeof(struct Route) * (routingTableSize - i - 1));
-            routingTableSize --;
-            i --;
+
+        if ((time % 10) == 0) {
+            sendRIPReponse();
         }
+        printCurrentRoutingTable();
     }
 
-    if ((time % 10) == 0) {
-        sendRIPReponse();
-    }
-    printCurrentRoutingTable();
-    renderData(routingTable, routingTableSize, statsBuffer, time);
+    int flow[] = {chan11 - lastTickChan11, chan12 - lastTickChan12, chan21 - lastTickChan21, chan22 - lastTickChan22};
+
+    renderData(routingTable, routingTableSize, statsBuffer, time, flow);
+
+    lastTickChan11 = chan11;
+    lastTickChan12 = chan12;
+    lastTickChan21 = chan21;
+    lastTickChan22 = chan22;
 }
 
 int main()
@@ -453,21 +476,21 @@ int main()
 
 	XLlFifo_IntClear(&fifoInstance,0xffffffff);
 
-    gpioRxConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_0_DEVICE_ID);
-    if (!gpioRxConfig) {
+    gpio1Config = XGpio_LookupConfig(XPAR_AXI_GPIO_0_DEVICE_ID);
+    if (!gpio1Config) {
         printf("No config found\n");
         goto fail;
     }
 
-    XGpio_CfgInitialize(&gpioRxInstance, gpioRxConfig, gpioRxConfig->BaseAddress);
+    XGpio_CfgInitialize(&gpio1Instance, gpio1Config, gpio1Config->BaseAddress);
 
-    gpioTxConfig = XGpio_LookupConfig(XPAR_AXI_GPIO_1_DEVICE_ID);
-    if (!gpioTxConfig) {
+    gpio2Config = XGpio_LookupConfig(XPAR_AXI_GPIO_1_DEVICE_ID);
+    if (!gpio2Config) {
         printf("No config found\n");
         goto fail;
     }
 
-    XGpio_CfgInitialize(&gpioTxInstance, gpioTxConfig, gpioTxConfig->BaseAddress);
+    XGpio_CfgInitialize(&gpio2Instance, gpio2Config, gpio2Config->BaseAddress);
 
     bramConfig = XBram_LookupConfig(XPAR_BRAM_0_DEVICE_ID);
     if (!bramConfig) {
@@ -486,7 +509,7 @@ int main()
     XScuTimer_CfgInitialize(&timerInstance, timerConfig, timerConfig->BaseAddr);
     XScuTimer_SelfTest(&timerInstance);
     XScuTimer_EnableAutoReload(&timerInstance);
-    XScuTimer_LoadTimer(&timerInstance, 0x13D92D3F); // 1s
+    XScuTimer_LoadTimer(&timerInstance, 0x13D92D3F / 10); // 100ms
     XScuTimer_Start(&timerInstance);
 
     gicConfig = XScuGic_LookupConfig(XPAR_PS7_SCUGIC_0_DEVICE_ID);

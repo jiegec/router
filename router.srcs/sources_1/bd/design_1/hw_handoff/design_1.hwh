@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Jun  9 19:36:20 2019" VIVADOVERSION="2018.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Sun Jun  9 22:05:18 2019" VIVADOVERSION="2018.1">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z020" NAME="design_1" PACKAGE="clg484" SPEEDGRADE="-2"/>
 
@@ -2124,14 +2124,14 @@
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M01_AXI_rready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="gpio_io_i" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_rx_bytes">
+        <PORT DIR="I" LEFT="31" NAME="gpio_io_i" RIGHT="0" SIGIS="undef" SIGNAME="xlslice_0_Dout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="router_0" PORT="stats_rx_bytes"/>
+            <CONNECTION INSTANCE="xlslice_0" PORT="Dout"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="gpio2_io_i" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_rx_packets">
+        <PORT DIR="I" LEFT="31" NAME="gpio2_io_i" RIGHT="0" SIGIS="undef" SIGNAME="xlslice_1_Dout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="router_0" PORT="stats_rx_packets"/>
+            <CONNECTION INSTANCE="xlslice_1" PORT="Dout"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -2489,14 +2489,14 @@
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M02_AXI_rready"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="gpio_io_i" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_tx_bytes">
+        <PORT DIR="I" LEFT="31" NAME="gpio_io_i" RIGHT="0" SIGIS="undef" SIGNAME="xlslice_3_Dout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="router_0" PORT="stats_tx_bytes"/>
+            <CONNECTION INSTANCE="xlslice_3" PORT="Dout"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="I" LEFT="31" NAME="gpio2_io_i" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_tx_packets">
+        <PORT DIR="I" LEFT="31" NAME="gpio2_io_i" RIGHT="0" SIGIS="undef" SIGNAME="xlslice_2_Dout">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="router_0" PORT="stats_tx_packets"/>
+            <CONNECTION INSTANCE="xlslice_2" PORT="Dout"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
@@ -8397,24 +8397,15 @@
         <PORT DIR="O" NAME="rgmii4_txc" SIGIS="clk"/>
         <PORT DIR="O" LEFT="255" NAME="stats_rx_packets" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_rx_packets">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_gpio_0" PORT="gpio2_io_i"/>
+            <CONNECTION INSTANCE="xlslice_0" PORT="Din"/>
+            <CONNECTION INSTANCE="xlslice_1" PORT="Din"/>
+            <CONNECTION INSTANCE="xlslice_3" PORT="Din"/>
+            <CONNECTION INSTANCE="xlslice_2" PORT="Din"/>
           </CONNECTIONS>
         </PORT>
-        <PORT DIR="O" LEFT="255" NAME="stats_rx_bytes" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_rx_bytes">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_gpio_0" PORT="gpio_io_i"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="255" NAME="stats_tx_packets" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_tx_packets">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_gpio_1" PORT="gpio2_io_i"/>
-          </CONNECTIONS>
-        </PORT>
-        <PORT DIR="O" LEFT="255" NAME="stats_tx_bytes" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_tx_bytes">
-          <CONNECTIONS>
-            <CONNECTION INSTANCE="axi_gpio_1" PORT="gpio_io_i"/>
-          </CONNECTIONS>
-        </PORT>
+        <PORT DIR="O" LEFT="255" NAME="stats_rx_bytes" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="255" NAME="stats_tx_packets" RIGHT="0" SIGIS="undef"/>
+        <PORT DIR="O" LEFT="255" NAME="stats_tx_bytes" RIGHT="0" SIGIS="undef"/>
         <PORT CLKFREQUENCY="100000000" DIR="I" NAME="os_clk" SIGIS="clk" SIGNAME="axi_bram_ctrl_0_bram_clk_a">
           <CONNECTIONS>
             <CONNECTION INSTANCE="axi_bram_ctrl_0" PORT="bram_clk_a"/>
@@ -9268,6 +9259,102 @@
         <PORT DIR="O" LEFT="2" NAME="dout" RIGHT="0" SIGIS="undef" SIGNAME="xlconcat_0_dout">
           <CONNECTIONS>
             <CONNECTION INSTANCE="processing_system7_0" PORT="IRQ_F2P"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/xlslice_0" HWVERSION="1.0" INSTANCE="xlslice_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="DIN_WIDTH" VALUE="256"/>
+        <PARAMETER NAME="DIN_FROM" VALUE="31"/>
+        <PARAMETER NAME="DIN_TO" VALUE="0"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_xlslice_0_0"/>
+        <PARAMETER NAME="DOUT_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="255" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_rx_packets">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="router_0" PORT="stats_rx_packets"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="xlslice_0_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="gpio_io_i"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/xlslice_1" HWVERSION="1.0" INSTANCE="xlslice_1" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="DIN_WIDTH" VALUE="256"/>
+        <PARAMETER NAME="DIN_FROM" VALUE="63"/>
+        <PARAMETER NAME="DIN_TO" VALUE="32"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_xlslice_0_1"/>
+        <PARAMETER NAME="DOUT_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="255" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_rx_packets">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="router_0" PORT="stats_rx_packets"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="xlslice_1_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_0" PORT="gpio2_io_i"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/xlslice_2" HWVERSION="1.0" INSTANCE="xlslice_2" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="DIN_WIDTH" VALUE="256"/>
+        <PARAMETER NAME="DIN_FROM" VALUE="127"/>
+        <PARAMETER NAME="DIN_TO" VALUE="96"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_xlslice_0_2"/>
+        <PARAMETER NAME="DOUT_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="255" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_rx_packets">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="router_0" PORT="stats_rx_packets"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="xlslice_2_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_1" PORT="gpio2_io_i"/>
+          </CONNECTIONS>
+        </PORT>
+      </PORTS>
+      <BUSINTERFACES/>
+    </MODULE>
+    <MODULE FULLNAME="/xlslice_3" HWVERSION="1.0" INSTANCE="xlslice_3" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="xlslice" VLNV="xilinx.com:ip:xlslice:1.0">
+      <DOCUMENTS/>
+      <PARAMETERS>
+        <PARAMETER NAME="DIN_WIDTH" VALUE="256"/>
+        <PARAMETER NAME="DIN_FROM" VALUE="95"/>
+        <PARAMETER NAME="DIN_TO" VALUE="64"/>
+        <PARAMETER NAME="Component_Name" VALUE="design_1_xlslice_1_0"/>
+        <PARAMETER NAME="DOUT_WIDTH" VALUE="32"/>
+        <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
+      </PARAMETERS>
+      <PORTS>
+        <PORT DIR="I" LEFT="255" NAME="Din" RIGHT="0" SIGIS="undef" SIGNAME="router_0_stats_rx_packets">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="router_0" PORT="stats_rx_packets"/>
+          </CONNECTIONS>
+        </PORT>
+        <PORT DIR="O" LEFT="31" NAME="Dout" RIGHT="0" SIGIS="undef" SIGNAME="xlslice_3_Dout">
+          <CONNECTIONS>
+            <CONNECTION INSTANCE="axi_gpio_1" PORT="gpio_io_i"/>
           </CONNECTIONS>
         </PORT>
       </PORTS>
