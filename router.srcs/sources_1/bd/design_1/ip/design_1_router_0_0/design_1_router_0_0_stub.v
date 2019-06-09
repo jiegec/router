@@ -1,7 +1,7 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Sun Jun  9 17:01:33 2019
+// Date        : Sun Jun  9 19:40:45 2019
 // Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 // Command     : write_verilog -force -mode synth_stub
 //               /home/oslab/router/router.srcs/sources_1/bd/design_1/ip/design_1_router_0_0/design_1_router_0_0_stub.v
@@ -28,14 +28,14 @@ module design_1_router_0_0(clk, clk_125M, clk_200M, reset_n, axis_clk,
   input clk_200M;
   input reset_n;
   input axis_clk;
-  output [7:0]axis_rxd_tdata;
-  output axis_rxd_tlast;
-  input axis_rxd_tready;
-  output axis_rxd_tvalid;
-  input [7:0]axis_txd_tdata;
-  input axis_txd_tlast;
-  output axis_txd_tready;
-  input axis_txd_tvalid;
+  input [7:0]axis_rxd_tdata;
+  input axis_rxd_tlast;
+  output axis_rxd_tready;
+  input axis_rxd_tvalid;
+  output [7:0]axis_txd_tdata;
+  output axis_txd_tlast;
+  input axis_txd_tready;
+  output axis_txd_tvalid;
   input [3:0]rgmii1_rd;
   input rgmii1_rx_ctl;
   input rgmii1_rxc;

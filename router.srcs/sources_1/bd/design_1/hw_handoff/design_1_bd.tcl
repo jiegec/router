@@ -408,7 +408,7 @@ proc create_root_design { parentCell } {
  ] $ps7_0_axi_periph
 
   # Create instance: router_0, and set properties
-  set router_0 [ create_bd_cell -type ip -vlnv me.jiegec:ip:router:1.2 router_0 ]
+  set router_0 [ create_bd_cell -type ip -vlnv me.jiegec:ip:router:1.3 router_0 ]
 
   # Create instance: rst_ps7_0_142M, and set properties
   set rst_ps7_0_142M [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 rst_ps7_0_142M ]
@@ -437,7 +437,7 @@ proc create_root_design { parentCell } {
 
   # Create interface connections
   connect_bd_intf_net -intf_net axi_bram_ctrl_0_BRAM_PORTA [get_bd_intf_pins axi_bram_ctrl_0/BRAM_PORTA] [get_bd_intf_pins router_0/routing_table]
-  connect_bd_intf_net -intf_net axi_fifo_mm_s_0_AXI_STR_TXD [get_bd_intf_pins axi_fifo_mm_s_0/AXI_STR_TXD] [get_bd_intf_pins router_0/axis_txd]
+  connect_bd_intf_net -intf_net axi_fifo_mm_s_0_AXI_STR_TXD [get_bd_intf_pins axi_fifo_mm_s_0/AXI_STR_TXD] [get_bd_intf_pins router_0/axis_rxd]
   connect_bd_intf_net -intf_net axi_gpio_2_GPIO [get_bd_intf_ports hdmi_rstn] [get_bd_intf_pins axi_gpio_2/GPIO]
   connect_bd_intf_net -intf_net axi_smc_M00_AXI [get_bd_intf_pins axi_smc/M00_AXI] [get_bd_intf_pins processing_system7_0/S_AXI_HP0]
   connect_bd_intf_net -intf_net axi_vdma_0_M_AXIS_MM2S [get_bd_intf_pins axi_vdma_0/M_AXIS_MM2S] [get_bd_intf_pins v_axi4s_vid_out_0/video_in]
@@ -454,7 +454,7 @@ proc create_root_design { parentCell } {
   connect_bd_intf_net -intf_net ps7_0_axi_periph_M05_AXI [get_bd_intf_pins ps7_0_axi_periph/M05_AXI] [get_bd_intf_pins v_tc_0/ctrl]
   connect_bd_intf_net -intf_net ps7_0_axi_periph_M06_AXI [get_bd_intf_pins axi_dynclk_0/s00_axi] [get_bd_intf_pins ps7_0_axi_periph/M06_AXI]
   connect_bd_intf_net -intf_net ps7_0_axi_periph_M07_AXI [get_bd_intf_pins axi_gpio_2/S_AXI] [get_bd_intf_pins ps7_0_axi_periph/M07_AXI]
-  connect_bd_intf_net -intf_net router_0_axis_rxd [get_bd_intf_pins axi_fifo_mm_s_0/AXI_STR_RXD] [get_bd_intf_pins router_0/axis_rxd]
+  connect_bd_intf_net -intf_net router_0_axis_txd [get_bd_intf_pins axi_fifo_mm_s_0/AXI_STR_RXD] [get_bd_intf_pins router_0/axis_txd]
   connect_bd_intf_net -intf_net router_0_rgmii1 [get_bd_intf_ports rgmii1] [get_bd_intf_pins router_0/rgmii1]
   connect_bd_intf_net -intf_net router_0_rgmii2 [get_bd_intf_ports rgmii2] [get_bd_intf_pins router_0/rgmii2]
   connect_bd_intf_net -intf_net router_0_rgmii3 [get_bd_intf_ports rgmii3] [get_bd_intf_pins router_0/rgmii3]

@@ -550,7 +550,7 @@
       </spirit:componentInstance>
       <spirit:componentInstance>
         <spirit:instanceName>router_0</spirit:instanceName>
-        <spirit:componentRef spirit:library="ip" spirit:name="router" spirit:vendor="me.jiegec" spirit:version="1.2"/>
+        <spirit:componentRef spirit:library="ip" spirit:name="router" spirit:vendor="me.jiegec" spirit:version="1.3"/>
         <spirit:configurableElementValues>
           <spirit:configurableElementValue spirit:referenceId="bd:xciName">design_1_router_0_0</spirit:configurableElementValue>
         </spirit:configurableElementValues>
@@ -623,19 +623,19 @@
         <spirit:activeInterface spirit:busRef="S_AXI" spirit:componentRef="axi_gpio_2"/>
       </spirit:interconnection>
       <spirit:interconnection>
-        <spirit:name>axi_fifo_mm_s_0_AXI_STR_TXD</spirit:name>
-        <spirit:activeInterface spirit:busRef="AXI_STR_TXD" spirit:componentRef="axi_fifo_mm_s_0"/>
-        <spirit:activeInterface spirit:busRef="axis_txd" spirit:componentRef="router_0"/>
-      </spirit:interconnection>
-      <spirit:interconnection>
-        <spirit:name>router_0_axis_rxd</spirit:name>
-        <spirit:activeInterface spirit:busRef="AXI_STR_RXD" spirit:componentRef="axi_fifo_mm_s_0"/>
-        <spirit:activeInterface spirit:busRef="axis_rxd" spirit:componentRef="router_0"/>
-      </spirit:interconnection>
-      <spirit:interconnection>
         <spirit:name>axi_bram_ctrl_0_BRAM_PORTA</spirit:name>
         <spirit:activeInterface spirit:busRef="BRAM_PORTA" spirit:componentRef="axi_bram_ctrl_0"/>
         <spirit:activeInterface spirit:busRef="routing_table" spirit:componentRef="router_0"/>
+      </spirit:interconnection>
+      <spirit:interconnection>
+        <spirit:name>router_0_axis_txd</spirit:name>
+        <spirit:activeInterface spirit:busRef="AXI_STR_RXD" spirit:componentRef="axi_fifo_mm_s_0"/>
+        <spirit:activeInterface spirit:busRef="axis_txd" spirit:componentRef="router_0"/>
+      </spirit:interconnection>
+      <spirit:interconnection>
+        <spirit:name>axi_fifo_mm_s_0_AXI_STR_TXD</spirit:name>
+        <spirit:activeInterface spirit:busRef="AXI_STR_TXD" spirit:componentRef="axi_fifo_mm_s_0"/>
+        <spirit:activeInterface spirit:busRef="axis_rxd" spirit:componentRef="router_0"/>
       </spirit:interconnection>
     </spirit:interconnections>
     <spirit:adHocConnections>
@@ -747,6 +747,8 @@
         <spirit:internalPortReference spirit:componentRef="axi_dynclk_0" spirit:portRef="s00_axi_aclk"/>
         <spirit:internalPortReference spirit:componentRef="axi_dynclk_0" spirit:portRef="REF_CLK_I"/>
         <spirit:internalPortReference spirit:componentRef="axi_gpio_2" spirit:portRef="s_axi_aclk"/>
+        <spirit:internalPortReference spirit:componentRef="router_0" spirit:portRef="clk"/>
+        <spirit:internalPortReference spirit:componentRef="router_0" spirit:portRef="axis_clk"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="S00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M00_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="ACLK"/>
@@ -757,8 +759,6 @@
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M05_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M06_ACLK"/>
         <spirit:internalPortReference spirit:componentRef="ps7_0_axi_periph" spirit:portRef="M07_ACLK"/>
-        <spirit:internalPortReference spirit:componentRef="router_0" spirit:portRef="clk"/>
-        <spirit:internalPortReference spirit:componentRef="router_0" spirit:portRef="axis_clk"/>
       </spirit:adHocConnection>
       <spirit:adHocConnection>
         <spirit:name>processing_system7_0_FCLK_CLK3</spirit:name>

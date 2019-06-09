@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
--- Date        : Sun Jun  9 17:01:33 2019
+-- Date        : Sun Jun  9 19:40:45 2019
 -- Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 -- Command     : write_vhdl -force -mode synth_stub
 --               /home/oslab/router/router.srcs/sources_1/bd/design_1/ip/design_1_router_0_0/design_1_router_0_0_stub.vhdl
@@ -19,14 +19,14 @@ entity design_1_router_0_0 is
     clk_200M : in STD_LOGIC;
     reset_n : in STD_LOGIC;
     axis_clk : in STD_LOGIC;
-    axis_rxd_tdata : out STD_LOGIC_VECTOR ( 7 downto 0 );
-    axis_rxd_tlast : out STD_LOGIC;
-    axis_rxd_tready : in STD_LOGIC;
-    axis_rxd_tvalid : out STD_LOGIC;
-    axis_txd_tdata : in STD_LOGIC_VECTOR ( 7 downto 0 );
-    axis_txd_tlast : in STD_LOGIC;
-    axis_txd_tready : out STD_LOGIC;
-    axis_txd_tvalid : in STD_LOGIC;
+    axis_rxd_tdata : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    axis_rxd_tlast : in STD_LOGIC;
+    axis_rxd_tready : out STD_LOGIC;
+    axis_rxd_tvalid : in STD_LOGIC;
+    axis_txd_tdata : out STD_LOGIC_VECTOR ( 7 downto 0 );
+    axis_txd_tlast : out STD_LOGIC;
+    axis_txd_tready : in STD_LOGIC;
+    axis_txd_tvalid : out STD_LOGIC;
     rgmii1_rd : in STD_LOGIC_VECTOR ( 3 downto 0 );
     rgmii1_rx_ctl : in STD_LOGIC;
     rgmii1_rxc : in STD_LOGIC;

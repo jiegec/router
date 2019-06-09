@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Sun Jun  9 18:14:11 2019
+//Date        : Sun Jun  9 19:36:01 2019
 //Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -103,30 +103,30 @@ module design_1
   output hdmi_out_vs;
   (* X_INTERFACE_INFO = "xilinx.com:interface:gpio:1.0 hdmi_rstn TRI_O" *) output [0:0]hdmi_rstn_tri_o;
   (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.RESET_N_IN RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.RESET_N_IN, POLARITY ACTIVE_LOW" *) input reset_n_in;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 " *) input [3:0]rgmii1_rd;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 " *) input rgmii1_rx_ctl;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 " *) input rgmii1_rxc;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 " *) output [3:0]rgmii1_td;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 " *) output rgmii1_tx_ctl;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 " *) output rgmii1_txc;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 " *) input [3:0]rgmii2_rd;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 " *) input rgmii2_rx_ctl;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 " *) input rgmii2_rxc;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 " *) output [3:0]rgmii2_td;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 " *) output rgmii2_tx_ctl;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 " *) output rgmii2_txc;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 " *) input [3:0]rgmii3_rd;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 " *) input rgmii3_rx_ctl;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 " *) input rgmii3_rxc;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 " *) output [3:0]rgmii3_td;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 " *) output rgmii3_tx_ctl;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 " *) output rgmii3_txc;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 " *) input [3:0]rgmii4_rd;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 " *) input rgmii4_rx_ctl;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 " *) input rgmii4_rxc;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 " *) output [3:0]rgmii4_td;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 " *) output rgmii4_tx_ctl;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 " *) output rgmii4_txc;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 RD" *) input [3:0]rgmii1_rd;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 RX_CTL" *) input rgmii1_rx_ctl;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 RXC" *) input rgmii1_rxc;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 TD" *) output [3:0]rgmii1_td;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 TX_CTL" *) output rgmii1_tx_ctl;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 TXC" *) output rgmii1_txc;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 RD" *) input [3:0]rgmii2_rd;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 RX_CTL" *) input rgmii2_rx_ctl;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 RXC" *) input rgmii2_rxc;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 TD" *) output [3:0]rgmii2_td;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 TX_CTL" *) output rgmii2_tx_ctl;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii2 TXC" *) output rgmii2_txc;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 RD" *) input [3:0]rgmii3_rd;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 RX_CTL" *) input rgmii3_rx_ctl;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 RXC" *) input rgmii3_rxc;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 TD" *) output [3:0]rgmii3_td;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 TX_CTL" *) output rgmii3_tx_ctl;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii3 TXC" *) output rgmii3_txc;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 RD" *) input [3:0]rgmii4_rd;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 RX_CTL" *) input rgmii4_rx_ctl;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 RXC" *) input rgmii4_rxc;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 TD" *) output [3:0]rgmii4_td;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 TX_CTL" *) output rgmii4_tx_ctl;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii4 TXC" *) output rgmii4_txc;
 
   wire [13:0]axi_bram_ctrl_0_BRAM_PORTA_ADDR;
   wire axi_bram_ctrl_0_BRAM_PORTA_CLK;
@@ -398,10 +398,10 @@ module design_1
   wire [3:0]ps7_0_axi_periph_M07_AXI_WSTRB;
   wire ps7_0_axi_periph_M07_AXI_WVALID;
   wire reset_n_0_1;
-  wire [7:0]router_0_axis_rxd_TDATA;
-  wire router_0_axis_rxd_TLAST;
-  wire router_0_axis_rxd_TREADY;
-  wire router_0_axis_rxd_TVALID;
+  wire [7:0]router_0_axis_txd_TDATA;
+  wire router_0_axis_txd_TLAST;
+  wire router_0_axis_txd_TREADY;
+  wire router_0_axis_txd_TVALID;
   wire [3:0]router_0_rgmii1_RD;
   wire router_0_rgmii1_RXC;
   wire router_0_rgmii1_RX_CTL;
@@ -548,10 +548,10 @@ module design_1
         .s00_axi_wstrb(ps7_0_axi_periph_M06_AXI_WSTRB),
         .s00_axi_wvalid(ps7_0_axi_periph_M06_AXI_WVALID));
   design_1_axi_fifo_mm_s_0_0 axi_fifo_mm_s_0
-       (.axi_str_rxd_tdata({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,router_0_axis_rxd_TDATA}),
-        .axi_str_rxd_tlast(router_0_axis_rxd_TLAST),
-        .axi_str_rxd_tready(router_0_axis_rxd_TREADY),
-        .axi_str_rxd_tvalid(router_0_axis_rxd_TVALID),
+       (.axi_str_rxd_tdata({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,router_0_axis_txd_TDATA}),
+        .axi_str_rxd_tlast(router_0_axis_txd_TLAST),
+        .axi_str_rxd_tready(router_0_axis_txd_TREADY),
+        .axi_str_rxd_tvalid(router_0_axis_txd_TVALID),
         .axi_str_txd_tdata(axi_fifo_mm_s_0_AXI_STR_TXD_TDATA),
         .axi_str_txd_tlast(axi_fifo_mm_s_0_AXI_STR_TXD_TLAST),
         .axi_str_txd_tready(axi_fifo_mm_s_0_AXI_STR_TXD_TREADY),
@@ -1035,14 +1035,14 @@ module design_1
         .S00_AXI_wvalid(processing_system7_0_M_AXI_GP0_WVALID));
   design_1_router_0_0 router_0
        (.axis_clk(processing_system7_0_FCLK_CLK0),
-        .axis_rxd_tdata(router_0_axis_rxd_TDATA),
-        .axis_rxd_tlast(router_0_axis_rxd_TLAST),
-        .axis_rxd_tready(router_0_axis_rxd_TREADY),
-        .axis_rxd_tvalid(router_0_axis_rxd_TVALID),
-        .axis_txd_tdata(axi_fifo_mm_s_0_AXI_STR_TXD_TDATA[7:0]),
-        .axis_txd_tlast(axi_fifo_mm_s_0_AXI_STR_TXD_TLAST),
-        .axis_txd_tready(axi_fifo_mm_s_0_AXI_STR_TXD_TREADY),
-        .axis_txd_tvalid(axi_fifo_mm_s_0_AXI_STR_TXD_TVALID),
+        .axis_rxd_tdata(axi_fifo_mm_s_0_AXI_STR_TXD_TDATA[7:0]),
+        .axis_rxd_tlast(axi_fifo_mm_s_0_AXI_STR_TXD_TLAST),
+        .axis_rxd_tready(axi_fifo_mm_s_0_AXI_STR_TXD_TREADY),
+        .axis_rxd_tvalid(axi_fifo_mm_s_0_AXI_STR_TXD_TVALID),
+        .axis_txd_tdata(router_0_axis_txd_TDATA),
+        .axis_txd_tlast(router_0_axis_txd_TLAST),
+        .axis_txd_tready(router_0_axis_txd_TREADY),
+        .axis_txd_tvalid(router_0_axis_txd_TVALID),
         .clk(processing_system7_0_FCLK_CLK0),
         .clk_125M(processing_system7_0_FCLK_CLK3),
         .clk_200M(processing_system7_0_FCLK_CLK4),

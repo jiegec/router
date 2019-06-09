@@ -47,8 +47,8 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: me.jiegec:ip:router:1.2
-// IP Revision: 7
+// IP VLNV: me.jiegec:ip:router:1.3
+// IP Revision: 9
 
 `timescale 1ns/1ps
 
@@ -120,23 +120,23 @@ input wire reset_n;
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 axis_clk CLK" *)
 input wire axis_clk;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 axis_rxd TDATA" *)
-output wire [7 : 0] axis_rxd_tdata;
+input wire [7 : 0] axis_rxd_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 axis_rxd TLAST" *)
-output wire axis_rxd_tlast;
+input wire axis_rxd_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 axis_rxd TREADY" *)
-input wire axis_rxd_tready;
+output wire axis_rxd_tready;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME axis_rxd, TDATA_NUM_BYTES 1, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 axis_rxd TVALID" *)
-output wire axis_rxd_tvalid;
+input wire axis_rxd_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 axis_txd TDATA" *)
-input wire [7 : 0] axis_txd_tdata;
+output wire [7 : 0] axis_txd_tdata;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 axis_txd TLAST" *)
-input wire axis_txd_tlast;
+output wire axis_txd_tlast;
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 axis_txd TREADY" *)
-output wire axis_txd_tready;
+input wire axis_txd_tready;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME axis_txd, TDATA_NUM_BYTES 1, TDEST_WIDTH 0, TID_WIDTH 0, TUSER_WIDTH 0, HAS_TREADY 1, HAS_TSTRB 0, HAS_TKEEP 0, HAS_TLAST 1, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, LAYERED_METADATA undef" *)
 (* X_INTERFACE_INFO = "xilinx.com:interface:axis:1.0 axis_txd TVALID" *)
-input wire axis_txd_tvalid;
+output wire axis_txd_tvalid;
 (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 RD" *)
 input wire [3 : 0] rgmii1_rd;
 (* X_INTERFACE_INFO = "xilinx.com:interface:rgmii:1.0 rgmii1 RX_CTL" *)
@@ -189,7 +189,7 @@ output wire [255 : 0] stats_rx_packets;
 output wire [255 : 0] stats_rx_bytes;
 output wire [255 : 0] stats_tx_packets;
 output wire [255 : 0] stats_tx_bytes;
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME os_clk, ASSOCIATED_RESET os_rst, FREQ_HZ 100000000, PHASE 0.000" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME os_clk, ASSOCIATED_RESET os_rst, ASSOCIATED_BUSIF routing_table, FREQ_HZ 100000000, PHASE 0.000" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 os_clk CLK, xilinx.com:interface:bram:1.0 routing_table CLK" *)
 input wire os_clk;
 (* X_INTERFACE_INFO = "xilinx.com:interface:bram:1.0 routing_table ADDR" *)
