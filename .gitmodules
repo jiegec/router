@@ -1,0 +1,3 @@
+[submodule "repo/naiverouter"]
+	path = repo/naiverouter
+	url = git@github.com:jiegec/naiverouter.git
