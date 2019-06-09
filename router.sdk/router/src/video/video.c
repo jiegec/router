@@ -289,6 +289,15 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
                 pointEnd = (pointEnd + 1) % pointCount;
             }
         }
+        if(flow[4+i]) {
+            // TX
+            if (pointEnd + 1 != pointBegin) {
+                points[pointEnd].port = i;
+                points[pointEnd].rx = 0;
+                points[pointEnd].y = 0;
+                pointEnd = (pointEnd + 1) % pointCount;
+            }
+        }
     }
 
 
@@ -320,10 +329,7 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
         sprintIP(routingTable[i].nexthop, nexthopBuffer);
         sprintf(rowBuffer, "%s/%d via %s metric %ld port %ld timer %ld", ipBuffer, prefix, nexthopBuffer, routingTable[i].metric, routingTable[i].port, time - routingTable[i].updateTime);
 
-        for (int j = 0;j < strlen(rowBuffer);j++) {
-            int x = fontWidth * j;
-            renderChar(x, y, rowBuffer[j]);
-        }
+        renderText(0, y, rowBuffer);
     }
 
     int rectWidth = 670;
@@ -331,18 +337,19 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
     int beginX = (actualWidth - 4 * rj45Width - (4 - 1) * spacing) / 2;
     int arrowSize = 10;
     int rj45Y = 400;
+    int routerTop = 200;
     int routerBot = 300;
     int pointRadius = 2;
     int pointOffset = 5;
 
-    renderRectangle((actualWidth - rectWidth) / 2, 200, rectWidth, 100);
-    renderTextCenter(actualWidth / 2, 250, "Router");
+    renderRectangle((actualWidth - rectWidth) / 2, routerTop, rectWidth, routerBot - routerTop - 3);
+    renderTextCenter(actualWidth / 2, (routerTop + routerBot) / 2, "Router");
 
     for (int i = pointBegin;i != pointEnd;i = (i + 1) % pointCount) {
         if (points[i].y >= rj45Y - routerBot - arrowSize - pointOffset) {
             pointBegin = (i + 1) % pointCount;
         } else {
-            points[i].y += 5;
+            points[i].y += 3;
         }
     }
 
@@ -355,8 +362,13 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
         int rxX = (curX * 5 + endX * 4) / 9;
         int txX = (curX * 4 + endX * 5) / 9;
 
-        for (int i = routerBot + pointOffset;i < rj45Y;i++) {
+        for (int i = routerBot;i < rj45Y;i++) {
             for (int j = rxX - pointOffset - pointRadius;j <= rxX - pointOffset + pointRadius;j++) {
+                actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 0] = 255;
+                actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 1] = 255;
+                actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 2] = 255;
+            }
+            for (int j = txX + pointOffset - pointRadius;j <= txX + pointOffset + pointRadius;j++) {
                 actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 0] = 255;
                 actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 1] = 255;
                 actualFrame[j * BYTES_PER_PIXEL + i * actualStride + 2] = 255;

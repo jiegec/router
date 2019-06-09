@@ -63,6 +63,8 @@
 XLlFifo fifoInstance;
 XGpio gpio1Instance;
 XGpio gpio2Instance;
+XGpio gpio3Instance;
+XGpio gpio4Instance;
 XScuGic gicInstance;
 XScuTimer timerInstance;
 XBram bramInstance;
@@ -70,6 +72,8 @@ XBram bramInstance;
 XLlFifo_Config *fifoConfig;
 XGpio_Config *gpio1Config;
 XGpio_Config *gpio2Config;
+XGpio_Config *gpio3Config;
+XGpio_Config *gpio4Config;
 XScuGic_Config *gicConfig;
 XScuTimer_Config *timerConfig;
 XBram_Config *bramConfig;
@@ -408,25 +412,45 @@ void printCurrentRoutingTable() {
 
 char statsBuffer[512];
 void timerInterruptHandler(void *data) {
-    static u32 lastChan11 = 0, lastChan12 = 0, lastChan21 = 0, lastChan22 = 0;
-    static u32 lastTickChan11 = 0, lastTickChan12 = 0, lastTickChan21 = 0, lastTickChan22 = 0;
+    static u32 lastChan11 = 0, lastChan12 = 0, lastChan21 = 0, lastChan22 = 0, lastChan31 = 0, lastChan32 = 0, lastChan41 = 0, lastChan42 = 0;
+    static u32 curChan11 = 0, curChan12 = 0, curChan21 = 0, curChan22 = 0, curChan31 = 0, curChan32 = 0, curChan41 = 0, curChan42 = 0;
+    static u32 lastTickChan11 = 0, lastTickChan12 = 0, lastTickChan21 = 0, lastTickChan22 = 0, lastTickChan31 = 0, lastTickChan32 = 0, lastTickChan41 = 0, lastTickChan42 = 0;
+
     u32 chan11 = XGpio_DiscreteRead(&gpio1Instance, 1);
     u32 chan12 = XGpio_DiscreteRead(&gpio1Instance, 2);
     u32 chan21 = XGpio_DiscreteRead(&gpio2Instance, 1);
     u32 chan22 = XGpio_DiscreteRead(&gpio2Instance, 2);
-    snprintf(statsBuffer, sizeof(statsBuffer), "%lu: Rx %lu, %lu, %lu, %lu packets/s", time, chan11 - lastChan11, chan12 - lastChan12, chan21 - lastChan21, chan22 - lastChan22);
-    printf("%s\n", statsBuffer);
+    u32 chan31 = XGpio_DiscreteRead(&gpio3Instance, 1);
+    u32 chan32 = XGpio_DiscreteRead(&gpio3Instance, 2);
+    u32 chan41 = XGpio_DiscreteRead(&gpio4Instance, 1);
+    u32 chan42 = XGpio_DiscreteRead(&gpio4Instance, 2);
 
+    snprintf(statsBuffer, sizeof(statsBuffer), "%lu: Rx %lu, %lu, %lu, %lu packets/s, Tx %lu, %lu, %lu, %lu packets/s",
+             time, curChan11 - lastChan11, curChan12 - lastChan12, curChan21 - lastChan21, curChan22 - lastChan22,
+             curChan31 - lastChan31, curChan32 - lastChan32, curChan41 - lastChan41, curChan42 - lastChan42);
 
     tick ++;
-    if ((tick % 10) == 0) {
-        // 100ms tick
+    if ((tick % 20) == 0) {
+        // 30FPS
         time ++;
 
-        lastChan11 = chan11;
-        lastChan12 = chan12;
-        lastChan21 = chan21;
-        lastChan22 = chan22;
+        lastChan11 = curChan11;
+        lastChan12 = curChan12;
+        lastChan21 = curChan21;
+        lastChan22 = curChan22;
+        lastChan31 = curChan31;
+        lastChan32 = curChan32;
+        lastChan41 = curChan41;
+        lastChan42 = curChan42;
+
+        curChan11 = chan11;
+        curChan12 = chan12;
+        curChan21 = chan21;
+        curChan22 = chan22;
+        curChan31 = chan31;
+        curChan32 = chan32;
+        curChan41 = chan41;
+        curChan42 = chan42;
 
         for (int i = 0;i < routingTableSize;i++) {
             if ((time - routingTable[i].updateTime) > INVALID_TIME) {
@@ -445,7 +469,10 @@ void timerInterruptHandler(void *data) {
         printCurrentRoutingTable();
     }
 
-    int flow[] = {chan11 - lastTickChan11, chan12 - lastTickChan12, chan21 - lastTickChan21, chan22 - lastTickChan22};
+    int flow[] = {
+        chan11 - lastTickChan11, chan12 - lastTickChan12, chan21 - lastTickChan21, chan22 - lastTickChan22,
+        chan31 - lastTickChan31, chan32 - lastTickChan32, chan41 - lastTickChan41, chan42 - lastTickChan42
+    };
 
     renderData(routingTable, routingTableSize, statsBuffer, time, flow);
 
@@ -453,6 +480,10 @@ void timerInterruptHandler(void *data) {
     lastTickChan12 = chan12;
     lastTickChan21 = chan21;
     lastTickChan22 = chan22;
+    lastTickChan31 = chan31;
+    lastTickChan32 = chan32;
+    lastTickChan41 = chan41;
+    lastTickChan42 = chan42;
 }
 
 int main()
@@ -481,7 +512,6 @@ int main()
         printf("No config found\n");
         goto fail;
     }
-
     XGpio_CfgInitialize(&gpio1Instance, gpio1Config, gpio1Config->BaseAddress);
 
     gpio2Config = XGpio_LookupConfig(XPAR_AXI_GPIO_1_DEVICE_ID);
@@ -489,8 +519,21 @@ int main()
         printf("No config found\n");
         goto fail;
     }
-
     XGpio_CfgInitialize(&gpio2Instance, gpio2Config, gpio2Config->BaseAddress);
+
+    gpio3Config = XGpio_LookupConfig(XPAR_AXI_GPIO_3_DEVICE_ID);
+    if (!gpio3Config) {
+        printf("No config found\n");
+        goto fail;
+    }
+    XGpio_CfgInitialize(&gpio3Instance, gpio3Config, gpio3Config->BaseAddress);
+
+    gpio4Config = XGpio_LookupConfig(XPAR_AXI_GPIO_4_DEVICE_ID);
+    if (!gpio4Config) {
+        printf("No config found\n");
+        goto fail;
+    }
+    XGpio_CfgInitialize(&gpio4Instance, gpio4Config, gpio4Config->BaseAddress);
 
     bramConfig = XBram_LookupConfig(XPAR_BRAM_0_DEVICE_ID);
     if (!bramConfig) {
@@ -509,7 +552,7 @@ int main()
     XScuTimer_CfgInitialize(&timerInstance, timerConfig, timerConfig->BaseAddr);
     XScuTimer_SelfTest(&timerInstance);
     XScuTimer_EnableAutoReload(&timerInstance);
-    XScuTimer_LoadTimer(&timerInstance, 0x13D92D3F / 10); // 100ms
+    XScuTimer_LoadTimer(&timerInstance, 0x13D92D3F / 20); // 20FPS
     XScuTimer_Start(&timerInstance);
 
     gicConfig = XScuGic_LookupConfig(XPAR_PS7_SCUGIC_0_DEVICE_ID);
