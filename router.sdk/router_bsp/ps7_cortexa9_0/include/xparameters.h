@@ -27,6 +27,7 @@
 #define PLATFORM_ZYNQ
  
 /* Definitions for sleep timer configuration */
+#define XSLEEP_TIMER_IS_DEFAULT_TIMER
  
  
 /******************************************************************/
@@ -214,6 +215,11 @@
 /******************************************************************/
 
 
+/* Definitions for peripheral AXI_DYNCLK_0 */
+#define XPAR_AXI_DYNCLK_0_BASEADDR 0x43C20000
+#define XPAR_AXI_DYNCLK_0_HIGHADDR 0x43C2FFFF
+
+
 /* Definitions for peripheral PS7_AFI_0 */
 #define XPAR_PS7_AFI_0_S_AXI_BASEADDR 0xF8008000
 #define XPAR_PS7_AFI_0_S_AXI_HIGHADDR 0xF8008FFF
@@ -299,11 +305,6 @@
 /* Definitions for peripheral PS7_SLCR_0 */
 #define XPAR_PS7_SLCR_0_S_AXI_BASEADDR 0xF8000000
 #define XPAR_PS7_SLCR_0_S_AXI_HIGHADDR 0xF8000FFF
-
-
-/* Definitions for peripheral AXI_DYNCLK_0 */
-#define XPAR_AXI_DYNCLK_0_BASEADDR 0x43C20000
-#define XPAR_AXI_DYNCLK_0_HIGHADDR 0x43C2FFFF
 
 
 /******************************************************************/
