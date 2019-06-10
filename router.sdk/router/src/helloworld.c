@@ -65,6 +65,10 @@ XGpio gpio1Instance;
 XGpio gpio2Instance;
 XGpio gpio3Instance;
 XGpio gpio4Instance;
+XGpio gpio5Instance;
+XGpio gpio6Instance;
+XGpio gpio7Instance;
+XGpio gpio8Instance;
 XScuGic gicInstance;
 XScuTimer timerInstance;
 XBram bramInstance;
@@ -74,6 +78,10 @@ XGpio_Config *gpio1Config;
 XGpio_Config *gpio2Config;
 XGpio_Config *gpio3Config;
 XGpio_Config *gpio4Config;
+XGpio_Config *gpio5Config;
+XGpio_Config *gpio6Config;
+XGpio_Config *gpio7Config;
+XGpio_Config *gpio8Config;
 XScuGic_Config *gicConfig;
 XScuTimer_Config *timerConfig;
 XBram_Config *bramConfig;
@@ -205,8 +213,6 @@ void handleEthernetFrame(u8 port, u8 *data) {
                 printf("Got RIP response from port %d:\n", port);
                 u16 totalLength = bswap16(ip->totalLength);
                 int totalRoutes = (totalLength - 20 - 8 - 4) / 20;
-                // Avoid racing
-                XScuTimer_DisableInterrupt(&timerInstance);
                 for (int routes = 0;routes < totalRoutes;routes++) {
                     u32 ip_net = bswap32(ip->payload.udp.payload.rip.routes[routes].ip);
                     u32 netmask = bswap32(ip->payload.udp.payload.rip.routes[routes].netmask);
@@ -259,8 +265,6 @@ void handleEthernetFrame(u8 port, u8 *data) {
                     }
                 }
 
-                // avoid racing
-                XScuTimer_EnableInterrupt(&timerInstance);
             }
         }
     }
@@ -292,7 +296,11 @@ void sendRIPReponse() {
                 ip->payload.udp.payload.rip.routes[routes].ip = bswap32(routingTable[r].ip);
                 ip->payload.udp.payload.rip.routes[routes].netmask = bswap32(routingTable[r].netmask);
                 ip->payload.udp.payload.rip.routes[routes].nexthop = bswap32(0);
-                ip->payload.udp.payload.rip.routes[routes].metric = bswap32(routingTable[r].metric);
+                if (routingTable[r].metric >= 16) {
+                    ip->payload.udp.payload.rip.routes[routes].metric = bswap32(16);
+                } else {
+                    ip->payload.udp.payload.rip.routes[routes].metric = bswap32(routingTable[r].metric);
+                }
                 routes++;
             }
         }
@@ -323,7 +331,6 @@ void sendRIPReponse() {
         ip->payload.udp.payload.rip.command = 2;
         ip->payload.udp.payload.rip.version = 2;
         ip->payload.udp.payload.rip.zero = 0;
-
 
         fillIpChecksum(ip);
         sendToFifo(port, buffer, totalLength + 14);
@@ -412,9 +419,14 @@ void printCurrentRoutingTable() {
 
 char statsBuffer[512];
 void timerInterruptHandler(void *data) {
+    // packets
     static u32 lastChan11 = 0, lastChan12 = 0, lastChan21 = 0, lastChan22 = 0, lastChan31 = 0, lastChan32 = 0, lastChan41 = 0, lastChan42 = 0;
     static u32 curChan11 = 0, curChan12 = 0, curChan21 = 0, curChan22 = 0, curChan31 = 0, curChan32 = 0, curChan41 = 0, curChan42 = 0;
     static u32 lastTickChan11 = 0, lastTickChan12 = 0, lastTickChan21 = 0, lastTickChan22 = 0, lastTickChan31 = 0, lastTickChan32 = 0, lastTickChan41 = 0, lastTickChan42 = 0;
+
+    // bytes
+    static u32 lastChan51 = 0, lastChan52 = 0, lastChan61 = 0, lastChan62 = 0, lastChan71 = 0, lastChan72 = 0, lastChan81 = 0, lastChan82 = 0;
+    static u32 curChan51 = 0, curChan52 = 0, curChan61 = 0, curChan62 = 0, curChan71 = 0, curChan72 = 0, curChan81 = 0, curChan82 = 0;
 
     u32 chan11 = XGpio_DiscreteRead(&gpio1Instance, 1);
     u32 chan12 = XGpio_DiscreteRead(&gpio1Instance, 2);
@@ -424,14 +436,22 @@ void timerInterruptHandler(void *data) {
     u32 chan32 = XGpio_DiscreteRead(&gpio3Instance, 2);
     u32 chan41 = XGpio_DiscreteRead(&gpio4Instance, 1);
     u32 chan42 = XGpio_DiscreteRead(&gpio4Instance, 2);
+    u32 chan51 = XGpio_DiscreteRead(&gpio5Instance, 1);
+    u32 chan52 = XGpio_DiscreteRead(&gpio5Instance, 2);
+    u32 chan61 = XGpio_DiscreteRead(&gpio6Instance, 1);
+    u32 chan62 = XGpio_DiscreteRead(&gpio6Instance, 2);
+    u32 chan71 = XGpio_DiscreteRead(&gpio7Instance, 1);
+    u32 chan72 = XGpio_DiscreteRead(&gpio7Instance, 2);
+    u32 chan81 = XGpio_DiscreteRead(&gpio8Instance, 1);
+    u32 chan82 = XGpio_DiscreteRead(&gpio8Instance, 2);
 
     snprintf(statsBuffer, sizeof(statsBuffer), "%lu: Rx %lu, %lu, %lu, %lu packets/s, Tx %lu, %lu, %lu, %lu packets/s",
              time, curChan11 - lastChan11, curChan12 - lastChan12, curChan21 - lastChan21, curChan22 - lastChan22,
              curChan31 - lastChan31, curChan32 - lastChan32, curChan41 - lastChan41, curChan42 - lastChan42);
 
     tick ++;
-    if ((tick % 20) == 0) {
-        // 30FPS
+    if ((tick % 10) == 0) {
+        // 10FPS
         time ++;
 
         lastChan11 = curChan11;
@@ -442,6 +462,14 @@ void timerInterruptHandler(void *data) {
         lastChan32 = curChan32;
         lastChan41 = curChan41;
         lastChan42 = curChan42;
+        lastChan51 = curChan51;
+        lastChan52 = curChan52;
+        lastChan61 = curChan61;
+        lastChan62 = curChan62;
+        lastChan71 = curChan71;
+        lastChan72 = curChan72;
+        lastChan81 = curChan81;
+        lastChan82 = curChan82;
 
         curChan11 = chan11;
         curChan12 = chan12;
@@ -451,6 +479,14 @@ void timerInterruptHandler(void *data) {
         curChan32 = chan32;
         curChan41 = chan41;
         curChan42 = chan42;
+        curChan51 = chan51;
+        curChan52 = chan52;
+        curChan61 = chan61;
+        curChan62 = chan62;
+        curChan71 = chan71;
+        curChan72 = chan72;
+        curChan81 = chan81;
+        curChan82 = chan82;
 
         for (int i = 0;i < routingTableSize;i++) {
             if ((time - routingTable[i].updateTime) > INVALID_TIME) {
@@ -469,12 +505,17 @@ void timerInterruptHandler(void *data) {
         printCurrentRoutingTable();
     }
 
-    int flow[] = {
+    int packets[] = {
         chan11 - lastTickChan11, chan12 - lastTickChan12, chan21 - lastTickChan21, chan22 - lastTickChan22,
         chan31 - lastTickChan31, chan32 - lastTickChan32, chan41 - lastTickChan41, chan42 - lastTickChan42
     };
 
-    renderData(routingTable, routingTableSize, statsBuffer, time, flow);
+    int bytes[] = {
+        chan51 - lastChan51, chan52 - lastChan52, chan61 - lastChan61, chan62 - lastChan62,
+        chan71 - lastChan71, chan72 - lastChan72, chan81 - lastChan81, chan62 - lastChan82
+    };
+
+    renderData(routingTable, routingTableSize, statsBuffer, time, packets, bytes);
 
     lastTickChan11 = chan11;
     lastTickChan12 = chan12;
@@ -535,6 +576,34 @@ int main()
     }
     XGpio_CfgInitialize(&gpio4Instance, gpio4Config, gpio4Config->BaseAddress);
 
+    gpio5Config = XGpio_LookupConfig(XPAR_AXI_GPIO_5_DEVICE_ID);
+    if (!gpio5Config) {
+        printf("No config found\n");
+        goto fail;
+    }
+    XGpio_CfgInitialize(&gpio5Instance, gpio5Config, gpio5Config->BaseAddress);
+
+    gpio6Config = XGpio_LookupConfig(XPAR_AXI_GPIO_6_DEVICE_ID);
+    if (!gpio6Config) {
+        printf("No config found\n");
+        goto fail;
+    }
+    XGpio_CfgInitialize(&gpio6Instance, gpio6Config, gpio6Config->BaseAddress);
+
+    gpio7Config = XGpio_LookupConfig(XPAR_AXI_GPIO_7_DEVICE_ID);
+    if (!gpio7Config) {
+        printf("No config found\n");
+        goto fail;
+    }
+    XGpio_CfgInitialize(&gpio7Instance, gpio7Config, gpio7Config->BaseAddress);
+
+    gpio8Config = XGpio_LookupConfig(XPAR_AXI_GPIO_8_DEVICE_ID);
+    if (!gpio8Config) {
+        printf("No config found\n");
+        goto fail;
+    }
+    XGpio_CfgInitialize(&gpio8Instance, gpio8Config, gpio8Config->BaseAddress);
+
     bramConfig = XBram_LookupConfig(XPAR_BRAM_0_DEVICE_ID);
     if (!bramConfig) {
         printf("No config found\n");
@@ -552,7 +621,7 @@ int main()
     XScuTimer_CfgInitialize(&timerInstance, timerConfig, timerConfig->BaseAddr);
     XScuTimer_SelfTest(&timerInstance);
     XScuTimer_EnableAutoReload(&timerInstance);
-    XScuTimer_LoadTimer(&timerInstance, 0x13D92D3F / 20); // 20FPS
+    XScuTimer_LoadTimer(&timerInstance, 0x13D92D3F / 10); // 10FPS
     XScuTimer_Start(&timerInstance);
 
     gicConfig = XScuGic_LookupConfig(XPAR_PS7_SCUGIC_0_DEVICE_ID);
@@ -577,6 +646,8 @@ int main()
     printf("Waiting for data\n");
     for (int time = 0;;time++) {
         if (XLlFifo_iRxOccupancy(&fifoInstance)) {
+            // Avoid racing
+            XScuTimer_DisableInterrupt(&timerInstance);
             receiveLength = XLlFifo_iRxGetLen(&fifoInstance) / 4;
             //printf("%ld: Got length %ld\nData: ", ++count, receiveLength);
             for (i = 0;i < receiveLength;i++) {
@@ -586,6 +657,9 @@ int main()
             }
             //printf("\n");
             handleEthernetFrame(buffer[0], &buffer[1]);
+
+            // avoid racing
+            XScuTimer_EnableInterrupt(&timerInstance);
         }
     }
 

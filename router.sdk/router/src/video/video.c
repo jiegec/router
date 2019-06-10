@@ -267,6 +267,7 @@ char rowBuffer[256];
 char ipBuffer[256];
 char nexthopBuffer[256];
 char routingTableBuffer[256];
+char speedBuffer[256];
 
 // ring buffer
 struct Points {
@@ -278,9 +279,9 @@ int pointCount = 256;
 int pointBegin = 0;
 int pointEnd = 0;
 
-void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u32 time, int *flow) {
+void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u32 time, int *packets, int *bytes) {
     for (int i = 0;i < 4;i++) {
-        if(flow[i]) {
+        if(packets[i]) {
             // RX
             if (pointEnd + 1 != pointBegin) {
                 points[pointEnd].port = i;
@@ -289,7 +290,7 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
                 pointEnd = (pointEnd + 1) % pointCount;
             }
         }
-        if(flow[4+i]) {
+        if(packets[4+i]) {
             // TX
             if (pointEnd + 1 != pointBegin) {
                 points[pointEnd].port = i;
@@ -353,6 +354,7 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
         }
     }
 
+    clearFrameBuffer(rj45Y + rj45Height + 1, actualHeight);
     for (int i = 0;i < 4;i++) {
         int curX = beginX + (rj45Width + spacing) * i;
         int endX = curX + rj45Width;
@@ -386,6 +388,11 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
                 renderCircle(x, y, pointRadius);
             }
         }
+
+        sprintf(speedBuffer, "R: %d Bytes/s", bytes[i]);
+        renderText(curX, rj45Y + rj45Height + 1, speedBuffer);
+        sprintf(speedBuffer, "T: %d Bytes/s", bytes[i + 4]);
+        renderText(curX, rj45Y + rj45Height + 1 + fontHeight + 1, speedBuffer);
     }
 
     Xil_DCacheFlushRange((u32) actualFrame, FRAME_BYTES);
