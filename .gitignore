@@ -12,3 +12,4 @@ vivado_pid*.str
 vivado_pid*.zip
 
 Packages
+.vscode

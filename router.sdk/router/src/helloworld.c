@@ -511,8 +511,8 @@ void timerInterruptHandler(void *data) {
     };
 
     int bytes[] = {
-        chan51 - lastChan51, chan52 - lastChan52, chan61 - lastChan61, chan62 - lastChan62,
-        chan71 - lastChan71, chan72 - lastChan72, chan81 - lastChan81, chan62 - lastChan82
+        curChan51 - lastChan51, curChan52 - lastChan52, curChan61 - lastChan61, curChan62 - lastChan62,
+        curChan71 - lastChan71, curChan72 - lastChan72, curChan81 - lastChan81, curChan62 - lastChan82
     };
 
     renderData(routingTable, routingTableSize, statsBuffer, time, packets, bytes);

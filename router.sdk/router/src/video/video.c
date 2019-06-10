@@ -279,6 +279,23 @@ int pointCount = 256;
 int pointBegin = 0;
 int pointEnd = 0;
 
+char convertBuffer[256];
+char *speedToHuman(int bytes)
+{
+    bytes = bytes * 8;
+    if (bytes < 1024)
+    {
+        sprintf(convertBuffer, "%d bps", bytes);
+    } else if (bytes < 1024 * 1024) {
+        sprintf(convertBuffer, "%.2f Kbps", bytes / 1024.0);
+    } else if (bytes < 1024 * 1024 * 1024) {
+        sprintf(convertBuffer, "%.2f Mbps", bytes / 1024.0 / 1024);
+    } else {
+        sprintf(convertBuffer, "%.2f Gbps", bytes / 1024.0 / 1024 / 1024);
+    }
+    return convertBuffer;
+}
+
 void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u32 time, int *packets, int *bytes) {
     for (int i = 0;i < 4;i++) {
         if(packets[i]) {
@@ -389,9 +406,9 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
             }
         }
 
-        sprintf(speedBuffer, "R: %d Bytes/s", bytes[i]);
+        sprintf(speedBuffer, "R: %s", speedToHuman(bytes[i]));
         renderText(curX, rj45Y + rj45Height + 1, speedBuffer);
-        sprintf(speedBuffer, "T: %d Bytes/s", bytes[i + 4]);
+        sprintf(speedBuffer, "T: %s", speedToHuman(bytes[i + 4]));
         renderText(curX, rj45Y + rj45Height + 1 + fontHeight + 1, speedBuffer);
     }
 
