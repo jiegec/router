@@ -318,13 +318,15 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
         }
     }
 
+    int textMarginLeft = 20;
+    int textMarginTop = 20;
 
-    clearFrameBuffer(0, 3 * fontHeight);
-    renderText(0, 0, stats);
+    clearFrameBuffer(0 + textMarginTop, 3 * fontHeight + textMarginTop);
+    renderText(textMarginLeft, textMarginTop, stats);
 
     static u32 window = 0;
     const int WINDOW_SIZE = 3;
-    clearFrameBuffer(fontHeight * 3, fontHeight * (WINDOW_SIZE + 3));
+    clearFrameBuffer(fontHeight * 3 + textMarginTop, fontHeight * (WINDOW_SIZE + 3) + textMarginTop);
 
     static u32 lastTime = 0;
     if ((time % 5) == 0 && time != lastTime) {
@@ -336,7 +338,7 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
     lastTime = time;
 
     sprintf(routingTableBuffer, "Routing Table(%d-%d):", window + 1, window + WINDOW_SIZE);
-    renderText(0, 2 * fontHeight, routingTableBuffer);
+    renderText(textMarginLeft, 2 * fontHeight + textMarginTop, routingTableBuffer);
 
     for (int i = window;i < routingTableSize && i < window + WINDOW_SIZE;i++) {
         int y = fontHeight * (i - window + 3);
@@ -347,7 +349,7 @@ void renderData(struct Route *routingTable, u32 routingTableSize, char *stats, u
         sprintIP(routingTable[i].nexthop, nexthopBuffer);
         sprintf(rowBuffer, "%s/%d via %s metric %ld port %ld timer %ld", ipBuffer, prefix, nexthopBuffer, routingTable[i].metric, routingTable[i].port, time - routingTable[i].updateTime);
 
-        renderText(0, y, rowBuffer);
+        renderText(textMarginLeft, y + textMarginTop, rowBuffer);
     }
 
     int rectWidth = 670;
