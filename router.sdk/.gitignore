@@ -6,3 +6,4 @@ router.hdf
 *.o
 *.bit
 webtalk/
+*.prefs

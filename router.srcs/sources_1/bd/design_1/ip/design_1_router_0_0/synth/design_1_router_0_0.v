@@ -47,8 +47,8 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: me.jiegec:ip:router:1.3
-// IP Revision: 9
+// IP VLNV: me.jiegec:ip:router:1.4
+// IP Revision: 10
 
 (* X_CORE_INFO = "router_top,Vivado 2018.1" *)
 (* CHECK_LICENSE_TYPE = "design_1_router_0_0,router_top,{}" *)
@@ -104,7 +104,7 @@ module design_1_router_0_0 (
   os_en
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, ASSOCIATED_BUSIF axis_rxd, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, FREQ_HZ 200000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK3" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clk CLK" *)
 input wire clk;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk_125M, FREQ_HZ 125000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK2" *)

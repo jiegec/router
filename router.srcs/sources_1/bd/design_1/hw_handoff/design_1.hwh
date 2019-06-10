@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Jun 10 01:01:42 2019" VIVADOVERSION="2018.1">
+<EDKSYSTEM EDWVERSION="1.2" TIMESTAMP="Mon Jun 10 16:46:31 2019" VIVADOVERSION="2018.1">
 
   <SYSTEMINFO ARCH="zynq" DEVICE="7z020" NAME="design_1" PACKAGE="clg484" SPEEDGRADE="-2"/>
 
@@ -7139,8 +7139,6 @@
             <CONNECTION INSTANCE="axi_dynclk_0" PORT="s00_axi_aclk"/>
             <CONNECTION INSTANCE="axi_dynclk_0" PORT="REF_CLK_I"/>
             <CONNECTION INSTANCE="axi_gpio_2" PORT="s_axi_aclk"/>
-            <CONNECTION INSTANCE="router_0" PORT="clk"/>
-            <CONNECTION INSTANCE="router_0" PORT="axis_clk"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="S00_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M00_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="ACLK"/>
@@ -7155,6 +7153,7 @@
             <CONNECTION INSTANCE="axi_gpio_4" PORT="s_axi_aclk"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M08_ACLK"/>
             <CONNECTION INSTANCE="ps7_0_axi_periph" PORT="M09_ACLK"/>
+            <CONNECTION INSTANCE="router_0" PORT="axis_clk"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="142857132" DIR="O" NAME="FCLK_CLK1" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK1">
@@ -7174,6 +7173,7 @@
         </PORT>
         <PORT CLKFREQUENCY="200000000" DIR="O" NAME="FCLK_CLK3" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK3">
           <CONNECTIONS>
+            <CONNECTION INSTANCE="router_0" PORT="clk"/>
             <CONNECTION INSTANCE="router_0" PORT="clk_200M"/>
           </CONNECTIONS>
         </PORT>
@@ -9341,16 +9341,16 @@
         </BUSINTERFACE>
       </BUSINTERFACES>
     </MODULE>
-    <MODULE FULLNAME="/router_0" HWVERSION="1.3" INSTANCE="router_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="router" VLNV="me.jiegec:ip:router:1.3">
+    <MODULE FULLNAME="/router_0" HWVERSION="1.4" INSTANCE="router_0" IPTYPE="PERIPHERAL" IS_ENABLE="1" MODCLASS="PERIPHERAL" MODTYPE="router" VLNV="me.jiegec:ip:router:1.4">
       <DOCUMENTS/>
       <PARAMETERS>
         <PARAMETER NAME="Component_Name" VALUE="design_1_router_0_0"/>
         <PARAMETER NAME="EDK_IPTYPE" VALUE="PERIPHERAL"/>
       </PARAMETERS>
       <PORTS>
-        <PORT CLKFREQUENCY="100000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK0">
+        <PORT CLKFREQUENCY="200000000" DIR="I" NAME="clk" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK3">
           <CONNECTIONS>
-            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK0"/>
+            <CONNECTION INSTANCE="processing_system7_0" PORT="FCLK_CLK3"/>
           </CONNECTIONS>
         </PORT>
         <PORT CLKFREQUENCY="125000000" DIR="I" NAME="clk_125M" SIGIS="clk" SIGNAME="processing_system7_0_FCLK_CLK2">

@@ -83,7 +83,7 @@ u32 tick = 0;
 
 const u8 portMAC[6] = {2, 2, 3, 3, 0, 0};
 const u8 ripMAC[6] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
-const int ENABLE_PORT = 4;
+const int ENABLE_PORT = 3;
 const int INVALID_TIME = 30; // 180
 const int FLUSH_TIME = 60; // 240
 

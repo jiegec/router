@@ -1,7 +1,7 @@
 //Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-//Date        : Mon Jun 10 01:01:21 2019
+//Date        : Mon Jun 10 16:46:13 2019
 //Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 //Command     : generate_target design_1.bd
 //Design      : design_1
@@ -1165,7 +1165,7 @@ module design_1
         .axis_txd_tlast(router_0_axis_txd_TLAST),
         .axis_txd_tready(router_0_axis_txd_TREADY),
         .axis_txd_tvalid(router_0_axis_txd_TVALID),
-        .clk(processing_system7_0_FCLK_CLK0),
+        .clk(processing_system7_0_FCLK_CLK4),
         .clk_125M(processing_system7_0_FCLK_CLK3),
         .clk_200M(processing_system7_0_FCLK_CLK4),
         .os_addr({1'b0,1'b0,axi_bram_ctrl_0_BRAM_PORTA_ADDR}),
