@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
 // Date        : Mon Jun  3 21:28:08 2019
 // Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
-// Command     : write_verilog -force -mode synth_stub
-//               /home/oslab/router/router.srcs/sources_1/bd/design_1/ip/design_1_rst_ps7_0_50M_0/design_1_rst_ps7_0_50M_0_stub.v
+// Command     : write_verilog -force -mode synth_stub -rename_top design_1_rst_ps7_0_50M_0 -prefix
+//               design_1_rst_ps7_0_50M_0_ design_1_rst_ps7_0_50M_0_stub.v
 // Design      : design_1_rst_ps7_0_50M_0
 // Purpose     : Stub declaration of top-level module interface
 // Device      : xc7z020clg484-2
