@@ -73,8 +73,8 @@ set_false_path -through [get_ports {tx_configuration_vector[*]}]
 ############################################################
 # Ignore paths to resync flops
 ############################################################
-set_false_path -to [get_pins -hier -filter {NAME =~ */async_rst*/PRE}]
-set_false_path -to [get_pins -hier -filter {NAME =~ */async_rst*/CLR}]
+set_false_path -to [get_pins -filter {REF_PIN_NAME =~ PRE} -of [get_cells -hier -regexp {.*\/async_rst.*}]]
+set_false_path -to [get_pins -filter {REF_PIN_NAME =~ CLR} -of [get_cells -hier -regexp {.*\/async_rst.*}]]
 set_false_path -from [get_cells {tri_mode_ethernet_mac_0_shared_core/sync_*tx_clk/sync_rst1_reg}] -to [get_cells {*/data_sync_reg0}]
 
 

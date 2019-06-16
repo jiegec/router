@@ -1,6 +1,6 @@
 {
-   ExpandedHierarchyInLayout: "",
-   guistr: "# # String gsaved with Nlview 6.8.5  2018-01-30 bk=1.4354 VDI=40 GEI=35 GUI=JA:1.6 TLS
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 TLS
 #  -string -flagsOSRD
 preplace port rgmii1 -pg 1 -y -290 -defaultsOSRD
 preplace port hdmi_i2c -pg 1 -y 530 -defaultsOSRD
@@ -16,119 +16,119 @@ preplace port hdmi_out_clk -pg 1 -y 780 -defaultsOSRD
 preplace port reset_n_in -pg 1 -y -190 -defaultsOSRD
 preplace port hdmi_out_vs -pg 1 -y 840 -defaultsOSRD
 preplace portBus hdmi_out_data -pg 1 -y 820 -defaultsOSRD
-preplace inst axi_gpio_8 -pg 1 -lvl 6 -y 150 -defaultsOSRD
 preplace inst v_axi4s_vid_out_0 -pg 1 -lvl 3 -y 510 -defaultsOSRD
 preplace inst rst_ps7_0_50M -pg 1 -lvl 3 -y 980 -defaultsOSRD
-preplace inst xlslice_0 -pg 1 -lvl 4 -y -650 -defaultsOSRD
+preplace inst axi_gpio_8 -pg 1 -lvl 6 -y 150 -defaultsOSRD
 preplace inst v_tc_0 -pg 1 -lvl 2 -y 420 -defaultsOSRD
 preplace inst axi_vdma_0 -pg 1 -lvl 3 -y 240 -defaultsOSRD
+preplace inst xlslice_0 -pg 1 -lvl 4 -y -650 -defaultsOSRD
 preplace inst xlslice_1 -pg 1 -lvl 4 -y -550 -defaultsOSRD
 preplace inst router_0 -pg 1 -lvl 3 -y -80 -defaultsOSRD
-preplace inst xlslice_2 -pg 1 -lvl 4 -y -450 -defaultsOSRD
 preplace inst axi_smc -pg 1 -lvl 4 -y 330 -defaultsOSRD
+preplace inst xlslice_2 -pg 1 -lvl 4 -y -450 -defaultsOSRD
 preplace inst xlslice_3 -pg 1 -lvl 4 -y -350 -defaultsOSRD
+preplace inst rst_ps7_0_142M -pg 1 -lvl 3 -y 1160 -defaultsOSRD
+preplace inst axi_gpio_0 -pg 1 -lvl 7 -y -630 -defaultsOSRD
 preplace inst xlslice_10 -pg 1 -lvl 5 -y -510 -defaultsOSRD
 preplace inst xlslice_4 -pg 1 -lvl 4 -y -140 -defaultsOSRD
-preplace inst rst_ps7_0_142M -pg 1 -lvl 3 -y 1160 -defaultsOSRD
 preplace inst xlconcat_0 -pg 1 -lvl 9 -y 220 -defaultsOSRD
-preplace inst axi_gpio_0 -pg 1 -lvl 7 -y -630 -defaultsOSRD
+preplace inst axi_gpio_1 -pg 1 -lvl 7 -y -400 -defaultsOSRD
 preplace inst xlslice_11 -pg 1 -lvl 5 -y -410 -defaultsOSRD
 preplace inst xlslice_5 -pg 1 -lvl 4 -y -40 -defaultsOSRD
-preplace inst axi_gpio_1 -pg 1 -lvl 7 -y -400 -defaultsOSRD
+preplace inst axi_gpio_2 -pg 1 -lvl 1 -y 60 -defaultsOSRD
 preplace inst xlslice_12 -pg 1 -lvl 5 -y -270 -defaultsOSRD
 preplace inst xlslice_6 -pg 1 -lvl 4 -y 60 -defaultsOSRD
-preplace inst axi_gpio_2 -pg 1 -lvl 1 -y 60 -defaultsOSRD
 preplace inst axi_dynclk_0 -pg 1 -lvl 3 -y 770 -defaultsOSRD
+preplace inst axi_gpio_3 -pg 1 -lvl 7 -y -90 -defaultsOSRD
 preplace inst xlslice_13 -pg 1 -lvl 5 -y -160 -defaultsOSRD
 preplace inst xlslice_7 -pg 1 -lvl 4 -y 160 -defaultsOSRD
-preplace inst axi_gpio_3 -pg 1 -lvl 7 -y -90 -defaultsOSRD
+preplace inst ps7_0_axi_periph -pg 1 -lvl 4 -y 770 -defaultsOSRD
+preplace inst axi_gpio_4 -pg 1 -lvl 7 -y 100 -defaultsOSRD
 preplace inst xlslice_14 -pg 1 -lvl 5 -y -60 -defaultsOSRD
 preplace inst xlslice_8 -pg 1 -lvl 5 -y -710 -defaultsOSRD
-preplace inst axi_gpio_4 -pg 1 -lvl 7 -y 100 -defaultsOSRD
-preplace inst ps7_0_axi_periph -pg 1 -lvl 4 -y 770 -defaultsOSRD
+preplace inst axi_gpio_5 -pg 1 -lvl 6 -y -550 -defaultsOSRD
 preplace inst xlslice_15 -pg 1 -lvl 5 -y 80 -defaultsOSRD
 preplace inst xlslice_9 -pg 1 -lvl 5 -y -610 -defaultsOSRD
-preplace inst axi_gpio_5 -pg 1 -lvl 6 -y -550 -defaultsOSRD
 preplace inst axi_gpio_6 -pg 1 -lvl 6 -y -310 -defaultsOSRD
-preplace inst axi_bram_ctrl_0 -pg 1 -lvl 2 -y 200 -defaultsOSRD
 preplace inst axi_fifo_mm_s_0 -pg 1 -lvl 8 -y 740 -defaultsOSRD
+preplace inst axi_bram_ctrl_0 -pg 1 -lvl 2 -y 200 -defaultsOSRD
 preplace inst axi_gpio_7 -pg 1 -lvl 6 -y -70 -defaultsOSRD
 preplace inst processing_system7_0 -pg 1 -lvl 2 -y 680 -defaultsOSRD
 preplace netloc axi_gpio_2_GPIO 1 1 9 540J -890 NJ -890 NJ -890 NJ -890 NJ -890 NJ -890 NJ -890 NJ -890 4830J
 preplace netloc xlslice_11_Dout 1 5 2 NJ -410 2970
-preplace netloc xlslice_2_Dout 1 4 4 2130J 140 2600 40 3020 -250 4110
-preplace netloc axi_vdma_0_M_AXI_MM2S 1 3 1 1670
-preplace netloc ps7_0_axi_periph_M08_AXI 1 4 3 2210 150 2570 -160 3040
-preplace netloc ps7_0_axi_periph_M09_AXI 1 4 3 2220 160 2620 60 2990
-preplace netloc processing_system7_0_FIXED_IO 1 2 8 1100 670 1660 250 2110 300 NJ 300 NJ 300 NJ 300 NJ 300 4820
-preplace netloc axi_smc_M00_AXI 1 1 4 550 1280 NJ 1280 NJ 1280 2090
-preplace netloc ps7_0_axi_periph_M02_AXI 1 4 3 2120 -840 N -840 3030
-preplace netloc axi_vdma_0_M_AXIS_MM2S 1 2 2 1170 360 1610
-preplace netloc ps7_0_axi_periph_M04_AXI 1 2 3 1160 1270 NJ 1270 2040
-preplace netloc xlconcat_0_dout 1 1 9 560 1340 NJ 1340 NJ 1340 NJ 1340 NJ 1340 NJ 1340 NJ 1340 NJ 1340 4800
+preplace netloc xlslice_2_Dout 1 4 4 2100J 140 2600 40 3020 -250 4110
+preplace netloc axi_vdma_0_M_AXI_MM2S 1 3 1 1680
+preplace netloc ps7_0_axi_periph_M08_AXI 1 4 3 2200 -800 N -800 3040
+preplace netloc ps7_0_axi_periph_M09_AXI 1 4 3 2230 150 2570 60 2990
+preplace netloc processing_system7_0_FIXED_IO 1 2 8 1050 1290 N 1290 2290 300 NJ 300 NJ 300 NJ 300 NJ 300 4820
+preplace netloc axi_smc_M00_AXI 1 1 4 550 1280 NJ 1280 NJ 1280 2100
+preplace netloc ps7_0_axi_periph_M02_AXI 1 4 3 2170 -840 N -840 3050
+preplace netloc axi_vdma_0_M_AXIS_MM2S 1 2 2 1180 860 1580
+preplace netloc ps7_0_axi_periph_M04_AXI 1 2 3 1160 1300 NJ 1300 2070
+preplace netloc xlconcat_0_dout 1 1 9 560 1350 NJ 1350 NJ 1350 NJ 1350 NJ 1350 NJ 1350 NJ 1350 NJ 1350 4800
 preplace netloc v_tc_0_vtiming_out 1 2 1 1130
-preplace netloc xlslice_3_Dout 1 4 4 2090J -790 N -790 N -790 4110
-preplace netloc ps7_0_axi_periph_M03_AXI 1 1 4 540J 1260 NJ 1260 N 1260 2050
-preplace netloc xlslice_10_Dout 1 5 2 2620J -460 2980
-preplace netloc xlslice_12_Dout 1 5 2 2550J -180 2980
-preplace netloc xlslice_5_Dout 1 4 4 2110J -820 N -820 N -820 4160
-preplace netloc processing_system7_0_DDR 1 2 8 1110 660 1700 220 2190 260 2600J 310 NJ 310 NJ 310 NJ 310 4810
-preplace netloc ps7_0_axi_periph_M12_AXI 1 4 2 2230 10 2550J
-preplace netloc axi_fifo_mm_s_0_interrupt 1 8 1 4580
-preplace netloc xlslice_7_Dout 1 4 4 2180 -780 N -780 N -780 4140
+preplace netloc xlslice_3_Dout 1 4 4 2130J -790 N -790 N -790 4120
+preplace netloc ps7_0_axi_periph_M03_AXI 1 1 4 540J 1270 NJ 1270 N 1270 2040
+preplace netloc xlslice_10_Dout 1 5 2 2640J -460 2980
+preplace netloc xlslice_12_Dout 1 5 2 2580J -170 2980
+preplace netloc xlslice_5_Dout 1 4 4 2090J -880 N -880 N -880 4150
+preplace netloc processing_system7_0_DDR 1 2 8 1110 670 1650 250 2190 310 NJ 310 NJ 310 NJ 310 NJ 310 4810
+preplace netloc ps7_0_axi_periph_M12_AXI 1 4 2 2250 170 2580J
+preplace netloc axi_fifo_mm_s_0_interrupt 1 8 1 4590
+preplace netloc xlslice_7_Dout 1 4 4 2120 -870 N -870 N -870 4160
 preplace netloc ps7_0_axi_periph_M00_AXI 1 4 4 N 640 N 640 N 640 4190
-preplace netloc rst_ps7_0_50M_peripheral_aresetn 1 0 8 -40 220 510 280 1140 870 1650 -880 N -880 2590 -660 3010 0 4170
+preplace netloc rst_ps7_0_50M_peripheral_aresetn 1 0 8 -50 220 510 280 1120 1330 1660 -820 N -820 2620 -660 3010 -180 4180
 preplace netloc processing_system7_0_FCLK_RESET0_N 1 2 1 1030
-preplace netloc xlslice_4_Dout 1 4 4 2060J -830 N -830 N -830 4170
-preplace netloc xlslice_1_Dout 1 4 4 2050J -800 N -800 N -800 4120
-preplace netloc ps7_0_axi_periph_M01_AXI 1 4 3 2100 -850 N -850 3040
-preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 2 1 1050
-preplace netloc router_0_rgmii1 1 3 7 1570J -290 2150J -350 2620J -220 2970J -240 4180J -290 NJ -290 NJ
-preplace netloc router_0_rgmii2 1 3 7 1620J -210 2230J 0 2530J -190 3030J -230 4190J -270 NJ -270 NJ
-preplace netloc xlslice_0_Dout 1 4 4 2040J -870 N -870 N -870 4130
-preplace netloc ps7_0_axi_periph_M10_AXI 1 4 2 2200 -770 2620J
-preplace netloc router_0_rgmii3 1 3 7 1610J -250 2160J -340 2570J -200 3040J -220 4200J -250 NJ -250 NJ
-preplace netloc router_0_rgmii4 1 3 7 1600J -280 2170J -330 2530J -210 NJ -210 4210J -230 NJ -230 NJ
-preplace netloc ps7_0_axi_periph_M07_AXI 1 0 5 -60J 1320 NJ 1320 NJ 1320 NJ 1320 2060
-preplace netloc axi_vdma_0_mm2s_introut 1 3 6 1680J 240 2160J 280 N 280 2990 200 N 200 N
-preplace netloc processing_system7_0_IIC_0 1 2 8 1040J 1290 NJ 1290 2270J 530 NJ 530 NJ 530 NJ 530 NJ 530 NJ
-preplace netloc ps7_0_axi_periph_M13_AXI 1 4 2 2250 180 2630J
-preplace netloc xlslice_6_Dout 1 4 4 2140 -810 N -810 N -810 4150
-preplace netloc router_0_axis_txd 1 3 5 1630J -200 2190 20 N 20 3040 10 4200
-preplace netloc router_0_stats_rx_bytes 1 3 2 1580J -710 2250
+preplace netloc xlslice_4_Dout 1 4 4 2210J 20 N 20 3060 0 4110
+preplace netloc xlslice_1_Dout 1 4 4 2100J -810 N -810 N -810 4130
+preplace netloc router_0_rgmii1 1 3 7 1630J -210 2240J 10 2570J -180 2980J -240 4170J -290 NJ -290 NJ
+preplace netloc ps7_0_axi_periph_M01_AXI 1 4 3 2150 -860 N -860 3060
+preplace netloc axi_bram_ctrl_0_BRAM_PORTA 1 2 1 1060
+preplace netloc router_0_rgmii2 1 3 7 1580J -290 2160J -350 2640J -220 2970J -230 4180J -270 NJ -270 NJ
+preplace netloc xlslice_0_Dout 1 4 4 2110J -780 N -780 N -780 4110
+preplace netloc ps7_0_axi_periph_M10_AXI 1 4 2 2220 -770 2640J
+preplace netloc router_0_rgmii3 1 3 7 1620J -250 2180J -340 2610J -200 3030J -220 4190J -250 NJ -250 NJ
+preplace netloc router_0_rgmii4 1 3 7 1610J -280 2190J -330 2550J -210 NJ -210 4200J -230 NJ -230 NJ
+preplace netloc ps7_0_axi_periph_M07_AXI 1 0 5 -60J -720 NJ -720 NJ -720 NJ -720 2080
+preplace netloc axi_vdma_0_mm2s_introut 1 3 6 1700J 240 NJ 240 N 240 3000 200 N 200 N
+preplace netloc processing_system7_0_IIC_0 1 2 8 1040J 1260 NJ 1260 2300J 530 NJ 530 NJ 530 NJ 530 NJ 530 NJ
+preplace netloc ps7_0_axi_periph_M13_AXI 1 4 2 2260 180 2640J
+preplace netloc xlslice_6_Dout 1 4 4 2140 -850 N -850 N -850 4140
+preplace netloc router_0_axis_txd 1 3 5 1640J -200 2230 0 2550 -190 N -190 4200
+preplace netloc router_0_stats_rx_bytes 1 3 2 1590J -710 2260
 preplace netloc xlslice_8_Dout 1 5 2 NJ -710 2980
-preplace netloc router_0_stats_rx_packets 1 3 1 1590
-preplace netloc processing_system7_0_FCLK_CLK0 1 0 8 -50 200 520 830 1060 60 1690 -860 N -860 2580 -650 3000 -180 4210
-preplace netloc axi_dynclk_0_PXL_CLK_O 1 1 9 570 820 1150 860 1580 1150 NJ 1150 NJ 1150 NJ 1150 NJ 1150 4570J 780 NJ
-preplace netloc processing_system7_0_FCLK_CLK2 1 1 3 580 840 1120 350 1720J
-preplace netloc router_0_stats_tx_bytes 1 3 2 1640 -220 2250J
-preplace netloc processing_system7_0_FCLK_CLK3 1 2 1 1080
-preplace netloc ps7_0_axi_periph_M06_AXI 1 2 3 1170 1310 NJ 1310 2070
-preplace netloc v_axi4s_vid_out_0_vid_active_video 1 3 7 1630J 1160 NJ 1160 NJ 1160 NJ 1160 NJ 1160 4590J 800 NJ
-preplace netloc v_tc_0_irq 1 2 7 1050J 1330 NJ 1330 2260J 290 N 290 3030 220 N 220 N
-preplace netloc processing_system7_0_FCLK_CLK4 1 2 1 1090
-preplace netloc v_axi4s_vid_out_0_vid_data 1 3 7 1610J 1170 2280J 830 NJ 830 NJ 830 NJ 830 4580J 820 NJ
-preplace netloc rst_ps7_0_142M_peripheral_aresetn 1 3 1 1730
-preplace netloc ps7_0_axi_periph_M11_AXI 1 4 2 2240 170 2560J
-preplace netloc xlslice_14_Dout 1 5 2 2540 30 2980
-preplace netloc ps7_0_axi_periph_M05_AXI 1 1 4 530 1300 NJ 1300 NJ 1300 2080
-preplace netloc router_0_stats_tx_packets 1 3 1 1710
-preplace netloc rst_ps7_0_50M_interconnect_aresetn 1 3 1 1740
-preplace netloc v_axi4s_vid_out_0_vid_hsync 1 3 7 1710J 230 2180J 270 2540J 320 NJ 320 NJ 320 NJ 320 4820J
-preplace netloc v_axi4s_vid_out_0_vid_vsync 1 3 7 1570J 1180 NJ 1180 NJ 1180 NJ 1180 NJ 1180 4600J 840 NJ
+preplace netloc router_0_stats_rx_packets 1 3 1 1600
+preplace netloc processing_system7_0_FCLK_CLK0 1 0 8 -60 200 520 830 1080 60 1690 -830 N -830 2630 -650 3000 10 4170
+preplace netloc axi_dynclk_0_PXL_CLK_O 1 1 9 570 820 1150 870 1600 1150 NJ 1150 NJ 1150 NJ 1150 NJ 1150 4570J 780 NJ
+preplace netloc processing_system7_0_FCLK_CLK2 1 1 3 580 840 1140 880 1700J
+preplace netloc router_0_stats_tx_bytes 1 3 2 1650 -220 2260J
+preplace netloc processing_system7_0_FCLK_CLK3 1 2 1 1070
+preplace netloc ps7_0_axi_periph_M06_AXI 1 2 3 1170 1320 NJ 1320 2050
+preplace netloc v_axi4s_vid_out_0_vid_active_video 1 3 7 1640J 1160 NJ 1160 NJ 1160 NJ 1160 NJ 1160 4590J 800 NJ
+preplace netloc v_tc_0_irq 1 2 7 1060J 1340 NJ 1340 2280J 290 2620 260 3050 220 N 220 N
+preplace netloc processing_system7_0_FCLK_CLK4 1 2 1 1100
+preplace netloc v_axi4s_vid_out_0_vid_data 1 3 7 1620J 1170 2270J 830 NJ 830 NJ 830 NJ 830 4580J 820 NJ
+preplace netloc rst_ps7_0_142M_peripheral_aresetn 1 3 1 1720
+preplace netloc ps7_0_axi_periph_M11_AXI 1 4 2 2240 160 2590J
+preplace netloc xlslice_14_Dout 1 5 2 2560 30 2980
+preplace netloc ps7_0_axi_periph_M05_AXI 1 1 4 530 1310 NJ 1310 NJ 1310 2060
+preplace netloc router_0_stats_tx_packets 1 3 1 1700
+preplace netloc rst_ps7_0_50M_interconnect_aresetn 1 3 1 1730
+preplace netloc v_axi4s_vid_out_0_vid_hsync 1 3 7 1630J 230 NJ 230 2560J 320 NJ 320 NJ 320 NJ 320 4820J
+preplace netloc v_axi4s_vid_out_0_vid_vsync 1 3 7 1590J 1180 2310J 840 NJ 840 NJ 840 NJ 840 NJ 840 NJ
 preplace netloc xlslice_15_Dout 1 5 2 2610J 50 2970
-preplace netloc processing_system7_0_M_AXI_GP0 1 2 2 1070 680 1720
-preplace netloc xlslice_9_Dout 1 5 2 2570 -640 2970
-preplace netloc xlslice_13_Dout 1 5 2 2550J -170 2970
-preplace netloc axi_fifo_mm_s_0_AXI_STR_TXD 1 2 7 1160 -900 NJ -900 NJ -900 N -900 N -900 N -900 4570
-preplace netloc reset_n_0_1 1 0 3 NJ -190 NJ -190 1140J
-levelinfo -pg 1 -80 400 810 1370 1890 2410 2820 3960 4390 4700 4850 -top -980 -bot 1360
-",
+preplace netloc processing_system7_0_M_AXI_GP0 1 2 2 1090 680 1710
+preplace netloc xlslice_9_Dout 1 5 2 2610 -640 2970
+preplace netloc xlslice_13_Dout 1 5 2 NJ -160 2970
+preplace netloc axi_fifo_mm_s_0_AXI_STR_TXD 1 2 7 1180 350 1670J 220 NJ 220 2610 250 N 250 N 250 4570
+preplace netloc reset_n_0_1 1 0 3 NJ -190 NJ -190 1160J
+levelinfo -pg 1 -80 400 810 1380 1890 2430 2820 3960 4390 4700 4850 -top -980 -bot 1360
+"
 }
 {
-   da_axi4_cnt: "15",
-   da_board_cnt: "5",
-   da_bram_cntlr_cnt: "1",
-   da_clkrst_cnt: "1",
-   da_ps7_cnt: "1",
+   "da_axi4_cnt":"15",
+   "da_board_cnt":"5",
+   "da_bram_cntlr_cnt":"1",
+   "da_clkrst_cnt":"1",
+   "da_ps7_cnt":"1"
 }

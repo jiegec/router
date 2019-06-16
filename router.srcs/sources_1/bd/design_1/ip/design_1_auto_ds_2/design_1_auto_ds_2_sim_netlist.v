@@ -1,18 +1,18 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
-// Tool Version: Vivado v.2018.1 (lin64) Build 2188600 Wed Apr  4 18:39:19 MDT 2018
-// Date        : Mon Jun  3 21:32:00 2019
+// Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
+// Date        : Mon Jun 17 01:19:01 2019
 // Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
 // Command     : write_verilog -force -mode funcsim -rename_top design_1_auto_ds_2 -prefix
-//               design_1_auto_ds_2_ design_1_auto_ds_3_sim_netlist.v
-// Design      : design_1_auto_ds_3
+//               design_1_auto_ds_2_ design_1_auto_ds_0_sim_netlist.v
+// Design      : design_1_auto_ds_0
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
 // Device      : xc7z020clg484-2
 // --------------------------------------------------------------------------------
 `timescale 1 ps / 1 ps
 
-module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo
+module design_1_auto_ds_2_axi_data_fifo_v2_1_17_axic_fifo
    (dout,
     full,
     empty,
@@ -21,19 +21,19 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo
     E,
     wr_en,
     cmd_b_push_block_reg,
-    split_ongoing_reg,
+    access_is_fix_q_reg,
     S,
     S_AXI_AREADY_I_reg,
-    command_ongoing_reg,
-    \queue_id_reg[0] ,
+    S_AXI_AREADY_I_reg_0,
+    \S_AXI_AID_Q_reg[0] ,
     CLK,
     rd_en,
     m_axi_awready,
-    ram_full_i_reg,
+    cmd_b_push_block_reg_0,
     cmd_push_block,
     command_ongoing,
     cmd_b_push_block,
-    S_AXI_AREADY_I_reg_0,
+    cmd_b_push_block_reg_1,
     out,
     wrap_need_to_split_q,
     incr_need_to_split_q,
@@ -44,13 +44,13 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo
     split_ongoing,
     access_is_fix_q,
     Q,
-    \pushed_commands_reg[7] ,
-    \num_transactions_q_reg[3] ,
+    S_AXI_AREADY_I_i_4,
+    \gpr1.dout_i_reg[1] ,
     S_AXI_AREADY_I_reg_1,
     s_axi_awvalid,
-    \areset_d_reg[0] ,
+    S_AXI_AREADY_I_reg_2,
     areset_d,
-    \areset_d_reg[1] ,
+    command_ongoing_reg,
     S_AXI_AID_Q,
     s_axi_bid);
   output [8:0]dout;
@@ -61,19 +61,19 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo
   output [0:0]E;
   output wr_en;
   output cmd_b_push_block_reg;
-  output split_ongoing_reg;
+  output access_is_fix_q_reg;
   output [2:0]S;
   output S_AXI_AREADY_I_reg;
-  output command_ongoing_reg;
-  output \queue_id_reg[0] ;
+  output S_AXI_AREADY_I_reg_0;
+  output \S_AXI_AID_Q_reg[0] ;
   input CLK;
   input rd_en;
   input m_axi_awready;
-  input ram_full_i_reg;
+  input cmd_b_push_block_reg_0;
   input cmd_push_block;
   input command_ongoing;
   input cmd_b_push_block;
-  input [0:0]S_AXI_AREADY_I_reg_0;
+  input [0:0]cmd_b_push_block_reg_1;
   input out;
   input wrap_need_to_split_q;
   input incr_need_to_split_q;
@@ -84,13 +84,13 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo
   input split_ongoing;
   input access_is_fix_q;
   input [3:0]Q;
-  input [7:0]\pushed_commands_reg[7] ;
-  input [3:0]\num_transactions_q_reg[3] ;
+  input [7:0]S_AXI_AREADY_I_i_4;
+  input [3:0]\gpr1.dout_i_reg[1] ;
   input [0:0]S_AXI_AREADY_I_reg_1;
   input s_axi_awvalid;
-  input \areset_d_reg[0] ;
+  input S_AXI_AREADY_I_reg_2;
   input [0:0]areset_d;
-  input \areset_d_reg[1] ;
+  input command_ongoing_reg;
   input S_AXI_AID_Q;
   input [0:0]s_axi_bid;
 
@@ -101,17 +101,21 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo
   wire [2:0]S;
   wire [0:0]SR;
   wire S_AXI_AID_Q;
+  wire \S_AXI_AID_Q_reg[0] ;
+  wire [7:0]S_AXI_AREADY_I_i_4;
   wire S_AXI_AREADY_I_reg;
-  wire [0:0]S_AXI_AREADY_I_reg_0;
+  wire S_AXI_AREADY_I_reg_0;
   wire [0:0]S_AXI_AREADY_I_reg_1;
+  wire S_AXI_AREADY_I_reg_2;
   wire access_is_fix_q;
+  wire access_is_fix_q_reg;
   wire access_is_incr_q;
   wire access_is_wrap_q;
   wire [0:0]areset_d;
-  wire \areset_d_reg[0] ;
-  wire \areset_d_reg[1] ;
   wire cmd_b_push_block;
   wire cmd_b_push_block_reg;
+  wire cmd_b_push_block_reg_0;
+  wire [0:0]cmd_b_push_block_reg_1;
   wire cmd_push_block;
   wire command_ongoing;
   wire command_ongoing_reg;
@@ -120,22 +124,18 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo
   wire empty;
   wire fix_need_to_split_q;
   wire full;
+  wire [3:0]\gpr1.dout_i_reg[1] ;
   wire incr_need_to_split_q;
   wire m_axi_awready;
-  wire [3:0]\num_transactions_q_reg[3] ;
   wire out;
-  wire [7:0]\pushed_commands_reg[7] ;
-  wire \queue_id_reg[0] ;
-  wire ram_full_i_reg;
   wire rd_en;
   wire s_axi_awvalid;
   wire [0:0]s_axi_bid;
   wire split_ongoing;
-  wire split_ongoing_reg;
   wire wr_en;
   wire wrap_need_to_split_q;
 
-  design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen inst
+  design_1_auto_ds_2_axi_data_fifo_v2_1_17_fifo_gen inst
        (.CLK(CLK),
         .CO(CO),
         .E(E),
@@ -143,17 +143,21 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo
         .S(S),
         .SR(SR),
         .S_AXI_AID_Q(S_AXI_AID_Q),
+        .\S_AXI_AID_Q_reg[0] (\S_AXI_AID_Q_reg[0] ),
+        .S_AXI_AREADY_I_i_4_0(S_AXI_AREADY_I_i_4),
         .S_AXI_AREADY_I_reg(S_AXI_AREADY_I_reg),
         .S_AXI_AREADY_I_reg_0(S_AXI_AREADY_I_reg_0),
         .S_AXI_AREADY_I_reg_1(S_AXI_AREADY_I_reg_1),
+        .S_AXI_AREADY_I_reg_2(S_AXI_AREADY_I_reg_2),
         .access_is_fix_q(access_is_fix_q),
+        .access_is_fix_q_reg(access_is_fix_q_reg),
         .access_is_incr_q(access_is_incr_q),
         .access_is_wrap_q(access_is_wrap_q),
         .areset_d(areset_d),
-        .\areset_d_reg[0] (\areset_d_reg[0] ),
-        .\areset_d_reg[1] (\areset_d_reg[1] ),
         .cmd_b_push_block(cmd_b_push_block),
         .cmd_b_push_block_reg(cmd_b_push_block_reg),
+        .cmd_b_push_block_reg_0(cmd_b_push_block_reg_0),
+        .cmd_b_push_block_reg_1(cmd_b_push_block_reg_1),
         .cmd_push_block(cmd_push_block),
         .command_ongoing(command_ongoing),
         .command_ongoing_reg(command_ongoing_reg),
@@ -162,56 +166,52 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo
         .empty(empty),
         .fix_need_to_split_q(fix_need_to_split_q),
         .full(full),
+        .\gpr1.dout_i_reg[1] (\gpr1.dout_i_reg[1] ),
         .incr_need_to_split_q(incr_need_to_split_q),
         .m_axi_awready(m_axi_awready),
-        .\num_transactions_q_reg[3] (\num_transactions_q_reg[3] ),
         .out(out),
-        .\pushed_commands_reg[7] (\pushed_commands_reg[7] ),
-        .\queue_id_reg[0] (\queue_id_reg[0] ),
-        .ram_full_i_reg(ram_full_i_reg),
         .rd_en(rd_en),
         .s_axi_awvalid(s_axi_awvalid),
         .s_axi_bid(s_axi_bid),
         .split_ongoing(split_ongoing),
-        .split_ongoing_reg(split_ongoing_reg),
         .wr_en(wr_en),
         .wrap_need_to_split_q(wrap_need_to_split_q));
 endmodule
 
-(* ORIG_REF_NAME = "axi_data_fifo_v2_1_15_axic_fifo" *) 
-module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0
+(* ORIG_REF_NAME = "axi_data_fifo_v2_1_17_axic_fifo" *) 
+module design_1_auto_ds_2_axi_data_fifo_v2_1_17_axic_fifo__parameterized0
    (dout,
     empty,
     din,
-    \WORD_LANE[3].S_AXI_RDATA_II_reg[96] ,
-    cmd_push_block_reg,
+    s_axi_rready_0,
+    s_axi_aresetn,
     E,
     m_axi_arvalid,
     DI,
-    \gpr1.dout_i_reg[7] ,
+    \S_AXI_ALEN_Q_reg[6] ,
     S,
-    \next_mi_addr_reg[8] ,
-    \next_mi_addr_reg[8]_0 ,
+    split_ongoing_reg,
+    access_is_incr_q_reg,
     s_axi_rvalid,
     m_axi_rready,
-    \WORD_LANE[0].S_AXI_RDATA_II_reg[31] ,
-    \WORD_LANE[1].S_AXI_RDATA_II_reg[63] ,
-    \WORD_LANE[2].S_AXI_RDATA_II_reg[95] ,
-    \WORD_LANE[3].S_AXI_RDATA_II_reg[127] ,
-    first_mi_word_reg,
+    s_axi_rready_1,
+    s_axi_rready_2,
+    s_axi_rready_3,
+    s_axi_rready_4,
+    \goreg_dm.dout_i_reg[2] ,
     D,
     s_axi_rdata,
-    \S_AXI_RRESP_ACC_reg[0] ,
-    \gpr1.dout_i_reg[7]_0 ,
-    \gpr1.dout_i_reg[7]_1 ,
+    \goreg_dm.dout_i_reg[0] ,
+    \downsized_len_q_reg[7] ,
+    \downsized_len_q_reg[3] ,
+    \areset_d_reg[0] ,
     S_AXI_AREADY_I_reg,
-    command_ongoing_reg,
-    \queue_id_reg[0] ,
+    \S_AXI_AID_Q_reg[0] ,
     s_axi_rlast,
     CLK,
     SR,
     access_fit_mi_side_q,
-    \cmd_mask_q_reg[3] ,
+    \gpr1.dout_i_reg[13] ,
     fix_need_to_split_q,
     Q,
     split_ongoing,
@@ -222,74 +222,74 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0
     cmd_push_block,
     m_axi_arready,
     access_is_fix_q,
-    \S_AXI_ALEN_Q_reg[7] ,
-    \downsized_len_q_reg[7] ,
+    \m_axi_arlen[7] ,
+    \m_axi_arlen[7]_0 ,
     CO,
     access_is_incr_q,
     wrap_need_to_split_q,
     incr_need_to_split_q,
-    \unalignment_addr_q_reg[4] ,
-    \wrap_unaligned_len_q_reg[7] ,
-    \pushed_commands_reg[7] ,
-    \num_transactions_q_reg[3] ,
-    \split_addr_mask_q_reg[31] ,
-    \fix_len_q_reg[4] ,
-    \S_AXI_AADDR_Q_reg[3] ,
+    cmd_length_i_carry__0_i_7__0,
+    cmd_length_i_carry__0_i_4__0,
+    cmd_length_i_carry__0_i_8__0,
+    last_incr_split0_carry,
+    \gpr1.dout_i_reg[25] ,
+    cmd_length_i_carry__0_i_7__0_0,
+    \gpr1.dout_i_reg[19] ,
     si_full_size_q,
-    \split_addr_mask_q_reg[0] ,
-    \split_addr_mask_q_reg[1] ,
-    \split_addr_mask_q_reg[3] ,
+    \gpr1.dout_i_reg[19]_0 ,
+    \gpr1.dout_i_reg[19]_1 ,
+    \gpr1.dout_i_reg[19]_2 ,
     legal_wrap_len_q,
-    empty_fwft_i_reg,
-    \goreg_dm.dout_i_reg[9] ,
+    \goreg_dm.dout_i_reg[28] ,
+    s_axi_rvalid_0,
     first_word,
-    \length_counter_1_reg[7] ,
-    \goreg_dm.dout_i_reg[8] ,
+    first_mi_word_reg,
+    first_mi_word_reg_0,
     \current_word_1_reg[3] ,
     m_axi_rdata,
     p_1_in,
-    \S_AXI_RRESP_ACC_reg[0]_0 ,
-    first_mi_word_reg_0,
+    \S_AXI_RRESP_ACC_reg[0] ,
+    \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 ,
     m_axi_rvalid,
     areset_d,
     S_AXI_AREADY_I_reg_0,
     s_axi_arvalid,
-    \areset_d_reg[1] ,
+    command_ongoing_reg,
     S_AXI_AID_Q,
     s_axi_rid,
     m_axi_rlast);
   output [9:0]dout;
   output empty;
   output [3:0]din;
-  output [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[96] ;
-  output cmd_push_block_reg;
+  output [0:0]s_axi_rready_0;
+  output s_axi_aresetn;
   output [0:0]E;
   output m_axi_arvalid;
   output [3:0]DI;
-  output [2:0]\gpr1.dout_i_reg[7] ;
+  output [2:0]\S_AXI_ALEN_Q_reg[6] ;
   output [2:0]S;
-  output \next_mi_addr_reg[8] ;
-  output \next_mi_addr_reg[8]_0 ;
+  output split_ongoing_reg;
+  output access_is_incr_q_reg;
   output s_axi_rvalid;
   output m_axi_rready;
-  output [0:0]\WORD_LANE[0].S_AXI_RDATA_II_reg[31] ;
-  output [0:0]\WORD_LANE[1].S_AXI_RDATA_II_reg[63] ;
-  output [0:0]\WORD_LANE[2].S_AXI_RDATA_II_reg[95] ;
-  output [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[127] ;
-  output [0:0]first_mi_word_reg;
+  output [0:0]s_axi_rready_1;
+  output [0:0]s_axi_rready_2;
+  output [0:0]s_axi_rready_3;
+  output [0:0]s_axi_rready_4;
+  output [0:0]\goreg_dm.dout_i_reg[2] ;
   output [3:0]D;
   output [127:0]s_axi_rdata;
-  output \S_AXI_RRESP_ACC_reg[0] ;
-  output [3:0]\gpr1.dout_i_reg[7]_0 ;
-  output [3:0]\gpr1.dout_i_reg[7]_1 ;
+  output \goreg_dm.dout_i_reg[0] ;
+  output [3:0]\downsized_len_q_reg[7] ;
+  output [3:0]\downsized_len_q_reg[3] ;
+  output \areset_d_reg[0] ;
   output S_AXI_AREADY_I_reg;
-  output command_ongoing_reg;
-  output \queue_id_reg[0] ;
+  output \S_AXI_AID_Q_reg[0] ;
   output s_axi_rlast;
   input CLK;
   input [0:0]SR;
   input access_fit_mi_side_q;
-  input [14:0]\cmd_mask_q_reg[3] ;
+  input [14:0]\gpr1.dout_i_reg[13] ;
   input fix_need_to_split_q;
   input [7:0]Q;
   input split_ongoing;
@@ -300,39 +300,39 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0
   input cmd_push_block;
   input m_axi_arready;
   input access_is_fix_q;
-  input [7:0]\S_AXI_ALEN_Q_reg[7] ;
-  input [7:0]\downsized_len_q_reg[7] ;
+  input [7:0]\m_axi_arlen[7] ;
+  input [7:0]\m_axi_arlen[7]_0 ;
   input [0:0]CO;
   input access_is_incr_q;
   input wrap_need_to_split_q;
   input incr_need_to_split_q;
-  input [4:0]\unalignment_addr_q_reg[4] ;
-  input [7:0]\wrap_unaligned_len_q_reg[7] ;
-  input [7:0]\pushed_commands_reg[7] ;
-  input [3:0]\num_transactions_q_reg[3] ;
-  input \split_addr_mask_q_reg[31] ;
-  input [4:0]\fix_len_q_reg[4] ;
-  input [3:0]\S_AXI_AADDR_Q_reg[3] ;
+  input [4:0]cmd_length_i_carry__0_i_7__0;
+  input [7:0]cmd_length_i_carry__0_i_4__0;
+  input [7:0]cmd_length_i_carry__0_i_8__0;
+  input [3:0]last_incr_split0_carry;
+  input \gpr1.dout_i_reg[25] ;
+  input [4:0]cmd_length_i_carry__0_i_7__0_0;
+  input [3:0]\gpr1.dout_i_reg[19] ;
   input si_full_size_q;
-  input \split_addr_mask_q_reg[0] ;
-  input \split_addr_mask_q_reg[1] ;
-  input [1:0]\split_addr_mask_q_reg[3] ;
+  input \gpr1.dout_i_reg[19]_0 ;
+  input \gpr1.dout_i_reg[19]_1 ;
+  input [1:0]\gpr1.dout_i_reg[19]_2 ;
   input legal_wrap_len_q;
-  input empty_fwft_i_reg;
-  input \goreg_dm.dout_i_reg[9] ;
+  input \goreg_dm.dout_i_reg[28] ;
+  input s_axi_rvalid_0;
   input first_word;
-  input [0:0]\length_counter_1_reg[7] ;
-  input \goreg_dm.dout_i_reg[8] ;
+  input [0:0]first_mi_word_reg;
+  input first_mi_word_reg_0;
   input [3:0]\current_word_1_reg[3] ;
   input [31:0]m_axi_rdata;
   input [127:0]p_1_in;
-  input \S_AXI_RRESP_ACC_reg[0]_0 ;
-  input first_mi_word_reg_0;
+  input \S_AXI_RRESP_ACC_reg[0] ;
+  input \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 ;
   input m_axi_rvalid;
   input [1:0]areset_d;
   input [0:0]S_AXI_AREADY_I_reg_0;
   input s_axi_arvalid;
-  input \areset_d_reg[1] ;
+  input command_ongoing_reg;
   input S_AXI_AID_Q;
   input [0:0]s_axi_rid;
   input m_axi_rlast;
@@ -345,78 +345,78 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0
   wire [7:0]Q;
   wire [2:0]S;
   wire [0:0]SR;
-  wire [3:0]\S_AXI_AADDR_Q_reg[3] ;
   wire S_AXI_AID_Q;
-  wire [7:0]\S_AXI_ALEN_Q_reg[7] ;
+  wire \S_AXI_AID_Q_reg[0] ;
+  wire [2:0]\S_AXI_ALEN_Q_reg[6] ;
   wire S_AXI_AREADY_I_reg;
   wire [0:0]S_AXI_AREADY_I_reg_0;
   wire \S_AXI_RRESP_ACC_reg[0] ;
-  wire \S_AXI_RRESP_ACC_reg[0]_0 ;
-  wire [0:0]\WORD_LANE[0].S_AXI_RDATA_II_reg[31] ;
-  wire [0:0]\WORD_LANE[1].S_AXI_RDATA_II_reg[63] ;
-  wire [0:0]\WORD_LANE[2].S_AXI_RDATA_II_reg[95] ;
-  wire [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[127] ;
-  wire [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[96] ;
+  wire \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 ;
   wire access_fit_mi_side_q;
   wire access_is_fix_q;
   wire access_is_incr_q;
+  wire access_is_incr_q_reg;
   wire access_is_wrap_q;
   wire [1:0]areset_d;
-  wire \areset_d_reg[1] ;
-  wire [14:0]\cmd_mask_q_reg[3] ;
+  wire \areset_d_reg[0] ;
+  wire [7:0]cmd_length_i_carry__0_i_4__0;
+  wire [4:0]cmd_length_i_carry__0_i_7__0;
+  wire [4:0]cmd_length_i_carry__0_i_7__0_0;
+  wire [7:0]cmd_length_i_carry__0_i_8__0;
   wire cmd_push_block;
-  wire cmd_push_block_reg;
   wire command_ongoing;
   wire command_ongoing_reg;
   wire [3:0]\current_word_1_reg[3] ;
   wire [3:0]din;
   wire [9:0]dout;
-  wire [7:0]\downsized_len_q_reg[7] ;
+  wire [3:0]\downsized_len_q_reg[3] ;
+  wire [3:0]\downsized_len_q_reg[7] ;
   wire empty;
-  wire empty_fwft_i_reg;
   wire [0:0]first_mi_word_reg;
   wire first_mi_word_reg_0;
   wire first_word;
-  wire [4:0]\fix_len_q_reg[4] ;
   wire fix_need_to_split_q;
-  wire \goreg_dm.dout_i_reg[8] ;
-  wire \goreg_dm.dout_i_reg[9] ;
-  wire [2:0]\gpr1.dout_i_reg[7] ;
-  wire [3:0]\gpr1.dout_i_reg[7]_0 ;
-  wire [3:0]\gpr1.dout_i_reg[7]_1 ;
+  wire \goreg_dm.dout_i_reg[0] ;
+  wire \goreg_dm.dout_i_reg[28] ;
+  wire [0:0]\goreg_dm.dout_i_reg[2] ;
+  wire [14:0]\gpr1.dout_i_reg[13] ;
+  wire [3:0]\gpr1.dout_i_reg[19] ;
+  wire \gpr1.dout_i_reg[19]_0 ;
+  wire \gpr1.dout_i_reg[19]_1 ;
+  wire [1:0]\gpr1.dout_i_reg[19]_2 ;
+  wire \gpr1.dout_i_reg[25] ;
   wire incr_need_to_split_q;
+  wire [3:0]last_incr_split0_carry;
   wire legal_wrap_len_q;
-  wire [0:0]\length_counter_1_reg[7] ;
+  wire [7:0]\m_axi_arlen[7] ;
+  wire [7:0]\m_axi_arlen[7]_0 ;
   wire m_axi_arready;
   wire m_axi_arvalid;
   wire [31:0]m_axi_rdata;
   wire m_axi_rlast;
   wire m_axi_rready;
   wire m_axi_rvalid;
-  wire \next_mi_addr_reg[8] ;
-  wire \next_mi_addr_reg[8]_0 ;
-  wire [3:0]\num_transactions_q_reg[3] ;
   wire out;
   wire [127:0]p_1_in;
-  wire [7:0]\pushed_commands_reg[7] ;
-  wire \queue_id_reg[0] ;
+  wire s_axi_aresetn;
   wire s_axi_arvalid;
   wire [127:0]s_axi_rdata;
   wire [0:0]s_axi_rid;
   wire s_axi_rlast;
   wire s_axi_rready;
+  wire [0:0]s_axi_rready_0;
+  wire [0:0]s_axi_rready_1;
+  wire [0:0]s_axi_rready_2;
+  wire [0:0]s_axi_rready_3;
+  wire [0:0]s_axi_rready_4;
   wire s_axi_rvalid;
+  wire s_axi_rvalid_0;
   wire si_full_size_q;
-  wire \split_addr_mask_q_reg[0] ;
-  wire \split_addr_mask_q_reg[1] ;
-  wire \split_addr_mask_q_reg[31] ;
-  wire [1:0]\split_addr_mask_q_reg[3] ;
   wire split_ongoing;
-  wire [4:0]\unalignment_addr_q_reg[4] ;
+  wire split_ongoing_reg;
   wire wrap_need_to_split_q;
-  wire [7:0]\wrap_unaligned_len_q_reg[7] ;
 
-  design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0 inst
+  design_1_auto_ds_2_axi_data_fifo_v2_1_17_fifo_gen__parameterized0 inst
        (.CLK(CLK),
         .CO(CO),
         .D(D),
@@ -425,88 +425,88 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0
         .Q(Q),
         .S(S),
         .SR(SR),
-        .\S_AXI_AADDR_Q_reg[3] (\S_AXI_AADDR_Q_reg[3] ),
         .S_AXI_AID_Q(S_AXI_AID_Q),
-        .\S_AXI_ALEN_Q_reg[7] (\S_AXI_ALEN_Q_reg[7] ),
+        .\S_AXI_AID_Q_reg[0] (\S_AXI_AID_Q_reg[0] ),
+        .\S_AXI_ALEN_Q_reg[6] (\S_AXI_ALEN_Q_reg[6] ),
         .S_AXI_AREADY_I_reg(S_AXI_AREADY_I_reg),
         .S_AXI_AREADY_I_reg_0(S_AXI_AREADY_I_reg_0),
         .\S_AXI_RRESP_ACC_reg[0] (\S_AXI_RRESP_ACC_reg[0] ),
-        .\S_AXI_RRESP_ACC_reg[0]_0 (\S_AXI_RRESP_ACC_reg[0]_0 ),
-        .\WORD_LANE[0].S_AXI_RDATA_II_reg[31] (\WORD_LANE[0].S_AXI_RDATA_II_reg[31] ),
-        .\WORD_LANE[1].S_AXI_RDATA_II_reg[63] (\WORD_LANE[1].S_AXI_RDATA_II_reg[63] ),
-        .\WORD_LANE[2].S_AXI_RDATA_II_reg[95] (\WORD_LANE[2].S_AXI_RDATA_II_reg[95] ),
-        .\WORD_LANE[3].S_AXI_RDATA_II_reg[127] (\WORD_LANE[3].S_AXI_RDATA_II_reg[127] ),
-        .\WORD_LANE[3].S_AXI_RDATA_II_reg[96] (\WORD_LANE[3].S_AXI_RDATA_II_reg[96] ),
-        .access_fit_mi_side_q_reg({access_fit_mi_side_q,\cmd_mask_q_reg[3] }),
+        .\WORD_LANE[0].S_AXI_RDATA_II[31]_i_3_0 (\WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 ),
         .access_is_fix_q(access_is_fix_q),
         .access_is_incr_q(access_is_incr_q),
+        .access_is_incr_q_reg(access_is_incr_q_reg),
         .access_is_wrap_q(access_is_wrap_q),
         .areset_d(areset_d),
-        .\areset_d_reg[1] (\areset_d_reg[1] ),
+        .\areset_d_reg[0] (\areset_d_reg[0] ),
+        .cmd_length_i_carry__0_i_4__0_0(cmd_length_i_carry__0_i_4__0),
+        .cmd_length_i_carry__0_i_7__0_0(cmd_length_i_carry__0_i_7__0),
+        .cmd_length_i_carry__0_i_7__0_1(cmd_length_i_carry__0_i_7__0_0),
+        .cmd_length_i_carry__0_i_8__0_0(cmd_length_i_carry__0_i_8__0),
         .cmd_push_block(cmd_push_block),
-        .cmd_push_block_reg(cmd_push_block_reg),
         .command_ongoing(command_ongoing),
         .command_ongoing_reg(command_ongoing_reg),
         .\current_word_1_reg[3] (\current_word_1_reg[3] ),
         .din(din),
         .dout(dout),
+        .\downsized_len_q_reg[3] (\downsized_len_q_reg[3] ),
         .\downsized_len_q_reg[7] (\downsized_len_q_reg[7] ),
         .empty(empty),
-        .empty_fwft_i_reg(empty_fwft_i_reg),
         .first_mi_word_reg(first_mi_word_reg),
         .first_mi_word_reg_0(first_mi_word_reg_0),
         .first_word(first_word),
-        .\fix_len_q_reg[4] (\fix_len_q_reg[4] ),
         .fix_need_to_split_q(fix_need_to_split_q),
-        .\goreg_dm.dout_i_reg[8] (\goreg_dm.dout_i_reg[8] ),
-        .\goreg_dm.dout_i_reg[9] (\goreg_dm.dout_i_reg[9] ),
-        .\gpr1.dout_i_reg[7] (\gpr1.dout_i_reg[7] ),
-        .\gpr1.dout_i_reg[7]_0 (\gpr1.dout_i_reg[7]_0 ),
-        .\gpr1.dout_i_reg[7]_1 (\gpr1.dout_i_reg[7]_1 ),
+        .\goreg_dm.dout_i_reg[0] (\goreg_dm.dout_i_reg[0] ),
+        .\goreg_dm.dout_i_reg[28] (\goreg_dm.dout_i_reg[28] ),
+        .\goreg_dm.dout_i_reg[2] (\goreg_dm.dout_i_reg[2] ),
+        .\gpr1.dout_i_reg[19] (\gpr1.dout_i_reg[19] ),
+        .\gpr1.dout_i_reg[19]_0 (\gpr1.dout_i_reg[19]_0 ),
+        .\gpr1.dout_i_reg[19]_1 (\gpr1.dout_i_reg[19]_1 ),
+        .\gpr1.dout_i_reg[19]_2 (\gpr1.dout_i_reg[19]_2 ),
+        .\gpr1.dout_i_reg[25] (\gpr1.dout_i_reg[25] ),
         .incr_need_to_split_q(incr_need_to_split_q),
+        .last_incr_split0_carry(last_incr_split0_carry),
         .legal_wrap_len_q(legal_wrap_len_q),
-        .\length_counter_1_reg[7] (\length_counter_1_reg[7] ),
+        .\m_axi_arlen[7] (\m_axi_arlen[7] ),
+        .\m_axi_arlen[7]_0 (\m_axi_arlen[7]_0 ),
         .m_axi_arready(m_axi_arready),
+        .\m_axi_arsize[0] ({access_fit_mi_side_q,\gpr1.dout_i_reg[13] }),
         .m_axi_arvalid(m_axi_arvalid),
         .m_axi_rdata(m_axi_rdata),
         .m_axi_rlast(m_axi_rlast),
         .m_axi_rready(m_axi_rready),
         .m_axi_rvalid(m_axi_rvalid),
-        .\next_mi_addr_reg[8] (\next_mi_addr_reg[8] ),
-        .\next_mi_addr_reg[8]_0 (\next_mi_addr_reg[8]_0 ),
-        .\num_transactions_q_reg[3] (\num_transactions_q_reg[3] ),
         .out(out),
         .p_1_in(p_1_in),
-        .\pushed_commands_reg[7] (\pushed_commands_reg[7] ),
-        .\queue_id_reg[0] (\queue_id_reg[0] ),
+        .s_axi_aresetn(s_axi_aresetn),
         .s_axi_arvalid(s_axi_arvalid),
         .s_axi_rdata(s_axi_rdata),
         .s_axi_rid(s_axi_rid),
         .s_axi_rlast(s_axi_rlast),
         .s_axi_rready(s_axi_rready),
+        .s_axi_rready_0(s_axi_rready_0),
+        .s_axi_rready_1(s_axi_rready_1),
+        .s_axi_rready_2(s_axi_rready_2),
+        .s_axi_rready_3(s_axi_rready_3),
+        .s_axi_rready_4(s_axi_rready_4),
         .s_axi_rvalid(s_axi_rvalid),
+        .s_axi_rvalid_0(s_axi_rvalid_0),
         .si_full_size_q(si_full_size_q),
-        .\split_addr_mask_q_reg[0] (\split_addr_mask_q_reg[0] ),
-        .\split_addr_mask_q_reg[1] (\split_addr_mask_q_reg[1] ),
-        .\split_addr_mask_q_reg[31] (\split_addr_mask_q_reg[31] ),
-        .\split_addr_mask_q_reg[3] (\split_addr_mask_q_reg[3] ),
         .split_ongoing(split_ongoing),
-        .\unalignment_addr_q_reg[4] (\unalignment_addr_q_reg[4] ),
-        .wrap_need_to_split_q(wrap_need_to_split_q),
-        .\wrap_unaligned_len_q_reg[7] (\wrap_unaligned_len_q_reg[7] ));
+        .split_ongoing_reg(split_ongoing_reg),
+        .wrap_need_to_split_q(wrap_need_to_split_q));
 endmodule
 
-(* ORIG_REF_NAME = "axi_data_fifo_v2_1_15_axic_fifo" *) 
-module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0__xdcDup__1
+(* ORIG_REF_NAME = "axi_data_fifo_v2_1_17_axic_fifo" *) 
+module design_1_auto_ds_2_axi_data_fifo_v2_1_17_axic_fifo__parameterized0__xdcDup__1
    (dout,
     full,
-    \m_axi_awsize[2] ,
-    cmd_push_block_reg,
+    access_fit_mi_side_q_reg,
+    s_axi_aresetn,
     m_axi_awvalid,
     DI,
-    \gpr1.dout_i_reg[7] ,
-    \next_mi_addr_reg[8] ,
-    \next_mi_addr_reg[8]_0 ,
+    \S_AXI_ALEN_Q_reg[6] ,
+    split_ongoing_reg,
+    access_is_incr_q_reg,
     E,
     m_axi_wvalid,
     s_axi_wready,
@@ -514,7 +514,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0__xdcDu
     m_axi_wstrb,
     D,
     S,
-    \gpr1.dout_i_reg[7]_0 ,
+    \downsized_len_q_reg[3] ,
     CLK,
     SR,
     din,
@@ -526,45 +526,45 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0__xdcDu
     out,
     command_ongoing,
     cmd_push_block,
-    ram_full_i_reg,
+    m_axi_awvalid_0,
     m_axi_awready,
     access_is_fix_q,
-    \S_AXI_ALEN_Q_reg[7] ,
-    \downsized_len_q_reg[7] ,
-    access_is_fix_q_reg,
+    \m_axi_awlen[7] ,
+    \m_axi_awlen[7]_0 ,
+    cmd_length_i_carry_i_8,
     CO,
     access_is_incr_q,
-    \unalignment_addr_q_reg[4] ,
-    \wrap_unaligned_len_q_reg[7] ,
+    cmd_length_i_carry__0_i_7,
+    cmd_length_i_carry__0_i_4,
     wrap_need_to_split_q,
-    \split_addr_mask_q_reg[31] ,
-    \fix_len_q_reg[4] ,
-    \S_AXI_AADDR_Q_reg[3] ,
+    \gpr1.dout_i_reg[25] ,
+    cmd_length_i_carry__0_i_7_0,
+    \gpr1.dout_i_reg[19] ,
     si_full_size_q,
-    \split_addr_mask_q_reg[0] ,
-    \split_addr_mask_q_reg[1] ,
-    \split_addr_mask_q_reg[3] ,
+    \gpr1.dout_i_reg[19]_0 ,
+    \gpr1.dout_i_reg[19]_1 ,
+    \gpr1.dout_i_reg[19]_2 ,
     incr_need_to_split_q,
     legal_wrap_len_q,
     s_axi_wvalid,
     m_axi_wready,
     m_axi_wlast,
     first_mi_word,
-    \length_counter_1_reg[7] ,
-    \goreg_dm.dout_i_reg[8] ,
+    s_axi_wready_0,
+    s_axi_wready_1,
     s_axi_wdata,
     s_axi_wstrb,
     \current_word_1_reg[3] ,
-    first_word_reg);
+    \current_word_1_reg[3]_0 );
   output [8:0]dout;
   output full;
-  output [2:0]\m_axi_awsize[2] ;
-  output cmd_push_block_reg;
+  output [2:0]access_fit_mi_side_q_reg;
+  output s_axi_aresetn;
   output m_axi_awvalid;
   output [3:0]DI;
-  output [2:0]\gpr1.dout_i_reg[7] ;
-  output \next_mi_addr_reg[8] ;
-  output \next_mi_addr_reg[8]_0 ;
+  output [2:0]\S_AXI_ALEN_Q_reg[6] ;
+  output split_ongoing_reg;
+  output access_is_incr_q_reg;
   output [0:0]E;
   output m_axi_wvalid;
   output s_axi_wready;
@@ -572,7 +572,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0__xdcDu
   output [3:0]m_axi_wstrb;
   output [3:0]D;
   output [3:0]S;
-  output [3:0]\gpr1.dout_i_reg[7]_0 ;
+  output [3:0]\downsized_len_q_reg[3] ;
   input CLK;
   input [0:0]SR;
   input [16:0]din;
@@ -584,36 +584,36 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0__xdcDu
   input out;
   input command_ongoing;
   input cmd_push_block;
-  input ram_full_i_reg;
+  input m_axi_awvalid_0;
   input m_axi_awready;
   input access_is_fix_q;
-  input [7:0]\S_AXI_ALEN_Q_reg[7] ;
-  input [7:0]\downsized_len_q_reg[7] ;
-  input access_is_fix_q_reg;
+  input [7:0]\m_axi_awlen[7] ;
+  input [7:0]\m_axi_awlen[7]_0 ;
+  input cmd_length_i_carry_i_8;
   input [0:0]CO;
   input access_is_incr_q;
-  input [4:0]\unalignment_addr_q_reg[4] ;
-  input [7:0]\wrap_unaligned_len_q_reg[7] ;
+  input [4:0]cmd_length_i_carry__0_i_7;
+  input [7:0]cmd_length_i_carry__0_i_4;
   input wrap_need_to_split_q;
-  input \split_addr_mask_q_reg[31] ;
-  input [4:0]\fix_len_q_reg[4] ;
-  input [3:0]\S_AXI_AADDR_Q_reg[3] ;
+  input \gpr1.dout_i_reg[25] ;
+  input [4:0]cmd_length_i_carry__0_i_7_0;
+  input [3:0]\gpr1.dout_i_reg[19] ;
   input si_full_size_q;
-  input \split_addr_mask_q_reg[0] ;
-  input \split_addr_mask_q_reg[1] ;
-  input [1:0]\split_addr_mask_q_reg[3] ;
+  input \gpr1.dout_i_reg[19]_0 ;
+  input \gpr1.dout_i_reg[19]_1 ;
+  input [1:0]\gpr1.dout_i_reg[19]_2 ;
   input incr_need_to_split_q;
   input legal_wrap_len_q;
   input s_axi_wvalid;
   input m_axi_wready;
   input m_axi_wlast;
   input first_mi_word;
-  input [0:0]\length_counter_1_reg[7] ;
-  input \goreg_dm.dout_i_reg[8] ;
+  input [0:0]s_axi_wready_0;
+  input s_axi_wready_1;
   input [127:0]s_axi_wdata;
   input [15:0]s_axi_wstrb;
   input [3:0]\current_word_1_reg[3] ;
-  input first_word_reg;
+  input \current_word_1_reg[3]_0 ;
 
   wire CLK;
   wire [0:0]CO;
@@ -623,58 +623,58 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0__xdcDu
   wire [7:0]Q;
   wire [3:0]S;
   wire [0:0]SR;
-  wire [3:0]\S_AXI_AADDR_Q_reg[3] ;
-  wire [7:0]\S_AXI_ALEN_Q_reg[7] ;
+  wire [2:0]\S_AXI_ALEN_Q_reg[6] ;
+  wire [2:0]access_fit_mi_side_q_reg;
   wire access_is_fix_q;
-  wire access_is_fix_q_reg;
   wire access_is_incr_q;
+  wire access_is_incr_q_reg;
   wire access_is_wrap_q;
+  wire [7:0]cmd_length_i_carry__0_i_4;
+  wire [4:0]cmd_length_i_carry__0_i_7;
+  wire [4:0]cmd_length_i_carry__0_i_7_0;
+  wire cmd_length_i_carry_i_8;
   wire cmd_push_block;
-  wire cmd_push_block_reg;
   wire command_ongoing;
   wire [3:0]\current_word_1_reg[3] ;
+  wire \current_word_1_reg[3]_0 ;
   wire [16:0]din;
   wire [8:0]dout;
-  wire [7:0]\downsized_len_q_reg[7] ;
+  wire [3:0]\downsized_len_q_reg[3] ;
   wire first_mi_word;
-  wire first_word_reg;
-  wire [4:0]\fix_len_q_reg[4] ;
   wire fix_need_to_split_q;
   wire full;
-  wire \goreg_dm.dout_i_reg[8] ;
-  wire [2:0]\gpr1.dout_i_reg[7] ;
-  wire [3:0]\gpr1.dout_i_reg[7]_0 ;
+  wire [3:0]\gpr1.dout_i_reg[19] ;
+  wire \gpr1.dout_i_reg[19]_0 ;
+  wire \gpr1.dout_i_reg[19]_1 ;
+  wire [1:0]\gpr1.dout_i_reg[19]_2 ;
+  wire \gpr1.dout_i_reg[25] ;
   wire incr_need_to_split_q;
   wire legal_wrap_len_q;
-  wire [0:0]\length_counter_1_reg[7] ;
+  wire [7:0]\m_axi_awlen[7] ;
+  wire [7:0]\m_axi_awlen[7]_0 ;
   wire m_axi_awready;
-  wire [2:0]\m_axi_awsize[2] ;
   wire m_axi_awvalid;
+  wire m_axi_awvalid_0;
   wire [31:0]m_axi_wdata;
   wire m_axi_wlast;
   wire m_axi_wready;
   wire [3:0]m_axi_wstrb;
   wire m_axi_wvalid;
-  wire \next_mi_addr_reg[8] ;
-  wire \next_mi_addr_reg[8]_0 ;
   wire out;
-  wire ram_full_i_reg;
+  wire s_axi_aresetn;
   wire [127:0]s_axi_wdata;
   wire s_axi_wready;
+  wire [0:0]s_axi_wready_0;
+  wire s_axi_wready_1;
   wire [15:0]s_axi_wstrb;
   wire s_axi_wvalid;
   wire si_full_size_q;
-  wire \split_addr_mask_q_reg[0] ;
-  wire \split_addr_mask_q_reg[1] ;
-  wire \split_addr_mask_q_reg[31] ;
-  wire [1:0]\split_addr_mask_q_reg[3] ;
   wire split_ongoing;
-  wire [4:0]\unalignment_addr_q_reg[4] ;
+  wire split_ongoing_reg;
   wire wr_en;
   wire wrap_need_to_split_q;
-  wire [7:0]\wrap_unaligned_len_q_reg[7] ;
 
-  design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup__1 inst
+  design_1_auto_ds_2_axi_data_fifo_v2_1_17_fifo_gen__parameterized0__xdcDup__1 inst
        (.CLK(CLK),
         .CO(CO),
         .D(D),
@@ -683,59 +683,59 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0__xdcDu
         .Q(Q),
         .S(S),
         .SR(SR),
-        .\S_AXI_AADDR_Q_reg[3] (\S_AXI_AADDR_Q_reg[3] ),
-        .\S_AXI_ALEN_Q_reg[7] (\S_AXI_ALEN_Q_reg[7] ),
+        .\S_AXI_ALEN_Q_reg[6] (\S_AXI_ALEN_Q_reg[6] ),
+        .access_fit_mi_side_q_reg(access_fit_mi_side_q_reg),
         .access_is_fix_q(access_is_fix_q),
-        .access_is_fix_q_reg(access_is_fix_q_reg),
         .access_is_incr_q(access_is_incr_q),
+        .access_is_incr_q_reg(access_is_incr_q_reg),
         .access_is_wrap_q(access_is_wrap_q),
+        .cmd_length_i_carry__0_i_4_0(cmd_length_i_carry__0_i_4),
+        .cmd_length_i_carry__0_i_7_0(cmd_length_i_carry__0_i_7),
+        .cmd_length_i_carry__0_i_7_1(cmd_length_i_carry__0_i_7_0),
+        .cmd_length_i_carry_i_8_0(cmd_length_i_carry_i_8),
         .cmd_push_block(cmd_push_block),
-        .cmd_push_block_reg(cmd_push_block_reg),
         .command_ongoing(command_ongoing),
         .\current_word_1_reg[3] (\current_word_1_reg[3] ),
+        .\current_word_1_reg[3]_0 (\current_word_1_reg[3]_0 ),
         .din(din),
         .dout(dout),
-        .\downsized_len_q_reg[7] (\downsized_len_q_reg[7] ),
+        .\downsized_len_q_reg[3] (\downsized_len_q_reg[3] ),
         .first_mi_word(first_mi_word),
-        .first_word_reg(first_word_reg),
-        .\fix_len_q_reg[4] (\fix_len_q_reg[4] ),
         .fix_need_to_split_q(fix_need_to_split_q),
         .full(full),
-        .\goreg_dm.dout_i_reg[8] (\goreg_dm.dout_i_reg[8] ),
-        .\gpr1.dout_i_reg[7] (\gpr1.dout_i_reg[7] ),
-        .\gpr1.dout_i_reg[7]_0 (\gpr1.dout_i_reg[7]_0 ),
+        .\gpr1.dout_i_reg[19] (\gpr1.dout_i_reg[19] ),
+        .\gpr1.dout_i_reg[19]_0 (\gpr1.dout_i_reg[19]_0 ),
+        .\gpr1.dout_i_reg[19]_1 (\gpr1.dout_i_reg[19]_1 ),
+        .\gpr1.dout_i_reg[19]_2 (\gpr1.dout_i_reg[19]_2 ),
+        .\gpr1.dout_i_reg[25] (\gpr1.dout_i_reg[25] ),
         .incr_need_to_split_q(incr_need_to_split_q),
         .legal_wrap_len_q(legal_wrap_len_q),
-        .\length_counter_1_reg[7] (\length_counter_1_reg[7] ),
+        .\m_axi_awlen[7] (\m_axi_awlen[7] ),
+        .\m_axi_awlen[7]_0 (\m_axi_awlen[7]_0 ),
         .m_axi_awready(m_axi_awready),
-        .\m_axi_awsize[2] (\m_axi_awsize[2] ),
         .m_axi_awvalid(m_axi_awvalid),
+        .m_axi_awvalid_0(m_axi_awvalid_0),
         .m_axi_wdata(m_axi_wdata),
         .m_axi_wlast(m_axi_wlast),
         .m_axi_wready(m_axi_wready),
         .m_axi_wstrb(m_axi_wstrb),
         .m_axi_wvalid(m_axi_wvalid),
-        .\next_mi_addr_reg[8] (\next_mi_addr_reg[8] ),
-        .\next_mi_addr_reg[8]_0 (\next_mi_addr_reg[8]_0 ),
         .out(out),
-        .ram_full_i_reg(ram_full_i_reg),
+        .s_axi_aresetn(s_axi_aresetn),
         .s_axi_wdata(s_axi_wdata),
         .s_axi_wready(s_axi_wready),
+        .s_axi_wready_0(s_axi_wready_0),
+        .s_axi_wready_1(s_axi_wready_1),
         .s_axi_wstrb(s_axi_wstrb),
         .s_axi_wvalid(s_axi_wvalid),
         .si_full_size_q(si_full_size_q),
-        .\split_addr_mask_q_reg[0] (\split_addr_mask_q_reg[0] ),
-        .\split_addr_mask_q_reg[1] (\split_addr_mask_q_reg[1] ),
-        .\split_addr_mask_q_reg[31] (\split_addr_mask_q_reg[31] ),
-        .\split_addr_mask_q_reg[3] (\split_addr_mask_q_reg[3] ),
         .split_ongoing(split_ongoing),
-        .\unalignment_addr_q_reg[4] (\unalignment_addr_q_reg[4] ),
+        .split_ongoing_reg(split_ongoing_reg),
         .wr_en(wr_en),
-        .wrap_need_to_split_q(wrap_need_to_split_q),
-        .\wrap_unaligned_len_q_reg[7] (\wrap_unaligned_len_q_reg[7] ));
+        .wrap_need_to_split_q(wrap_need_to_split_q));
 endmodule
 
-module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
+module design_1_auto_ds_2_axi_data_fifo_v2_1_17_fifo_gen
    (dout,
     full,
     empty,
@@ -744,19 +744,19 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
     E,
     wr_en,
     cmd_b_push_block_reg,
-    split_ongoing_reg,
+    access_is_fix_q_reg,
     S,
     S_AXI_AREADY_I_reg,
-    command_ongoing_reg,
-    \queue_id_reg[0] ,
+    S_AXI_AREADY_I_reg_0,
+    \S_AXI_AID_Q_reg[0] ,
     CLK,
     rd_en,
     m_axi_awready,
-    ram_full_i_reg,
+    cmd_b_push_block_reg_0,
     cmd_push_block,
     command_ongoing,
     cmd_b_push_block,
-    S_AXI_AREADY_I_reg_0,
+    cmd_b_push_block_reg_1,
     out,
     wrap_need_to_split_q,
     incr_need_to_split_q,
@@ -767,13 +767,13 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
     split_ongoing,
     access_is_fix_q,
     Q,
-    \pushed_commands_reg[7] ,
-    \num_transactions_q_reg[3] ,
+    S_AXI_AREADY_I_i_4_0,
+    \gpr1.dout_i_reg[1] ,
     S_AXI_AREADY_I_reg_1,
     s_axi_awvalid,
-    \areset_d_reg[0] ,
+    S_AXI_AREADY_I_reg_2,
     areset_d,
-    \areset_d_reg[1] ,
+    command_ongoing_reg,
     S_AXI_AID_Q,
     s_axi_bid);
   output [8:0]dout;
@@ -784,19 +784,19 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
   output [0:0]E;
   output wr_en;
   output cmd_b_push_block_reg;
-  output split_ongoing_reg;
+  output access_is_fix_q_reg;
   output [2:0]S;
   output S_AXI_AREADY_I_reg;
-  output command_ongoing_reg;
-  output \queue_id_reg[0] ;
+  output S_AXI_AREADY_I_reg_0;
+  output \S_AXI_AID_Q_reg[0] ;
   input CLK;
   input rd_en;
   input m_axi_awready;
-  input ram_full_i_reg;
+  input cmd_b_push_block_reg_0;
   input cmd_push_block;
   input command_ongoing;
   input cmd_b_push_block;
-  input [0:0]S_AXI_AREADY_I_reg_0;
+  input [0:0]cmd_b_push_block_reg_1;
   input out;
   input wrap_need_to_split_q;
   input incr_need_to_split_q;
@@ -807,13 +807,13 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
   input split_ongoing;
   input access_is_fix_q;
   input [3:0]Q;
-  input [7:0]\pushed_commands_reg[7] ;
-  input [3:0]\num_transactions_q_reg[3] ;
+  input [7:0]S_AXI_AREADY_I_i_4_0;
+  input [3:0]\gpr1.dout_i_reg[1] ;
   input [0:0]S_AXI_AREADY_I_reg_1;
   input s_axi_awvalid;
-  input \areset_d_reg[0] ;
+  input S_AXI_AREADY_I_reg_2;
   input [0:0]areset_d;
-  input \areset_d_reg[1] ;
+  input command_ongoing_reg;
   input S_AXI_AID_Q;
   input [0:0]s_axi_bid;
 
@@ -824,21 +824,25 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
   wire [2:0]S;
   wire [0:0]SR;
   wire S_AXI_AID_Q;
+  wire \S_AXI_AID_Q_reg[0] ;
   wire S_AXI_AREADY_I_i_3_n_0;
+  wire [7:0]S_AXI_AREADY_I_i_4_0;
   wire S_AXI_AREADY_I_i_5_n_0;
   wire S_AXI_AREADY_I_i_6_n_0;
   wire S_AXI_AREADY_I_reg;
-  wire [0:0]S_AXI_AREADY_I_reg_0;
+  wire S_AXI_AREADY_I_reg_0;
   wire [0:0]S_AXI_AREADY_I_reg_1;
+  wire S_AXI_AREADY_I_reg_2;
   wire access_is_fix_q;
+  wire access_is_fix_q_reg;
   wire access_is_incr_q;
   wire access_is_wrap_q;
   wire [0:0]areset_d;
-  wire \areset_d_reg[0] ;
-  wire \areset_d_reg[1] ;
   wire cmd_b_push;
   wire cmd_b_push_block;
   wire cmd_b_push_block_reg;
+  wire cmd_b_push_block_reg_0;
+  wire [0:0]cmd_b_push_block_reg_1;
   wire cmd_push_block;
   wire command_ongoing;
   wire command_ongoing_reg;
@@ -847,19 +851,15 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
   wire empty;
   wire fix_need_to_split_q;
   wire full;
+  wire [3:0]\gpr1.dout_i_reg[1] ;
   wire incr_need_to_split_q;
   wire m_axi_awready;
-  wire [3:0]\num_transactions_q_reg[3] ;
   wire out;
   wire [3:0]p_1_out;
-  wire [7:0]\pushed_commands_reg[7] ;
-  wire \queue_id_reg[0] ;
-  wire ram_full_i_reg;
   wire rd_en;
   wire s_axi_awvalid;
   wire [0:0]s_axi_bid;
   wire split_ongoing;
-  wire split_ongoing_reg;
   wire wr_en;
   wire wrap_need_to_split_q;
   wire NLW_fifo_gen_inst_almost_empty_UNCONNECTED;
@@ -998,13 +998,13 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
         .I1(S_AXI_AREADY_I_i_3_n_0),
         .I2(S_AXI_AREADY_I_reg_1),
         .I3(s_axi_awvalid),
-        .I4(\areset_d_reg[0] ),
+        .I4(S_AXI_AREADY_I_reg_2),
         .I5(areset_d),
         .O(S_AXI_AREADY_I_reg));
   LUT6 #(
     .INIT(64'h002A2A2A002A002A)) 
     S_AXI_AREADY_I_i_3
-       (.I0(split_ongoing_reg),
+       (.I0(access_is_fix_q_reg),
         .I1(CO),
         .I2(access_is_incr_q),
         .I3(access_is_wrap_q),
@@ -1019,24 +1019,24 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
         .I2(S_AXI_AREADY_I_i_5_n_0),
         .I3(S_AXI_AREADY_I_i_6_n_0),
         .I4(Q[1]),
-        .I5(\pushed_commands_reg[7] [1]),
-        .O(split_ongoing_reg));
+        .I5(S_AXI_AREADY_I_i_4_0[1]),
+        .O(access_is_fix_q_reg));
   LUT4 #(
     .INIT(16'h9009)) 
     S_AXI_AREADY_I_i_5
-       (.I0(\pushed_commands_reg[7] [0]),
+       (.I0(S_AXI_AREADY_I_i_4_0[0]),
         .I1(Q[0]),
-        .I2(\pushed_commands_reg[7] [3]),
+        .I2(S_AXI_AREADY_I_i_4_0[3]),
         .I3(Q[3]),
         .O(S_AXI_AREADY_I_i_5_n_0));
   LUT6 #(
     .INIT(64'hFFFEFFFFFFFFFFFE)) 
     S_AXI_AREADY_I_i_6
-       (.I0(\pushed_commands_reg[7] [5]),
-        .I1(\pushed_commands_reg[7] [4]),
-        .I2(\pushed_commands_reg[7] [7]),
-        .I3(\pushed_commands_reg[7] [6]),
-        .I4(\pushed_commands_reg[7] [2]),
+       (.I0(S_AXI_AREADY_I_i_4_0[5]),
+        .I1(S_AXI_AREADY_I_i_4_0[4]),
+        .I2(S_AXI_AREADY_I_i_4_0[7]),
+        .I3(S_AXI_AREADY_I_i_4_0[6]),
+        .I4(S_AXI_AREADY_I_i_4_0[2]),
         .I5(Q[2]),
         .O(S_AXI_AREADY_I_i_6_n_0));
   LUT6 #(
@@ -1044,10 +1044,10 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
     cmd_b_push_block_i_1
        (.I0(cmd_b_push_block),
         .I1(full),
-        .I2(ram_full_i_reg),
+        .I2(cmd_b_push_block_reg_0),
         .I3(cmd_push_block),
         .I4(command_ongoing),
-        .I5(S_AXI_AREADY_I_reg_0),
+        .I5(cmd_b_push_block_reg_1),
         .O(cmd_b_push_block_reg));
   LUT6 #(
     .INIT(64'hFFFFFDDD0000F000)) 
@@ -1056,9 +1056,9 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
         .I1(S_AXI_AREADY_I_i_3_n_0),
         .I2(S_AXI_AREADY_I_reg_1),
         .I3(s_axi_awvalid),
-        .I4(\areset_d_reg[1] ),
+        .I4(command_ongoing_reg),
         .I5(command_ongoing),
-        .O(command_ongoing_reg));
+        .O(S_AXI_AREADY_I_reg_0));
   (* C_ADD_NGC_CONSTRAINT = "0" *) 
   (* C_APPLICATION_TYPE_AXIS = "0" *) 
   (* C_APPLICATION_TYPE_RACH = "0" *) 
@@ -1261,7 +1261,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
   (* C_WR_PNTR_WIDTH_WDCH = "10" *) 
   (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
   (* C_WR_RESPONSE_LATENCY = "1" *) 
-  design_1_auto_ds_2_fifo_generator_v13_2_2 fifo_gen_inst
+  design_1_auto_ds_2_fifo_generator_v13_2_3 fifo_gen_inst
        (.almost_empty(NLW_fifo_gen_inst_almost_empty_UNCONNECTED),
         .almost_full(NLW_fifo_gen_inst_almost_full_UNCONNECTED),
         .axi_ar_data_count(NLW_fifo_gen_inst_axi_ar_data_count_UNCONNECTED[4:0]),
@@ -1498,7 +1498,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
     .INIT(16'h0010)) 
     fifo_gen_inst_i_10
        (.I0(full),
-        .I1(ram_full_i_reg),
+        .I1(cmd_b_push_block_reg_0),
         .I2(command_ongoing),
         .I3(cmd_push_block),
         .O(wr_en));
@@ -1516,7 +1516,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
        (.I0(Q[3]),
         .I1(fix_need_to_split_q),
         .I2(incr_need_to_split_q),
-        .I3(\num_transactions_q_reg[3] [3]),
+        .I3(\gpr1.dout_i_reg[1] [3]),
         .O(p_1_out[3]));
   LUT4 #(
     .INIT(16'hB888)) 
@@ -1524,7 +1524,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
        (.I0(Q[2]),
         .I1(fix_need_to_split_q),
         .I2(incr_need_to_split_q),
-        .I3(\num_transactions_q_reg[3] [2]),
+        .I3(\gpr1.dout_i_reg[1] [2]),
         .O(p_1_out[2]));
   LUT4 #(
     .INIT(16'hB888)) 
@@ -1532,14 +1532,14 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
        (.I0(Q[1]),
         .I1(fix_need_to_split_q),
         .I2(incr_need_to_split_q),
-        .I3(\num_transactions_q_reg[3] [1]),
+        .I3(\gpr1.dout_i_reg[1] [1]),
         .O(p_1_out[1]));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     fifo_gen_inst_i_5__1
        (.I0(Q[0]),
         .I1(fix_need_to_split_q),
-        .I2(\num_transactions_q_reg[3] [0]),
+        .I2(\gpr1.dout_i_reg[1] [0]),
         .I3(incr_need_to_split_q),
         .I4(wrap_need_to_split_q),
         .O(p_1_out[0]));
@@ -1548,7 +1548,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
     .INIT(32'h0000F100)) 
     fifo_gen_inst_i_6
        (.I0(full),
-        .I1(ram_full_i_reg),
+        .I1(cmd_b_push_block_reg_0),
         .I2(cmd_push_block),
         .I3(command_ongoing),
         .I4(cmd_b_push_block),
@@ -1556,81 +1556,81 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen
   LUT2 #(
     .INIT(4'h1)) 
     last_incr_split0_carry_i_1
-       (.I0(\pushed_commands_reg[7] [6]),
-        .I1(\pushed_commands_reg[7] [7]),
+       (.I0(S_AXI_AREADY_I_i_4_0[6]),
+        .I1(S_AXI_AREADY_I_i_4_0[7]),
         .O(S[2]));
   LUT4 #(
     .INIT(16'h1001)) 
     last_incr_split0_carry_i_2
-       (.I0(\pushed_commands_reg[7] [4]),
-        .I1(\pushed_commands_reg[7] [5]),
-        .I2(\num_transactions_q_reg[3] [3]),
-        .I3(\pushed_commands_reg[7] [3]),
+       (.I0(S_AXI_AREADY_I_i_4_0[4]),
+        .I1(S_AXI_AREADY_I_i_4_0[5]),
+        .I2(\gpr1.dout_i_reg[1] [3]),
+        .I3(S_AXI_AREADY_I_i_4_0[3]),
         .O(S[1]));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     last_incr_split0_carry_i_3
-       (.I0(\num_transactions_q_reg[3] [2]),
-        .I1(\pushed_commands_reg[7] [2]),
-        .I2(\pushed_commands_reg[7] [0]),
-        .I3(\num_transactions_q_reg[3] [0]),
-        .I4(\pushed_commands_reg[7] [1]),
-        .I5(\num_transactions_q_reg[3] [1]),
+       (.I0(\gpr1.dout_i_reg[1] [2]),
+        .I1(S_AXI_AREADY_I_i_4_0[2]),
+        .I2(S_AXI_AREADY_I_i_4_0[0]),
+        .I3(\gpr1.dout_i_reg[1] [0]),
+        .I4(S_AXI_AREADY_I_i_4_0[1]),
+        .I5(\gpr1.dout_i_reg[1] [1]),
         .O(S[0]));
   LUT6 #(
     .INIT(64'hFFFFFEFF00000200)) 
     \queue_id[0]_i_1 
        (.I0(S_AXI_AID_Q),
         .I1(full),
-        .I2(ram_full_i_reg),
+        .I2(cmd_b_push_block_reg_0),
         .I3(command_ongoing),
         .I4(cmd_push_block),
         .I5(s_axi_bid),
-        .O(\queue_id_reg[0] ));
+        .O(\S_AXI_AID_Q_reg[0] ));
   LUT5 #(
     .INIT(32'hAA020000)) 
     split_ongoing_i_1
        (.I0(m_axi_awready),
         .I1(full),
-        .I2(ram_full_i_reg),
+        .I2(cmd_b_push_block_reg_0),
         .I3(cmd_push_block),
         .I4(command_ongoing),
         .O(E));
 endmodule
 
-(* ORIG_REF_NAME = "axi_data_fifo_v2_1_15_fifo_gen" *) 
-module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
+(* ORIG_REF_NAME = "axi_data_fifo_v2_1_17_fifo_gen" *) 
+module design_1_auto_ds_2_axi_data_fifo_v2_1_17_fifo_gen__parameterized0
    (dout,
     empty,
     din,
-    \WORD_LANE[3].S_AXI_RDATA_II_reg[96] ,
-    cmd_push_block_reg,
+    s_axi_rready_0,
+    s_axi_aresetn,
     E,
     m_axi_arvalid,
     DI,
-    \gpr1.dout_i_reg[7] ,
+    \S_AXI_ALEN_Q_reg[6] ,
     S,
-    \next_mi_addr_reg[8] ,
-    \next_mi_addr_reg[8]_0 ,
+    split_ongoing_reg,
+    access_is_incr_q_reg,
     s_axi_rvalid,
     m_axi_rready,
-    \WORD_LANE[0].S_AXI_RDATA_II_reg[31] ,
-    \WORD_LANE[1].S_AXI_RDATA_II_reg[63] ,
-    \WORD_LANE[2].S_AXI_RDATA_II_reg[95] ,
-    \WORD_LANE[3].S_AXI_RDATA_II_reg[127] ,
-    first_mi_word_reg,
+    s_axi_rready_1,
+    s_axi_rready_2,
+    s_axi_rready_3,
+    s_axi_rready_4,
+    \goreg_dm.dout_i_reg[2] ,
     D,
     s_axi_rdata,
-    \S_AXI_RRESP_ACC_reg[0] ,
-    \gpr1.dout_i_reg[7]_0 ,
-    \gpr1.dout_i_reg[7]_1 ,
+    \goreg_dm.dout_i_reg[0] ,
+    \downsized_len_q_reg[7] ,
+    \downsized_len_q_reg[3] ,
+    \areset_d_reg[0] ,
     S_AXI_AREADY_I_reg,
-    command_ongoing_reg,
-    \queue_id_reg[0] ,
+    \S_AXI_AID_Q_reg[0] ,
     s_axi_rlast,
     CLK,
     SR,
-    access_fit_mi_side_q_reg,
+    \m_axi_arsize[0] ,
     fix_need_to_split_q,
     Q,
     split_ongoing,
@@ -1641,73 +1641,73 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
     cmd_push_block,
     m_axi_arready,
     access_is_fix_q,
-    \S_AXI_ALEN_Q_reg[7] ,
-    \downsized_len_q_reg[7] ,
+    \m_axi_arlen[7] ,
+    \m_axi_arlen[7]_0 ,
     CO,
     access_is_incr_q,
     wrap_need_to_split_q,
     incr_need_to_split_q,
-    \unalignment_addr_q_reg[4] ,
-    \wrap_unaligned_len_q_reg[7] ,
-    \pushed_commands_reg[7] ,
-    \num_transactions_q_reg[3] ,
-    \split_addr_mask_q_reg[31] ,
-    \fix_len_q_reg[4] ,
-    \S_AXI_AADDR_Q_reg[3] ,
+    cmd_length_i_carry__0_i_7__0_0,
+    cmd_length_i_carry__0_i_4__0_0,
+    cmd_length_i_carry__0_i_8__0_0,
+    last_incr_split0_carry,
+    \gpr1.dout_i_reg[25] ,
+    cmd_length_i_carry__0_i_7__0_1,
+    \gpr1.dout_i_reg[19] ,
     si_full_size_q,
-    \split_addr_mask_q_reg[0] ,
-    \split_addr_mask_q_reg[1] ,
-    \split_addr_mask_q_reg[3] ,
+    \gpr1.dout_i_reg[19]_0 ,
+    \gpr1.dout_i_reg[19]_1 ,
+    \gpr1.dout_i_reg[19]_2 ,
     legal_wrap_len_q,
-    empty_fwft_i_reg,
-    \goreg_dm.dout_i_reg[9] ,
+    \goreg_dm.dout_i_reg[28] ,
+    s_axi_rvalid_0,
     first_word,
-    \length_counter_1_reg[7] ,
-    \goreg_dm.dout_i_reg[8] ,
+    first_mi_word_reg,
+    first_mi_word_reg_0,
     \current_word_1_reg[3] ,
     m_axi_rdata,
     p_1_in,
-    \S_AXI_RRESP_ACC_reg[0]_0 ,
-    first_mi_word_reg_0,
+    \S_AXI_RRESP_ACC_reg[0] ,
+    \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3_0 ,
     m_axi_rvalid,
     areset_d,
     S_AXI_AREADY_I_reg_0,
     s_axi_arvalid,
-    \areset_d_reg[1] ,
+    command_ongoing_reg,
     S_AXI_AID_Q,
     s_axi_rid,
     m_axi_rlast);
   output [9:0]dout;
   output empty;
   output [3:0]din;
-  output [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[96] ;
-  output cmd_push_block_reg;
+  output [0:0]s_axi_rready_0;
+  output s_axi_aresetn;
   output [0:0]E;
   output m_axi_arvalid;
   output [3:0]DI;
-  output [2:0]\gpr1.dout_i_reg[7] ;
+  output [2:0]\S_AXI_ALEN_Q_reg[6] ;
   output [2:0]S;
-  output \next_mi_addr_reg[8] ;
-  output \next_mi_addr_reg[8]_0 ;
+  output split_ongoing_reg;
+  output access_is_incr_q_reg;
   output s_axi_rvalid;
   output m_axi_rready;
-  output [0:0]\WORD_LANE[0].S_AXI_RDATA_II_reg[31] ;
-  output [0:0]\WORD_LANE[1].S_AXI_RDATA_II_reg[63] ;
-  output [0:0]\WORD_LANE[2].S_AXI_RDATA_II_reg[95] ;
-  output [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[127] ;
-  output [0:0]first_mi_word_reg;
+  output [0:0]s_axi_rready_1;
+  output [0:0]s_axi_rready_2;
+  output [0:0]s_axi_rready_3;
+  output [0:0]s_axi_rready_4;
+  output [0:0]\goreg_dm.dout_i_reg[2] ;
   output [3:0]D;
   output [127:0]s_axi_rdata;
-  output \S_AXI_RRESP_ACC_reg[0] ;
-  output [3:0]\gpr1.dout_i_reg[7]_0 ;
-  output [3:0]\gpr1.dout_i_reg[7]_1 ;
+  output \goreg_dm.dout_i_reg[0] ;
+  output [3:0]\downsized_len_q_reg[7] ;
+  output [3:0]\downsized_len_q_reg[3] ;
+  output \areset_d_reg[0] ;
   output S_AXI_AREADY_I_reg;
-  output command_ongoing_reg;
-  output \queue_id_reg[0] ;
+  output \S_AXI_AID_Q_reg[0] ;
   output s_axi_rlast;
   input CLK;
   input [0:0]SR;
-  input [15:0]access_fit_mi_side_q_reg;
+  input [15:0]\m_axi_arsize[0] ;
   input fix_need_to_split_q;
   input [7:0]Q;
   input split_ongoing;
@@ -1718,39 +1718,39 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   input cmd_push_block;
   input m_axi_arready;
   input access_is_fix_q;
-  input [7:0]\S_AXI_ALEN_Q_reg[7] ;
-  input [7:0]\downsized_len_q_reg[7] ;
+  input [7:0]\m_axi_arlen[7] ;
+  input [7:0]\m_axi_arlen[7]_0 ;
   input [0:0]CO;
   input access_is_incr_q;
   input wrap_need_to_split_q;
   input incr_need_to_split_q;
-  input [4:0]\unalignment_addr_q_reg[4] ;
-  input [7:0]\wrap_unaligned_len_q_reg[7] ;
-  input [7:0]\pushed_commands_reg[7] ;
-  input [3:0]\num_transactions_q_reg[3] ;
-  input \split_addr_mask_q_reg[31] ;
-  input [4:0]\fix_len_q_reg[4] ;
-  input [3:0]\S_AXI_AADDR_Q_reg[3] ;
+  input [4:0]cmd_length_i_carry__0_i_7__0_0;
+  input [7:0]cmd_length_i_carry__0_i_4__0_0;
+  input [7:0]cmd_length_i_carry__0_i_8__0_0;
+  input [3:0]last_incr_split0_carry;
+  input \gpr1.dout_i_reg[25] ;
+  input [4:0]cmd_length_i_carry__0_i_7__0_1;
+  input [3:0]\gpr1.dout_i_reg[19] ;
   input si_full_size_q;
-  input \split_addr_mask_q_reg[0] ;
-  input \split_addr_mask_q_reg[1] ;
-  input [1:0]\split_addr_mask_q_reg[3] ;
+  input \gpr1.dout_i_reg[19]_0 ;
+  input \gpr1.dout_i_reg[19]_1 ;
+  input [1:0]\gpr1.dout_i_reg[19]_2 ;
   input legal_wrap_len_q;
-  input empty_fwft_i_reg;
-  input \goreg_dm.dout_i_reg[9] ;
+  input \goreg_dm.dout_i_reg[28] ;
+  input s_axi_rvalid_0;
   input first_word;
-  input [0:0]\length_counter_1_reg[7] ;
-  input \goreg_dm.dout_i_reg[8] ;
+  input [0:0]first_mi_word_reg;
+  input first_mi_word_reg_0;
   input [3:0]\current_word_1_reg[3] ;
   input [31:0]m_axi_rdata;
   input [127:0]p_1_in;
-  input \S_AXI_RRESP_ACC_reg[0]_0 ;
-  input first_mi_word_reg_0;
+  input \S_AXI_RRESP_ACC_reg[0] ;
+  input \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3_0 ;
   input m_axi_rvalid;
   input [1:0]areset_d;
   input [0:0]S_AXI_AREADY_I_reg_0;
   input s_axi_arvalid;
-  input \areset_d_reg[1] ;
+  input command_ongoing_reg;
   input S_AXI_AID_Q;
   input [0:0]s_axi_rid;
   input m_axi_rlast;
@@ -1763,9 +1763,9 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   wire [7:0]Q;
   wire [2:0]S;
   wire [0:0]SR;
-  wire [3:0]\S_AXI_AADDR_Q_reg[3] ;
   wire S_AXI_AID_Q;
-  wire [7:0]\S_AXI_ALEN_Q_reg[7] ;
+  wire \S_AXI_AID_Q_reg[0] ;
+  wire [2:0]\S_AXI_ALEN_Q_reg[6] ;
   wire S_AXI_AREADY_I_i_2_n_0;
   wire S_AXI_AREADY_I_i_3__0_n_0;
   wire S_AXI_AREADY_I_i_4__0_n_0;
@@ -1773,28 +1773,23 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   wire S_AXI_AREADY_I_reg;
   wire [0:0]S_AXI_AREADY_I_reg_0;
   wire \S_AXI_RRESP_ACC_reg[0] ;
-  wire \S_AXI_RRESP_ACC_reg[0]_0 ;
   wire [3:0]\USE_READ.rd_cmd_first_word ;
   wire [3:0]\USE_READ.rd_cmd_mask ;
   wire [3:0]\USE_READ.rd_cmd_offset ;
   wire \USE_READ.rd_cmd_ready ;
   wire [2:0]\USE_READ.rd_cmd_size ;
   wire \USE_READ.rd_cmd_split ;
+  wire \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3_0 ;
   wire \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3_n_0 ;
-  wire [0:0]\WORD_LANE[0].S_AXI_RDATA_II_reg[31] ;
   wire \WORD_LANE[1].S_AXI_RDATA_II[63]_i_2_n_0 ;
-  wire [0:0]\WORD_LANE[1].S_AXI_RDATA_II_reg[63] ;
   wire \WORD_LANE[2].S_AXI_RDATA_II[95]_i_2_n_0 ;
-  wire [0:0]\WORD_LANE[2].S_AXI_RDATA_II_reg[95] ;
   wire \WORD_LANE[3].S_AXI_RDATA_II[127]_i_2_n_0 ;
-  wire [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[127] ;
-  wire [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[96] ;
-  wire [15:0]access_fit_mi_side_q_reg;
   wire access_is_fix_q;
   wire access_is_incr_q;
+  wire access_is_incr_q_reg;
   wire access_is_wrap_q;
   wire [1:0]areset_d;
-  wire \areset_d_reg[1] ;
+  wire \areset_d_reg[0] ;
   wire cmd_length_i_carry__0_i_10__0_n_0;
   wire cmd_length_i_carry__0_i_11__0_n_0;
   wire cmd_length_i_carry__0_i_12__0_n_0;
@@ -1805,6 +1800,10 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   wire cmd_length_i_carry__0_i_17__0_n_0;
   wire cmd_length_i_carry__0_i_18__0_n_0;
   wire cmd_length_i_carry__0_i_19__0_n_0;
+  wire [7:0]cmd_length_i_carry__0_i_4__0_0;
+  wire [4:0]cmd_length_i_carry__0_i_7__0_0;
+  wire [4:0]cmd_length_i_carry__0_i_7__0_1;
+  wire [7:0]cmd_length_i_carry__0_i_8__0_0;
   wire cmd_length_i_carry__0_i_8__0_n_0;
   wire cmd_length_i_carry__0_i_9__0_n_0;
   wire cmd_length_i_carry_i_10__0_n_0;
@@ -1817,7 +1816,6 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   wire cmd_length_i_carry_i_9__0_n_0;
   wire cmd_push;
   wire cmd_push_block;
-  wire cmd_push_block_reg;
   wire [2:0]cmd_size_ii;
   wire command_ongoing;
   wire command_ongoing_reg;
@@ -1827,9 +1825,9 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   wire [3:0]\current_word_1_reg[3] ;
   wire [3:0]din;
   wire [9:0]dout;
-  wire [7:0]\downsized_len_q_reg[7] ;
+  wire [3:0]\downsized_len_q_reg[3] ;
+  wire [3:0]\downsized_len_q_reg[7] ;
   wire empty;
-  wire empty_fwft_i_reg;
   wire fifo_gen_inst_i_13__0_n_0;
   wire fifo_gen_inst_i_14__0_n_0;
   wire fifo_gen_inst_i_17_n_0;
@@ -1837,32 +1835,33 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   wire [0:0]first_mi_word_reg;
   wire first_mi_word_reg_0;
   wire first_word;
-  wire [4:0]\fix_len_q_reg[4] ;
   wire fix_need_to_split_q;
   wire full;
-  wire \goreg_dm.dout_i_reg[8] ;
-  wire \goreg_dm.dout_i_reg[9] ;
-  wire [2:0]\gpr1.dout_i_reg[7] ;
-  wire [3:0]\gpr1.dout_i_reg[7]_0 ;
-  wire [3:0]\gpr1.dout_i_reg[7]_1 ;
+  wire \goreg_dm.dout_i_reg[0] ;
+  wire \goreg_dm.dout_i_reg[28] ;
+  wire [0:0]\goreg_dm.dout_i_reg[2] ;
+  wire [3:0]\gpr1.dout_i_reg[19] ;
+  wire \gpr1.dout_i_reg[19]_0 ;
+  wire \gpr1.dout_i_reg[19]_1 ;
+  wire [1:0]\gpr1.dout_i_reg[19]_2 ;
+  wire \gpr1.dout_i_reg[25] ;
   wire incr_need_to_split_q;
+  wire [3:0]last_incr_split0_carry;
   wire legal_wrap_len_q;
-  wire [0:0]\length_counter_1_reg[7] ;
+  wire [7:0]\m_axi_arlen[7] ;
+  wire [7:0]\m_axi_arlen[7]_0 ;
   wire m_axi_arready;
+  wire [15:0]\m_axi_arsize[0] ;
   wire m_axi_arvalid;
   wire [31:0]m_axi_rdata;
   wire m_axi_rlast;
   wire m_axi_rready;
   wire m_axi_rready_INST_0_i_1_n_0;
   wire m_axi_rvalid;
-  wire \next_mi_addr_reg[8] ;
-  wire \next_mi_addr_reg[8]_0 ;
-  wire [3:0]\num_transactions_q_reg[3] ;
   wire out;
   wire [28:18]p_0_out;
   wire [127:0]p_1_in;
-  wire [7:0]\pushed_commands_reg[7] ;
-  wire \queue_id_reg[0] ;
+  wire s_axi_aresetn;
   wire s_axi_arvalid;
   wire [127:0]s_axi_rdata;
   wire \s_axi_rdata[127]_INST_0_i_1_n_0 ;
@@ -1875,9 +1874,15 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   wire [0:0]s_axi_rid;
   wire s_axi_rlast;
   wire s_axi_rready;
+  wire [0:0]s_axi_rready_0;
+  wire [0:0]s_axi_rready_1;
+  wire [0:0]s_axi_rready_2;
+  wire [0:0]s_axi_rready_3;
+  wire [0:0]s_axi_rready_4;
   wire \s_axi_rresp[1]_INST_0_i_2_n_0 ;
   wire \s_axi_rresp[1]_INST_0_i_3_n_0 ;
   wire s_axi_rvalid;
+  wire s_axi_rvalid_0;
   wire s_axi_rvalid_INST_0_i_1_n_0;
   wire s_axi_rvalid_INST_0_i_3_n_0;
   wire s_axi_rvalid_INST_0_i_4_n_0;
@@ -1886,14 +1891,9 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   wire s_axi_rvalid_INST_0_i_8_n_0;
   wire s_axi_rvalid_INST_0_i_9_n_0;
   wire si_full_size_q;
-  wire \split_addr_mask_q_reg[0] ;
-  wire \split_addr_mask_q_reg[1] ;
-  wire \split_addr_mask_q_reg[31] ;
-  wire [1:0]\split_addr_mask_q_reg[3] ;
   wire split_ongoing;
-  wire [4:0]\unalignment_addr_q_reg[4] ;
+  wire split_ongoing_reg;
   wire wrap_need_to_split_q;
-  wire [7:0]\wrap_unaligned_len_q_reg[7] ;
   wire NLW_fifo_gen_inst_almost_empty_UNCONNECTED;
   wire NLW_fifo_gen_inst_almost_full_UNCONNECTED;
   wire NLW_fifo_gen_inst_axi_ar_dbiterr_UNCONNECTED;
@@ -2027,7 +2027,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I3(S_AXI_AREADY_I_i_2_n_0),
         .I4(S_AXI_AREADY_I_reg_0),
         .I5(s_axi_arvalid),
-        .O(S_AXI_AREADY_I_reg));
+        .O(\areset_d_reg[0] ));
   LUT6 #(
     .INIT(64'h002A2A2A002A002A)) 
     S_AXI_AREADY_I_i_2
@@ -2039,32 +2039,32 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I5(wrap_need_to_split_q),
         .O(S_AXI_AREADY_I_i_2_n_0));
   LUT6 #(
-    .INIT(64'hDD5DDDDDDDDDDD5D)) 
+    .INIT(64'hDDDDDDDDDDDDDDD5)) 
     S_AXI_AREADY_I_i_3__0
        (.I0(access_is_fix_q),
         .I1(fix_need_to_split_q),
-        .I2(S_AXI_AREADY_I_i_4__0_n_0),
-        .I3(S_AXI_AREADY_I_i_5__0_n_0),
-        .I4(\S_AXI_ALEN_Q_reg[7] [1]),
-        .I5(\pushed_commands_reg[7] [1]),
+        .I2(cmd_length_i_carry__0_i_8__0_0[6]),
+        .I3(cmd_length_i_carry__0_i_8__0_0[7]),
+        .I4(S_AXI_AREADY_I_i_4__0_n_0),
+        .I5(S_AXI_AREADY_I_i_5__0_n_0),
         .O(S_AXI_AREADY_I_i_3__0_n_0));
   LUT4 #(
-    .INIT(16'h9009)) 
+    .INIT(16'hEFFE)) 
     S_AXI_AREADY_I_i_4__0
-       (.I0(\pushed_commands_reg[7] [0]),
-        .I1(\S_AXI_ALEN_Q_reg[7] [0]),
-        .I2(\pushed_commands_reg[7] [3]),
-        .I3(\S_AXI_ALEN_Q_reg[7] [3]),
+       (.I0(cmd_length_i_carry__0_i_8__0_0[4]),
+        .I1(cmd_length_i_carry__0_i_8__0_0[5]),
+        .I2(cmd_length_i_carry__0_i_8__0_0[3]),
+        .I3(\m_axi_arlen[7] [3]),
         .O(S_AXI_AREADY_I_i_4__0_n_0));
   LUT6 #(
-    .INIT(64'hFFFEFFFFFFFFFFFE)) 
+    .INIT(64'h6FF6FFFFFFFF6FF6)) 
     S_AXI_AREADY_I_i_5__0
-       (.I0(\pushed_commands_reg[7] [5]),
-        .I1(\pushed_commands_reg[7] [4]),
-        .I2(\pushed_commands_reg[7] [7]),
-        .I3(\pushed_commands_reg[7] [6]),
-        .I4(\pushed_commands_reg[7] [2]),
-        .I5(\S_AXI_ALEN_Q_reg[7] [2]),
+       (.I0(cmd_length_i_carry__0_i_8__0_0[0]),
+        .I1(\m_axi_arlen[7] [0]),
+        .I2(\m_axi_arlen[7] [2]),
+        .I3(cmd_length_i_carry__0_i_8__0_0[2]),
+        .I4(\m_axi_arlen[7] [1]),
+        .I5(cmd_length_i_carry__0_i_8__0_0[1]),
         .O(S_AXI_AREADY_I_i_5__0_n_0));
   LUT6 #(
     .INIT(64'h888A0000FFFFFFFF)) 
@@ -2075,7 +2075,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I3(s_axi_rvalid_INST_0_i_5_n_0),
         .I4(s_axi_rready),
         .I5(out),
-        .O(\WORD_LANE[3].S_AXI_RDATA_II_reg[96] ));
+        .O(s_axi_rready_0));
   LUT6 #(
     .INIT(64'hBBBA000000000000)) 
     \WORD_LANE[0].S_AXI_RDATA_II[31]_i_2 
@@ -2085,7 +2085,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I3(s_axi_rvalid_INST_0_i_5_n_0),
         .I4(s_axi_rvalid_INST_0_i_1_n_0),
         .I5(\WORD_LANE[0].S_AXI_RDATA_II[31]_i_3_n_0 ),
-        .O(\WORD_LANE[0].S_AXI_RDATA_II_reg[31] ));
+        .O(s_axi_rready_1));
   (* SOFT_HLUTNM = "soft_lutpair10" *) 
   LUT5 #(
     .INIT(32'h90060990)) 
@@ -2105,7 +2105,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I3(s_axi_rvalid_INST_0_i_5_n_0),
         .I4(s_axi_rvalid_INST_0_i_1_n_0),
         .I5(\WORD_LANE[1].S_AXI_RDATA_II[63]_i_2_n_0 ),
-        .O(\WORD_LANE[1].S_AXI_RDATA_II_reg[63] ));
+        .O(s_axi_rready_2));
   (* SOFT_HLUTNM = "soft_lutpair11" *) 
   LUT5 #(
     .INIT(32'h06609006)) 
@@ -2125,7 +2125,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I3(s_axi_rvalid_INST_0_i_5_n_0),
         .I4(s_axi_rvalid_INST_0_i_1_n_0),
         .I5(\WORD_LANE[2].S_AXI_RDATA_II[95]_i_2_n_0 ),
-        .O(\WORD_LANE[2].S_AXI_RDATA_II_reg[95] ));
+        .O(s_axi_rready_3));
   (* SOFT_HLUTNM = "soft_lutpair11" *) 
   LUT5 #(
     .INIT(32'h60060690)) 
@@ -2145,7 +2145,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I3(s_axi_rvalid_INST_0_i_5_n_0),
         .I4(s_axi_rvalid_INST_0_i_1_n_0),
         .I5(\WORD_LANE[3].S_AXI_RDATA_II[127]_i_2_n_0 ),
-        .O(\WORD_LANE[3].S_AXI_RDATA_II_reg[127] ));
+        .O(s_axi_rready_4));
   (* SOFT_HLUTNM = "soft_lutpair10" *) 
   LUT5 #(
     .INIT(32'h06909009)) 
@@ -2168,7 +2168,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry__0_i_11__0
-       (.I0(\fix_len_q_reg[4] [4]),
+       (.I0(cmd_length_i_carry__0_i_7__0_1[4]),
         .I1(fix_need_to_split_q),
         .I2(Q[4]),
         .I3(split_ongoing),
@@ -2177,7 +2177,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT3 #(
     .INIT(8'hDF)) 
     cmd_length_i_carry__0_i_12__0
-       (.I0(\wrap_unaligned_len_q_reg[7] [7]),
+       (.I0(cmd_length_i_carry__0_i_4__0_0[7]),
         .I1(split_ongoing),
         .I2(wrap_need_to_split_q),
         .O(cmd_length_i_carry__0_i_12__0_n_0));
@@ -2193,7 +2193,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT3 #(
     .INIT(8'hDF)) 
     cmd_length_i_carry__0_i_14__0
-       (.I0(\wrap_unaligned_len_q_reg[7] [6]),
+       (.I0(cmd_length_i_carry__0_i_4__0_0[6]),
         .I1(split_ongoing),
         .I2(wrap_need_to_split_q),
         .O(cmd_length_i_carry__0_i_14__0_n_0));
@@ -2201,16 +2201,16 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT3 #(
     .INIT(8'hDF)) 
     cmd_length_i_carry__0_i_15__0
-       (.I0(\wrap_unaligned_len_q_reg[7] [5]),
+       (.I0(cmd_length_i_carry__0_i_4__0_0[5]),
         .I1(split_ongoing),
         .I2(wrap_need_to_split_q),
         .O(cmd_length_i_carry__0_i_15__0_n_0));
   LUT5 #(
     .INIT(32'hCF55CFCF)) 
     cmd_length_i_carry__0_i_16__0
-       (.I0(\wrap_unaligned_len_q_reg[7] [4]),
+       (.I0(cmd_length_i_carry__0_i_4__0_0[4]),
         .I1(cmd_length_i_carry__0_i_19__0_n_0),
-        .I2(\unalignment_addr_q_reg[4] [4]),
+        .I2(cmd_length_i_carry__0_i_7__0_0[4]),
         .I3(split_ongoing),
         .I4(wrap_need_to_split_q),
         .O(cmd_length_i_carry__0_i_16__0_n_0));
@@ -2236,7 +2236,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
     .INIT(32'h0000FD0D)) 
     cmd_length_i_carry__0_i_19__0
        (.I0(access_is_incr_q),
-        .I1(access_fit_mi_side_q_reg[15]),
+        .I1(\m_axi_arsize[0] [15]),
         .I2(incr_need_to_split_q),
         .I3(split_ongoing),
         .I4(fix_need_to_split_q),
@@ -2244,70 +2244,70 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry__0_i_1__0
-       (.I0(\S_AXI_ALEN_Q_reg[7] [6]),
-        .I1(access_fit_mi_side_q_reg[15]),
-        .I2(\downsized_len_q_reg[7] [6]),
+       (.I0(\m_axi_arlen[7] [6]),
+        .I1(\m_axi_arsize[0] [15]),
+        .I2(\m_axi_arlen[7]_0 [6]),
         .I3(cmd_length_i_carry__0_i_8__0_n_0),
         .I4(cmd_length_i_carry__0_i_9__0_n_0),
-        .O(\gpr1.dout_i_reg[7] [2]));
+        .O(\S_AXI_ALEN_Q_reg[6] [2]));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry__0_i_2__0
-       (.I0(\S_AXI_ALEN_Q_reg[7] [5]),
-        .I1(access_fit_mi_side_q_reg[15]),
-        .I2(\downsized_len_q_reg[7] [5]),
+       (.I0(\m_axi_arlen[7] [5]),
+        .I1(\m_axi_arsize[0] [15]),
+        .I2(\m_axi_arlen[7]_0 [5]),
         .I3(cmd_length_i_carry__0_i_8__0_n_0),
         .I4(cmd_length_i_carry__0_i_10__0_n_0),
-        .O(\gpr1.dout_i_reg[7] [1]));
+        .O(\S_AXI_ALEN_Q_reg[6] [1]));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry__0_i_3__0
-       (.I0(\S_AXI_ALEN_Q_reg[7] [4]),
-        .I1(access_fit_mi_side_q_reg[15]),
-        .I2(\downsized_len_q_reg[7] [4]),
+       (.I0(\m_axi_arlen[7] [4]),
+        .I1(\m_axi_arsize[0] [15]),
+        .I2(\m_axi_arlen[7]_0 [4]),
         .I3(cmd_length_i_carry__0_i_8__0_n_0),
         .I4(cmd_length_i_carry__0_i_11__0_n_0),
-        .O(\gpr1.dout_i_reg[7] [0]));
+        .O(\S_AXI_ALEN_Q_reg[6] [0]));
   LUT6 #(
     .INIT(64'h555556A6AAAA56A6)) 
     cmd_length_i_carry__0_i_4__0
        (.I0(cmd_length_i_carry__0_i_12__0_n_0),
         .I1(cmd_length_i_carry__0_i_13__0_n_0),
         .I2(cmd_length_i_carry__0_i_8__0_n_0),
-        .I3(\downsized_len_q_reg[7] [7]),
-        .I4(access_fit_mi_side_q_reg[15]),
-        .I5(\S_AXI_ALEN_Q_reg[7] [7]),
-        .O(\gpr1.dout_i_reg[7]_0 [3]));
+        .I3(\m_axi_arlen[7]_0 [7]),
+        .I4(\m_axi_arsize[0] [15]),
+        .I5(\m_axi_arlen[7] [7]),
+        .O(\downsized_len_q_reg[7] [3]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry__0_i_5__0
        (.I0(cmd_length_i_carry__0_i_9__0_n_0),
         .I1(cmd_length_i_carry__0_i_8__0_n_0),
-        .I2(\downsized_len_q_reg[7] [6]),
-        .I3(access_fit_mi_side_q_reg[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [6]),
+        .I2(\m_axi_arlen[7]_0 [6]),
+        .I3(\m_axi_arsize[0] [15]),
+        .I4(\m_axi_arlen[7] [6]),
         .I5(cmd_length_i_carry__0_i_14__0_n_0),
-        .O(\gpr1.dout_i_reg[7]_0 [2]));
+        .O(\downsized_len_q_reg[7] [2]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry__0_i_6__0
        (.I0(cmd_length_i_carry__0_i_10__0_n_0),
         .I1(cmd_length_i_carry__0_i_8__0_n_0),
-        .I2(\downsized_len_q_reg[7] [5]),
-        .I3(access_fit_mi_side_q_reg[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [5]),
+        .I2(\m_axi_arlen[7]_0 [5]),
+        .I3(\m_axi_arsize[0] [15]),
+        .I4(\m_axi_arlen[7] [5]),
         .I5(cmd_length_i_carry__0_i_15__0_n_0),
-        .O(\gpr1.dout_i_reg[7]_0 [1]));
+        .O(\downsized_len_q_reg[7] [1]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry__0_i_7__0
        (.I0(cmd_length_i_carry__0_i_11__0_n_0),
         .I1(cmd_length_i_carry__0_i_8__0_n_0),
-        .I2(\downsized_len_q_reg[7] [4]),
-        .I3(access_fit_mi_side_q_reg[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [4]),
+        .I2(\m_axi_arlen[7]_0 [4]),
+        .I3(\m_axi_arsize[0] [15]),
+        .I4(\m_axi_arlen[7] [4]),
         .I5(cmd_length_i_carry__0_i_16__0_n_0),
-        .O(\gpr1.dout_i_reg[7]_0 [0]));
+        .O(\downsized_len_q_reg[7] [0]));
   LUT6 #(
     .INIT(64'hFFFFFFFFD0D0F0D0)) 
     cmd_length_i_carry__0_i_8__0
@@ -2330,7 +2330,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry_i_10__0
-       (.I0(\fix_len_q_reg[4] [2]),
+       (.I0(cmd_length_i_carry__0_i_7__0_1[2]),
         .I1(fix_need_to_split_q),
         .I2(Q[2]),
         .I3(split_ongoing),
@@ -2339,7 +2339,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry_i_11__0
-       (.I0(\fix_len_q_reg[4] [1]),
+       (.I0(cmd_length_i_carry__0_i_7__0_1[1]),
         .I1(fix_need_to_split_q),
         .I2(Q[1]),
         .I3(split_ongoing),
@@ -2348,7 +2348,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry_i_12__0
-       (.I0(\fix_len_q_reg[4] [0]),
+       (.I0(cmd_length_i_carry__0_i_7__0_1[0]),
         .I1(fix_need_to_split_q),
         .I2(Q[0]),
         .I3(split_ongoing),
@@ -2357,18 +2357,18 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT5 #(
     .INIT(32'hCF55CFCF)) 
     cmd_length_i_carry_i_13__0
-       (.I0(\wrap_unaligned_len_q_reg[7] [3]),
+       (.I0(cmd_length_i_carry__0_i_4__0_0[3]),
         .I1(cmd_length_i_carry__0_i_19__0_n_0),
-        .I2(\unalignment_addr_q_reg[4] [3]),
+        .I2(cmd_length_i_carry__0_i_7__0_0[3]),
         .I3(split_ongoing),
         .I4(wrap_need_to_split_q),
         .O(cmd_length_i_carry_i_13__0_n_0));
   LUT5 #(
     .INIT(32'hCF55CFCF)) 
     cmd_length_i_carry_i_14__0
-       (.I0(\wrap_unaligned_len_q_reg[7] [2]),
+       (.I0(cmd_length_i_carry__0_i_4__0_0[2]),
         .I1(cmd_length_i_carry__0_i_19__0_n_0),
-        .I2(\unalignment_addr_q_reg[4] [2]),
+        .I2(cmd_length_i_carry__0_i_7__0_0[2]),
         .I3(split_ongoing),
         .I4(wrap_need_to_split_q),
         .O(cmd_length_i_carry_i_14__0_n_0));
@@ -2376,54 +2376,54 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT5 #(
     .INIT(32'hDDDD0FDD)) 
     cmd_length_i_carry_i_15__0
-       (.I0(\unalignment_addr_q_reg[4] [1]),
+       (.I0(cmd_length_i_carry__0_i_7__0_0[1]),
         .I1(cmd_length_i_carry__0_i_19__0_n_0),
-        .I2(\wrap_unaligned_len_q_reg[7] [1]),
+        .I2(cmd_length_i_carry__0_i_4__0_0[1]),
         .I3(wrap_need_to_split_q),
         .I4(split_ongoing),
         .O(cmd_length_i_carry_i_15__0_n_0));
   LUT5 #(
     .INIT(32'hF704F7F7)) 
     cmd_length_i_carry_i_16__0
-       (.I0(\wrap_unaligned_len_q_reg[7] [0]),
+       (.I0(cmd_length_i_carry__0_i_4__0_0[0]),
         .I1(wrap_need_to_split_q),
         .I2(split_ongoing),
         .I3(cmd_length_i_carry__0_i_19__0_n_0),
-        .I4(\unalignment_addr_q_reg[4] [0]),
+        .I4(cmd_length_i_carry__0_i_7__0_0[0]),
         .O(cmd_length_i_carry_i_16__0_n_0));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry_i_1__0
-       (.I0(\S_AXI_ALEN_Q_reg[7] [3]),
-        .I1(access_fit_mi_side_q_reg[15]),
-        .I2(\downsized_len_q_reg[7] [3]),
+       (.I0(\m_axi_arlen[7] [3]),
+        .I1(\m_axi_arsize[0] [15]),
+        .I2(\m_axi_arlen[7]_0 [3]),
         .I3(cmd_length_i_carry__0_i_8__0_n_0),
         .I4(cmd_length_i_carry_i_9__0_n_0),
         .O(DI[3]));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry_i_2__0
-       (.I0(\S_AXI_ALEN_Q_reg[7] [2]),
-        .I1(access_fit_mi_side_q_reg[15]),
-        .I2(\downsized_len_q_reg[7] [2]),
+       (.I0(\m_axi_arlen[7] [2]),
+        .I1(\m_axi_arsize[0] [15]),
+        .I2(\m_axi_arlen[7]_0 [2]),
         .I3(cmd_length_i_carry__0_i_8__0_n_0),
         .I4(cmd_length_i_carry_i_10__0_n_0),
         .O(DI[2]));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry_i_3__0
-       (.I0(\S_AXI_ALEN_Q_reg[7] [1]),
-        .I1(access_fit_mi_side_q_reg[15]),
-        .I2(\downsized_len_q_reg[7] [1]),
+       (.I0(\m_axi_arlen[7] [1]),
+        .I1(\m_axi_arsize[0] [15]),
+        .I2(\m_axi_arlen[7]_0 [1]),
         .I3(cmd_length_i_carry__0_i_8__0_n_0),
         .I4(cmd_length_i_carry_i_11__0_n_0),
         .O(DI[1]));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry_i_4__0
-       (.I0(\S_AXI_ALEN_Q_reg[7] [0]),
-        .I1(access_fit_mi_side_q_reg[15]),
-        .I2(\downsized_len_q_reg[7] [0]),
+       (.I0(\m_axi_arlen[7] [0]),
+        .I1(\m_axi_arsize[0] [15]),
+        .I2(\m_axi_arlen[7]_0 [0]),
         .I3(cmd_length_i_carry__0_i_8__0_n_0),
         .I4(cmd_length_i_carry_i_12__0_n_0),
         .O(DI[0]));
@@ -2432,45 +2432,45 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
     cmd_length_i_carry_i_5__0
        (.I0(cmd_length_i_carry_i_9__0_n_0),
         .I1(cmd_length_i_carry__0_i_8__0_n_0),
-        .I2(\downsized_len_q_reg[7] [3]),
-        .I3(access_fit_mi_side_q_reg[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [3]),
+        .I2(\m_axi_arlen[7]_0 [3]),
+        .I3(\m_axi_arsize[0] [15]),
+        .I4(\m_axi_arlen[7] [3]),
         .I5(cmd_length_i_carry_i_13__0_n_0),
-        .O(\gpr1.dout_i_reg[7]_1 [3]));
+        .O(\downsized_len_q_reg[3] [3]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry_i_6__0
        (.I0(cmd_length_i_carry_i_10__0_n_0),
         .I1(cmd_length_i_carry__0_i_8__0_n_0),
-        .I2(\downsized_len_q_reg[7] [2]),
-        .I3(access_fit_mi_side_q_reg[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [2]),
+        .I2(\m_axi_arlen[7]_0 [2]),
+        .I3(\m_axi_arsize[0] [15]),
+        .I4(\m_axi_arlen[7] [2]),
         .I5(cmd_length_i_carry_i_14__0_n_0),
-        .O(\gpr1.dout_i_reg[7]_1 [2]));
+        .O(\downsized_len_q_reg[3] [2]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry_i_7__0
        (.I0(cmd_length_i_carry_i_11__0_n_0),
         .I1(cmd_length_i_carry__0_i_8__0_n_0),
-        .I2(\downsized_len_q_reg[7] [1]),
-        .I3(access_fit_mi_side_q_reg[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [1]),
+        .I2(\m_axi_arlen[7]_0 [1]),
+        .I3(\m_axi_arsize[0] [15]),
+        .I4(\m_axi_arlen[7] [1]),
         .I5(cmd_length_i_carry_i_15__0_n_0),
-        .O(\gpr1.dout_i_reg[7]_1 [1]));
+        .O(\downsized_len_q_reg[3] [1]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry_i_8__0
        (.I0(cmd_length_i_carry_i_12__0_n_0),
         .I1(cmd_length_i_carry__0_i_8__0_n_0),
-        .I2(\downsized_len_q_reg[7] [0]),
-        .I3(access_fit_mi_side_q_reg[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [0]),
+        .I2(\m_axi_arlen[7]_0 [0]),
+        .I3(\m_axi_arsize[0] [15]),
+        .I4(\m_axi_arlen[7] [0]),
         .I5(cmd_length_i_carry_i_16__0_n_0),
-        .O(\gpr1.dout_i_reg[7]_1 [0]));
+        .O(\downsized_len_q_reg[3] [0]));
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry_i_9__0
-       (.I0(\fix_len_q_reg[4] [3]),
+       (.I0(cmd_length_i_carry__0_i_7__0_1[3]),
         .I1(fix_need_to_split_q),
         .I2(Q[3]),
         .I3(split_ongoing),
@@ -2485,17 +2485,17 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I2(cmd_push_block),
         .I3(full),
         .I4(m_axi_arready),
-        .O(cmd_push_block_reg));
+        .O(s_axi_aresetn));
   LUT6 #(
     .INIT(64'hFFFBFBFB55000000)) 
     command_ongoing_i_1__0
-       (.I0(\areset_d_reg[1] ),
+       (.I0(command_ongoing_reg),
         .I1(E),
         .I2(S_AXI_AREADY_I_i_2_n_0),
         .I3(S_AXI_AREADY_I_reg_0),
         .I4(s_axi_arvalid),
         .I5(command_ongoing),
-        .O(command_ongoing_reg));
+        .O(S_AXI_AREADY_I_reg));
   (* SOFT_HLUTNM = "soft_lutpair4" *) 
   LUT5 #(
     .INIT(32'h88888882)) 
@@ -2757,7 +2757,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   (* C_WR_PNTR_WIDTH_WDCH = "10" *) 
   (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
   (* C_WR_RESPONSE_LATENCY = "1" *) 
-  design_1_auto_ds_2_fifo_generator_v13_2_2__parameterized0 fifo_gen_inst
+  design_1_auto_ds_2_fifo_generator_v13_2_3__parameterized0 fifo_gen_inst
        (.almost_empty(NLW_fifo_gen_inst_almost_empty_UNCONNECTED),
         .almost_full(NLW_fifo_gen_inst_almost_full_UNCONNECTED),
         .axi_ar_data_count(NLW_fifo_gen_inst_axi_ar_data_count_UNCONNECTED[4:0]),
@@ -2843,7 +2843,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .clk(CLK),
         .data_count(NLW_fifo_gen_inst_data_count_UNCONNECTED[5:0]),
         .dbiterr(NLW_fifo_gen_inst_dbiterr_UNCONNECTED),
-        .din({p_0_out[28],din[3],access_fit_mi_side_q_reg[15],p_0_out[25:18],access_fit_mi_side_q_reg[14:11],din[2:0],access_fit_mi_side_q_reg[10:0]}),
+        .din({p_0_out[28],din[3],\m_axi_arsize[0] [15],p_0_out[25:18],\m_axi_arsize[0] [14:11],din[2:0],\m_axi_arsize[0] [10:0]}),
         .dout({dout[9],\USE_READ.rd_cmd_split ,dout[8],\USE_READ.rd_cmd_first_word ,\USE_READ.rd_cmd_offset ,\USE_READ.rd_cmd_mask ,cmd_size_ii,dout[7:0],\USE_READ.rd_cmd_size }),
         .empty(empty),
         .full(full),
@@ -2992,12 +2992,12 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT6 #(
     .INIT(64'h0000000004440404)) 
     fifo_gen_inst_i_10__0
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [0]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [0]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[0] ),
-        .I5(access_fit_mi_side_q_reg[11]),
+        .I4(\gpr1.dout_i_reg[19]_0 ),
+        .I5(\m_axi_arsize[0] [11]),
         .O(p_0_out[18]));
   (* SOFT_HLUTNM = "soft_lutpair14" *) 
   LUT3 #(
@@ -3015,25 +3015,25 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I2(fifo_gen_inst_i_17_n_0),
         .I3(s_axi_rvalid_INST_0_i_5_n_0),
         .I4(s_axi_rready),
-        .I5(empty_fwft_i_reg),
+        .I5(\goreg_dm.dout_i_reg[28] ),
         .O(\USE_READ.rd_cmd_ready ));
   LUT6 #(
     .INIT(64'h0000FF002F00FF00)) 
     fifo_gen_inst_i_13__0
-       (.I0(\split_addr_mask_q_reg[3] [1]),
+       (.I0(\gpr1.dout_i_reg[19]_2 [1]),
         .I1(si_full_size_q),
         .I2(access_is_incr_q),
-        .I3(\S_AXI_AADDR_Q_reg[3] [3]),
+        .I3(\gpr1.dout_i_reg[19] [3]),
         .I4(split_ongoing),
         .I5(access_is_wrap_q),
         .O(fifo_gen_inst_i_13__0_n_0));
   LUT6 #(
     .INIT(64'h0000FF002F00FF00)) 
     fifo_gen_inst_i_14__0
-       (.I0(\split_addr_mask_q_reg[3] [0]),
+       (.I0(\gpr1.dout_i_reg[19]_2 [0]),
         .I1(si_full_size_q),
         .I2(access_is_incr_q),
-        .I3(\S_AXI_AADDR_Q_reg[3] [2]),
+        .I3(\gpr1.dout_i_reg[19] [2]),
         .I4(split_ongoing),
         .I5(access_is_wrap_q),
         .O(fifo_gen_inst_i_14__0_n_0));
@@ -3043,14 +3043,14 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
     fifo_gen_inst_i_15__0
        (.I0(split_ongoing),
         .I1(access_is_wrap_q),
-        .O(\next_mi_addr_reg[8] ));
+        .O(split_ongoing_reg));
   (* SOFT_HLUTNM = "soft_lutpair9" *) 
   LUT2 #(
     .INIT(4'h8)) 
     fifo_gen_inst_i_16
        (.I0(access_is_incr_q),
         .I1(split_ongoing),
-        .O(\next_mi_addr_reg[8]_0 ));
+        .O(access_is_incr_q_reg));
   LUT6 #(
     .INIT(64'h8808000000808888)) 
     fifo_gen_inst_i_17
@@ -3074,7 +3074,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
   LUT2 #(
     .INIT(4'h8)) 
     fifo_gen_inst_i_1__1
-       (.I0(access_fit_mi_side_q_reg[15]),
+       (.I0(\m_axi_arsize[0] [15]),
         .I1(access_is_fix_q),
         .O(p_0_out[28]));
   LUT4 #(
@@ -3089,65 +3089,65 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
     .INIT(8'h80)) 
     fifo_gen_inst_i_3__0
        (.I0(fifo_gen_inst_i_13__0_n_0),
-        .I1(\split_addr_mask_q_reg[31] ),
-        .I2(access_fit_mi_side_q_reg[14]),
+        .I1(\gpr1.dout_i_reg[25] ),
+        .I2(\m_axi_arsize[0] [14]),
         .O(p_0_out[25]));
   LUT3 #(
     .INIT(8'h80)) 
     fifo_gen_inst_i_4__0
        (.I0(fifo_gen_inst_i_14__0_n_0),
-        .I1(access_fit_mi_side_q_reg[13]),
-        .I2(\split_addr_mask_q_reg[31] ),
+        .I1(\m_axi_arsize[0] [13]),
+        .I2(\gpr1.dout_i_reg[25] ),
         .O(p_0_out[24]));
   LUT6 #(
     .INIT(64'h0444000000000000)) 
     fifo_gen_inst_i_5__0
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [1]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [1]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[1] ),
-        .I5(access_fit_mi_side_q_reg[12]),
+        .I4(\gpr1.dout_i_reg[19]_1 ),
+        .I5(\m_axi_arsize[0] [12]),
         .O(p_0_out[23]));
   LUT6 #(
     .INIT(64'h0444000000000000)) 
     fifo_gen_inst_i_6__1
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [0]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [0]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[0] ),
-        .I5(access_fit_mi_side_q_reg[11]),
+        .I4(\gpr1.dout_i_reg[19]_0 ),
+        .I5(\m_axi_arsize[0] [11]),
         .O(p_0_out[22]));
   LUT6 #(
     .INIT(64'h0000000004440404)) 
     fifo_gen_inst_i_7__1
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [3]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [3]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[3] [1]),
-        .I5(access_fit_mi_side_q_reg[14]),
+        .I4(\gpr1.dout_i_reg[19]_2 [1]),
+        .I5(\m_axi_arsize[0] [14]),
         .O(p_0_out[21]));
   LUT6 #(
     .INIT(64'h0000000004440404)) 
     fifo_gen_inst_i_8__0
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [2]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [2]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[3] [0]),
-        .I5(access_fit_mi_side_q_reg[13]),
+        .I4(\gpr1.dout_i_reg[19]_2 [0]),
+        .I5(\m_axi_arsize[0] [13]),
         .O(p_0_out[20]));
   LUT6 #(
     .INIT(64'h0000000004440404)) 
     fifo_gen_inst_i_9__0
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [1]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [1]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[1] ),
-        .I5(access_fit_mi_side_q_reg[12]),
+        .I4(\gpr1.dout_i_reg[19]_1 ),
+        .I5(\m_axi_arsize[0] [12]),
         .O(p_0_out[19]));
   LUT6 #(
     .INIT(64'hAAAAAAAA000088A8)) 
@@ -3158,48 +3158,48 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I3(s_axi_rvalid_INST_0_i_4_n_0),
         .I4(m_axi_rready_INST_0_i_1_n_0),
         .I5(s_axi_rready),
-        .O(first_mi_word_reg));
+        .O(\goreg_dm.dout_i_reg[2] ));
   LUT2 #(
     .INIT(4'h1)) 
     last_incr_split0_carry_i_1__0
-       (.I0(\pushed_commands_reg[7] [6]),
-        .I1(\pushed_commands_reg[7] [7]),
+       (.I0(cmd_length_i_carry__0_i_8__0_0[7]),
+        .I1(cmd_length_i_carry__0_i_8__0_0[6]),
         .O(S[2]));
   LUT4 #(
     .INIT(16'h1001)) 
     last_incr_split0_carry_i_2__0
-       (.I0(\pushed_commands_reg[7] [4]),
-        .I1(\pushed_commands_reg[7] [5]),
-        .I2(\num_transactions_q_reg[3] [3]),
-        .I3(\pushed_commands_reg[7] [3]),
+       (.I0(cmd_length_i_carry__0_i_8__0_0[4]),
+        .I1(cmd_length_i_carry__0_i_8__0_0[5]),
+        .I2(last_incr_split0_carry[3]),
+        .I3(cmd_length_i_carry__0_i_8__0_0[3]),
         .O(S[1]));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     last_incr_split0_carry_i_3__0
-       (.I0(\num_transactions_q_reg[3] [2]),
-        .I1(\pushed_commands_reg[7] [2]),
-        .I2(\pushed_commands_reg[7] [0]),
-        .I3(\num_transactions_q_reg[3] [0]),
-        .I4(\pushed_commands_reg[7] [1]),
-        .I5(\num_transactions_q_reg[3] [1]),
+       (.I0(last_incr_split0_carry[2]),
+        .I1(cmd_length_i_carry__0_i_8__0_0[2]),
+        .I2(cmd_length_i_carry__0_i_8__0_0[0]),
+        .I3(last_incr_split0_carry[0]),
+        .I4(cmd_length_i_carry__0_i_8__0_0[1]),
+        .I5(last_incr_split0_carry[1]),
         .O(S[0]));
   LUT2 #(
     .INIT(4'h8)) 
     \m_axi_arsize[0]_INST_0 
-       (.I0(access_fit_mi_side_q_reg[15]),
-        .I1(access_fit_mi_side_q_reg[0]),
+       (.I0(\m_axi_arsize[0] [15]),
+        .I1(\m_axi_arsize[0] [0]),
         .O(din[0]));
   LUT2 #(
     .INIT(4'hB)) 
     \m_axi_arsize[1]_INST_0 
-       (.I0(access_fit_mi_side_q_reg[1]),
-        .I1(access_fit_mi_side_q_reg[15]),
+       (.I0(\m_axi_arsize[0] [1]),
+        .I1(\m_axi_arsize[0] [15]),
         .O(din[1]));
   LUT2 #(
     .INIT(4'h8)) 
     \m_axi_arsize[2]_INST_0 
-       (.I0(access_fit_mi_side_q_reg[15]),
-        .I1(access_fit_mi_side_q_reg[2]),
+       (.I0(\m_axi_arsize[0] [15]),
+        .I1(\m_axi_arsize[0] [2]),
         .O(din[2]));
   LUT3 #(
     .INIT(8'h8A)) 
@@ -3223,8 +3223,8 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
     m_axi_rready_INST_0_i_1
        (.I0(dout[7]),
         .I1(first_word),
-        .I2(\length_counter_1_reg[7] ),
-        .I3(\goreg_dm.dout_i_reg[8] ),
+        .I2(first_mi_word_reg),
+        .I3(first_mi_word_reg_0),
         .I4(dout[9]),
         .I5(dout[8]),
         .O(m_axi_rready_INST_0_i_1_n_0));
@@ -3237,7 +3237,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I2(command_ongoing),
         .I3(cmd_push_block),
         .I4(s_axi_rid),
-        .O(\queue_id_reg[0] ));
+        .O(\S_AXI_AID_Q_reg[0] ));
   LUT5 #(
     .INIT(32'hABBBA888)) 
     \s_axi_rdata[0]_INST_0 
@@ -3549,7 +3549,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
     \s_axi_rdata[127]_INST_0_i_4 
        (.I0(\USE_READ.rd_cmd_offset [0]),
         .I1(\current_word_1_reg[3] [0]),
-        .I2(first_mi_word_reg_0),
+        .I2(\WORD_LANE[0].S_AXI_RDATA_II[31]_i_3_0 ),
         .I3(\USE_READ.rd_cmd_first_word [0]),
         .I4(\USE_READ.rd_cmd_offset [1]),
         .I5(\s_axi_rdata[127]_INST_0_i_6_n_0 ),
@@ -4460,37 +4460,37 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .I1(\USE_READ.rd_cmd_split ),
         .O(s_axi_rlast));
   LUT6 #(
-    .INIT(64'h00000000FFAFABAB)) 
+    .INIT(64'h00000000FFFFF311)) 
     \s_axi_rresp[1]_INST_0_i_1 
-       (.I0(\s_axi_rresp[1]_INST_0_i_2_n_0 ),
-        .I1(\s_axi_rdata[127]_INST_0_i_6_n_0 ),
-        .I2(\s_axi_rresp[1]_INST_0_i_3_n_0 ),
-        .I3(\USE_READ.rd_cmd_size [0]),
-        .I4(\s_axi_rdata[127]_INST_0_i_7_n_0 ),
-        .I5(\S_AXI_RRESP_ACC_reg[0]_0 ),
-        .O(\S_AXI_RRESP_ACC_reg[0] ));
+       (.I0(\s_axi_rdata[127]_INST_0_i_6_n_0 ),
+        .I1(\s_axi_rresp[1]_INST_0_i_2_n_0 ),
+        .I2(\USE_READ.rd_cmd_size [0]),
+        .I3(\s_axi_rdata[127]_INST_0_i_7_n_0 ),
+        .I4(\s_axi_rresp[1]_INST_0_i_3_n_0 ),
+        .I5(\S_AXI_RRESP_ACC_reg[0] ),
+        .O(\goreg_dm.dout_i_reg[0] ));
+  (* SOFT_HLUTNM = "soft_lutpair12" *) 
+  LUT2 #(
+    .INIT(4'h1)) 
+    \s_axi_rresp[1]_INST_0_i_2 
+       (.I0(\USE_READ.rd_cmd_size [2]),
+        .I1(\USE_READ.rd_cmd_size [1]),
+        .O(\s_axi_rresp[1]_INST_0_i_2_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair12" *) 
   LUT5 #(
     .INIT(32'hFFC05500)) 
-    \s_axi_rresp[1]_INST_0_i_2 
+    \s_axi_rresp[1]_INST_0_i_3 
        (.I0(\s_axi_rdata[127]_INST_0_i_5_n_0 ),
         .I1(\USE_READ.rd_cmd_size [1]),
         .I2(\USE_READ.rd_cmd_size [0]),
         .I3(\USE_READ.rd_cmd_size [2]),
         .I4(\s_axi_rdata[127]_INST_0_i_3_n_0 ),
-        .O(\s_axi_rresp[1]_INST_0_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair12" *) 
-  LUT2 #(
-    .INIT(4'h1)) 
-    \s_axi_rresp[1]_INST_0_i_3 
-       (.I0(\USE_READ.rd_cmd_size [2]),
-        .I1(\USE_READ.rd_cmd_size [1]),
         .O(\s_axi_rresp[1]_INST_0_i_3_n_0 ));
   LUT6 #(
     .INIT(64'hA8A8A8A8AAA8AAAA)) 
     s_axi_rvalid_INST_0
        (.I0(s_axi_rvalid_INST_0_i_1_n_0),
-        .I1(\goreg_dm.dout_i_reg[9] ),
+        .I1(s_axi_rvalid_0),
         .I2(s_axi_rvalid_INST_0_i_3_n_0),
         .I3(s_axi_rvalid_INST_0_i_4_n_0),
         .I4(\USE_READ.rd_cmd_size [2]),
@@ -4570,17 +4570,17 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0
         .O(E));
 endmodule
 
-(* ORIG_REF_NAME = "axi_data_fifo_v2_1_15_fifo_gen" *) 
-module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup__1
+(* ORIG_REF_NAME = "axi_data_fifo_v2_1_17_fifo_gen" *) 
+module design_1_auto_ds_2_axi_data_fifo_v2_1_17_fifo_gen__parameterized0__xdcDup__1
    (dout,
     full,
-    \m_axi_awsize[2] ,
-    cmd_push_block_reg,
+    access_fit_mi_side_q_reg,
+    s_axi_aresetn,
     m_axi_awvalid,
     DI,
-    \gpr1.dout_i_reg[7] ,
-    \next_mi_addr_reg[8] ,
-    \next_mi_addr_reg[8]_0 ,
+    \S_AXI_ALEN_Q_reg[6] ,
+    split_ongoing_reg,
+    access_is_incr_q_reg,
     E,
     m_axi_wvalid,
     s_axi_wready,
@@ -4588,7 +4588,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     m_axi_wstrb,
     D,
     S,
-    \gpr1.dout_i_reg[7]_0 ,
+    \downsized_len_q_reg[3] ,
     CLK,
     SR,
     din,
@@ -4600,45 +4600,45 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     out,
     command_ongoing,
     cmd_push_block,
-    ram_full_i_reg,
+    m_axi_awvalid_0,
     m_axi_awready,
     access_is_fix_q,
-    \S_AXI_ALEN_Q_reg[7] ,
-    \downsized_len_q_reg[7] ,
-    access_is_fix_q_reg,
+    \m_axi_awlen[7] ,
+    \m_axi_awlen[7]_0 ,
+    cmd_length_i_carry_i_8_0,
     CO,
     access_is_incr_q,
-    \unalignment_addr_q_reg[4] ,
-    \wrap_unaligned_len_q_reg[7] ,
+    cmd_length_i_carry__0_i_7_0,
+    cmd_length_i_carry__0_i_4_0,
     wrap_need_to_split_q,
-    \split_addr_mask_q_reg[31] ,
-    \fix_len_q_reg[4] ,
-    \S_AXI_AADDR_Q_reg[3] ,
+    \gpr1.dout_i_reg[25] ,
+    cmd_length_i_carry__0_i_7_1,
+    \gpr1.dout_i_reg[19] ,
     si_full_size_q,
-    \split_addr_mask_q_reg[0] ,
-    \split_addr_mask_q_reg[1] ,
-    \split_addr_mask_q_reg[3] ,
+    \gpr1.dout_i_reg[19]_0 ,
+    \gpr1.dout_i_reg[19]_1 ,
+    \gpr1.dout_i_reg[19]_2 ,
     incr_need_to_split_q,
     legal_wrap_len_q,
     s_axi_wvalid,
     m_axi_wready,
     m_axi_wlast,
     first_mi_word,
-    \length_counter_1_reg[7] ,
-    \goreg_dm.dout_i_reg[8] ,
+    s_axi_wready_0,
+    s_axi_wready_1,
     s_axi_wdata,
     s_axi_wstrb,
     \current_word_1_reg[3] ,
-    first_word_reg);
+    \current_word_1_reg[3]_0 );
   output [8:0]dout;
   output full;
-  output [2:0]\m_axi_awsize[2] ;
-  output cmd_push_block_reg;
+  output [2:0]access_fit_mi_side_q_reg;
+  output s_axi_aresetn;
   output m_axi_awvalid;
   output [3:0]DI;
-  output [2:0]\gpr1.dout_i_reg[7] ;
-  output \next_mi_addr_reg[8] ;
-  output \next_mi_addr_reg[8]_0 ;
+  output [2:0]\S_AXI_ALEN_Q_reg[6] ;
+  output split_ongoing_reg;
+  output access_is_incr_q_reg;
   output [0:0]E;
   output m_axi_wvalid;
   output s_axi_wready;
@@ -4646,7 +4646,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   output [3:0]m_axi_wstrb;
   output [3:0]D;
   output [3:0]S;
-  output [3:0]\gpr1.dout_i_reg[7]_0 ;
+  output [3:0]\downsized_len_q_reg[3] ;
   input CLK;
   input [0:0]SR;
   input [16:0]din;
@@ -4658,36 +4658,36 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   input out;
   input command_ongoing;
   input cmd_push_block;
-  input ram_full_i_reg;
+  input m_axi_awvalid_0;
   input m_axi_awready;
   input access_is_fix_q;
-  input [7:0]\S_AXI_ALEN_Q_reg[7] ;
-  input [7:0]\downsized_len_q_reg[7] ;
-  input access_is_fix_q_reg;
+  input [7:0]\m_axi_awlen[7] ;
+  input [7:0]\m_axi_awlen[7]_0 ;
+  input cmd_length_i_carry_i_8_0;
   input [0:0]CO;
   input access_is_incr_q;
-  input [4:0]\unalignment_addr_q_reg[4] ;
-  input [7:0]\wrap_unaligned_len_q_reg[7] ;
+  input [4:0]cmd_length_i_carry__0_i_7_0;
+  input [7:0]cmd_length_i_carry__0_i_4_0;
   input wrap_need_to_split_q;
-  input \split_addr_mask_q_reg[31] ;
-  input [4:0]\fix_len_q_reg[4] ;
-  input [3:0]\S_AXI_AADDR_Q_reg[3] ;
+  input \gpr1.dout_i_reg[25] ;
+  input [4:0]cmd_length_i_carry__0_i_7_1;
+  input [3:0]\gpr1.dout_i_reg[19] ;
   input si_full_size_q;
-  input \split_addr_mask_q_reg[0] ;
-  input \split_addr_mask_q_reg[1] ;
-  input [1:0]\split_addr_mask_q_reg[3] ;
+  input \gpr1.dout_i_reg[19]_0 ;
+  input \gpr1.dout_i_reg[19]_1 ;
+  input [1:0]\gpr1.dout_i_reg[19]_2 ;
   input incr_need_to_split_q;
   input legal_wrap_len_q;
   input s_axi_wvalid;
   input m_axi_wready;
   input m_axi_wlast;
   input first_mi_word;
-  input [0:0]\length_counter_1_reg[7] ;
-  input \goreg_dm.dout_i_reg[8] ;
+  input [0:0]s_axi_wready_0;
+  input s_axi_wready_1;
   input [127:0]s_axi_wdata;
   input [15:0]s_axi_wstrb;
   input [3:0]\current_word_1_reg[3] ;
-  input first_word_reg;
+  input \current_word_1_reg[3]_0 ;
 
   wire CLK;
   wire [0:0]CO;
@@ -4697,17 +4697,17 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   wire [7:0]Q;
   wire [3:0]S;
   wire [0:0]SR;
-  wire [3:0]\S_AXI_AADDR_Q_reg[3] ;
-  wire [7:0]\S_AXI_ALEN_Q_reg[7] ;
+  wire [2:0]\S_AXI_ALEN_Q_reg[6] ;
   wire [3:0]\USE_WRITE.wr_cmd_first_word ;
   wire [3:0]\USE_WRITE.wr_cmd_mask ;
   wire \USE_WRITE.wr_cmd_mirror ;
   wire [3:0]\USE_WRITE.wr_cmd_offset ;
   wire \USE_WRITE.wr_cmd_ready ;
   wire [2:0]\USE_WRITE.wr_cmd_size ;
+  wire [2:0]access_fit_mi_side_q_reg;
   wire access_is_fix_q;
-  wire access_is_fix_q_reg;
   wire access_is_incr_q;
+  wire access_is_incr_q_reg;
   wire access_is_wrap_q;
   wire cmd_length_i_carry__0_i_10_n_0;
   wire cmd_length_i_carry__0_i_11_n_0;
@@ -4719,6 +4719,9 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   wire cmd_length_i_carry__0_i_17_n_0;
   wire cmd_length_i_carry__0_i_18_n_0;
   wire cmd_length_i_carry__0_i_19_n_0;
+  wire [7:0]cmd_length_i_carry__0_i_4_0;
+  wire [4:0]cmd_length_i_carry__0_i_7_0;
+  wire [4:0]cmd_length_i_carry__0_i_7_1;
   wire cmd_length_i_carry__0_i_8_n_0;
   wire cmd_length_i_carry__0_i_9_n_0;
   wire cmd_length_i_carry_i_10_n_0;
@@ -4728,34 +4731,36 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   wire cmd_length_i_carry_i_14_n_0;
   wire cmd_length_i_carry_i_15_n_0;
   wire cmd_length_i_carry_i_16_n_0;
+  wire cmd_length_i_carry_i_8_0;
   wire cmd_length_i_carry_i_9_n_0;
   wire cmd_push_block;
-  wire cmd_push_block_reg;
   wire [2:0]cmd_size_ii;
   wire command_ongoing;
   wire \current_word_1[1]_i_2_n_0 ;
   wire \current_word_1[1]_i_3_n_0 ;
   wire [3:0]\current_word_1_reg[3] ;
+  wire \current_word_1_reg[3]_0 ;
   wire [16:0]din;
   wire [8:0]dout;
-  wire [7:0]\downsized_len_q_reg[7] ;
+  wire [3:0]\downsized_len_q_reg[3] ;
   wire empty;
   wire fifo_gen_inst_i_12_n_0;
   wire fifo_gen_inst_i_13_n_0;
   wire first_mi_word;
-  wire first_word_reg;
-  wire [4:0]\fix_len_q_reg[4] ;
   wire fix_need_to_split_q;
   wire full;
-  wire \goreg_dm.dout_i_reg[8] ;
-  wire [2:0]\gpr1.dout_i_reg[7] ;
-  wire [3:0]\gpr1.dout_i_reg[7]_0 ;
+  wire [3:0]\gpr1.dout_i_reg[19] ;
+  wire \gpr1.dout_i_reg[19]_0 ;
+  wire \gpr1.dout_i_reg[19]_1 ;
+  wire [1:0]\gpr1.dout_i_reg[19]_2 ;
+  wire \gpr1.dout_i_reg[25] ;
   wire incr_need_to_split_q;
   wire legal_wrap_len_q;
-  wire [0:0]\length_counter_1_reg[7] ;
+  wire [7:0]\m_axi_awlen[7] ;
+  wire [7:0]\m_axi_awlen[7]_0 ;
   wire m_axi_awready;
-  wire [2:0]\m_axi_awsize[2] ;
   wire m_axi_awvalid;
+  wire m_axi_awvalid_0;
   wire [31:0]m_axi_wdata;
   wire \m_axi_wdata[31]_INST_0_i_1_n_0 ;
   wire \m_axi_wdata[31]_INST_0_i_2_n_0 ;
@@ -4765,13 +4770,13 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   wire m_axi_wready;
   wire [3:0]m_axi_wstrb;
   wire m_axi_wvalid;
-  wire \next_mi_addr_reg[8] ;
-  wire \next_mi_addr_reg[8]_0 ;
   wire out;
   wire [28:18]p_0_out;
-  wire ram_full_i_reg;
+  wire s_axi_aresetn;
   wire [127:0]s_axi_wdata;
   wire s_axi_wready;
+  wire [0:0]s_axi_wready_0;
+  wire s_axi_wready_1;
   wire s_axi_wready_INST_0_i_1_n_0;
   wire s_axi_wready_INST_0_i_2_n_0;
   wire s_axi_wready_INST_0_i_3_n_0;
@@ -4782,15 +4787,10 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   wire [15:0]s_axi_wstrb;
   wire s_axi_wvalid;
   wire si_full_size_q;
-  wire \split_addr_mask_q_reg[0] ;
-  wire \split_addr_mask_q_reg[1] ;
-  wire \split_addr_mask_q_reg[31] ;
-  wire [1:0]\split_addr_mask_q_reg[3] ;
   wire split_ongoing;
-  wire [4:0]\unalignment_addr_q_reg[4] ;
+  wire split_ongoing_reg;
   wire wr_en;
   wire wrap_need_to_split_q;
-  wire [7:0]\wrap_unaligned_len_q_reg[7] ;
   wire NLW_fifo_gen_inst_almost_empty_UNCONNECTED;
   wire NLW_fifo_gen_inst_almost_full_UNCONNECTED;
   wire NLW_fifo_gen_inst_axi_ar_dbiterr_UNCONNECTED;
@@ -4919,12 +4919,12 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry__0_i_1
-       (.I0(\S_AXI_ALEN_Q_reg[7] [6]),
+       (.I0(\m_axi_awlen[7] [6]),
         .I1(din[15]),
-        .I2(\downsized_len_q_reg[7] [6]),
+        .I2(\m_axi_awlen[7]_0 [6]),
         .I3(cmd_length_i_carry__0_i_8_n_0),
         .I4(cmd_length_i_carry__0_i_9_n_0),
-        .O(\gpr1.dout_i_reg[7] [2]));
+        .O(\S_AXI_ALEN_Q_reg[6] [2]));
   (* SOFT_HLUTNM = "soft_lutpair73" *) 
   LUT4 #(
     .INIT(16'h4555)) 
@@ -4934,11 +4934,11 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I2(split_ongoing),
         .I3(access_is_wrap_q),
         .O(cmd_length_i_carry__0_i_10_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair71" *) 
+  (* SOFT_HLUTNM = "soft_lutpair70" *) 
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry__0_i_11
-       (.I0(\fix_len_q_reg[4] [4]),
+       (.I0(cmd_length_i_carry__0_i_7_1[4]),
         .I1(fix_need_to_split_q),
         .I2(Q[4]),
         .I3(split_ongoing),
@@ -4948,7 +4948,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT3 #(
     .INIT(8'hDF)) 
     cmd_length_i_carry__0_i_12
-       (.I0(\wrap_unaligned_len_q_reg[7] [7]),
+       (.I0(cmd_length_i_carry__0_i_4_0[7]),
         .I1(split_ongoing),
         .I2(wrap_need_to_split_q),
         .O(cmd_length_i_carry__0_i_12_n_0));
@@ -4963,7 +4963,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT3 #(
     .INIT(8'hDF)) 
     cmd_length_i_carry__0_i_14
-       (.I0(\wrap_unaligned_len_q_reg[7] [6]),
+       (.I0(cmd_length_i_carry__0_i_4_0[6]),
         .I1(split_ongoing),
         .I2(wrap_need_to_split_q),
         .O(cmd_length_i_carry__0_i_14_n_0));
@@ -4971,20 +4971,20 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT3 #(
     .INIT(8'hDF)) 
     cmd_length_i_carry__0_i_15
-       (.I0(\wrap_unaligned_len_q_reg[7] [5]),
+       (.I0(cmd_length_i_carry__0_i_4_0[5]),
         .I1(split_ongoing),
         .I2(wrap_need_to_split_q),
         .O(cmd_length_i_carry__0_i_15_n_0));
   LUT5 #(
     .INIT(32'hCF55CFCF)) 
     cmd_length_i_carry__0_i_16
-       (.I0(\wrap_unaligned_len_q_reg[7] [4]),
+       (.I0(cmd_length_i_carry__0_i_4_0[4]),
         .I1(cmd_length_i_carry__0_i_19_n_0),
-        .I2(\unalignment_addr_q_reg[4] [4]),
+        .I2(cmd_length_i_carry__0_i_7_0[4]),
         .I3(split_ongoing),
         .I4(wrap_need_to_split_q),
         .O(cmd_length_i_carry__0_i_16_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair70" *) 
+  (* SOFT_HLUTNM = "soft_lutpair69" *) 
   LUT2 #(
     .INIT(4'h2)) 
     cmd_length_i_carry__0_i_17
@@ -5000,7 +5000,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I3(incr_need_to_split_q),
         .I4(access_is_incr_q),
         .O(cmd_length_i_carry__0_i_18_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair69" *) 
+  (* SOFT_HLUTNM = "soft_lutpair71" *) 
   LUT5 #(
     .INIT(32'h0000FD0D)) 
     cmd_length_i_carry__0_i_19
@@ -5013,39 +5013,39 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry__0_i_2
-       (.I0(\S_AXI_ALEN_Q_reg[7] [5]),
+       (.I0(\m_axi_awlen[7] [5]),
         .I1(din[15]),
-        .I2(\downsized_len_q_reg[7] [5]),
+        .I2(\m_axi_awlen[7]_0 [5]),
         .I3(cmd_length_i_carry__0_i_8_n_0),
         .I4(cmd_length_i_carry__0_i_10_n_0),
-        .O(\gpr1.dout_i_reg[7] [1]));
+        .O(\S_AXI_ALEN_Q_reg[6] [1]));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry__0_i_3
-       (.I0(\S_AXI_ALEN_Q_reg[7] [4]),
+       (.I0(\m_axi_awlen[7] [4]),
         .I1(din[15]),
-        .I2(\downsized_len_q_reg[7] [4]),
+        .I2(\m_axi_awlen[7]_0 [4]),
         .I3(cmd_length_i_carry__0_i_8_n_0),
         .I4(cmd_length_i_carry__0_i_11_n_0),
-        .O(\gpr1.dout_i_reg[7] [0]));
+        .O(\S_AXI_ALEN_Q_reg[6] [0]));
   LUT6 #(
     .INIT(64'h555556A6AAAA56A6)) 
     cmd_length_i_carry__0_i_4
        (.I0(cmd_length_i_carry__0_i_12_n_0),
         .I1(cmd_length_i_carry__0_i_13_n_0),
         .I2(cmd_length_i_carry__0_i_8_n_0),
-        .I3(\downsized_len_q_reg[7] [7]),
+        .I3(\m_axi_awlen[7]_0 [7]),
         .I4(din[15]),
-        .I5(\S_AXI_ALEN_Q_reg[7] [7]),
+        .I5(\m_axi_awlen[7] [7]),
         .O(S[3]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry__0_i_5
        (.I0(cmd_length_i_carry__0_i_9_n_0),
         .I1(cmd_length_i_carry__0_i_8_n_0),
-        .I2(\downsized_len_q_reg[7] [6]),
+        .I2(\m_axi_awlen[7]_0 [6]),
         .I3(din[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [6]),
+        .I4(\m_axi_awlen[7] [6]),
         .I5(cmd_length_i_carry__0_i_14_n_0),
         .O(S[2]));
   LUT6 #(
@@ -5053,9 +5053,9 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     cmd_length_i_carry__0_i_6
        (.I0(cmd_length_i_carry__0_i_10_n_0),
         .I1(cmd_length_i_carry__0_i_8_n_0),
-        .I2(\downsized_len_q_reg[7] [5]),
+        .I2(\m_axi_awlen[7]_0 [5]),
         .I3(din[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [5]),
+        .I4(\m_axi_awlen[7] [5]),
         .I5(cmd_length_i_carry__0_i_15_n_0),
         .O(S[1]));
   LUT6 #(
@@ -5063,15 +5063,15 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     cmd_length_i_carry__0_i_7
        (.I0(cmd_length_i_carry__0_i_11_n_0),
         .I1(cmd_length_i_carry__0_i_8_n_0),
-        .I2(\downsized_len_q_reg[7] [4]),
+        .I2(\m_axi_awlen[7]_0 [4]),
         .I3(din[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [4]),
+        .I4(\m_axi_awlen[7] [4]),
         .I5(cmd_length_i_carry__0_i_16_n_0),
         .O(S[0]));
   LUT6 #(
     .INIT(64'hFFFFFFFFD0D0F0D0)) 
     cmd_length_i_carry__0_i_8
-       (.I0(access_is_fix_q_reg),
+       (.I0(cmd_length_i_carry_i_8_0),
         .I1(CO),
         .I2(access_is_incr_q),
         .I3(access_is_wrap_q),
@@ -5090,16 +5090,16 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry_i_1
-       (.I0(\S_AXI_ALEN_Q_reg[7] [3]),
+       (.I0(\m_axi_awlen[7] [3]),
         .I1(din[15]),
-        .I2(\downsized_len_q_reg[7] [3]),
+        .I2(\m_axi_awlen[7]_0 [3]),
         .I3(cmd_length_i_carry__0_i_8_n_0),
         .I4(cmd_length_i_carry_i_9_n_0),
         .O(DI[3]));
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry_i_10
-       (.I0(\fix_len_q_reg[4] [2]),
+       (.I0(cmd_length_i_carry__0_i_7_1[2]),
         .I1(fix_need_to_split_q),
         .I2(Q[2]),
         .I3(split_ongoing),
@@ -5108,7 +5108,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry_i_11
-       (.I0(\fix_len_q_reg[4] [1]),
+       (.I0(cmd_length_i_carry__0_i_7_1[1]),
         .I1(fix_need_to_split_q),
         .I2(Q[1]),
         .I3(split_ongoing),
@@ -5117,7 +5117,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry_i_12
-       (.I0(\fix_len_q_reg[4] [0]),
+       (.I0(cmd_length_i_carry__0_i_7_1[0]),
         .I1(fix_need_to_split_q),
         .I2(Q[0]),
         .I3(split_ongoing),
@@ -5126,64 +5126,64 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT5 #(
     .INIT(32'hCF55CFCF)) 
     cmd_length_i_carry_i_13
-       (.I0(\wrap_unaligned_len_q_reg[7] [3]),
+       (.I0(cmd_length_i_carry__0_i_4_0[3]),
         .I1(cmd_length_i_carry__0_i_19_n_0),
-        .I2(\unalignment_addr_q_reg[4] [3]),
+        .I2(cmd_length_i_carry__0_i_7_0[3]),
         .I3(split_ongoing),
         .I4(wrap_need_to_split_q),
         .O(cmd_length_i_carry_i_13_n_0));
   LUT5 #(
     .INIT(32'hCF55CFCF)) 
     cmd_length_i_carry_i_14
-       (.I0(\wrap_unaligned_len_q_reg[7] [2]),
+       (.I0(cmd_length_i_carry__0_i_4_0[2]),
         .I1(cmd_length_i_carry__0_i_19_n_0),
-        .I2(\unalignment_addr_q_reg[4] [2]),
+        .I2(cmd_length_i_carry__0_i_7_0[2]),
         .I3(split_ongoing),
         .I4(wrap_need_to_split_q),
         .O(cmd_length_i_carry_i_14_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair70" *) 
+  (* SOFT_HLUTNM = "soft_lutpair69" *) 
   LUT5 #(
     .INIT(32'hDDDD0FDD)) 
     cmd_length_i_carry_i_15
-       (.I0(\unalignment_addr_q_reg[4] [1]),
+       (.I0(cmd_length_i_carry__0_i_7_0[1]),
         .I1(cmd_length_i_carry__0_i_19_n_0),
-        .I2(\wrap_unaligned_len_q_reg[7] [1]),
+        .I2(cmd_length_i_carry__0_i_4_0[1]),
         .I3(wrap_need_to_split_q),
         .I4(split_ongoing),
         .O(cmd_length_i_carry_i_15_n_0));
   LUT5 #(
     .INIT(32'hF704F7F7)) 
     cmd_length_i_carry_i_16
-       (.I0(\wrap_unaligned_len_q_reg[7] [0]),
+       (.I0(cmd_length_i_carry__0_i_4_0[0]),
         .I1(wrap_need_to_split_q),
         .I2(split_ongoing),
         .I3(cmd_length_i_carry__0_i_19_n_0),
-        .I4(\unalignment_addr_q_reg[4] [0]),
+        .I4(cmd_length_i_carry__0_i_7_0[0]),
         .O(cmd_length_i_carry_i_16_n_0));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry_i_2
-       (.I0(\S_AXI_ALEN_Q_reg[7] [2]),
+       (.I0(\m_axi_awlen[7] [2]),
         .I1(din[15]),
-        .I2(\downsized_len_q_reg[7] [2]),
+        .I2(\m_axi_awlen[7]_0 [2]),
         .I3(cmd_length_i_carry__0_i_8_n_0),
         .I4(cmd_length_i_carry_i_10_n_0),
         .O(DI[2]));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry_i_3
-       (.I0(\S_AXI_ALEN_Q_reg[7] [1]),
+       (.I0(\m_axi_awlen[7] [1]),
         .I1(din[15]),
-        .I2(\downsized_len_q_reg[7] [1]),
+        .I2(\m_axi_awlen[7]_0 [1]),
         .I3(cmd_length_i_carry__0_i_8_n_0),
         .I4(cmd_length_i_carry_i_11_n_0),
         .O(DI[1]));
   LUT5 #(
     .INIT(32'hB8BBB888)) 
     cmd_length_i_carry_i_4
-       (.I0(\S_AXI_ALEN_Q_reg[7] [0]),
+       (.I0(\m_axi_awlen[7] [0]),
         .I1(din[15]),
-        .I2(\downsized_len_q_reg[7] [0]),
+        .I2(\m_axi_awlen[7]_0 [0]),
         .I3(cmd_length_i_carry__0_i_8_n_0),
         .I4(cmd_length_i_carry_i_12_n_0),
         .O(DI[0]));
@@ -5192,45 +5192,45 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     cmd_length_i_carry_i_5
        (.I0(cmd_length_i_carry_i_9_n_0),
         .I1(cmd_length_i_carry__0_i_8_n_0),
-        .I2(\downsized_len_q_reg[7] [3]),
+        .I2(\m_axi_awlen[7]_0 [3]),
         .I3(din[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [3]),
+        .I4(\m_axi_awlen[7] [3]),
         .I5(cmd_length_i_carry_i_13_n_0),
-        .O(\gpr1.dout_i_reg[7]_0 [3]));
+        .O(\downsized_len_q_reg[3] [3]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry_i_6
        (.I0(cmd_length_i_carry_i_10_n_0),
         .I1(cmd_length_i_carry__0_i_8_n_0),
-        .I2(\downsized_len_q_reg[7] [2]),
+        .I2(\m_axi_awlen[7]_0 [2]),
         .I3(din[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [2]),
+        .I4(\m_axi_awlen[7] [2]),
         .I5(cmd_length_i_carry_i_14_n_0),
-        .O(\gpr1.dout_i_reg[7]_0 [2]));
+        .O(\downsized_len_q_reg[3] [2]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry_i_7
        (.I0(cmd_length_i_carry_i_11_n_0),
         .I1(cmd_length_i_carry__0_i_8_n_0),
-        .I2(\downsized_len_q_reg[7] [1]),
+        .I2(\m_axi_awlen[7]_0 [1]),
         .I3(din[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [1]),
+        .I4(\m_axi_awlen[7] [1]),
         .I5(cmd_length_i_carry_i_15_n_0),
-        .O(\gpr1.dout_i_reg[7]_0 [1]));
+        .O(\downsized_len_q_reg[3] [1]));
   LUT6 #(
     .INIT(64'h001DFF1DFFE200E2)) 
     cmd_length_i_carry_i_8
        (.I0(cmd_length_i_carry_i_12_n_0),
         .I1(cmd_length_i_carry__0_i_8_n_0),
-        .I2(\downsized_len_q_reg[7] [0]),
+        .I2(\m_axi_awlen[7]_0 [0]),
         .I3(din[15]),
-        .I4(\S_AXI_ALEN_Q_reg[7] [0]),
+        .I4(\m_axi_awlen[7] [0]),
         .I5(cmd_length_i_carry_i_16_n_0),
-        .O(\gpr1.dout_i_reg[7]_0 [0]));
+        .O(\downsized_len_q_reg[3] [0]));
   LUT5 #(
     .INIT(32'hB8BBBBBB)) 
     cmd_length_i_carry_i_9
-       (.I0(\fix_len_q_reg[4] [3]),
+       (.I0(cmd_length_i_carry__0_i_7_1[3]),
         .I1(fix_need_to_split_q),
         .I2(Q[3]),
         .I3(split_ongoing),
@@ -5243,9 +5243,9 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I1(command_ongoing),
         .I2(cmd_push_block),
         .I3(full),
-        .I4(ram_full_i_reg),
+        .I4(m_axi_awvalid_0),
         .I5(m_axi_awready),
-        .O(cmd_push_block_reg));
+        .O(s_axi_aresetn));
   LUT5 #(
     .INIT(32'h22222228)) 
     \current_word_1[0]_i_1__0 
@@ -5498,7 +5498,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   (* C_WR_PNTR_WIDTH_WDCH = "10" *) 
   (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
   (* C_WR_RESPONSE_LATENCY = "1" *) 
-  design_1_auto_ds_2_fifo_generator_v13_2_2__parameterized0__xdcDup__1 fifo_gen_inst
+  design_1_auto_ds_2_fifo_generator_v13_2_3__parameterized0__xdcDup__1 fifo_gen_inst
        (.almost_empty(NLW_fifo_gen_inst_almost_empty_UNCONNECTED),
         .almost_full(NLW_fifo_gen_inst_almost_full_UNCONNECTED),
         .axi_ar_data_count(NLW_fifo_gen_inst_axi_ar_data_count_UNCONNECTED[4:0]),
@@ -5584,7 +5584,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .clk(CLK),
         .data_count(NLW_fifo_gen_inst_data_count_UNCONNECTED[5:0]),
         .dbiterr(NLW_fifo_gen_inst_dbiterr_UNCONNECTED),
-        .din({p_0_out[28],din[16:15],p_0_out[25:18],din[14:11],\m_axi_awsize[2] ,din[10:0]}),
+        .din({p_0_out[28],din[16:15],p_0_out[25:18],din[14:11],access_fit_mi_side_q_reg,din[10:0]}),
         .dout({dout[8],NLW_fifo_gen_inst_dout_UNCONNECTED[27],\USE_WRITE.wr_cmd_mirror ,\USE_WRITE.wr_cmd_first_word ,\USE_WRITE.wr_cmd_offset ,\USE_WRITE.wr_cmd_mask ,cmd_size_ii,dout[7:0],\USE_WRITE.wr_cmd_size }),
         .empty(empty),
         .full(full),
@@ -5748,42 +5748,42 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
   LUT6 #(
     .INIT(64'h0000FF002F00FF00)) 
     fifo_gen_inst_i_12
-       (.I0(\split_addr_mask_q_reg[3] [1]),
+       (.I0(\gpr1.dout_i_reg[19]_2 [1]),
         .I1(si_full_size_q),
         .I2(access_is_incr_q),
-        .I3(\S_AXI_AADDR_Q_reg[3] [3]),
+        .I3(\gpr1.dout_i_reg[19] [3]),
         .I4(split_ongoing),
         .I5(access_is_wrap_q),
         .O(fifo_gen_inst_i_12_n_0));
   LUT6 #(
     .INIT(64'h0000FF002F00FF00)) 
     fifo_gen_inst_i_13
-       (.I0(\split_addr_mask_q_reg[3] [0]),
+       (.I0(\gpr1.dout_i_reg[19]_2 [0]),
         .I1(si_full_size_q),
         .I2(access_is_incr_q),
-        .I3(\S_AXI_AADDR_Q_reg[3] [2]),
+        .I3(\gpr1.dout_i_reg[19] [2]),
         .I4(split_ongoing),
         .I5(access_is_wrap_q),
         .O(fifo_gen_inst_i_13_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair71" *) 
+  (* SOFT_HLUTNM = "soft_lutpair70" *) 
   LUT2 #(
     .INIT(4'h8)) 
     fifo_gen_inst_i_14
        (.I0(split_ongoing),
         .I1(access_is_wrap_q),
-        .O(\next_mi_addr_reg[8] ));
-  (* SOFT_HLUTNM = "soft_lutpair69" *) 
+        .O(split_ongoing_reg));
+  (* SOFT_HLUTNM = "soft_lutpair71" *) 
   LUT2 #(
     .INIT(4'h8)) 
     fifo_gen_inst_i_15
        (.I0(access_is_incr_q),
         .I1(split_ongoing),
-        .O(\next_mi_addr_reg[8]_0 ));
+        .O(access_is_incr_q_reg));
   LUT3 #(
     .INIT(8'h80)) 
     fifo_gen_inst_i_2
        (.I0(fifo_gen_inst_i_12_n_0),
-        .I1(\split_addr_mask_q_reg[31] ),
+        .I1(\gpr1.dout_i_reg[25] ),
         .I2(din[14]),
         .O(p_0_out[25]));
   LUT3 #(
@@ -5791,66 +5791,66 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     fifo_gen_inst_i_3
        (.I0(fifo_gen_inst_i_13_n_0),
         .I1(din[13]),
-        .I2(\split_addr_mask_q_reg[31] ),
+        .I2(\gpr1.dout_i_reg[25] ),
         .O(p_0_out[24]));
   LUT6 #(
     .INIT(64'h0444000000000000)) 
     fifo_gen_inst_i_4
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [1]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [1]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[1] ),
+        .I4(\gpr1.dout_i_reg[19]_1 ),
         .I5(din[12]),
         .O(p_0_out[23]));
   LUT6 #(
     .INIT(64'h0444000000000000)) 
     fifo_gen_inst_i_5
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [0]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [0]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[0] ),
+        .I4(\gpr1.dout_i_reg[19]_0 ),
         .I5(din[11]),
         .O(p_0_out[22]));
   LUT6 #(
     .INIT(64'h0000000004440404)) 
     fifo_gen_inst_i_6__0
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [3]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [3]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[3] [1]),
+        .I4(\gpr1.dout_i_reg[19]_2 [1]),
         .I5(din[14]),
         .O(p_0_out[21]));
   LUT6 #(
     .INIT(64'h0000000004440404)) 
     fifo_gen_inst_i_7__0
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [2]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [2]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[3] [0]),
+        .I4(\gpr1.dout_i_reg[19]_2 [0]),
         .I5(din[13]),
         .O(p_0_out[20]));
   LUT6 #(
     .INIT(64'h0000000004440404)) 
     fifo_gen_inst_i_8
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [1]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [1]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[1] ),
+        .I4(\gpr1.dout_i_reg[19]_1 ),
         .I5(din[12]),
         .O(p_0_out[19]));
   LUT6 #(
     .INIT(64'h0000000004440404)) 
     fifo_gen_inst_i_9
-       (.I0(\next_mi_addr_reg[8] ),
-        .I1(\S_AXI_AADDR_Q_reg[3] [0]),
-        .I2(\next_mi_addr_reg[8]_0 ),
+       (.I0(split_ongoing_reg),
+        .I1(\gpr1.dout_i_reg[19] [0]),
+        .I2(access_is_incr_q_reg),
         .I3(si_full_size_q),
-        .I4(\split_addr_mask_q_reg[0] ),
+        .I4(\gpr1.dout_i_reg[19]_0 ),
         .I5(din[11]),
         .O(p_0_out[18]));
   (* SOFT_HLUTNM = "soft_lutpair72" *) 
@@ -5866,26 +5866,26 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     \m_axi_awsize[0]_INST_0 
        (.I0(din[15]),
         .I1(din[0]),
-        .O(\m_axi_awsize[2] [0]));
+        .O(access_fit_mi_side_q_reg[0]));
   LUT2 #(
     .INIT(4'hB)) 
     \m_axi_awsize[1]_INST_0 
        (.I0(din[1]),
         .I1(din[15]),
-        .O(\m_axi_awsize[2] [1]));
+        .O(access_fit_mi_side_q_reg[1]));
   LUT2 #(
     .INIT(4'h8)) 
     \m_axi_awsize[2]_INST_0 
        (.I0(din[15]),
         .I1(din[2]),
-        .O(\m_axi_awsize[2] [2]));
+        .O(access_fit_mi_side_q_reg[2]));
   LUT4 #(
     .INIT(16'h888A)) 
     m_axi_awvalid_INST_0
        (.I0(command_ongoing),
         .I1(cmd_push_block),
         .I2(full),
-        .I3(ram_full_i_reg),
+        .I3(m_axi_awvalid_0),
         .O(m_axi_awvalid));
   LUT6 #(
     .INIT(64'hFFCCF0AA00CCF0AA)) 
@@ -5898,44 +5898,44 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I5(s_axi_wdata[64]),
         .O(m_axi_wdata[0]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[10]_INST_0 
        (.I0(s_axi_wdata[42]),
         .I1(s_axi_wdata[10]),
-        .I2(s_axi_wdata[106]),
+        .I2(s_axi_wdata[74]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[74]),
+        .I5(s_axi_wdata[106]),
         .O(m_axi_wdata[10]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hFFAACCF000AACCF0)) 
     \m_axi_wdata[11]_INST_0 
-       (.I0(s_axi_wdata[43]),
-        .I1(s_axi_wdata[11]),
-        .I2(s_axi_wdata[107]),
+       (.I0(s_axi_wdata[11]),
+        .I1(s_axi_wdata[107]),
+        .I2(s_axi_wdata[43]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
         .I5(s_axi_wdata[75]),
         .O(m_axi_wdata[11]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[12]_INST_0 
        (.I0(s_axi_wdata[44]),
         .I1(s_axi_wdata[12]),
-        .I2(s_axi_wdata[108]),
+        .I2(s_axi_wdata[76]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[76]),
+        .I5(s_axi_wdata[108]),
         .O(m_axi_wdata[12]));
   LUT6 #(
-    .INIT(64'hCCFFF0AACC00F0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[13]_INST_0 
        (.I0(s_axi_wdata[45]),
-        .I1(s_axi_wdata[77]),
-        .I2(s_axi_wdata[109]),
+        .I1(s_axi_wdata[13]),
+        .I2(s_axi_wdata[77]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[13]),
+        .I5(s_axi_wdata[109]),
         .O(m_axi_wdata[13]));
   LUT6 #(
     .INIT(64'hCCAAFFF0CCAA00F0)) 
@@ -5948,14 +5948,14 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I5(s_axi_wdata[110]),
         .O(m_axi_wdata[14]));
   LUT6 #(
-    .INIT(64'hCCAAFFF0CCAA00F0)) 
+    .INIT(64'hCCFFF0AACC00F0AA)) 
     \m_axi_wdata[15]_INST_0 
-       (.I0(s_axi_wdata[15]),
+       (.I0(s_axi_wdata[47]),
         .I1(s_axi_wdata[79]),
-        .I2(s_axi_wdata[47]),
+        .I2(s_axi_wdata[111]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[111]),
+        .I5(s_axi_wdata[15]),
         .O(m_axi_wdata[15]));
   LUT6 #(
     .INIT(64'hFFCCF0AA00CCF0AA)) 
@@ -5968,64 +5968,64 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I5(s_axi_wdata[80]),
         .O(m_axi_wdata[16]));
   LUT6 #(
-    .INIT(64'hCCFFF0AACC00F0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[17]_INST_0 
        (.I0(s_axi_wdata[49]),
-        .I1(s_axi_wdata[81]),
-        .I2(s_axi_wdata[113]),
+        .I1(s_axi_wdata[17]),
+        .I2(s_axi_wdata[81]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[17]),
+        .I5(s_axi_wdata[113]),
         .O(m_axi_wdata[17]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[18]_INST_0 
        (.I0(s_axi_wdata[50]),
         .I1(s_axi_wdata[18]),
-        .I2(s_axi_wdata[114]),
+        .I2(s_axi_wdata[82]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[82]),
+        .I5(s_axi_wdata[114]),
         .O(m_axi_wdata[18]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hFFAACCF000AACCF0)) 
     \m_axi_wdata[19]_INST_0 
-       (.I0(s_axi_wdata[51]),
-        .I1(s_axi_wdata[19]),
-        .I2(s_axi_wdata[115]),
+       (.I0(s_axi_wdata[19]),
+        .I1(s_axi_wdata[115]),
+        .I2(s_axi_wdata[51]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
         .I5(s_axi_wdata[83]),
         .O(m_axi_wdata[19]));
   LUT6 #(
-    .INIT(64'hCCFFF0AACC00F0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[1]_INST_0 
        (.I0(s_axi_wdata[33]),
-        .I1(s_axi_wdata[65]),
-        .I2(s_axi_wdata[97]),
+        .I1(s_axi_wdata[1]),
+        .I2(s_axi_wdata[65]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[1]),
+        .I5(s_axi_wdata[97]),
         .O(m_axi_wdata[1]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[20]_INST_0 
        (.I0(s_axi_wdata[52]),
         .I1(s_axi_wdata[20]),
-        .I2(s_axi_wdata[116]),
+        .I2(s_axi_wdata[84]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[84]),
+        .I5(s_axi_wdata[116]),
         .O(m_axi_wdata[20]));
   LUT6 #(
-    .INIT(64'hCCFFF0AACC00F0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[21]_INST_0 
        (.I0(s_axi_wdata[53]),
-        .I1(s_axi_wdata[85]),
-        .I2(s_axi_wdata[117]),
+        .I1(s_axi_wdata[21]),
+        .I2(s_axi_wdata[85]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[21]),
+        .I5(s_axi_wdata[117]),
         .O(m_axi_wdata[21]));
   LUT6 #(
     .INIT(64'hCCAAFFF0CCAA00F0)) 
@@ -6038,14 +6038,14 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I5(s_axi_wdata[118]),
         .O(m_axi_wdata[22]));
   LUT6 #(
-    .INIT(64'hCCAAFFF0CCAA00F0)) 
+    .INIT(64'hCCFFF0AACC00F0AA)) 
     \m_axi_wdata[23]_INST_0 
-       (.I0(s_axi_wdata[23]),
+       (.I0(s_axi_wdata[55]),
         .I1(s_axi_wdata[87]),
-        .I2(s_axi_wdata[55]),
+        .I2(s_axi_wdata[119]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[119]),
+        .I5(s_axi_wdata[23]),
         .O(m_axi_wdata[23]));
   LUT6 #(
     .INIT(64'hFFCCF0AA00CCF0AA)) 
@@ -6058,64 +6058,64 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I5(s_axi_wdata[88]),
         .O(m_axi_wdata[24]));
   LUT6 #(
-    .INIT(64'hCCFFF0AACC00F0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[25]_INST_0 
        (.I0(s_axi_wdata[57]),
-        .I1(s_axi_wdata[89]),
-        .I2(s_axi_wdata[121]),
+        .I1(s_axi_wdata[25]),
+        .I2(s_axi_wdata[89]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[25]),
+        .I5(s_axi_wdata[121]),
         .O(m_axi_wdata[25]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[26]_INST_0 
        (.I0(s_axi_wdata[58]),
         .I1(s_axi_wdata[26]),
-        .I2(s_axi_wdata[122]),
+        .I2(s_axi_wdata[90]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[90]),
+        .I5(s_axi_wdata[122]),
         .O(m_axi_wdata[26]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hFFAACCF000AACCF0)) 
     \m_axi_wdata[27]_INST_0 
-       (.I0(s_axi_wdata[59]),
-        .I1(s_axi_wdata[27]),
-        .I2(s_axi_wdata[123]),
+       (.I0(s_axi_wdata[27]),
+        .I1(s_axi_wdata[123]),
+        .I2(s_axi_wdata[59]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
         .I5(s_axi_wdata[91]),
         .O(m_axi_wdata[27]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[28]_INST_0 
        (.I0(s_axi_wdata[60]),
         .I1(s_axi_wdata[28]),
-        .I2(s_axi_wdata[124]),
+        .I2(s_axi_wdata[92]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[92]),
+        .I5(s_axi_wdata[124]),
         .O(m_axi_wdata[28]));
   LUT6 #(
-    .INIT(64'hCCFFF0AACC00F0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[29]_INST_0 
        (.I0(s_axi_wdata[61]),
-        .I1(s_axi_wdata[93]),
-        .I2(s_axi_wdata[125]),
+        .I1(s_axi_wdata[29]),
+        .I2(s_axi_wdata[93]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[29]),
+        .I5(s_axi_wdata[125]),
         .O(m_axi_wdata[29]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[2]_INST_0 
        (.I0(s_axi_wdata[34]),
         .I1(s_axi_wdata[2]),
-        .I2(s_axi_wdata[98]),
+        .I2(s_axi_wdata[66]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[66]),
+        .I5(s_axi_wdata[98]),
         .O(m_axi_wdata[2]));
   LUT6 #(
     .INIT(64'hCCAAFFF0CCAA00F0)) 
@@ -6128,14 +6128,14 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I5(s_axi_wdata[126]),
         .O(m_axi_wdata[30]));
   LUT6 #(
-    .INIT(64'hCCAAFFF0CCAA00F0)) 
+    .INIT(64'hCCFFF0AACC00F0AA)) 
     \m_axi_wdata[31]_INST_0 
-       (.I0(s_axi_wdata[31]),
+       (.I0(s_axi_wdata[63]),
         .I1(s_axi_wdata[95]),
-        .I2(s_axi_wdata[63]),
+        .I2(s_axi_wdata[127]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[127]),
+        .I5(s_axi_wdata[31]),
         .O(m_axi_wdata[31]));
   LUT5 #(
     .INIT(32'h718E8E71)) 
@@ -6160,7 +6160,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     .INIT(64'h1DFFFFFF00001DFF)) 
     \m_axi_wdata[31]_INST_0_i_3 
        (.I0(\current_word_1_reg[3] [0]),
-        .I1(first_word_reg),
+        .I1(\current_word_1_reg[3]_0 ),
         .I2(\USE_WRITE.wr_cmd_first_word [0]),
         .I3(\USE_WRITE.wr_cmd_offset [0]),
         .I4(\USE_WRITE.wr_cmd_offset [1]),
@@ -6175,34 +6175,34 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I3(\current_word_1_reg[3] [3]),
         .O(\m_axi_wdata[31]_INST_0_i_4_n_0 ));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hFFAACCF000AACCF0)) 
     \m_axi_wdata[3]_INST_0 
-       (.I0(s_axi_wdata[35]),
-        .I1(s_axi_wdata[3]),
-        .I2(s_axi_wdata[99]),
+       (.I0(s_axi_wdata[3]),
+        .I1(s_axi_wdata[99]),
+        .I2(s_axi_wdata[35]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
         .I5(s_axi_wdata[67]),
         .O(m_axi_wdata[3]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[4]_INST_0 
        (.I0(s_axi_wdata[36]),
         .I1(s_axi_wdata[4]),
-        .I2(s_axi_wdata[100]),
+        .I2(s_axi_wdata[68]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[68]),
+        .I5(s_axi_wdata[100]),
         .O(m_axi_wdata[4]));
   LUT6 #(
-    .INIT(64'hCCFFF0AACC00F0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[5]_INST_0 
        (.I0(s_axi_wdata[37]),
-        .I1(s_axi_wdata[69]),
-        .I2(s_axi_wdata[101]),
+        .I1(s_axi_wdata[5]),
+        .I2(s_axi_wdata[69]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[5]),
+        .I5(s_axi_wdata[101]),
         .O(m_axi_wdata[5]));
   LUT6 #(
     .INIT(64'hCCAAFFF0CCAA00F0)) 
@@ -6215,14 +6215,14 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I5(s_axi_wdata[102]),
         .O(m_axi_wdata[6]));
   LUT6 #(
-    .INIT(64'hCCAAFFF0CCAA00F0)) 
+    .INIT(64'hCCFFF0AACC00F0AA)) 
     \m_axi_wdata[7]_INST_0 
-       (.I0(s_axi_wdata[7]),
+       (.I0(s_axi_wdata[39]),
         .I1(s_axi_wdata[71]),
-        .I2(s_axi_wdata[39]),
+        .I2(s_axi_wdata[103]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[103]),
+        .I5(s_axi_wdata[7]),
         .O(m_axi_wdata[7]));
   LUT6 #(
     .INIT(64'hFFCCF0AA00CCF0AA)) 
@@ -6235,31 +6235,31 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I5(s_axi_wdata[72]),
         .O(m_axi_wdata[8]));
   LUT6 #(
-    .INIT(64'hCCFFF0AACC00F0AA)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wdata[9]_INST_0 
        (.I0(s_axi_wdata[41]),
-        .I1(s_axi_wdata[73]),
-        .I2(s_axi_wdata[105]),
+        .I1(s_axi_wdata[9]),
+        .I2(s_axi_wdata[73]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wdata[9]),
+        .I5(s_axi_wdata[105]),
         .O(m_axi_wdata[9]));
   LUT6 #(
-    .INIT(64'hFFCCF0AA00CCF0AA)) 
+    .INIT(64'hAAFFF0CCAA00F0CC)) 
     \m_axi_wstrb[0]_INST_0 
-       (.I0(s_axi_wstrb[4]),
-        .I1(s_axi_wstrb[0]),
+       (.I0(s_axi_wstrb[8]),
+        .I1(s_axi_wstrb[4]),
         .I2(s_axi_wstrb[12]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
-        .I5(s_axi_wstrb[8]),
+        .I5(s_axi_wstrb[0]),
         .O(m_axi_wstrb[0]));
   LUT6 #(
-    .INIT(64'hCCAAFFF0CCAA00F0)) 
+    .INIT(64'hF0CCFFAAF0CC00AA)) 
     \m_axi_wstrb[1]_INST_0 
-       (.I0(s_axi_wstrb[1]),
-        .I1(s_axi_wstrb[9]),
-        .I2(s_axi_wstrb[5]),
+       (.I0(s_axi_wstrb[5]),
+        .I1(s_axi_wstrb[1]),
+        .I2(s_axi_wstrb[9]),
         .I3(\m_axi_wdata[31]_INST_0_i_1_n_0 ),
         .I4(\m_axi_wdata[31]_INST_0_i_2_n_0 ),
         .I5(s_axi_wstrb[13]),
@@ -6313,8 +6313,8 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     s_axi_wready_INST_0_i_2
        (.I0(dout[7]),
         .I1(first_mi_word),
-        .I2(\length_counter_1_reg[7] ),
-        .I3(\goreg_dm.dout_i_reg[8] ),
+        .I2(s_axi_wready_0),
+        .I3(s_axi_wready_1),
         .I4(\USE_WRITE.wr_cmd_mirror ),
         .I5(dout[8]),
         .O(s_axi_wready_INST_0_i_2_n_0));
@@ -6322,7 +6322,7 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
     .INIT(64'h4747B847FFFFFFFF)) 
     s_axi_wready_INST_0_i_3
        (.I0(\USE_WRITE.wr_cmd_first_word [3]),
-        .I1(first_word_reg),
+        .I1(\current_word_1_reg[3]_0 ),
         .I2(\current_word_1_reg[3] [3]),
         .I3(s_axi_wready_INST_0_i_8_n_0),
         .I4(s_axi_wready_INST_0_i_9_n_0),
@@ -6356,23 +6356,23 @@ module design_1_auto_ds_2_axi_data_fifo_v2_1_15_fifo_gen__parameterized0__xdcDup
         .I3(\current_word_1_reg[3] [2]),
         .O(s_axi_wready_INST_0_i_8_n_0));
   LUT5 #(
-    .INIT(32'hFFF0FCFE)) 
+    .INIT(32'hFFFFFA0E)) 
     s_axi_wready_INST_0_i_9
-       (.I0(\current_word_1[1]_i_3_n_0 ),
-        .I1(\current_word_1[1]_i_2_n_0 ),
-        .I2(cmd_size_ii[2]),
+       (.I0(\current_word_1[1]_i_2_n_0 ),
+        .I1(\current_word_1[1]_i_3_n_0 ),
+        .I2(cmd_size_ii[1]),
         .I3(cmd_size_ii[0]),
-        .I4(cmd_size_ii[1]),
+        .I4(cmd_size_ii[2]),
         .O(s_axi_wready_INST_0_i_9_n_0));
 endmodule
 
-module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
+module design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_a_downsizer
    (dout,
     empty,
     SR,
-    \current_word_1_reg[2] ,
+    \goreg_dm.dout_i_reg[28] ,
     din,
-    s_axi_awready,
+    S_AXI_AREADY_I_reg_0,
     areset_d,
     s_axi_bid,
     m_axi_awvalid,
@@ -6381,7 +6381,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     E,
     m_axi_wvalid,
     s_axi_wready,
-    command_ongoing_reg_0,
+    \areset_d_reg[1]_0 ,
     m_axi_awburst,
     m_axi_wdata,
     m_axi_wstrb,
@@ -6405,11 +6405,11 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     m_axi_wlast,
     first_mi_word,
     Q,
-    \goreg_dm.dout_i_reg[8] ,
+    s_axi_wready_0,
     s_axi_wdata,
     s_axi_wstrb,
     \current_word_1_reg[3] ,
-    first_word_reg,
+    \current_word_1_reg[3]_0 ,
     s_axi_awvalid,
     s_axi_awcache,
     s_axi_awprot,
@@ -6418,9 +6418,9 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   output [8:0]dout;
   output empty;
   output [0:0]SR;
-  output [8:0]\current_word_1_reg[2] ;
+  output [8:0]\goreg_dm.dout_i_reg[28] ;
   output [10:0]din;
-  output s_axi_awready;
+  output S_AXI_AREADY_I_reg_0;
   output [1:0]areset_d;
   output [0:0]s_axi_bid;
   output m_axi_awvalid;
@@ -6429,7 +6429,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   output [0:0]E;
   output m_axi_wvalid;
   output s_axi_wready;
-  output command_ongoing_reg_0;
+  output \areset_d_reg[1]_0 ;
   output [1:0]m_axi_awburst;
   output [31:0]m_axi_wdata;
   output [3:0]m_axi_wstrb;
@@ -6453,11 +6453,11 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   input m_axi_wlast;
   input first_mi_word;
   input [0:0]Q;
-  input \goreg_dm.dout_i_reg[8] ;
+  input s_axi_wready_0;
   input [127:0]s_axi_wdata;
   input [15:0]s_axi_wstrb;
   input [3:0]\current_word_1_reg[3] ;
-  input first_word_reg;
+  input \current_word_1_reg[3]_0 ;
   input s_axi_awvalid;
   input [3:0]s_axi_awcache;
   input [2:0]s_axi_awprot;
@@ -6508,6 +6508,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   wire \S_AXI_ALEN_Q_reg_n_0_[6] ;
   wire \S_AXI_ALEN_Q_reg_n_0_[7] ;
   wire [0:0]S_AXI_ALOCK_Q;
+  wire S_AXI_AREADY_I_reg_0;
   wire [2:0]S_AXI_ASIZE_Q;
   wire \USE_B_CHANNEL.cmd_b_queue_n_15 ;
   wire \USE_B_CHANNEL.cmd_b_queue_n_16 ;
@@ -6525,6 +6526,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   wire access_is_wrap;
   wire access_is_wrap_q;
   wire [1:0]areset_d;
+  wire \areset_d_reg[1]_0 ;
   wire cmd_b_push_block;
   wire cmd_length_i_carry__0_n_1;
   wire cmd_length_i_carry__0_n_2;
@@ -6564,9 +6566,8 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   wire cmd_queue_n_74;
   wire cmd_split_i;
   wire command_ongoing;
-  wire command_ongoing_reg_0;
-  wire [8:0]\current_word_1_reg[2] ;
   wire [3:0]\current_word_1_reg[3] ;
+  wire \current_word_1_reg[3]_0 ;
   wire [10:0]din;
   wire [8:0]dout;
   wire [7:0]downsized_len_q;
@@ -6575,19 +6576,17 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   wire \downsized_len_q[2]_i_1_n_0 ;
   wire \downsized_len_q[3]_i_1_n_0 ;
   wire \downsized_len_q[4]_i_1_n_0 ;
-  wire \downsized_len_q[5]_i_1_n_0 ;
-  wire \downsized_len_q[6]_i_1__0_n_0 ;
+  wire \downsized_len_q[5]_i_1__0_n_0 ;
+  wire \downsized_len_q[6]_i_1_n_0 ;
   wire \downsized_len_q[7]_i_1_n_0 ;
   wire \downsized_len_q[7]_i_2_n_0 ;
   wire empty;
   wire first_mi_word;
-  wire first_word_reg;
-  wire [3:0]fix_len;
+  wire [4:0]fix_len;
   wire [4:0]fix_len_q;
-  wire \fix_len_q[4]_i_1_n_0 ;
   wire fix_need_to_split;
   wire fix_need_to_split_q;
-  wire \goreg_dm.dout_i_reg[8] ;
+  wire [8:0]\goreg_dm.dout_i_reg[28] ;
   wire incr_need_to_split;
   wire incr_need_to_split_q;
   wire \inst/full ;
@@ -6599,7 +6598,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   wire legal_wrap_len_q_i_1_n_0;
   wire legal_wrap_len_q_i_2_n_0;
   wire legal_wrap_len_q_i_3_n_0;
-  wire legal_wrap_len_q_i_4_n_0;
   wire [31:0]m_axi_awaddr;
   wire [1:0]m_axi_awburst;
   wire [3:0]m_axi_awcache;
@@ -6619,11 +6617,11 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   wire \masked_addr_q[2]_i_2_n_0 ;
   wire \masked_addr_q[3]_i_2_n_0 ;
   wire \masked_addr_q[3]_i_3_n_0 ;
+  wire \masked_addr_q[4]_i_2_n_0 ;
   wire \masked_addr_q[5]_i_2_n_0 ;
   wire \masked_addr_q[6]_i_2_n_0 ;
   wire \masked_addr_q[7]_i_2_n_0 ;
-  wire \masked_addr_q[7]_i_3_n_0 ;
-  wire \masked_addr_q[7]_i_4_n_0 ;
+  wire \masked_addr_q[7]_i_3__0_n_0 ;
   wire \masked_addr_q[8]_i_2_n_0 ;
   wire \masked_addr_q[8]_i_3_n_0 ;
   wire \masked_addr_q[9]_i_2_n_0 ;
@@ -6726,13 +6724,13 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   wire [0:0]s_axi_awlock;
   wire [2:0]s_axi_awprot;
   wire [3:0]s_axi_awqos;
-  wire s_axi_awready;
   wire [3:0]s_axi_awregion;
   wire [2:0]s_axi_awsize;
   wire s_axi_awvalid;
   wire [0:0]s_axi_bid;
   wire [127:0]s_axi_wdata;
   wire s_axi_wready;
+  wire s_axi_wready_0;
   wire [15:0]s_axi_wstrb;
   wire s_axi_wvalid;
   wire si_full_size_q;
@@ -6768,331 +6766,331 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
 
   FDRE \S_AXI_AADDR_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[0]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[0] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[10] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[10]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[10] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[11] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[11]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[11] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[12] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[12]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[12] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[13] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[13]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[13] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[14] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[14]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[14] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[15] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[15]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[15] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[16] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[16]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[16] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[17] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[17]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[17] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[18] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[18]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[18] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[19] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[19]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[19] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[1]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[1] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[20] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[20]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[20] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[21] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[21]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[21] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[22] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[22]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[22] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[23] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[23]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[23] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[24] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[24]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[24] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[25] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[25]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[25] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[26] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[26]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[26] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[27] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[27]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[27] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[28] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[28]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[28] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[29] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[29]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[29] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[2]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[2] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[30] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[30]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[30] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[31] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[31]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[31] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[3]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[3] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[4]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[4] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[5]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[5] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[6]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[6] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[7]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[7] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[8] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[8]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[8] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[9] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[9]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[9] ),
         .R(1'b0));
   FDRE \S_AXI_ABURST_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awburst[0]),
         .Q(S_AXI_ABURST_Q[0]),
         .R(1'b0));
   FDRE \S_AXI_ABURST_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awburst[1]),
         .Q(S_AXI_ABURST_Q[1]),
         .R(1'b0));
   FDRE \S_AXI_ACACHE_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awcache[0]),
         .Q(m_axi_awcache[0]),
         .R(1'b0));
   FDRE \S_AXI_ACACHE_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awcache[1]),
         .Q(m_axi_awcache[1]),
         .R(1'b0));
   FDRE \S_AXI_ACACHE_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awcache[2]),
         .Q(m_axi_awcache[2]),
         .R(1'b0));
   FDRE \S_AXI_ACACHE_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awcache[3]),
         .Q(m_axi_awcache[3]),
         .R(1'b0));
   FDRE \S_AXI_AID_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awid),
         .Q(S_AXI_AID_Q),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awlen[0]),
         .Q(p_0_in_0[0]),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awlen[1]),
         .Q(p_0_in_0[1]),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awlen[2]),
         .Q(p_0_in_0[2]),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awlen[3]),
         .Q(p_0_in_0[3]),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awlen[4]),
         .Q(\S_AXI_ALEN_Q_reg_n_0_[4] ),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awlen[5]),
         .Q(\S_AXI_ALEN_Q_reg_n_0_[5] ),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awlen[6]),
         .Q(\S_AXI_ALEN_Q_reg_n_0_[6] ),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awlen[7]),
         .Q(\S_AXI_ALEN_Q_reg_n_0_[7] ),
         .R(1'b0));
   FDRE \S_AXI_ALOCK_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awlock),
         .Q(S_AXI_ALOCK_Q),
         .R(1'b0));
   FDRE \S_AXI_APROT_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awprot[0]),
         .Q(m_axi_awprot[0]),
         .R(1'b0));
   FDRE \S_AXI_APROT_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awprot[1]),
         .Q(m_axi_awprot[1]),
         .R(1'b0));
   FDRE \S_AXI_APROT_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awprot[2]),
         .Q(m_axi_awprot[2]),
         .R(1'b0));
   FDRE \S_AXI_AQOS_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awqos[0]),
         .Q(m_axi_awqos[0]),
         .R(1'b0));
   FDRE \S_AXI_AQOS_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awqos[1]),
         .Q(m_axi_awqos[1]),
         .R(1'b0));
   FDRE \S_AXI_AQOS_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awqos[2]),
         .Q(m_axi_awqos[2]),
         .R(1'b0));
   FDRE \S_AXI_AQOS_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awqos[3]),
         .Q(m_axi_awqos[3]),
         .R(1'b0));
@@ -7102,51 +7100,51 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
        (.C(CLK),
         .CE(1'b1),
         .D(\USE_B_CHANNEL.cmd_b_queue_n_20 ),
-        .Q(s_axi_awready),
+        .Q(S_AXI_AREADY_I_reg_0),
         .R(SR));
   FDRE \S_AXI_AREGION_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awregion[0]),
         .Q(m_axi_awregion[0]),
         .R(1'b0));
   FDRE \S_AXI_AREGION_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awregion[1]),
         .Q(m_axi_awregion[1]),
         .R(1'b0));
   FDRE \S_AXI_AREGION_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awregion[2]),
         .Q(m_axi_awregion[2]),
         .R(1'b0));
   FDRE \S_AXI_AREGION_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awregion[3]),
         .Q(m_axi_awregion[3]),
         .R(1'b0));
   FDRE \S_AXI_ASIZE_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awsize[0]),
         .Q(S_AXI_ASIZE_Q[0]),
         .R(1'b0));
   FDRE \S_AXI_ASIZE_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awsize[1]),
         .Q(S_AXI_ASIZE_Q[1]),
         .R(1'b0));
   FDRE \S_AXI_ASIZE_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awsize[2]),
         .Q(S_AXI_ASIZE_Q[2]),
         .R(1'b0));
-  design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo \USE_B_CHANNEL.cmd_b_queue 
+  design_1_auto_ds_2_axi_data_fifo_v2_1_17_axic_fifo \USE_B_CHANNEL.cmd_b_queue 
        (.CLK(CLK),
         .CO(last_incr_split0),
         .E(pushed_new_cmd),
@@ -7154,44 +7152,44 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .S({\USE_B_CHANNEL.cmd_b_queue_n_17 ,\USE_B_CHANNEL.cmd_b_queue_n_18 ,\USE_B_CHANNEL.cmd_b_queue_n_19 }),
         .SR(SR),
         .S_AXI_AID_Q(S_AXI_AID_Q),
+        .\S_AXI_AID_Q_reg[0] (\USE_B_CHANNEL.cmd_b_queue_n_22 ),
+        .S_AXI_AREADY_I_i_4(pushed_commands_reg__0),
         .S_AXI_AREADY_I_reg(\USE_B_CHANNEL.cmd_b_queue_n_20 ),
-        .S_AXI_AREADY_I_reg_0(\pushed_commands[7]_i_1_n_0 ),
-        .S_AXI_AREADY_I_reg_1(s_axi_awready),
+        .S_AXI_AREADY_I_reg_0(\USE_B_CHANNEL.cmd_b_queue_n_21 ),
+        .S_AXI_AREADY_I_reg_1(S_AXI_AREADY_I_reg_0),
+        .S_AXI_AREADY_I_reg_2(areset_d[0]),
         .access_is_fix_q(access_is_fix_q),
+        .access_is_fix_q_reg(\USE_B_CHANNEL.cmd_b_queue_n_16 ),
         .access_is_incr_q(access_is_incr_q),
         .access_is_wrap_q(access_is_wrap_q),
         .areset_d(areset_d[1]),
-        .\areset_d_reg[0] (areset_d[0]),
-        .\areset_d_reg[1] (command_ongoing_reg_0),
         .cmd_b_push_block(cmd_b_push_block),
         .cmd_b_push_block_reg(\USE_B_CHANNEL.cmd_b_queue_n_15 ),
+        .cmd_b_push_block_reg_0(\inst/full_0 ),
+        .cmd_b_push_block_reg_1(\pushed_commands[7]_i_1_n_0 ),
         .cmd_push_block(cmd_push_block),
         .command_ongoing(command_ongoing),
-        .command_ongoing_reg(\USE_B_CHANNEL.cmd_b_queue_n_21 ),
+        .command_ongoing_reg(\areset_d_reg[1]_0 ),
         .din(cmd_split_i),
         .dout(dout),
         .empty(empty),
         .fix_need_to_split_q(fix_need_to_split_q),
         .full(\inst/full ),
+        .\gpr1.dout_i_reg[1] ({\num_transactions_q_reg_n_0_[3] ,\num_transactions_q_reg_n_0_[2] ,\num_transactions_q_reg_n_0_[1] ,\num_transactions_q_reg_n_0_[0] }),
         .incr_need_to_split_q(incr_need_to_split_q),
         .m_axi_awready(m_axi_awready),
-        .\num_transactions_q_reg[3] ({\num_transactions_q_reg_n_0_[3] ,\num_transactions_q_reg_n_0_[2] ,\num_transactions_q_reg_n_0_[1] ,\num_transactions_q_reg_n_0_[0] }),
         .out(out),
-        .\pushed_commands_reg[7] (pushed_commands_reg__0),
-        .\queue_id_reg[0] (\USE_B_CHANNEL.cmd_b_queue_n_22 ),
-        .ram_full_i_reg(\inst/full_0 ),
         .rd_en(rd_en),
         .s_axi_awvalid(s_axi_awvalid),
         .s_axi_bid(s_axi_bid),
         .split_ongoing(split_ongoing),
-        .split_ongoing_reg(\USE_B_CHANNEL.cmd_b_queue_n_16 ),
         .wr_en(cmd_push),
         .wrap_need_to_split_q(wrap_need_to_split_q));
   FDRE #(
     .INIT(1'b0)) 
     access_fit_mi_side_q_reg
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\split_addr_mask_q[2]_i_1_n_0 ),
         .Q(access_fit_mi_side_q),
         .R(SR));
@@ -7206,7 +7204,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     .INIT(1'b0)) 
     access_is_fix_q_reg
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(access_is_fix),
         .Q(access_is_fix_q),
         .R(SR));
@@ -7220,7 +7218,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     .INIT(1'b0)) 
     access_is_incr_q_reg
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(access_is_incr),
         .Q(access_is_incr_q),
         .R(SR));
@@ -7235,7 +7233,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     .INIT(1'b0)) 
     access_is_wrap_q_reg
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(access_is_wrap),
         .Q(access_is_wrap_q),
         .R(SR));
@@ -7277,31 +7275,31 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .DI({1'b0,cmd_queue_n_19,cmd_queue_n_20,cmd_queue_n_21}),
         .O(din[7:4]),
         .S({cmd_queue_n_67,cmd_queue_n_68,cmd_queue_n_69,cmd_queue_n_70}));
-  (* SOFT_HLUTNM = "soft_lutpair85" *) 
+  (* SOFT_HLUTNM = "soft_lutpair83" *) 
   LUT5 #(
     .INIT(32'hFFFFFFFE)) 
     \cmd_mask_q[0]_i_1 
        (.I0(s_axi_awsize[1]),
-        .I1(s_axi_awlen[0]),
-        .I2(s_axi_awsize[0]),
+        .I1(s_axi_awsize[0]),
+        .I2(s_axi_awlen[0]),
         .I3(s_axi_awsize[2]),
         .I4(cmd_mask_q),
         .O(\cmd_mask_q[0]_i_1_n_0 ));
   LUT6 #(
     .INIT(64'hFFFFFFFFFEFFFEEE)) 
     \cmd_mask_q[1]_i_1 
-       (.I0(s_axi_awsize[1]),
-        .I1(s_axi_awsize[2]),
+       (.I0(s_axi_awsize[2]),
+        .I1(s_axi_awsize[1]),
         .I2(s_axi_awlen[0]),
         .I3(s_axi_awsize[0]),
         .I4(s_axi_awlen[1]),
         .I5(cmd_mask_q),
         .O(\cmd_mask_q[1]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair94" *) 
+  (* SOFT_HLUTNM = "soft_lutpair95" *) 
   LUT3 #(
     .INIT(8'h8A)) 
     \cmd_mask_q[1]_i_2 
-       (.I0(s_axi_awready),
+       (.I0(S_AXI_AREADY_I_reg_0),
         .I1(s_axi_awburst[0]),
         .I2(s_axi_awburst[1]),
         .O(cmd_mask_q));
@@ -7313,7 +7311,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I1(s_axi_awburst[0]),
         .I2(\masked_addr_q[2]_i_2_n_0 ),
         .O(\cmd_mask_q[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair94" *) 
+  (* SOFT_HLUTNM = "soft_lutpair95" *) 
   LUT3 #(
     .INIT(8'hDF)) 
     \cmd_mask_q[3]_i_1 
@@ -7323,25 +7321,25 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .O(\cmd_mask_q[3]_i_1_n_0 ));
   FDRE \cmd_mask_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\cmd_mask_q[0]_i_1_n_0 ),
         .Q(\cmd_mask_q_reg_n_0_[0] ),
         .R(SR));
   FDRE \cmd_mask_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\cmd_mask_q[1]_i_1_n_0 ),
         .Q(\cmd_mask_q_reg_n_0_[1] ),
         .R(SR));
   FDRE \cmd_mask_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\cmd_mask_q[2]_i_1_n_0 ),
         .Q(\cmd_mask_q_reg_n_0_[2] ),
         .R(SR));
   FDRE \cmd_mask_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\cmd_mask_q[3]_i_1_n_0 ),
         .Q(\cmd_mask_q_reg_n_0_[3] ),
         .R(SR));
@@ -7353,7 +7351,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .D(cmd_queue_n_13),
         .Q(cmd_push_block),
         .R(1'b0));
-  design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0__xdcDup__1 cmd_queue
+  design_1_auto_ds_2_axi_data_fifo_v2_1_17_axic_fifo__parameterized0__xdcDup__1 cmd_queue
        (.CLK(CLK),
         .CO(last_incr_split0),
         .D(D),
@@ -7362,62 +7360,62 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .Q(wrap_rest_len),
         .S({cmd_queue_n_67,cmd_queue_n_68,cmd_queue_n_69,cmd_queue_n_70}),
         .SR(SR),
-        .\S_AXI_AADDR_Q_reg[3] ({\S_AXI_AADDR_Q_reg_n_0_[3] ,\S_AXI_AADDR_Q_reg_n_0_[2] ,\S_AXI_AADDR_Q_reg_n_0_[1] ,\S_AXI_AADDR_Q_reg_n_0_[0] }),
-        .\S_AXI_ALEN_Q_reg[7] ({\S_AXI_ALEN_Q_reg_n_0_[7] ,\S_AXI_ALEN_Q_reg_n_0_[6] ,\S_AXI_ALEN_Q_reg_n_0_[5] ,\S_AXI_ALEN_Q_reg_n_0_[4] ,p_0_in_0}),
+        .\S_AXI_ALEN_Q_reg[6] ({cmd_queue_n_19,cmd_queue_n_20,cmd_queue_n_21}),
+        .access_fit_mi_side_q_reg(din[10:8]),
         .access_is_fix_q(access_is_fix_q),
-        .access_is_fix_q_reg(\USE_B_CHANNEL.cmd_b_queue_n_16 ),
         .access_is_incr_q(access_is_incr_q),
+        .access_is_incr_q_reg(cmd_queue_n_23),
         .access_is_wrap_q(access_is_wrap_q),
+        .cmd_length_i_carry__0_i_4(wrap_unaligned_len_q),
+        .cmd_length_i_carry__0_i_7(unalignment_addr_q),
+        .cmd_length_i_carry__0_i_7_0(fix_len_q),
+        .cmd_length_i_carry_i_8(\USE_B_CHANNEL.cmd_b_queue_n_16 ),
         .cmd_push_block(cmd_push_block),
-        .cmd_push_block_reg(cmd_queue_n_13),
         .command_ongoing(command_ongoing),
         .\current_word_1_reg[3] (\current_word_1_reg[3] ),
+        .\current_word_1_reg[3]_0 (\current_word_1_reg[3]_0 ),
         .din({cmd_split_i,access_fit_mi_side_q,\cmd_mask_q_reg_n_0_[3] ,\cmd_mask_q_reg_n_0_[2] ,\cmd_mask_q_reg_n_0_[1] ,\cmd_mask_q_reg_n_0_[0] ,din[7:0],S_AXI_ASIZE_Q}),
-        .dout(\current_word_1_reg[2] ),
-        .\downsized_len_q_reg[7] (downsized_len_q),
+        .dout(\goreg_dm.dout_i_reg[28] ),
+        .\downsized_len_q_reg[3] ({cmd_queue_n_71,cmd_queue_n_72,cmd_queue_n_73,cmd_queue_n_74}),
         .first_mi_word(first_mi_word),
-        .first_word_reg(first_word_reg),
-        .\fix_len_q_reg[4] (fix_len_q),
         .fix_need_to_split_q(fix_need_to_split_q),
         .full(\inst/full_0 ),
-        .\goreg_dm.dout_i_reg[8] (\goreg_dm.dout_i_reg[8] ),
-        .\gpr1.dout_i_reg[7] ({cmd_queue_n_19,cmd_queue_n_20,cmd_queue_n_21}),
-        .\gpr1.dout_i_reg[7]_0 ({cmd_queue_n_71,cmd_queue_n_72,cmd_queue_n_73,cmd_queue_n_74}),
+        .\gpr1.dout_i_reg[19] ({\S_AXI_AADDR_Q_reg_n_0_[3] ,\S_AXI_AADDR_Q_reg_n_0_[2] ,\S_AXI_AADDR_Q_reg_n_0_[1] ,\S_AXI_AADDR_Q_reg_n_0_[0] }),
+        .\gpr1.dout_i_reg[19]_0 (\split_addr_mask_q_reg_n_0_[0] ),
+        .\gpr1.dout_i_reg[19]_1 (\split_addr_mask_q_reg_n_0_[1] ),
+        .\gpr1.dout_i_reg[19]_2 ({\split_addr_mask_q_reg_n_0_[3] ,\split_addr_mask_q_reg_n_0_[2] }),
+        .\gpr1.dout_i_reg[25] (\split_addr_mask_q_reg_n_0_[31] ),
         .incr_need_to_split_q(incr_need_to_split_q),
         .legal_wrap_len_q(legal_wrap_len_q),
-        .\length_counter_1_reg[7] (Q),
+        .\m_axi_awlen[7] ({\S_AXI_ALEN_Q_reg_n_0_[7] ,\S_AXI_ALEN_Q_reg_n_0_[6] ,\S_AXI_ALEN_Q_reg_n_0_[5] ,\S_AXI_ALEN_Q_reg_n_0_[4] ,p_0_in_0}),
+        .\m_axi_awlen[7]_0 (downsized_len_q),
         .m_axi_awready(m_axi_awready),
-        .\m_axi_awsize[2] (din[10:8]),
         .m_axi_awvalid(m_axi_awvalid),
+        .m_axi_awvalid_0(\inst/full ),
         .m_axi_wdata(m_axi_wdata),
         .m_axi_wlast(m_axi_wlast),
         .m_axi_wready(m_axi_wready),
         .m_axi_wstrb(m_axi_wstrb),
         .m_axi_wvalid(m_axi_wvalid),
-        .\next_mi_addr_reg[8] (cmd_queue_n_22),
-        .\next_mi_addr_reg[8]_0 (cmd_queue_n_23),
         .out(out),
-        .ram_full_i_reg(\inst/full ),
+        .s_axi_aresetn(cmd_queue_n_13),
         .s_axi_wdata(s_axi_wdata),
         .s_axi_wready(s_axi_wready),
+        .s_axi_wready_0(Q),
+        .s_axi_wready_1(s_axi_wready_0),
         .s_axi_wstrb(s_axi_wstrb),
         .s_axi_wvalid(s_axi_wvalid),
         .si_full_size_q(si_full_size_q),
-        .\split_addr_mask_q_reg[0] (\split_addr_mask_q_reg_n_0_[0] ),
-        .\split_addr_mask_q_reg[1] (\split_addr_mask_q_reg_n_0_[1] ),
-        .\split_addr_mask_q_reg[31] (\split_addr_mask_q_reg_n_0_[31] ),
-        .\split_addr_mask_q_reg[3] ({\split_addr_mask_q_reg_n_0_[3] ,\split_addr_mask_q_reg_n_0_[2] }),
         .split_ongoing(split_ongoing),
-        .\unalignment_addr_q_reg[4] (unalignment_addr_q),
+        .split_ongoing_reg(cmd_queue_n_22),
         .wr_en(cmd_push),
-        .wrap_need_to_split_q(wrap_need_to_split_q),
-        .\wrap_unaligned_len_q_reg[7] (wrap_unaligned_len_q));
+        .wrap_need_to_split_q(wrap_need_to_split_q));
   LUT2 #(
     .INIT(4'h2)) 
     command_ongoing_i_2
        (.I0(areset_d[1]),
         .I1(areset_d[0]),
-        .O(command_ongoing_reg_0));
+        .O(\areset_d_reg[1]_0 ));
   FDRE #(
     .INIT(1'b0)) 
     command_ongoing_reg
@@ -7426,7 +7424,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .D(\USE_B_CHANNEL.cmd_b_queue_n_21 ),
         .Q(command_ongoing),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair79" *) 
+  (* SOFT_HLUTNM = "soft_lutpair76" *) 
   LUT4 #(
     .INIT(16'hFFEA)) 
     \downsized_len_q[0]_i_1 
@@ -7435,7 +7433,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I2(s_axi_awsize[1]),
         .I3(s_axi_awsize[2]),
         .O(\downsized_len_q[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair78" *) 
+  (* SOFT_HLUTNM = "soft_lutpair84" *) 
   LUT5 #(
     .INIT(32'h0222FEEE)) 
     \downsized_len_q[1]_i_1 
@@ -7453,9 +7451,9 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I2(s_axi_awsize[1]),
         .I3(s_axi_awsize[0]),
         .I4(s_axi_awlen[0]),
-        .I5(\masked_addr_q[8]_i_2_n_0 ),
+        .I5(\masked_addr_q[4]_i_2_n_0 ),
         .O(\downsized_len_q[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair81" *) 
+  (* SOFT_HLUTNM = "soft_lutpair79" *) 
   LUT5 #(
     .INIT(32'hFEEE0222)) 
     \downsized_len_q[3]_i_1 
@@ -7475,26 +7473,26 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I4(s_axi_awsize[1]),
         .I5(s_axi_awsize[0]),
         .O(\downsized_len_q[4]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair83" *) 
+  LUT6 #(
+    .INIT(64'hB8B8BB88BB88BB88)) 
+    \downsized_len_q[5]_i_1__0 
+       (.I0(\masked_addr_q[7]_i_2_n_0 ),
+        .I1(s_axi_awsize[2]),
+        .I2(\masked_addr_q[7]_i_3__0_n_0 ),
+        .I3(s_axi_awlen[5]),
+        .I4(s_axi_awsize[1]),
+        .I5(s_axi_awsize[0]),
+        .O(\downsized_len_q[5]_i_1__0_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair78" *) 
   LUT5 #(
     .INIT(32'hFEEE0222)) 
-    \downsized_len_q[5]_i_1 
-       (.I0(s_axi_awlen[5]),
+    \downsized_len_q[6]_i_1 
+       (.I0(s_axi_awlen[6]),
         .I1(s_axi_awsize[2]),
         .I2(s_axi_awsize[1]),
         .I3(s_axi_awsize[0]),
-        .I4(\masked_addr_q[7]_i_2_n_0 ),
-        .O(\downsized_len_q[5]_i_1_n_0 ));
-  LUT6 #(
-    .INIT(64'hB8B8BB88BB88BB88)) 
-    \downsized_len_q[6]_i_1__0 
-       (.I0(\masked_addr_q[8]_i_2_n_0 ),
-        .I1(s_axi_awsize[2]),
-        .I2(\masked_addr_q[8]_i_3_n_0 ),
-        .I3(s_axi_awlen[6]),
-        .I4(s_axi_awsize[1]),
-        .I5(s_axi_awsize[0]),
-        .O(\downsized_len_q[6]_i_1__0_n_0 ));
+        .I4(\masked_addr_q[8]_i_2_n_0 ),
+        .O(\downsized_len_q[6]_i_1_n_0 ));
   LUT6 #(
     .INIT(64'hFF55EA40BF15AA00)) 
     \downsized_len_q[7]_i_1 
@@ -7517,53 +7515,53 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .O(\downsized_len_q[7]_i_2_n_0 ));
   FDRE \downsized_len_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[0]_i_1_n_0 ),
         .Q(downsized_len_q[0]),
         .R(SR));
   FDRE \downsized_len_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[1]_i_1_n_0 ),
         .Q(downsized_len_q[1]),
         .R(SR));
   FDRE \downsized_len_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[2]_i_1_n_0 ),
         .Q(downsized_len_q[2]),
         .R(SR));
   FDRE \downsized_len_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[3]_i_1_n_0 ),
         .Q(downsized_len_q[3]),
         .R(SR));
   FDRE \downsized_len_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[4]_i_1_n_0 ),
         .Q(downsized_len_q[4]),
         .R(SR));
   FDRE \downsized_len_q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_awready),
-        .D(\downsized_len_q[5]_i_1_n_0 ),
+        .CE(S_AXI_AREADY_I_reg_0),
+        .D(\downsized_len_q[5]_i_1__0_n_0 ),
         .Q(downsized_len_q[5]),
         .R(SR));
   FDRE \downsized_len_q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_awready),
-        .D(\downsized_len_q[6]_i_1__0_n_0 ),
+        .CE(S_AXI_AREADY_I_reg_0),
+        .D(\downsized_len_q[6]_i_1_n_0 ),
         .Q(downsized_len_q[6]),
         .R(SR));
   FDRE \downsized_len_q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[7]_i_1_n_0 ),
         .Q(downsized_len_q[7]),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair85" *) 
+  (* SOFT_HLUTNM = "soft_lutpair79" *) 
   LUT3 #(
     .INIT(8'hF8)) 
     \fix_len_q[0]_i_1 
@@ -7571,7 +7569,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I1(s_axi_awsize[1]),
         .I2(s_axi_awsize[2]),
         .O(fix_len[0]));
-  (* SOFT_HLUTNM = "soft_lutpair87" *) 
+  (* SOFT_HLUTNM = "soft_lutpair84" *) 
   LUT3 #(
     .INIT(8'hA8)) 
     \fix_len_q[2]_i_1 
@@ -7579,52 +7577,52 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I1(s_axi_awsize[1]),
         .I2(s_axi_awsize[0]),
         .O(fix_len[2]));
-  (* SOFT_HLUTNM = "soft_lutpair106" *) 
+  (* SOFT_HLUTNM = "soft_lutpair102" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \fix_len_q[3]_i_1 
-       (.I0(s_axi_awsize[1]),
-        .I1(s_axi_awsize[2]),
+       (.I0(s_axi_awsize[2]),
+        .I1(s_axi_awsize[1]),
         .O(fix_len[3]));
-  (* SOFT_HLUTNM = "soft_lutpair78" *) 
+  (* SOFT_HLUTNM = "soft_lutpair89" *) 
   LUT3 #(
     .INIT(8'h80)) 
     \fix_len_q[4]_i_1 
-       (.I0(s_axi_awsize[1]),
-        .I1(s_axi_awsize[0]),
+       (.I0(s_axi_awsize[0]),
+        .I1(s_axi_awsize[1]),
         .I2(s_axi_awsize[2]),
-        .O(\fix_len_q[4]_i_1_n_0 ));
+        .O(fix_len[4]));
   FDRE \fix_len_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(fix_len[0]),
         .Q(fix_len_q[0]),
         .R(SR));
   FDRE \fix_len_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awsize[2]),
         .Q(fix_len_q[1]),
         .R(SR));
   FDRE \fix_len_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(fix_len[2]),
         .Q(fix_len_q[2]),
         .R(SR));
   FDRE \fix_len_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(fix_len[3]),
         .Q(fix_len_q[3]),
         .R(SR));
   FDRE \fix_len_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_awready),
-        .D(\fix_len_q[4]_i_1_n_0 ),
+        .CE(S_AXI_AREADY_I_reg_0),
+        .D(fix_len[4]),
         .Q(fix_len_q[4]),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair87" *) 
+  (* SOFT_HLUTNM = "soft_lutpair77" *) 
   LUT5 #(
     .INIT(32'h11111000)) 
     fix_need_to_split_q_i_1
@@ -7638,7 +7636,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     .INIT(1'b0)) 
     fix_need_to_split_q_reg
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(fix_need_to_split),
         .Q(fix_need_to_split_q),
         .R(SR));
@@ -7656,7 +7654,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     .INIT(1'b0)) 
     incr_need_to_split_q_reg
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(incr_need_to_split),
         .Q(incr_need_to_split_q),
         .R(SR));
@@ -7668,45 +7666,37 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .O(NLW_last_incr_split0_carry_O_UNCONNECTED[3:0]),
         .S({1'b0,\USE_B_CHANNEL.cmd_b_queue_n_17 ,\USE_B_CHANNEL.cmd_b_queue_n_18 ,\USE_B_CHANNEL.cmd_b_queue_n_19 }));
   LUT6 #(
-    .INIT(64'h00000000555555F7)) 
+    .INIT(64'h0001115555FFFFFF)) 
     legal_wrap_len_q_i_1
-       (.I0(s_axi_awsize[2]),
+       (.I0(legal_wrap_len_q_i_2_n_0),
         .I1(s_axi_awlen[1]),
-        .I2(legal_wrap_len_q_i_2_n_0),
-        .I3(legal_wrap_len_q_i_3_n_0),
-        .I4(s_axi_awlen[2]),
-        .I5(legal_wrap_len_q_i_4_n_0),
+        .I2(s_axi_awlen[0]),
+        .I3(s_axi_awsize[0]),
+        .I4(s_axi_awsize[1]),
+        .I5(s_axi_awsize[2]),
         .O(legal_wrap_len_q_i_1_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair92" *) 
-  LUT2 #(
-    .INIT(4'h1)) 
+  LUT4 #(
+    .INIT(16'hFFFE)) 
     legal_wrap_len_q_i_2
-       (.I0(s_axi_awsize[0]),
-        .I1(s_axi_awsize[1]),
-        .O(legal_wrap_len_q_i_2_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair77" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    legal_wrap_len_q_i_3
-       (.I0(s_axi_awsize[1]),
-        .I1(s_axi_awlen[0]),
-        .I2(s_axi_awsize[0]),
-        .O(legal_wrap_len_q_i_3_n_0));
-  LUT6 #(
-    .INIT(64'h5555555555555554)) 
-    legal_wrap_len_q_i_4
-       (.I0(\split_addr_mask_q[2]_i_1_n_0 ),
-        .I1(s_axi_awlen[5]),
+       (.I0(s_axi_awlen[6]),
+        .I1(s_axi_awlen[3]),
         .I2(s_axi_awlen[4]),
-        .I3(s_axi_awlen[6]),
-        .I4(s_axi_awlen[7]),
-        .I5(s_axi_awlen[3]),
-        .O(legal_wrap_len_q_i_4_n_0));
+        .I3(legal_wrap_len_q_i_3_n_0),
+        .O(legal_wrap_len_q_i_2_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair94" *) 
+  LUT4 #(
+    .INIT(16'hFFF8)) 
+    legal_wrap_len_q_i_3
+       (.I0(s_axi_awsize[2]),
+        .I1(s_axi_awlen[2]),
+        .I2(s_axi_awlen[5]),
+        .I3(s_axi_awlen[7]),
+        .O(legal_wrap_len_q_i_3_n_0));
   FDRE #(
     .INIT(1'b0)) 
     legal_wrap_len_q_reg
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(legal_wrap_len_q_i_1_n_0),
         .Q(legal_wrap_len_q),
         .R(SR));
@@ -8054,14 +8044,14 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I2(incr_need_to_split_q),
         .I3(fix_need_to_split_q),
         .O(m_axi_awlock));
-  (* SOFT_HLUTNM = "soft_lutpair79" *) 
+  (* SOFT_HLUTNM = "soft_lutpair76" *) 
   LUT5 #(
     .INIT(32'h00000002)) 
     \masked_addr_q[0]_i_1 
        (.I0(s_axi_awaddr[0]),
         .I1(s_axi_awsize[1]),
-        .I2(s_axi_awlen[0]),
-        .I3(s_axi_awsize[0]),
+        .I2(s_axi_awsize[0]),
+        .I3(s_axi_awlen[0]),
         .I4(s_axi_awsize[2]),
         .O(masked_addr[0]));
   LUT6 #(
@@ -8069,8 +8059,8 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     \masked_addr_q[10]_i_1 
        (.I0(s_axi_awaddr[10]),
         .I1(s_axi_awsize[1]),
-        .I2(s_axi_awsize[0]),
-        .I3(s_axi_awlen[7]),
+        .I2(s_axi_awlen[7]),
+        .I3(s_axi_awsize[0]),
         .I4(s_axi_awsize[2]),
         .I5(\num_transactions_q[0]_i_2_n_0 ),
         .O(masked_addr[10]));
@@ -8093,30 +8083,30 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I1(s_axi_awlen[6]),
         .I2(s_axi_awsize[0]),
         .I3(s_axi_awlen[7]),
-        .I4(s_axi_awsize[1]),
-        .I5(s_axi_awsize[2]),
+        .I4(s_axi_awsize[2]),
+        .I5(s_axi_awsize[1]),
         .O(masked_addr[13]));
-  (* SOFT_HLUTNM = "soft_lutpair82" *) 
+  (* SOFT_HLUTNM = "soft_lutpair87" *) 
   LUT5 #(
     .INIT(32'h2AAAAAAA)) 
     \masked_addr_q[14]_i_1 
        (.I0(s_axi_awaddr[14]),
-        .I1(s_axi_awsize[0]),
-        .I2(s_axi_awlen[7]),
-        .I3(s_axi_awsize[1]),
-        .I4(s_axi_awsize[2]),
+        .I1(s_axi_awlen[7]),
+        .I2(s_axi_awsize[0]),
+        .I3(s_axi_awsize[2]),
+        .I4(s_axi_awsize[1]),
         .O(masked_addr[14]));
   LUT6 #(
     .INIT(64'h0002000000020202)) 
     \masked_addr_q[1]_i_1 
        (.I0(s_axi_awaddr[1]),
-        .I1(s_axi_awsize[1]),
-        .I2(s_axi_awsize[2]),
+        .I1(s_axi_awsize[2]),
+        .I2(s_axi_awsize[1]),
         .I3(s_axi_awlen[0]),
         .I4(s_axi_awsize[0]),
         .I5(s_axi_awlen[1]),
         .O(masked_addr[1]));
-  (* SOFT_HLUTNM = "soft_lutpair102" *) 
+  (* SOFT_HLUTNM = "soft_lutpair106" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \masked_addr_q[2]_i_1 
@@ -8124,16 +8114,16 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I1(\masked_addr_q[2]_i_2_n_0 ),
         .O(masked_addr[2]));
   LUT6 #(
-    .INIT(64'h0000015105050151)) 
+    .INIT(64'h0001110100451145)) 
     \masked_addr_q[2]_i_2 
        (.I0(s_axi_awsize[2]),
-        .I1(s_axi_awlen[2]),
-        .I2(s_axi_awsize[0]),
-        .I3(s_axi_awlen[1]),
-        .I4(s_axi_awsize[1]),
+        .I1(s_axi_awsize[1]),
+        .I2(s_axi_awlen[2]),
+        .I3(s_axi_awsize[0]),
+        .I4(s_axi_awlen[1]),
         .I5(s_axi_awlen[0]),
         .O(\masked_addr_q[2]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair107" *) 
+  (* SOFT_HLUTNM = "soft_lutpair105" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \masked_addr_q[3]_i_1 
@@ -8150,6 +8140,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I4(s_axi_awsize[1]),
         .I5(\masked_addr_q[3]_i_3_n_0 ),
         .O(\masked_addr_q[3]_i_2_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair82" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \masked_addr_q[3]_i_3 
@@ -8161,13 +8152,23 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     .INIT(64'h02020202020202A2)) 
     \masked_addr_q[4]_i_1 
        (.I0(s_axi_awaddr[4]),
-        .I1(\masked_addr_q[8]_i_2_n_0 ),
+        .I1(\masked_addr_q[4]_i_2_n_0 ),
         .I2(s_axi_awsize[2]),
-        .I3(s_axi_awsize[0]),
-        .I4(s_axi_awlen[0]),
+        .I3(s_axi_awlen[0]),
+        .I4(s_axi_awsize[0]),
         .I5(s_axi_awsize[1]),
         .O(masked_addr[4]));
-  (* SOFT_HLUTNM = "soft_lutpair103" *) 
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \masked_addr_q[4]_i_2 
+       (.I0(s_axi_awlen[1]),
+        .I1(s_axi_awlen[2]),
+        .I2(s_axi_awsize[1]),
+        .I3(s_axi_awlen[3]),
+        .I4(s_axi_awsize[0]),
+        .I5(s_axi_awlen[4]),
+        .O(\masked_addr_q[4]_i_2_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair107" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \masked_addr_q[5]_i_1 
@@ -8184,7 +8185,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I4(s_axi_awsize[2]),
         .I5(\downsized_len_q[7]_i_2_n_0 ),
         .O(\masked_addr_q[5]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair91" *) 
+  (* SOFT_HLUTNM = "soft_lutpair90" *) 
   LUT4 #(
     .INIT(16'h4700)) 
     \masked_addr_q[6]_i_1 
@@ -8193,81 +8194,71 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I2(\num_transactions_q[0]_i_2_n_0 ),
         .I3(s_axi_awaddr[6]),
         .O(masked_addr[6]));
-  (* SOFT_HLUTNM = "soft_lutpair77" *) 
+  (* SOFT_HLUTNM = "soft_lutpair82" *) 
   LUT5 #(
-    .INIT(32'hFCBBFC88)) 
+    .INIT(32'hFAFACFC0)) 
     \masked_addr_q[6]_i_2 
        (.I0(s_axi_awlen[0]),
-        .I1(s_axi_awsize[1]),
-        .I2(s_axi_awlen[1]),
-        .I3(s_axi_awsize[0]),
-        .I4(s_axi_awlen[2]),
+        .I1(s_axi_awlen[1]),
+        .I2(s_axi_awsize[0]),
+        .I3(s_axi_awlen[2]),
+        .I4(s_axi_awsize[1]),
         .O(\masked_addr_q[6]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair104" *) 
-  LUT2 #(
-    .INIT(4'h2)) 
-    \masked_addr_q[7]_i_1 
-       (.I0(s_axi_awaddr[7]),
-        .I1(\masked_addr_q[7]_i_2_n_0 ),
-        .O(masked_addr[7]));
-  (* SOFT_HLUTNM = "soft_lutpair99" *) 
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \masked_addr_q[7]_i_2 
-       (.I0(\masked_addr_q[7]_i_3_n_0 ),
+  (* SOFT_HLUTNM = "soft_lutpair93" *) 
+  LUT4 #(
+    .INIT(16'h4700)) 
+    \masked_addr_q[7]_i_1__0 
+       (.I0(\masked_addr_q[7]_i_2_n_0 ),
         .I1(s_axi_awsize[2]),
-        .I2(\masked_addr_q[7]_i_4_n_0 ),
-        .O(\masked_addr_q[7]_i_2_n_0 ));
+        .I2(\masked_addr_q[7]_i_3__0_n_0 ),
+        .I3(s_axi_awaddr[7]),
+        .O(masked_addr[7]));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \masked_addr_q[7]_i_3 
+    \masked_addr_q[7]_i_2 
        (.I0(s_axi_awlen[0]),
         .I1(s_axi_awlen[1]),
         .I2(s_axi_awsize[1]),
         .I3(s_axi_awlen[2]),
         .I4(s_axi_awsize[0]),
         .I5(s_axi_awlen[3]),
-        .O(\masked_addr_q[7]_i_3_n_0 ));
+        .O(\masked_addr_q[7]_i_2_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \masked_addr_q[7]_i_4 
+    \masked_addr_q[7]_i_3__0 
        (.I0(s_axi_awlen[4]),
         .I1(s_axi_awlen[5]),
         .I2(s_axi_awsize[1]),
         .I3(s_axi_awlen[6]),
         .I4(s_axi_awsize[0]),
         .I5(s_axi_awlen[7]),
-        .O(\masked_addr_q[7]_i_4_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair93" *) 
-  LUT4 #(
-    .INIT(16'h4700)) 
-    \masked_addr_q[8]_i_1__0 
-       (.I0(\masked_addr_q[8]_i_2_n_0 ),
+        .O(\masked_addr_q[7]_i_3__0_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair103" *) 
+  LUT2 #(
+    .INIT(4'h2)) 
+    \masked_addr_q[8]_i_1 
+       (.I0(s_axi_awaddr[8]),
+        .I1(\masked_addr_q[8]_i_2_n_0 ),
+        .O(masked_addr[8]));
+  (* SOFT_HLUTNM = "soft_lutpair98" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \masked_addr_q[8]_i_2 
+       (.I0(\masked_addr_q[4]_i_2_n_0 ),
         .I1(s_axi_awsize[2]),
         .I2(\masked_addr_q[8]_i_3_n_0 ),
-        .I3(s_axi_awaddr[8]),
-        .O(masked_addr[8]));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \masked_addr_q[8]_i_2 
-       (.I0(s_axi_awlen[1]),
-        .I1(s_axi_awlen[2]),
-        .I2(s_axi_awsize[1]),
-        .I3(s_axi_awlen[3]),
-        .I4(s_axi_awsize[0]),
-        .I5(s_axi_awlen[4]),
         .O(\masked_addr_q[8]_i_2_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair88" *) 
   LUT5 #(
-    .INIT(32'hAFC0A0C0)) 
+    .INIT(32'hAFA0C0C0)) 
     \masked_addr_q[8]_i_3 
        (.I0(s_axi_awlen[5]),
         .I1(s_axi_awlen[6]),
         .I2(s_axi_awsize[1]),
-        .I3(s_axi_awsize[0]),
-        .I4(s_axi_awlen[7]),
+        .I3(s_axi_awlen[7]),
+        .I4(s_axi_awsize[0]),
         .O(\masked_addr_q[8]_i_3_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair105" *) 
+  (* SOFT_HLUTNM = "soft_lutpair104" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \masked_addr_q[9]_i_1 
@@ -8286,193 +8277,193 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .O(\masked_addr_q[9]_i_2_n_0 ));
   FDRE \masked_addr_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[0]),
         .Q(masked_addr_q[0]),
         .R(SR));
   FDRE \masked_addr_q_reg[10] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[10]),
         .Q(masked_addr_q[10]),
         .R(SR));
   FDRE \masked_addr_q_reg[11] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[11]),
         .Q(masked_addr_q[11]),
         .R(SR));
   FDRE \masked_addr_q_reg[12] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[12]),
         .Q(masked_addr_q[12]),
         .R(SR));
   FDRE \masked_addr_q_reg[13] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[13]),
         .Q(masked_addr_q[13]),
         .R(SR));
   FDRE \masked_addr_q_reg[14] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[14]),
         .Q(masked_addr_q[14]),
         .R(SR));
   FDRE \masked_addr_q_reg[15] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[15]),
         .Q(masked_addr_q[15]),
         .R(SR));
   FDRE \masked_addr_q_reg[16] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[16]),
         .Q(masked_addr_q[16]),
         .R(SR));
   FDRE \masked_addr_q_reg[17] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[17]),
         .Q(masked_addr_q[17]),
         .R(SR));
   FDRE \masked_addr_q_reg[18] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[18]),
         .Q(masked_addr_q[18]),
         .R(SR));
   FDRE \masked_addr_q_reg[19] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[19]),
         .Q(masked_addr_q[19]),
         .R(SR));
   FDRE \masked_addr_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[1]),
         .Q(masked_addr_q[1]),
         .R(SR));
   FDRE \masked_addr_q_reg[20] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[20]),
         .Q(masked_addr_q[20]),
         .R(SR));
   FDRE \masked_addr_q_reg[21] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[21]),
         .Q(masked_addr_q[21]),
         .R(SR));
   FDRE \masked_addr_q_reg[22] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[22]),
         .Q(masked_addr_q[22]),
         .R(SR));
   FDRE \masked_addr_q_reg[23] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[23]),
         .Q(masked_addr_q[23]),
         .R(SR));
   FDRE \masked_addr_q_reg[24] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[24]),
         .Q(masked_addr_q[24]),
         .R(SR));
   FDRE \masked_addr_q_reg[25] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[25]),
         .Q(masked_addr_q[25]),
         .R(SR));
   FDRE \masked_addr_q_reg[26] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[26]),
         .Q(masked_addr_q[26]),
         .R(SR));
   FDRE \masked_addr_q_reg[27] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[27]),
         .Q(masked_addr_q[27]),
         .R(SR));
   FDRE \masked_addr_q_reg[28] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[28]),
         .Q(masked_addr_q[28]),
         .R(SR));
   FDRE \masked_addr_q_reg[29] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[29]),
         .Q(masked_addr_q[29]),
         .R(SR));
   FDRE \masked_addr_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[2]),
         .Q(masked_addr_q[2]),
         .R(SR));
   FDRE \masked_addr_q_reg[30] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[30]),
         .Q(masked_addr_q[30]),
         .R(SR));
   FDRE \masked_addr_q_reg[31] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_awaddr[31]),
         .Q(masked_addr_q[31]),
         .R(SR));
   FDRE \masked_addr_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[3]),
         .Q(masked_addr_q[3]),
         .R(SR));
   FDRE \masked_addr_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[4]),
         .Q(masked_addr_q[4]),
         .R(SR));
   FDRE \masked_addr_q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[5]),
         .Q(masked_addr_q[5]),
         .R(SR));
   FDRE \masked_addr_q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[6]),
         .Q(masked_addr_q[6]),
         .R(SR));
   FDRE \masked_addr_q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[7]),
         .Q(masked_addr_q[7]),
         .R(SR));
   FDRE \masked_addr_q_reg[8] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[8]),
         .Q(masked_addr_q[8]),
         .R(SR));
   FDRE \masked_addr_q_reg[9] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[9]),
         .Q(masked_addr_q[9]),
         .R(SR));
@@ -9008,14 +8999,14 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .D(next_mi_addr0_carry_n_7),
         .Q(next_mi_addr[9]),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair89" *) 
+  (* SOFT_HLUTNM = "soft_lutpair86" *) 
   LUT5 #(
     .INIT(32'hB8888888)) 
     \num_transactions_q[0]_i_1 
        (.I0(\num_transactions_q[0]_i_2_n_0 ),
         .I1(s_axi_awsize[2]),
-        .I2(s_axi_awlen[7]),
-        .I3(s_axi_awsize[0]),
+        .I2(s_axi_awsize[0]),
+        .I3(s_axi_awlen[7]),
         .I4(s_axi_awsize[1]),
         .O(num_transactions[0]));
   LUT6 #(
@@ -9047,46 +9038,46 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I2(s_axi_awlen[7]),
         .O(\num_transactions_q[1]_i_2_n_0 ));
   LUT6 #(
-    .INIT(64'hF8C8380800000000)) 
+    .INIT(64'hF8A8580800000000)) 
     \num_transactions_q[2]_i_1 
-       (.I0(s_axi_awlen[7]),
-        .I1(s_axi_awsize[0]),
+       (.I0(s_axi_awsize[0]),
+        .I1(s_axi_awlen[7]),
         .I2(s_axi_awsize[1]),
         .I3(s_axi_awlen[6]),
         .I4(s_axi_awlen[5]),
         .I5(s_axi_awsize[2]),
         .O(\num_transactions_q[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair86" *) 
+  (* SOFT_HLUTNM = "soft_lutpair89" *) 
   LUT5 #(
     .INIT(32'h88800080)) 
     \num_transactions_q[3]_i_1 
-       (.I0(s_axi_awsize[2]),
-        .I1(s_axi_awsize[1]),
+       (.I0(s_axi_awsize[1]),
+        .I1(s_axi_awsize[2]),
         .I2(s_axi_awlen[7]),
         .I3(s_axi_awsize[0]),
         .I4(s_axi_awlen[6]),
         .O(num_transactions[3]));
   FDRE \num_transactions_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(num_transactions[0]),
         .Q(\num_transactions_q_reg_n_0_[0] ),
         .R(SR));
   FDRE \num_transactions_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\num_transactions_q[1]_i_1_n_0 ),
         .Q(\num_transactions_q_reg_n_0_[1] ),
         .R(SR));
   FDRE \num_transactions_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\num_transactions_q[2]_i_1_n_0 ),
         .Q(\num_transactions_q_reg_n_0_[2] ),
         .R(SR));
   FDRE \num_transactions_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(num_transactions[3]),
         .Q(\num_transactions_q_reg_n_0_[3] ),
         .R(SR));
@@ -9095,14 +9086,14 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     \pushed_commands[0]_i_1 
        (.I0(pushed_commands_reg__0[0]),
         .O(\pushed_commands[0]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair98" *) 
+  (* SOFT_HLUTNM = "soft_lutpair101" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \pushed_commands[1]_i_1 
        (.I0(pushed_commands_reg__0[1]),
         .I1(pushed_commands_reg__0[0]),
         .O(p_0_in[1]));
-  (* SOFT_HLUTNM = "soft_lutpair98" *) 
+  (* SOFT_HLUTNM = "soft_lutpair101" *) 
   LUT3 #(
     .INIT(8'h6A)) 
     \pushed_commands[2]_i_1 
@@ -9110,7 +9101,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I1(pushed_commands_reg__0[0]),
         .I2(pushed_commands_reg__0[1]),
         .O(p_0_in[2]));
-  (* SOFT_HLUTNM = "soft_lutpair84" *) 
+  (* SOFT_HLUTNM = "soft_lutpair85" *) 
   LUT4 #(
     .INIT(16'h6AAA)) 
     \pushed_commands[3]_i_1 
@@ -9119,7 +9110,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I2(pushed_commands_reg__0[1]),
         .I3(pushed_commands_reg__0[0]),
         .O(p_0_in[3]));
-  (* SOFT_HLUTNM = "soft_lutpair84" *) 
+  (* SOFT_HLUTNM = "soft_lutpair85" *) 
   LUT5 #(
     .INIT(32'h6AAAAAAA)) 
     \pushed_commands[4]_i_1 
@@ -9149,7 +9140,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
   LUT2 #(
     .INIT(4'hB)) 
     \pushed_commands[7]_i_1 
-       (.I0(s_axi_awready),
+       (.I0(S_AXI_AREADY_I_reg_0),
         .I1(out),
         .O(\pushed_commands[7]_i_1_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair97" *) 
@@ -9240,7 +9231,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .D(\USE_B_CHANNEL.cmd_b_queue_n_22 ),
         .Q(s_axi_bid),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair82" *) 
+  (* SOFT_HLUTNM = "soft_lutpair78" *) 
   LUT3 #(
     .INIT(8'h10)) 
     si_full_size_q_i_1
@@ -9252,26 +9243,26 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     .INIT(1'b0)) 
     si_full_size_q_reg
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(si_full_size_q_i_1_n_0),
         .Q(si_full_size_q),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair89" *) 
+  (* SOFT_HLUTNM = "soft_lutpair86" *) 
   LUT3 #(
     .INIT(8'h01)) 
     \split_addr_mask_q[0]_i_1 
-       (.I0(s_axi_awsize[2]),
-        .I1(s_axi_awsize[1]),
+       (.I0(s_axi_awsize[1]),
+        .I1(s_axi_awsize[2]),
         .I2(s_axi_awsize[0]),
         .O(split_addr_mask[0]));
-  (* SOFT_HLUTNM = "soft_lutpair95" *) 
+  (* SOFT_HLUTNM = "soft_lutpair92" *) 
   LUT2 #(
     .INIT(4'h1)) 
     \split_addr_mask_q[1]_i_1 
-       (.I0(s_axi_awsize[1]),
-        .I1(s_axi_awsize[2]),
+       (.I0(s_axi_awsize[2]),
+        .I1(s_axi_awsize[1]),
         .O(split_addr_mask[1]));
-  (* SOFT_HLUTNM = "soft_lutpair81" *) 
+  (* SOFT_HLUTNM = "soft_lutpair77" *) 
   LUT3 #(
     .INIT(8'h15)) 
     \split_addr_mask_q[2]_i_1 
@@ -9279,13 +9270,13 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I1(s_axi_awsize[1]),
         .I2(s_axi_awsize[0]),
         .O(\split_addr_mask_q[2]_i_1_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair99" *) 
+  (* SOFT_HLUTNM = "soft_lutpair94" *) 
   LUT1 #(
     .INIT(2'h1)) 
     \split_addr_mask_q[3]_i_1 
        (.I0(s_axi_awsize[2]),
         .O(split_addr_mask[3]));
-  (* SOFT_HLUTNM = "soft_lutpair86" *) 
+  (* SOFT_HLUTNM = "soft_lutpair83" *) 
   LUT3 #(
     .INIT(8'h1F)) 
     \split_addr_mask_q[4]_i_1 
@@ -9293,66 +9284,66 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I1(s_axi_awsize[1]),
         .I2(s_axi_awsize[2]),
         .O(split_addr_mask[4]));
-  (* SOFT_HLUTNM = "soft_lutpair106" *) 
+  (* SOFT_HLUTNM = "soft_lutpair98" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \split_addr_mask_q[5]_i_1 
-       (.I0(s_axi_awsize[2]),
-        .I1(s_axi_awsize[1]),
+       (.I0(s_axi_awsize[1]),
+        .I1(s_axi_awsize[2]),
         .O(split_addr_mask[5]));
-  (* SOFT_HLUTNM = "soft_lutpair83" *) 
+  (* SOFT_HLUTNM = "soft_lutpair87" *) 
   LUT3 #(
     .INIT(8'h7F)) 
     \split_addr_mask_q[6]_i_1 
        (.I0(s_axi_awsize[2]),
-        .I1(s_axi_awsize[0]),
-        .I2(s_axi_awsize[1]),
+        .I1(s_axi_awsize[1]),
+        .I2(s_axi_awsize[0]),
         .O(split_addr_mask[6]));
   FDRE \split_addr_mask_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[0]),
         .Q(\split_addr_mask_q_reg_n_0_[0] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[1]),
         .Q(\split_addr_mask_q_reg_n_0_[1] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\split_addr_mask_q[2]_i_1_n_0 ),
         .Q(\split_addr_mask_q_reg_n_0_[2] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[31] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(1'b1),
         .Q(\split_addr_mask_q_reg_n_0_[31] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[3]),
         .Q(\split_addr_mask_q_reg_n_0_[3] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[4]),
         .Q(\split_addr_mask_q_reg_n_0_[4] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[5]),
         .Q(\split_addr_mask_q_reg_n_0_[5] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[6]),
         .Q(\split_addr_mask_q_reg_n_0_[6] ),
         .R(SR));
@@ -9364,7 +9355,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .D(cmd_split_i),
         .Q(split_ongoing),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair92" *) 
+  (* SOFT_HLUTNM = "soft_lutpair91" *) 
   LUT4 #(
     .INIT(16'hAA80)) 
     \unalignment_addr_q[0]_i_1 
@@ -9379,7 +9370,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
        (.I0(s_axi_awaddr[3]),
         .I1(s_axi_awsize[2]),
         .O(unalignment_addr[1]));
-  (* SOFT_HLUTNM = "soft_lutpair90" *) 
+  (* SOFT_HLUTNM = "soft_lutpair92" *) 
   LUT4 #(
     .INIT(16'hA800)) 
     \unalignment_addr_q[2]_i_1 
@@ -9388,50 +9379,50 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I2(s_axi_awsize[1]),
         .I3(s_axi_awsize[2]),
         .O(unalignment_addr[2]));
-  (* SOFT_HLUTNM = "soft_lutpair95" *) 
+  (* SOFT_HLUTNM = "soft_lutpair102" *) 
   LUT3 #(
     .INIT(8'h80)) 
     \unalignment_addr_q[3]_i_1 
        (.I0(s_axi_awaddr[5]),
-        .I1(s_axi_awsize[2]),
-        .I2(s_axi_awsize[1]),
+        .I1(s_axi_awsize[1]),
+        .I2(s_axi_awsize[2]),
         .O(unalignment_addr[3]));
-  (* SOFT_HLUTNM = "soft_lutpair90" *) 
+  (* SOFT_HLUTNM = "soft_lutpair91" *) 
   LUT4 #(
     .INIT(16'h8000)) 
     \unalignment_addr_q[4]_i_1 
        (.I0(s_axi_awaddr[6]),
         .I1(s_axi_awsize[2]),
-        .I2(s_axi_awsize[0]),
-        .I3(s_axi_awsize[1]),
+        .I2(s_axi_awsize[1]),
+        .I3(s_axi_awsize[0]),
         .O(unalignment_addr[4]));
   FDRE \unalignment_addr_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[0]),
         .Q(unalignment_addr_q[0]),
         .R(SR));
   FDRE \unalignment_addr_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[1]),
         .Q(unalignment_addr_q[1]),
         .R(SR));
   FDRE \unalignment_addr_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[2]),
         .Q(unalignment_addr_q[2]),
         .R(SR));
   FDRE \unalignment_addr_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[3]),
         .Q(unalignment_addr_q[3]),
         .R(SR));
   FDRE \unalignment_addr_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[4]),
         .Q(unalignment_addr_q[4]),
         .R(SR));
@@ -9456,20 +9447,20 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I5(\masked_addr_q[5]_i_2_n_0 ),
         .O(wrap_need_to_split_q_i_2_n_0));
   LUT6 #(
-    .INIT(64'hFFFFFFEAFFEAFFEA)) 
+    .INIT(64'hFFFFFFFFFFFFF888)) 
     wrap_need_to_split_q_i_3
-       (.I0(wrap_unaligned_len[4]),
-        .I1(s_axi_awaddr[7]),
-        .I2(\masked_addr_q[7]_i_2_n_0 ),
-        .I3(wrap_unaligned_len[6]),
-        .I4(s_axi_awaddr[9]),
-        .I5(\masked_addr_q[9]_i_2_n_0 ),
+       (.I0(s_axi_awaddr[8]),
+        .I1(\masked_addr_q[8]_i_2_n_0 ),
+        .I2(s_axi_awaddr[9]),
+        .I3(\masked_addr_q[9]_i_2_n_0 ),
+        .I4(wrap_unaligned_len[4]),
+        .I5(wrap_unaligned_len[5]),
         .O(wrap_need_to_split_q_i_3_n_0));
   FDRE #(
     .INIT(1'b0)) 
     wrap_need_to_split_q_reg
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_need_to_split),
         .Q(wrap_need_to_split_q),
         .R(SR));
@@ -9493,7 +9484,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I1(wrap_unaligned_len_q[0]),
         .I2(wrap_unaligned_len_q[1]),
         .O(wrap_rest_len0[2]));
-  (* SOFT_HLUTNM = "soft_lutpair76" *) 
+  (* SOFT_HLUTNM = "soft_lutpair81" *) 
   LUT4 #(
     .INIT(16'hAAA9)) 
     \wrap_rest_len[3]_i_1 
@@ -9502,7 +9493,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I2(wrap_unaligned_len_q[1]),
         .I3(wrap_unaligned_len_q[0]),
         .O(wrap_rest_len0[3]));
-  (* SOFT_HLUTNM = "soft_lutpair76" *) 
+  (* SOFT_HLUTNM = "soft_lutpair81" *) 
   LUT5 #(
     .INIT(32'hAAAAAAA9)) 
     \wrap_rest_len[4]_i_1 
@@ -9522,14 +9513,14 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I4(wrap_unaligned_len_q[0]),
         .I5(wrap_unaligned_len_q[3]),
         .O(wrap_rest_len0[5]));
-  (* SOFT_HLUTNM = "soft_lutpair101" *) 
+  (* SOFT_HLUTNM = "soft_lutpair99" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \wrap_rest_len[6]_i_1 
        (.I0(wrap_unaligned_len_q[6]),
         .I1(\wrap_rest_len[7]_i_2_n_0 ),
         .O(wrap_rest_len0[6]));
-  (* SOFT_HLUTNM = "soft_lutpair101" *) 
+  (* SOFT_HLUTNM = "soft_lutpair99" *) 
   LUT3 #(
     .INIT(8'h9A)) 
     \wrap_rest_len[7]_i_1 
@@ -9595,14 +9586,14 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .D(wrap_rest_len0[7]),
         .Q(wrap_rest_len[7]),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair102" *) 
+  (* SOFT_HLUTNM = "soft_lutpair106" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \wrap_unaligned_len_q[0]_i_1 
        (.I0(s_axi_awaddr[2]),
         .I1(\masked_addr_q[2]_i_2_n_0 ),
         .O(wrap_unaligned_len[0]));
-  (* SOFT_HLUTNM = "soft_lutpair107" *) 
+  (* SOFT_HLUTNM = "soft_lutpair105" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \wrap_unaligned_len_q[1]_i_1 
@@ -9613,20 +9604,20 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
     .INIT(64'hA8A8A8A8A8A8A808)) 
     \wrap_unaligned_len_q[2]_i_1 
        (.I0(s_axi_awaddr[4]),
-        .I1(\masked_addr_q[8]_i_2_n_0 ),
+        .I1(\masked_addr_q[4]_i_2_n_0 ),
         .I2(s_axi_awsize[2]),
-        .I3(s_axi_awsize[0]),
-        .I4(s_axi_awlen[0]),
+        .I3(s_axi_awlen[0]),
+        .I4(s_axi_awsize[0]),
         .I5(s_axi_awsize[1]),
         .O(wrap_unaligned_len[2]));
-  (* SOFT_HLUTNM = "soft_lutpair103" *) 
+  (* SOFT_HLUTNM = "soft_lutpair107" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \wrap_unaligned_len_q[3]_i_1 
        (.I0(s_axi_awaddr[5]),
         .I1(\masked_addr_q[5]_i_2_n_0 ),
         .O(wrap_unaligned_len[3]));
-  (* SOFT_HLUTNM = "soft_lutpair91" *) 
+  (* SOFT_HLUTNM = "soft_lutpair90" *) 
   LUT4 #(
     .INIT(16'hA808)) 
     \wrap_unaligned_len_q[4]_i_1 
@@ -9635,23 +9626,23 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .I2(s_axi_awsize[2]),
         .I3(\masked_addr_q[6]_i_2_n_0 ),
         .O(wrap_unaligned_len[4]));
-  (* SOFT_HLUTNM = "soft_lutpair104" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
-    \wrap_unaligned_len_q[5]_i_1 
-       (.I0(s_axi_awaddr[7]),
-        .I1(\masked_addr_q[7]_i_2_n_0 ),
-        .O(wrap_unaligned_len[5]));
   (* SOFT_HLUTNM = "soft_lutpair93" *) 
   LUT4 #(
     .INIT(16'hA808)) 
+    \wrap_unaligned_len_q[5]_i_1 
+       (.I0(s_axi_awaddr[7]),
+        .I1(\masked_addr_q[7]_i_3__0_n_0 ),
+        .I2(s_axi_awsize[2]),
+        .I3(\masked_addr_q[7]_i_2_n_0 ),
+        .O(wrap_unaligned_len[5]));
+  (* SOFT_HLUTNM = "soft_lutpair103" *) 
+  LUT2 #(
+    .INIT(4'h8)) 
     \wrap_unaligned_len_q[6]_i_1 
        (.I0(s_axi_awaddr[8]),
-        .I1(\masked_addr_q[8]_i_3_n_0 ),
-        .I2(s_axi_awsize[2]),
-        .I3(\masked_addr_q[8]_i_2_n_0 ),
+        .I1(\masked_addr_q[8]_i_2_n_0 ),
         .O(wrap_unaligned_len[6]));
-  (* SOFT_HLUTNM = "soft_lutpair105" *) 
+  (* SOFT_HLUTNM = "soft_lutpair104" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \wrap_unaligned_len_q[7]_i_1 
@@ -9660,75 +9651,75 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer
         .O(wrap_unaligned_len[7]));
   FDRE \wrap_unaligned_len_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[0]),
         .Q(wrap_unaligned_len_q[0]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[1]),
         .Q(wrap_unaligned_len_q[1]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[2]),
         .Q(wrap_unaligned_len_q[2]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[3]),
         .Q(wrap_unaligned_len_q[3]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[4]),
         .Q(wrap_unaligned_len_q[4]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[5]),
         .Q(wrap_unaligned_len_q[5]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[6]),
         .Q(wrap_unaligned_len_q[6]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_awready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[7]),
         .Q(wrap_unaligned_len_q[7]),
         .R(SR));
 endmodule
 
-(* ORIG_REF_NAME = "axi_dwidth_converter_v2_1_16_a_downsizer" *) 
-module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterized0
+(* ORIG_REF_NAME = "axi_dwidth_converter_v2_1_18_a_downsizer" *) 
+module design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_a_downsizer__parameterized0
    (dout,
     empty,
-    \m_axi_arsize[2] ,
-    s_axi_arready,
+    access_fit_mi_side_q_reg_0,
+    S_AXI_AREADY_I_reg_0,
     s_axi_rid,
-    \WORD_LANE[3].S_AXI_RDATA_II_reg[96] ,
+    s_axi_rready_0,
     m_axi_arvalid,
     m_axi_arlock,
     m_axi_araddr,
     s_axi_rvalid,
     m_axi_rready,
     E,
-    \WORD_LANE[1].S_AXI_RDATA_II_reg[63] ,
-    \WORD_LANE[2].S_AXI_RDATA_II_reg[95] ,
-    \WORD_LANE[3].S_AXI_RDATA_II_reg[127] ,
-    first_mi_word_reg,
+    s_axi_rready_1,
+    s_axi_rready_2,
+    s_axi_rready_3,
+    \goreg_dm.dout_i_reg[2] ,
     D,
     s_axi_rdata,
-    \S_AXI_RRESP_ACC_reg[0] ,
+    \goreg_dm.dout_i_reg[0] ,
     m_axi_arburst,
     s_axi_rlast,
     m_axi_arcache,
@@ -9746,20 +9737,20 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     s_axi_arburst,
     s_axi_araddr,
     m_axi_arready,
-    empty_fwft_i_reg,
-    \goreg_dm.dout_i_reg[9] ,
+    \goreg_dm.dout_i_reg[28] ,
+    s_axi_rvalid_0,
     first_word,
     Q,
-    \goreg_dm.dout_i_reg[8] ,
+    first_mi_word_reg,
     \current_word_1_reg[3] ,
     m_axi_rdata,
     p_1_in,
-    \S_AXI_RRESP_ACC_reg[0]_0 ,
-    first_mi_word_reg_0,
+    \S_AXI_RRESP_ACC_reg[0] ,
+    \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 ,
     m_axi_rvalid,
     areset_d,
     s_axi_arvalid,
-    \areset_d_reg[1] ,
+    command_ongoing_reg_0,
     m_axi_rlast,
     s_axi_arcache,
     s_axi_arprot,
@@ -9767,23 +9758,23 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     s_axi_arqos);
   output [9:0]dout;
   output empty;
-  output [10:0]\m_axi_arsize[2] ;
-  output s_axi_arready;
+  output [10:0]access_fit_mi_side_q_reg_0;
+  output S_AXI_AREADY_I_reg_0;
   output [0:0]s_axi_rid;
-  output [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[96] ;
+  output [0:0]s_axi_rready_0;
   output m_axi_arvalid;
   output [0:0]m_axi_arlock;
   output [31:0]m_axi_araddr;
   output s_axi_rvalid;
   output m_axi_rready;
   output [0:0]E;
-  output [0:0]\WORD_LANE[1].S_AXI_RDATA_II_reg[63] ;
-  output [0:0]\WORD_LANE[2].S_AXI_RDATA_II_reg[95] ;
-  output [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[127] ;
-  output [0:0]first_mi_word_reg;
+  output [0:0]s_axi_rready_1;
+  output [0:0]s_axi_rready_2;
+  output [0:0]s_axi_rready_3;
+  output [0:0]\goreg_dm.dout_i_reg[2] ;
   output [3:0]D;
   output [127:0]s_axi_rdata;
-  output \S_AXI_RRESP_ACC_reg[0] ;
+  output \goreg_dm.dout_i_reg[0] ;
   output [1:0]m_axi_arburst;
   output s_axi_rlast;
   output [3:0]m_axi_arcache;
@@ -9801,20 +9792,20 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   input [1:0]s_axi_arburst;
   input [31:0]s_axi_araddr;
   input m_axi_arready;
-  input empty_fwft_i_reg;
-  input \goreg_dm.dout_i_reg[9] ;
+  input \goreg_dm.dout_i_reg[28] ;
+  input s_axi_rvalid_0;
   input first_word;
   input [0:0]Q;
-  input \goreg_dm.dout_i_reg[8] ;
+  input first_mi_word_reg;
   input [3:0]\current_word_1_reg[3] ;
   input [31:0]m_axi_rdata;
   input [127:0]p_1_in;
-  input \S_AXI_RRESP_ACC_reg[0]_0 ;
-  input first_mi_word_reg_0;
+  input \S_AXI_RRESP_ACC_reg[0] ;
+  input \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 ;
   input m_axi_rvalid;
   input [1:0]areset_d;
   input s_axi_arvalid;
-  input \areset_d_reg[1] ;
+  input command_ongoing_reg_0;
   input m_axi_rlast;
   input [3:0]s_axi_arcache;
   input [2:0]s_axi_arprot;
@@ -9865,14 +9856,12 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   wire \S_AXI_ALEN_Q_reg_n_0_[6] ;
   wire \S_AXI_ALEN_Q_reg_n_0_[7] ;
   wire [0:0]S_AXI_ALOCK_Q;
+  wire S_AXI_AREADY_I_reg_0;
   wire [2:0]S_AXI_ASIZE_Q;
   wire \S_AXI_RRESP_ACC_reg[0] ;
-  wire \S_AXI_RRESP_ACC_reg[0]_0 ;
-  wire [0:0]\WORD_LANE[1].S_AXI_RDATA_II_reg[63] ;
-  wire [0:0]\WORD_LANE[2].S_AXI_RDATA_II_reg[95] ;
-  wire [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[127] ;
-  wire [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[96] ;
+  wire \WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 ;
   wire access_fit_mi_side_q;
+  wire [10:0]access_fit_mi_side_q_reg_0;
   wire access_is_fix;
   wire access_is_fix_q;
   wire access_is_incr;
@@ -9880,7 +9869,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   wire access_is_wrap;
   wire access_is_wrap_q;
   wire [1:0]areset_d;
-  wire \areset_d_reg[1] ;
   wire cmd_length_i_carry__0_n_1;
   wire cmd_length_i_carry__0_n_2;
   wire cmd_length_i_carry__0_n_3;
@@ -9924,6 +9912,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   wire cmd_queue_n_30;
   wire cmd_split_i;
   wire command_ongoing;
+  wire command_ongoing_reg_0;
   wire [3:0]\current_word_1_reg[3] ;
   wire [9:0]dout;
   wire [7:0]downsized_len_q;
@@ -9932,22 +9921,20 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   wire \downsized_len_q[2]_i_1__0_n_0 ;
   wire \downsized_len_q[3]_i_1__0_n_0 ;
   wire \downsized_len_q[4]_i_1__0_n_0 ;
-  wire \downsized_len_q[5]_i_1__0_n_0 ;
-  wire \downsized_len_q[6]_i_1_n_0 ;
+  wire \downsized_len_q[5]_i_1_n_0 ;
+  wire \downsized_len_q[6]_i_1__0_n_0 ;
   wire \downsized_len_q[7]_i_1__0_n_0 ;
   wire \downsized_len_q[7]_i_2__0_n_0 ;
   wire empty;
-  wire empty_fwft_i_reg;
-  wire [0:0]first_mi_word_reg;
-  wire first_mi_word_reg_0;
+  wire first_mi_word_reg;
   wire first_word;
-  wire [3:0]fix_len;
+  wire [4:0]fix_len;
   wire [4:0]fix_len_q;
-  wire \fix_len_q[4]_i_1__0_n_0 ;
   wire fix_need_to_split;
   wire fix_need_to_split_q;
-  wire \goreg_dm.dout_i_reg[8] ;
-  wire \goreg_dm.dout_i_reg[9] ;
+  wire \goreg_dm.dout_i_reg[0] ;
+  wire \goreg_dm.dout_i_reg[28] ;
+  wire [0:0]\goreg_dm.dout_i_reg[2] ;
   wire incr_need_to_split;
   wire incr_need_to_split_q;
   wire last_incr_split0;
@@ -9957,7 +9944,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   wire legal_wrap_len_q_i_1__0_n_0;
   wire legal_wrap_len_q_i_2__0_n_0;
   wire legal_wrap_len_q_i_3__0_n_0;
-  wire legal_wrap_len_q_i_4__0_n_0;
   wire [31:0]m_axi_araddr;
   wire [1:0]m_axi_arburst;
   wire [3:0]m_axi_arcache;
@@ -9966,7 +9952,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   wire [3:0]m_axi_arqos;
   wire m_axi_arready;
   wire [3:0]m_axi_arregion;
-  wire [10:0]\m_axi_arsize[2] ;
   wire m_axi_arvalid;
   wire [31:0]m_axi_rdata;
   wire m_axi_rlast;
@@ -9977,11 +9962,11 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   wire \masked_addr_q[2]_i_2__0_n_0 ;
   wire \masked_addr_q[3]_i_2__0_n_0 ;
   wire \masked_addr_q[3]_i_3__0_n_0 ;
-  wire \masked_addr_q[4]_i_2_n_0 ;
   wire \masked_addr_q[5]_i_2__0_n_0 ;
   wire \masked_addr_q[6]_i_2__0_n_0 ;
   wire \masked_addr_q[7]_i_2__0_n_0 ;
-  wire \masked_addr_q[7]_i_3__0_n_0 ;
+  wire \masked_addr_q[7]_i_3_n_0 ;
+  wire \masked_addr_q[7]_i_4_n_0 ;
   wire \masked_addr_q[8]_i_2__0_n_0 ;
   wire \masked_addr_q[8]_i_3__0_n_0 ;
   wire \masked_addr_q[9]_i_2__0_n_0 ;
@@ -10081,7 +10066,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   wire [0:0]s_axi_arlock;
   wire [2:0]s_axi_arprot;
   wire [3:0]s_axi_arqos;
-  wire s_axi_arready;
   wire [3:0]s_axi_arregion;
   wire [2:0]s_axi_arsize;
   wire s_axi_arvalid;
@@ -10089,7 +10073,12 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   wire [0:0]s_axi_rid;
   wire s_axi_rlast;
   wire s_axi_rready;
+  wire [0:0]s_axi_rready_0;
+  wire [0:0]s_axi_rready_1;
+  wire [0:0]s_axi_rready_2;
+  wire [0:0]s_axi_rready_3;
   wire s_axi_rvalid;
+  wire s_axi_rvalid_0;
   wire si_full_size_q;
   wire si_full_size_q_i_1__0_n_0;
   wire [6:0]split_addr_mask;
@@ -10123,331 +10112,331 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
 
   FDRE \S_AXI_AADDR_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[0]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[0] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[10] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[10]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[10] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[11] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[11]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[11] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[12] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[12]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[12] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[13] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[13]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[13] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[14] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[14]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[14] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[15] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[15]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[15] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[16] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[16]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[16] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[17] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[17]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[17] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[18] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[18]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[18] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[19] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[19]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[19] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[1]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[1] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[20] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[20]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[20] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[21] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[21]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[21] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[22] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[22]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[22] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[23] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[23]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[23] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[24] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[24]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[24] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[25] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[25]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[25] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[26] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[26]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[26] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[27] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[27]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[27] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[28] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[28]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[28] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[29] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[29]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[29] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[2]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[2] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[30] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[30]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[30] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[31] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[31]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[31] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[3]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[3] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[4]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[4] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[5]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[5] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[6]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[6] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[7]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[7] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[8] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[8]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[8] ),
         .R(1'b0));
   FDRE \S_AXI_AADDR_Q_reg[9] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[9]),
         .Q(\S_AXI_AADDR_Q_reg_n_0_[9] ),
         .R(1'b0));
   FDRE \S_AXI_ABURST_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arburst[0]),
         .Q(S_AXI_ABURST_Q[0]),
         .R(1'b0));
   FDRE \S_AXI_ABURST_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arburst[1]),
         .Q(S_AXI_ABURST_Q[1]),
         .R(1'b0));
   FDRE \S_AXI_ACACHE_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arcache[0]),
         .Q(m_axi_arcache[0]),
         .R(1'b0));
   FDRE \S_AXI_ACACHE_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arcache[1]),
         .Q(m_axi_arcache[1]),
         .R(1'b0));
   FDRE \S_AXI_ACACHE_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arcache[2]),
         .Q(m_axi_arcache[2]),
         .R(1'b0));
   FDRE \S_AXI_ACACHE_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arcache[3]),
         .Q(m_axi_arcache[3]),
         .R(1'b0));
   FDRE \S_AXI_AID_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arid),
         .Q(S_AXI_AID_Q),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arlen[0]),
         .Q(p_0_in[0]),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arlen[1]),
         .Q(p_0_in[1]),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arlen[2]),
         .Q(p_0_in[2]),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arlen[3]),
         .Q(p_0_in[3]),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arlen[4]),
         .Q(\S_AXI_ALEN_Q_reg_n_0_[4] ),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arlen[5]),
         .Q(\S_AXI_ALEN_Q_reg_n_0_[5] ),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arlen[6]),
         .Q(\S_AXI_ALEN_Q_reg_n_0_[6] ),
         .R(1'b0));
   FDRE \S_AXI_ALEN_Q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arlen[7]),
         .Q(\S_AXI_ALEN_Q_reg_n_0_[7] ),
         .R(1'b0));
   FDRE \S_AXI_ALOCK_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arlock),
         .Q(S_AXI_ALOCK_Q),
         .R(1'b0));
   FDRE \S_AXI_APROT_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arprot[0]),
         .Q(m_axi_arprot[0]),
         .R(1'b0));
   FDRE \S_AXI_APROT_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arprot[1]),
         .Q(m_axi_arprot[1]),
         .R(1'b0));
   FDRE \S_AXI_APROT_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arprot[2]),
         .Q(m_axi_arprot[2]),
         .R(1'b0));
   FDRE \S_AXI_AQOS_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arqos[0]),
         .Q(m_axi_arqos[0]),
         .R(1'b0));
   FDRE \S_AXI_AQOS_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arqos[1]),
         .Q(m_axi_arqos[1]),
         .R(1'b0));
   FDRE \S_AXI_AQOS_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arqos[2]),
         .Q(m_axi_arqos[2]),
         .R(1'b0));
   FDRE \S_AXI_AQOS_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arqos[3]),
         .Q(m_axi_arqos[3]),
         .R(1'b0));
@@ -10457,47 +10446,47 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
        (.C(CLK),
         .CE(1'b1),
         .D(cmd_queue_n_179),
-        .Q(s_axi_arready),
+        .Q(S_AXI_AREADY_I_reg_0),
         .R(SR));
   FDRE \S_AXI_AREGION_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arregion[0]),
         .Q(m_axi_arregion[0]),
         .R(1'b0));
   FDRE \S_AXI_AREGION_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arregion[1]),
         .Q(m_axi_arregion[1]),
         .R(1'b0));
   FDRE \S_AXI_AREGION_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arregion[2]),
         .Q(m_axi_arregion[2]),
         .R(1'b0));
   FDRE \S_AXI_AREGION_Q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arregion[3]),
         .Q(m_axi_arregion[3]),
         .R(1'b0));
   FDRE \S_AXI_ASIZE_Q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arsize[0]),
         .Q(S_AXI_ASIZE_Q[0]),
         .R(1'b0));
   FDRE \S_AXI_ASIZE_Q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arsize[1]),
         .Q(S_AXI_ASIZE_Q[1]),
         .R(1'b0));
   FDRE \S_AXI_ASIZE_Q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arsize[2]),
         .Q(S_AXI_ASIZE_Q[2]),
         .R(1'b0));
@@ -10505,11 +10494,11 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     .INIT(1'b0)) 
     access_fit_mi_side_q_reg
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\split_addr_mask_q[2]_i_1__0_n_0 ),
         .Q(access_fit_mi_side_q),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair18" *) 
+  (* SOFT_HLUTNM = "soft_lutpair20" *) 
   LUT2 #(
     .INIT(4'h1)) 
     access_is_fix_q_i_1__0
@@ -10520,7 +10509,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     .INIT(1'b0)) 
     access_is_fix_q_reg
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(access_is_fix),
         .Q(access_is_fix_q),
         .R(SR));
@@ -10534,11 +10523,11 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     .INIT(1'b0)) 
     access_is_incr_q_reg
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(access_is_incr),
         .Q(access_is_incr_q),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair40" *) 
+  (* SOFT_HLUTNM = "soft_lutpair39" *) 
   LUT2 #(
     .INIT(4'h2)) 
     access_is_wrap_q_i_1__0
@@ -10549,7 +10538,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     .INIT(1'b0)) 
     access_is_wrap_q_reg
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(access_is_wrap),
         .Q(access_is_wrap_q),
         .R(SR));
@@ -10558,16 +10547,16 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .CO({cmd_length_i_carry_n_0,cmd_length_i_carry_n_1,cmd_length_i_carry_n_2,cmd_length_i_carry_n_3}),
         .CYINIT(1'b1),
         .DI({cmd_queue_n_19,cmd_queue_n_20,cmd_queue_n_21,cmd_queue_n_22}),
-        .O(\m_axi_arsize[2] [3:0]),
+        .O(access_fit_mi_side_q_reg_0[3:0]),
         .S({cmd_queue_n_175,cmd_queue_n_176,cmd_queue_n_177,cmd_queue_n_178}));
   CARRY4 cmd_length_i_carry__0
        (.CI(cmd_length_i_carry_n_0),
         .CO({NLW_cmd_length_i_carry__0_CO_UNCONNECTED[3],cmd_length_i_carry__0_n_1,cmd_length_i_carry__0_n_2,cmd_length_i_carry__0_n_3}),
         .CYINIT(1'b0),
         .DI({1'b0,cmd_queue_n_23,cmd_queue_n_24,cmd_queue_n_25}),
-        .O(\m_axi_arsize[2] [7:4]),
+        .O(access_fit_mi_side_q_reg_0[7:4]),
         .S({cmd_queue_n_171,cmd_queue_n_172,cmd_queue_n_173,cmd_queue_n_174}));
-  (* SOFT_HLUTNM = "soft_lutpair29" *) 
+  (* SOFT_HLUTNM = "soft_lutpair28" *) 
   LUT5 #(
     .INIT(32'hFFFFFFFE)) 
     \cmd_mask_q[0]_i_1__0 
@@ -10580,8 +10569,8 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   LUT6 #(
     .INIT(64'hFFFFFFFFFEFFFEEE)) 
     \cmd_mask_q[1]_i_1__0 
-       (.I0(s_axi_arsize[1]),
-        .I1(s_axi_arsize[2]),
+       (.I0(s_axi_arsize[2]),
+        .I1(s_axi_arsize[1]),
         .I2(s_axi_arlen[0]),
         .I3(s_axi_arsize[0]),
         .I4(s_axi_arlen[1]),
@@ -10591,11 +10580,11 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   LUT3 #(
     .INIT(8'h8A)) 
     \cmd_mask_q[1]_i_2__0 
-       (.I0(s_axi_arready),
+       (.I0(S_AXI_AREADY_I_reg_0),
         .I1(s_axi_arburst[0]),
         .I2(s_axi_arburst[1]),
         .O(cmd_mask_q));
-  (* SOFT_HLUTNM = "soft_lutpair40" *) 
+  (* SOFT_HLUTNM = "soft_lutpair39" *) 
   LUT3 #(
     .INIT(8'hDF)) 
     \cmd_mask_q[2]_i_1__0 
@@ -10613,25 +10602,25 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .O(\cmd_mask_q[3]_i_1__0_n_0 ));
   FDRE \cmd_mask_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\cmd_mask_q[0]_i_1__0_n_0 ),
         .Q(\cmd_mask_q_reg_n_0_[0] ),
         .R(SR));
   FDRE \cmd_mask_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\cmd_mask_q[1]_i_1__0_n_0 ),
         .Q(\cmd_mask_q_reg_n_0_[1] ),
         .R(SR));
   FDRE \cmd_mask_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\cmd_mask_q[2]_i_1__0_n_0 ),
         .Q(\cmd_mask_q_reg_n_0_[2] ),
         .R(SR));
   FDRE \cmd_mask_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\cmd_mask_q[3]_i_1__0_n_0 ),
         .Q(\cmd_mask_q_reg_n_0_[3] ),
         .R(SR));
@@ -10643,7 +10632,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .D(cmd_queue_n_16),
         .Q(cmd_push_block),
         .R(1'b0));
-  design_1_auto_ds_2_axi_data_fifo_v2_1_15_axic_fifo__parameterized0 cmd_queue
+  design_1_auto_ds_2_axi_data_fifo_v2_1_17_axic_fifo__parameterized0 cmd_queue
        (.CLK(CLK),
         .CO(last_incr_split0),
         .D(D),
@@ -10652,76 +10641,76 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .Q(wrap_rest_len),
         .S({cmd_queue_n_26,cmd_queue_n_27,cmd_queue_n_28}),
         .SR(SR),
-        .\S_AXI_AADDR_Q_reg[3] ({\S_AXI_AADDR_Q_reg_n_0_[3] ,\S_AXI_AADDR_Q_reg_n_0_[2] ,\S_AXI_AADDR_Q_reg_n_0_[1] ,\S_AXI_AADDR_Q_reg_n_0_[0] }),
         .S_AXI_AID_Q(S_AXI_AID_Q),
-        .\S_AXI_ALEN_Q_reg[7] ({\S_AXI_ALEN_Q_reg_n_0_[7] ,\S_AXI_ALEN_Q_reg_n_0_[6] ,\S_AXI_ALEN_Q_reg_n_0_[5] ,\S_AXI_ALEN_Q_reg_n_0_[4] ,p_0_in}),
-        .S_AXI_AREADY_I_reg(cmd_queue_n_179),
-        .S_AXI_AREADY_I_reg_0(s_axi_arready),
+        .\S_AXI_AID_Q_reg[0] (cmd_queue_n_181),
+        .\S_AXI_ALEN_Q_reg[6] ({cmd_queue_n_23,cmd_queue_n_24,cmd_queue_n_25}),
+        .S_AXI_AREADY_I_reg(cmd_queue_n_180),
+        .S_AXI_AREADY_I_reg_0(S_AXI_AREADY_I_reg_0),
         .\S_AXI_RRESP_ACC_reg[0] (\S_AXI_RRESP_ACC_reg[0] ),
-        .\S_AXI_RRESP_ACC_reg[0]_0 (\S_AXI_RRESP_ACC_reg[0]_0 ),
-        .\WORD_LANE[0].S_AXI_RDATA_II_reg[31] (E),
-        .\WORD_LANE[1].S_AXI_RDATA_II_reg[63] (\WORD_LANE[1].S_AXI_RDATA_II_reg[63] ),
-        .\WORD_LANE[2].S_AXI_RDATA_II_reg[95] (\WORD_LANE[2].S_AXI_RDATA_II_reg[95] ),
-        .\WORD_LANE[3].S_AXI_RDATA_II_reg[127] (\WORD_LANE[3].S_AXI_RDATA_II_reg[127] ),
-        .\WORD_LANE[3].S_AXI_RDATA_II_reg[96] (\WORD_LANE[3].S_AXI_RDATA_II_reg[96] ),
+        .\WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 (\WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 ),
         .access_fit_mi_side_q(access_fit_mi_side_q),
         .access_is_fix_q(access_is_fix_q),
         .access_is_incr_q(access_is_incr_q),
+        .access_is_incr_q_reg(cmd_queue_n_30),
         .access_is_wrap_q(access_is_wrap_q),
         .areset_d(areset_d),
-        .\areset_d_reg[1] (\areset_d_reg[1] ),
-        .\cmd_mask_q_reg[3] ({\cmd_mask_q_reg_n_0_[3] ,\cmd_mask_q_reg_n_0_[2] ,\cmd_mask_q_reg_n_0_[1] ,\cmd_mask_q_reg_n_0_[0] ,\m_axi_arsize[2] [7:0],S_AXI_ASIZE_Q}),
+        .\areset_d_reg[0] (cmd_queue_n_179),
+        .cmd_length_i_carry__0_i_4__0(wrap_unaligned_len_q),
+        .cmd_length_i_carry__0_i_7__0(unalignment_addr_q),
+        .cmd_length_i_carry__0_i_7__0_0(fix_len_q),
+        .cmd_length_i_carry__0_i_8__0(pushed_commands_reg),
         .cmd_push_block(cmd_push_block),
-        .cmd_push_block_reg(cmd_queue_n_16),
         .command_ongoing(command_ongoing),
-        .command_ongoing_reg(cmd_queue_n_180),
+        .command_ongoing_reg(command_ongoing_reg_0),
         .\current_word_1_reg[3] (\current_word_1_reg[3] ),
-        .din({cmd_split_i,\m_axi_arsize[2] [10:8]}),
+        .din({cmd_split_i,access_fit_mi_side_q_reg_0[10:8]}),
         .dout(dout),
-        .\downsized_len_q_reg[7] (downsized_len_q),
+        .\downsized_len_q_reg[3] ({cmd_queue_n_175,cmd_queue_n_176,cmd_queue_n_177,cmd_queue_n_178}),
+        .\downsized_len_q_reg[7] ({cmd_queue_n_171,cmd_queue_n_172,cmd_queue_n_173,cmd_queue_n_174}),
         .empty(empty),
-        .empty_fwft_i_reg(empty_fwft_i_reg),
-        .first_mi_word_reg(first_mi_word_reg),
-        .first_mi_word_reg_0(first_mi_word_reg_0),
+        .first_mi_word_reg(Q),
+        .first_mi_word_reg_0(first_mi_word_reg),
         .first_word(first_word),
-        .\fix_len_q_reg[4] (fix_len_q),
         .fix_need_to_split_q(fix_need_to_split_q),
-        .\goreg_dm.dout_i_reg[8] (\goreg_dm.dout_i_reg[8] ),
-        .\goreg_dm.dout_i_reg[9] (\goreg_dm.dout_i_reg[9] ),
-        .\gpr1.dout_i_reg[7] ({cmd_queue_n_23,cmd_queue_n_24,cmd_queue_n_25}),
-        .\gpr1.dout_i_reg[7]_0 ({cmd_queue_n_171,cmd_queue_n_172,cmd_queue_n_173,cmd_queue_n_174}),
-        .\gpr1.dout_i_reg[7]_1 ({cmd_queue_n_175,cmd_queue_n_176,cmd_queue_n_177,cmd_queue_n_178}),
+        .\goreg_dm.dout_i_reg[0] (\goreg_dm.dout_i_reg[0] ),
+        .\goreg_dm.dout_i_reg[28] (\goreg_dm.dout_i_reg[28] ),
+        .\goreg_dm.dout_i_reg[2] (\goreg_dm.dout_i_reg[2] ),
+        .\gpr1.dout_i_reg[13] ({\cmd_mask_q_reg_n_0_[3] ,\cmd_mask_q_reg_n_0_[2] ,\cmd_mask_q_reg_n_0_[1] ,\cmd_mask_q_reg_n_0_[0] ,access_fit_mi_side_q_reg_0[7:0],S_AXI_ASIZE_Q}),
+        .\gpr1.dout_i_reg[19] ({\S_AXI_AADDR_Q_reg_n_0_[3] ,\S_AXI_AADDR_Q_reg_n_0_[2] ,\S_AXI_AADDR_Q_reg_n_0_[1] ,\S_AXI_AADDR_Q_reg_n_0_[0] }),
+        .\gpr1.dout_i_reg[19]_0 (\split_addr_mask_q_reg_n_0_[0] ),
+        .\gpr1.dout_i_reg[19]_1 (\split_addr_mask_q_reg_n_0_[1] ),
+        .\gpr1.dout_i_reg[19]_2 ({\split_addr_mask_q_reg_n_0_[3] ,\split_addr_mask_q_reg_n_0_[2] }),
+        .\gpr1.dout_i_reg[25] (\split_addr_mask_q_reg_n_0_[31] ),
         .incr_need_to_split_q(incr_need_to_split_q),
+        .last_incr_split0_carry(num_transactions_q),
         .legal_wrap_len_q(legal_wrap_len_q),
-        .\length_counter_1_reg[7] (Q),
+        .\m_axi_arlen[7] ({\S_AXI_ALEN_Q_reg_n_0_[7] ,\S_AXI_ALEN_Q_reg_n_0_[6] ,\S_AXI_ALEN_Q_reg_n_0_[5] ,\S_AXI_ALEN_Q_reg_n_0_[4] ,p_0_in}),
+        .\m_axi_arlen[7]_0 (downsized_len_q),
         .m_axi_arready(m_axi_arready),
         .m_axi_arvalid(m_axi_arvalid),
         .m_axi_rdata(m_axi_rdata),
         .m_axi_rlast(m_axi_rlast),
         .m_axi_rready(m_axi_rready),
         .m_axi_rvalid(m_axi_rvalid),
-        .\next_mi_addr_reg[8] (cmd_queue_n_29),
-        .\next_mi_addr_reg[8]_0 (cmd_queue_n_30),
-        .\num_transactions_q_reg[3] (num_transactions_q),
         .out(out),
         .p_1_in(p_1_in),
-        .\pushed_commands_reg[7] (pushed_commands_reg),
-        .\queue_id_reg[0] (cmd_queue_n_181),
+        .s_axi_aresetn(cmd_queue_n_16),
         .s_axi_arvalid(s_axi_arvalid),
         .s_axi_rdata(s_axi_rdata),
         .s_axi_rid(s_axi_rid),
         .s_axi_rlast(s_axi_rlast),
         .s_axi_rready(s_axi_rready),
+        .s_axi_rready_0(s_axi_rready_0),
+        .s_axi_rready_1(E),
+        .s_axi_rready_2(s_axi_rready_1),
+        .s_axi_rready_3(s_axi_rready_2),
+        .s_axi_rready_4(s_axi_rready_3),
         .s_axi_rvalid(s_axi_rvalid),
+        .s_axi_rvalid_0(s_axi_rvalid_0),
         .si_full_size_q(si_full_size_q),
-        .\split_addr_mask_q_reg[0] (\split_addr_mask_q_reg_n_0_[0] ),
-        .\split_addr_mask_q_reg[1] (\split_addr_mask_q_reg_n_0_[1] ),
-        .\split_addr_mask_q_reg[31] (\split_addr_mask_q_reg_n_0_[31] ),
-        .\split_addr_mask_q_reg[3] ({\split_addr_mask_q_reg_n_0_[3] ,\split_addr_mask_q_reg_n_0_[2] }),
         .split_ongoing(split_ongoing),
-        .\unalignment_addr_q_reg[4] (unalignment_addr_q),
-        .wrap_need_to_split_q(wrap_need_to_split_q),
-        .\wrap_unaligned_len_q_reg[7] (wrap_unaligned_len_q));
+        .split_ongoing_reg(cmd_queue_n_29),
+        .wrap_need_to_split_q(wrap_need_to_split_q));
   FDRE #(
     .INIT(1'b0)) 
     command_ongoing_reg
@@ -10730,7 +10719,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .D(cmd_queue_n_180),
         .Q(command_ongoing),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair20" *) 
+  (* SOFT_HLUTNM = "soft_lutpair24" *) 
   LUT4 #(
     .INIT(16'hFFEA)) 
     \downsized_len_q[0]_i_1__0 
@@ -10739,7 +10728,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I2(s_axi_arsize[1]),
         .I3(s_axi_arsize[2]),
         .O(\downsized_len_q[0]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair30" *) 
+  (* SOFT_HLUTNM = "soft_lutpair25" *) 
   LUT5 #(
     .INIT(32'h0222FEEE)) 
     \downsized_len_q[1]_i_1__0 
@@ -10757,9 +10746,9 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I2(s_axi_arsize[1]),
         .I3(s_axi_arsize[0]),
         .I4(s_axi_arlen[0]),
-        .I5(\masked_addr_q[4]_i_2_n_0 ),
+        .I5(\masked_addr_q[8]_i_2__0_n_0 ),
         .O(\downsized_len_q[2]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair23" *) 
+  (* SOFT_HLUTNM = "soft_lutpair26" *) 
   LUT5 #(
     .INIT(32'hFEEE0222)) 
     \downsized_len_q[3]_i_1__0 
@@ -10779,26 +10768,26 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I4(s_axi_arsize[1]),
         .I5(s_axi_arsize[0]),
         .O(\downsized_len_q[4]_i_1__0_n_0 ));
-  LUT6 #(
-    .INIT(64'hB8B8BB88BB88BB88)) 
-    \downsized_len_q[5]_i_1__0 
-       (.I0(\masked_addr_q[7]_i_2__0_n_0 ),
-        .I1(s_axi_arsize[2]),
-        .I2(\masked_addr_q[7]_i_3__0_n_0 ),
-        .I3(s_axi_arlen[5]),
-        .I4(s_axi_arsize[1]),
-        .I5(s_axi_arsize[0]),
-        .O(\downsized_len_q[5]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair28" *) 
+  (* SOFT_HLUTNM = "soft_lutpair19" *) 
   LUT5 #(
     .INIT(32'hFEEE0222)) 
-    \downsized_len_q[6]_i_1 
-       (.I0(s_axi_arlen[6]),
+    \downsized_len_q[5]_i_1 
+       (.I0(s_axi_arlen[5]),
         .I1(s_axi_arsize[2]),
         .I2(s_axi_arsize[1]),
         .I3(s_axi_arsize[0]),
-        .I4(\masked_addr_q[8]_i_2__0_n_0 ),
-        .O(\downsized_len_q[6]_i_1_n_0 ));
+        .I4(\masked_addr_q[7]_i_2__0_n_0 ),
+        .O(\downsized_len_q[5]_i_1_n_0 ));
+  LUT6 #(
+    .INIT(64'hB8B8BB88BB88BB88)) 
+    \downsized_len_q[6]_i_1__0 
+       (.I0(\masked_addr_q[8]_i_2__0_n_0 ),
+        .I1(s_axi_arsize[2]),
+        .I2(\masked_addr_q[8]_i_3__0_n_0 ),
+        .I3(s_axi_arlen[6]),
+        .I4(s_axi_arsize[1]),
+        .I5(s_axi_arsize[0]),
+        .O(\downsized_len_q[6]_i_1__0_n_0 ));
   LUT6 #(
     .INIT(64'hFF55EA40BF15AA00)) 
     \downsized_len_q[7]_i_1__0 
@@ -10821,53 +10810,53 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .O(\downsized_len_q[7]_i_2__0_n_0 ));
   FDRE \downsized_len_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[0]_i_1__0_n_0 ),
         .Q(downsized_len_q[0]),
         .R(SR));
   FDRE \downsized_len_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[1]_i_1__0_n_0 ),
         .Q(downsized_len_q[1]),
         .R(SR));
   FDRE \downsized_len_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[2]_i_1__0_n_0 ),
         .Q(downsized_len_q[2]),
         .R(SR));
   FDRE \downsized_len_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[3]_i_1__0_n_0 ),
         .Q(downsized_len_q[3]),
         .R(SR));
   FDRE \downsized_len_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[4]_i_1__0_n_0 ),
         .Q(downsized_len_q[4]),
         .R(SR));
   FDRE \downsized_len_q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_arready),
-        .D(\downsized_len_q[5]_i_1__0_n_0 ),
+        .CE(S_AXI_AREADY_I_reg_0),
+        .D(\downsized_len_q[5]_i_1_n_0 ),
         .Q(downsized_len_q[5]),
         .R(SR));
   FDRE \downsized_len_q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_arready),
-        .D(\downsized_len_q[6]_i_1_n_0 ),
+        .CE(S_AXI_AREADY_I_reg_0),
+        .D(\downsized_len_q[6]_i_1__0_n_0 ),
         .Q(downsized_len_q[6]),
         .R(SR));
   FDRE \downsized_len_q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\downsized_len_q[7]_i_1__0_n_0 ),
         .Q(downsized_len_q[7]),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair28" *) 
+  (* SOFT_HLUTNM = "soft_lutpair23" *) 
   LUT3 #(
     .INIT(8'hF8)) 
     \fix_len_q[0]_i_1__0 
@@ -10875,7 +10864,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I1(s_axi_arsize[1]),
         .I2(s_axi_arsize[2]),
         .O(fix_len[0]));
-  (* SOFT_HLUTNM = "soft_lutpair30" *) 
+  (* SOFT_HLUTNM = "soft_lutpair26" *) 
   LUT3 #(
     .INIT(8'hA8)) 
     \fix_len_q[2]_i_1__0 
@@ -10883,52 +10872,52 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I1(s_axi_arsize[1]),
         .I2(s_axi_arsize[0]),
         .O(fix_len[2]));
-  (* SOFT_HLUTNM = "soft_lutpair48" *) 
+  (* SOFT_HLUTNM = "soft_lutpair44" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \fix_len_q[3]_i_1__0 
-       (.I0(s_axi_arsize[1]),
-        .I1(s_axi_arsize[2]),
+       (.I0(s_axi_arsize[2]),
+        .I1(s_axi_arsize[1]),
         .O(fix_len[3]));
-  (* SOFT_HLUTNM = "soft_lutpair19" *) 
+  (* SOFT_HLUTNM = "soft_lutpair31" *) 
   LUT3 #(
     .INIT(8'h80)) 
     \fix_len_q[4]_i_1__0 
-       (.I0(s_axi_arsize[1]),
-        .I1(s_axi_arsize[0]),
+       (.I0(s_axi_arsize[0]),
+        .I1(s_axi_arsize[1]),
         .I2(s_axi_arsize[2]),
-        .O(\fix_len_q[4]_i_1__0_n_0 ));
+        .O(fix_len[4]));
   FDRE \fix_len_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(fix_len[0]),
         .Q(fix_len_q[0]),
         .R(SR));
   FDRE \fix_len_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_arsize[2]),
         .Q(fix_len_q[1]),
         .R(SR));
   FDRE \fix_len_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(fix_len[2]),
         .Q(fix_len_q[2]),
         .R(SR));
   FDRE \fix_len_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(fix_len[3]),
         .Q(fix_len_q[3]),
         .R(SR));
   FDRE \fix_len_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_arready),
-        .D(\fix_len_q[4]_i_1__0_n_0 ),
+        .CE(S_AXI_AREADY_I_reg_0),
+        .D(fix_len[4]),
         .Q(fix_len_q[4]),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair19" *) 
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
   LUT5 #(
     .INIT(32'h11111000)) 
     fix_need_to_split_q_i_1__0
@@ -10942,7 +10931,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     .INIT(1'b0)) 
     fix_need_to_split_q_reg
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(fix_need_to_split),
         .Q(fix_need_to_split_q),
         .R(SR));
@@ -10960,7 +10949,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     .INIT(1'b0)) 
     incr_need_to_split_q_reg
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(incr_need_to_split),
         .Q(incr_need_to_split_q),
         .R(SR));
@@ -10972,45 +10961,37 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .O(NLW_last_incr_split0_carry_O_UNCONNECTED[3:0]),
         .S({1'b0,cmd_queue_n_26,cmd_queue_n_27,cmd_queue_n_28}));
   LUT6 #(
-    .INIT(64'h00000000555555F7)) 
+    .INIT(64'h0001115555FFFFFF)) 
     legal_wrap_len_q_i_1__0
-       (.I0(s_axi_arsize[2]),
+       (.I0(legal_wrap_len_q_i_2__0_n_0),
         .I1(s_axi_arlen[1]),
-        .I2(legal_wrap_len_q_i_2__0_n_0),
-        .I3(legal_wrap_len_q_i_3__0_n_0),
-        .I4(s_axi_arlen[2]),
-        .I5(legal_wrap_len_q_i_4__0_n_0),
-        .O(legal_wrap_len_q_i_1__0_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair34" *) 
-  LUT2 #(
-    .INIT(4'h1)) 
-    legal_wrap_len_q_i_2__0
-       (.I0(s_axi_arsize[0]),
-        .I1(s_axi_arsize[1]),
-        .O(legal_wrap_len_q_i_2__0_n_0));
-  (* SOFT_HLUTNM = "soft_lutpair21" *) 
-  LUT3 #(
-    .INIT(8'hA8)) 
-    legal_wrap_len_q_i_3__0
-       (.I0(s_axi_arsize[1]),
-        .I1(s_axi_arsize[0]),
         .I2(s_axi_arlen[0]),
+        .I3(s_axi_arsize[0]),
+        .I4(s_axi_arsize[1]),
+        .I5(s_axi_arsize[2]),
+        .O(legal_wrap_len_q_i_1__0_n_0));
+  LUT4 #(
+    .INIT(16'hFFFE)) 
+    legal_wrap_len_q_i_2__0
+       (.I0(s_axi_arlen[6]),
+        .I1(s_axi_arlen[3]),
+        .I2(s_axi_arlen[4]),
+        .I3(legal_wrap_len_q_i_3__0_n_0),
+        .O(legal_wrap_len_q_i_2__0_n_0));
+  (* SOFT_HLUTNM = "soft_lutpair36" *) 
+  LUT4 #(
+    .INIT(16'hFFF8)) 
+    legal_wrap_len_q_i_3__0
+       (.I0(s_axi_arsize[2]),
+        .I1(s_axi_arlen[2]),
+        .I2(s_axi_arlen[5]),
+        .I3(s_axi_arlen[7]),
         .O(legal_wrap_len_q_i_3__0_n_0));
-  LUT6 #(
-    .INIT(64'h5555555555555554)) 
-    legal_wrap_len_q_i_4__0
-       (.I0(\split_addr_mask_q[2]_i_1__0_n_0 ),
-        .I1(s_axi_arlen[7]),
-        .I2(s_axi_arlen[6]),
-        .I3(s_axi_arlen[3]),
-        .I4(s_axi_arlen[4]),
-        .I5(s_axi_arlen[5]),
-        .O(legal_wrap_len_q_i_4__0_n_0));
   FDRE #(
     .INIT(1'b0)) 
     legal_wrap_len_q_reg
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(legal_wrap_len_q_i_1__0_n_0),
         .Q(legal_wrap_len_q),
         .R(SR));
@@ -11358,7 +11339,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I2(incr_need_to_split_q),
         .I3(fix_need_to_split_q),
         .O(m_axi_arlock));
-  (* SOFT_HLUTNM = "soft_lutpair20" *) 
+  (* SOFT_HLUTNM = "soft_lutpair24" *) 
   LUT5 #(
     .INIT(32'h00000002)) 
     \masked_addr_q[0]_i_1__0 
@@ -11373,8 +11354,8 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     \masked_addr_q[10]_i_1__0 
        (.I0(s_axi_araddr[10]),
         .I1(s_axi_arsize[1]),
-        .I2(s_axi_arsize[0]),
-        .I3(s_axi_arlen[7]),
+        .I2(s_axi_arlen[7]),
+        .I3(s_axi_arsize[0]),
         .I4(s_axi_arsize[2]),
         .I5(\num_transactions_q[0]_i_2__0_n_0 ),
         .O(masked_addr[10]));
@@ -11397,25 +11378,25 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I1(s_axi_arlen[6]),
         .I2(s_axi_arsize[0]),
         .I3(s_axi_arlen[7]),
-        .I4(s_axi_arsize[1]),
-        .I5(s_axi_arsize[2]),
+        .I4(s_axi_arsize[2]),
+        .I5(s_axi_arsize[1]),
         .O(masked_addr[13]));
-  (* SOFT_HLUTNM = "soft_lutpair24" *) 
+  (* SOFT_HLUTNM = "soft_lutpair31" *) 
   LUT5 #(
     .INIT(32'h2AAAAAAA)) 
     \masked_addr_q[14]_i_1__0 
        (.I0(s_axi_araddr[14]),
-        .I1(s_axi_arsize[0]),
-        .I2(s_axi_arlen[7]),
-        .I3(s_axi_arsize[1]),
-        .I4(s_axi_arsize[2]),
+        .I1(s_axi_arlen[7]),
+        .I2(s_axi_arsize[0]),
+        .I3(s_axi_arsize[2]),
+        .I4(s_axi_arsize[1]),
         .O(masked_addr[14]));
   LUT6 #(
     .INIT(64'h0002000000020202)) 
     \masked_addr_q[1]_i_1__0 
        (.I0(s_axi_araddr[1]),
-        .I1(s_axi_arsize[1]),
-        .I2(s_axi_arsize[2]),
+        .I1(s_axi_arsize[2]),
+        .I2(s_axi_arsize[1]),
         .I3(s_axi_arlen[0]),
         .I4(s_axi_arsize[0]),
         .I5(s_axi_arlen[1]),
@@ -11428,13 +11409,13 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I1(\masked_addr_q[2]_i_2__0_n_0 ),
         .O(masked_addr[2]));
   LUT6 #(
-    .INIT(64'h0000015105050151)) 
+    .INIT(64'h0001110100451145)) 
     \masked_addr_q[2]_i_2__0 
        (.I0(s_axi_arsize[2]),
-        .I1(s_axi_arlen[2]),
-        .I2(s_axi_arsize[0]),
-        .I3(s_axi_arlen[1]),
-        .I4(s_axi_arsize[1]),
+        .I1(s_axi_arsize[1]),
+        .I2(s_axi_arlen[2]),
+        .I3(s_axi_arsize[0]),
+        .I4(s_axi_arlen[1]),
         .I5(s_axi_arlen[0]),
         .O(\masked_addr_q[2]_i_2__0_n_0 ));
   (* SOFT_HLUTNM = "soft_lutpair47" *) 
@@ -11454,6 +11435,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I4(s_axi_arsize[1]),
         .I5(\masked_addr_q[3]_i_3__0_n_0 ),
         .O(\masked_addr_q[3]_i_2__0_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair22" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \masked_addr_q[3]_i_3__0 
@@ -11465,23 +11447,13 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     .INIT(64'h02020202020202A2)) 
     \masked_addr_q[4]_i_1__0 
        (.I0(s_axi_araddr[4]),
-        .I1(\masked_addr_q[4]_i_2_n_0 ),
+        .I1(\masked_addr_q[8]_i_2__0_n_0 ),
         .I2(s_axi_arsize[2]),
         .I3(s_axi_arlen[0]),
         .I4(s_axi_arsize[0]),
         .I5(s_axi_arsize[1]),
         .O(masked_addr[4]));
-  LUT6 #(
-    .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \masked_addr_q[4]_i_2 
-       (.I0(s_axi_arlen[1]),
-        .I1(s_axi_arlen[2]),
-        .I2(s_axi_arsize[1]),
-        .I3(s_axi_arlen[3]),
-        .I4(s_axi_arsize[0]),
-        .I5(s_axi_arlen[4]),
-        .O(\masked_addr_q[4]_i_2_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair46" *) 
+  (* SOFT_HLUTNM = "soft_lutpair45" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \masked_addr_q[5]_i_1__0 
@@ -11498,7 +11470,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I4(s_axi_arsize[2]),
         .I5(\downsized_len_q[7]_i_2__0_n_0 ),
         .O(\masked_addr_q[5]_i_2__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair33" *) 
+  (* SOFT_HLUTNM = "soft_lutpair32" *) 
   LUT4 #(
     .INIT(16'h4700)) 
     \masked_addr_q[6]_i_1__0 
@@ -11507,71 +11479,81 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I2(\num_transactions_q[0]_i_2__0_n_0 ),
         .I3(s_axi_araddr[6]),
         .O(masked_addr[6]));
-  (* SOFT_HLUTNM = "soft_lutpair21" *) 
+  (* SOFT_HLUTNM = "soft_lutpair22" *) 
   LUT5 #(
-    .INIT(32'hFCBBFC88)) 
+    .INIT(32'hFAFACFC0)) 
     \masked_addr_q[6]_i_2__0 
        (.I0(s_axi_arlen[0]),
-        .I1(s_axi_arsize[1]),
-        .I2(s_axi_arlen[1]),
-        .I3(s_axi_arsize[0]),
-        .I4(s_axi_arlen[2]),
+        .I1(s_axi_arlen[1]),
+        .I2(s_axi_arsize[0]),
+        .I3(s_axi_arlen[2]),
+        .I4(s_axi_arsize[1]),
         .O(\masked_addr_q[6]_i_2__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair35" *) 
-  LUT4 #(
-    .INIT(16'h4700)) 
-    \masked_addr_q[7]_i_1__0 
-       (.I0(\masked_addr_q[7]_i_2__0_n_0 ),
-        .I1(s_axi_arsize[2]),
-        .I2(\masked_addr_q[7]_i_3__0_n_0 ),
-        .I3(s_axi_araddr[7]),
+  (* SOFT_HLUTNM = "soft_lutpair46" *) 
+  LUT2 #(
+    .INIT(4'h2)) 
+    \masked_addr_q[7]_i_1 
+       (.I0(s_axi_araddr[7]),
+        .I1(\masked_addr_q[7]_i_2__0_n_0 ),
         .O(masked_addr[7]));
+  (* SOFT_HLUTNM = "soft_lutpair42" *) 
+  LUT3 #(
+    .INIT(8'hB8)) 
+    \masked_addr_q[7]_i_2__0 
+       (.I0(\masked_addr_q[7]_i_3_n_0 ),
+        .I1(s_axi_arsize[2]),
+        .I2(\masked_addr_q[7]_i_4_n_0 ),
+        .O(\masked_addr_q[7]_i_2__0_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \masked_addr_q[7]_i_2__0 
+    \masked_addr_q[7]_i_3 
        (.I0(s_axi_arlen[0]),
         .I1(s_axi_arlen[1]),
         .I2(s_axi_arsize[1]),
         .I3(s_axi_arlen[2]),
         .I4(s_axi_arsize[0]),
         .I5(s_axi_arlen[3]),
-        .O(\masked_addr_q[7]_i_2__0_n_0 ));
+        .O(\masked_addr_q[7]_i_3_n_0 ));
   LUT6 #(
     .INIT(64'hAFA0CFCFAFA0C0C0)) 
-    \masked_addr_q[7]_i_3__0 
+    \masked_addr_q[7]_i_4 
        (.I0(s_axi_arlen[4]),
         .I1(s_axi_arlen[5]),
         .I2(s_axi_arsize[1]),
         .I3(s_axi_arlen[6]),
         .I4(s_axi_arsize[0]),
         .I5(s_axi_arlen[7]),
-        .O(\masked_addr_q[7]_i_3__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair45" *) 
-  LUT2 #(
-    .INIT(4'h2)) 
-    \masked_addr_q[8]_i_1 
-       (.I0(s_axi_araddr[8]),
-        .I1(\masked_addr_q[8]_i_2__0_n_0 ),
-        .O(masked_addr[8]));
-  (* SOFT_HLUTNM = "soft_lutpair42" *) 
-  LUT3 #(
-    .INIT(8'hB8)) 
-    \masked_addr_q[8]_i_2__0 
-       (.I0(\masked_addr_q[4]_i_2_n_0 ),
+        .O(\masked_addr_q[7]_i_4_n_0 ));
+  (* SOFT_HLUTNM = "soft_lutpair35" *) 
+  LUT4 #(
+    .INIT(16'h4700)) 
+    \masked_addr_q[8]_i_1__0 
+       (.I0(\masked_addr_q[8]_i_2__0_n_0 ),
         .I1(s_axi_arsize[2]),
         .I2(\masked_addr_q[8]_i_3__0_n_0 ),
+        .I3(s_axi_araddr[8]),
+        .O(masked_addr[8]));
+  LUT6 #(
+    .INIT(64'hAFA0CFCFAFA0C0C0)) 
+    \masked_addr_q[8]_i_2__0 
+       (.I0(s_axi_arlen[1]),
+        .I1(s_axi_arlen[2]),
+        .I2(s_axi_arsize[1]),
+        .I3(s_axi_arlen[3]),
+        .I4(s_axi_arsize[0]),
+        .I5(s_axi_arlen[4]),
         .O(\masked_addr_q[8]_i_2__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair27" *) 
+  (* SOFT_HLUTNM = "soft_lutpair29" *) 
   LUT5 #(
-    .INIT(32'hAFC0A0C0)) 
+    .INIT(32'hAFA0C0C0)) 
     \masked_addr_q[8]_i_3__0 
        (.I0(s_axi_arlen[5]),
         .I1(s_axi_arlen[6]),
         .I2(s_axi_arsize[1]),
-        .I3(s_axi_arsize[0]),
-        .I4(s_axi_arlen[7]),
+        .I3(s_axi_arlen[7]),
+        .I4(s_axi_arsize[0]),
         .O(\masked_addr_q[8]_i_3__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair44" *) 
+  (* SOFT_HLUTNM = "soft_lutpair48" *) 
   LUT2 #(
     .INIT(4'h2)) 
     \masked_addr_q[9]_i_1__0 
@@ -11590,193 +11572,193 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .O(\masked_addr_q[9]_i_2__0_n_0 ));
   FDRE \masked_addr_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[0]),
         .Q(masked_addr_q[0]),
         .R(SR));
   FDRE \masked_addr_q_reg[10] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[10]),
         .Q(masked_addr_q[10]),
         .R(SR));
   FDRE \masked_addr_q_reg[11] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[11]),
         .Q(masked_addr_q[11]),
         .R(SR));
   FDRE \masked_addr_q_reg[12] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[12]),
         .Q(masked_addr_q[12]),
         .R(SR));
   FDRE \masked_addr_q_reg[13] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[13]),
         .Q(masked_addr_q[13]),
         .R(SR));
   FDRE \masked_addr_q_reg[14] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[14]),
         .Q(masked_addr_q[14]),
         .R(SR));
   FDRE \masked_addr_q_reg[15] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[15]),
         .Q(masked_addr_q[15]),
         .R(SR));
   FDRE \masked_addr_q_reg[16] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[16]),
         .Q(masked_addr_q[16]),
         .R(SR));
   FDRE \masked_addr_q_reg[17] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[17]),
         .Q(masked_addr_q[17]),
         .R(SR));
   FDRE \masked_addr_q_reg[18] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[18]),
         .Q(masked_addr_q[18]),
         .R(SR));
   FDRE \masked_addr_q_reg[19] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[19]),
         .Q(masked_addr_q[19]),
         .R(SR));
   FDRE \masked_addr_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[1]),
         .Q(masked_addr_q[1]),
         .R(SR));
   FDRE \masked_addr_q_reg[20] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[20]),
         .Q(masked_addr_q[20]),
         .R(SR));
   FDRE \masked_addr_q_reg[21] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[21]),
         .Q(masked_addr_q[21]),
         .R(SR));
   FDRE \masked_addr_q_reg[22] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[22]),
         .Q(masked_addr_q[22]),
         .R(SR));
   FDRE \masked_addr_q_reg[23] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[23]),
         .Q(masked_addr_q[23]),
         .R(SR));
   FDRE \masked_addr_q_reg[24] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[24]),
         .Q(masked_addr_q[24]),
         .R(SR));
   FDRE \masked_addr_q_reg[25] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[25]),
         .Q(masked_addr_q[25]),
         .R(SR));
   FDRE \masked_addr_q_reg[26] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[26]),
         .Q(masked_addr_q[26]),
         .R(SR));
   FDRE \masked_addr_q_reg[27] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[27]),
         .Q(masked_addr_q[27]),
         .R(SR));
   FDRE \masked_addr_q_reg[28] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[28]),
         .Q(masked_addr_q[28]),
         .R(SR));
   FDRE \masked_addr_q_reg[29] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[29]),
         .Q(masked_addr_q[29]),
         .R(SR));
   FDRE \masked_addr_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[2]),
         .Q(masked_addr_q[2]),
         .R(SR));
   FDRE \masked_addr_q_reg[30] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[30]),
         .Q(masked_addr_q[30]),
         .R(SR));
   FDRE \masked_addr_q_reg[31] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(s_axi_araddr[31]),
         .Q(masked_addr_q[31]),
         .R(SR));
   FDRE \masked_addr_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[3]),
         .Q(masked_addr_q[3]),
         .R(SR));
   FDRE \masked_addr_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[4]),
         .Q(masked_addr_q[4]),
         .R(SR));
   FDRE \masked_addr_q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[5]),
         .Q(masked_addr_q[5]),
         .R(SR));
   FDRE \masked_addr_q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[6]),
         .Q(masked_addr_q[6]),
         .R(SR));
   FDRE \masked_addr_q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[7]),
         .Q(masked_addr_q[7]),
         .R(SR));
   FDRE \masked_addr_q_reg[8] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[8]),
         .Q(masked_addr_q[8]),
         .R(SR));
   FDRE \masked_addr_q_reg[9] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(masked_addr[9]),
         .Q(masked_addr_q[9]),
         .R(SR));
@@ -12312,14 +12294,14 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .D(next_mi_addr0_carry_n_7),
         .Q(next_mi_addr[9]),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair31" *) 
+  (* SOFT_HLUTNM = "soft_lutpair23" *) 
   LUT5 #(
     .INIT(32'hB8888888)) 
     \num_transactions_q[0]_i_1__0 
        (.I0(\num_transactions_q[0]_i_2__0_n_0 ),
         .I1(s_axi_arsize[2]),
-        .I2(s_axi_arlen[7]),
-        .I3(s_axi_arsize[0]),
+        .I2(s_axi_arsize[0]),
+        .I3(s_axi_arlen[7]),
         .I4(s_axi_arsize[1]),
         .O(num_transactions[0]));
   LUT6 #(
@@ -12342,7 +12324,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I4(s_axi_arlen[4]),
         .I5(s_axi_arsize[2]),
         .O(\num_transactions_q[1]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair27" *) 
+  (* SOFT_HLUTNM = "soft_lutpair29" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \num_transactions_q[1]_i_2__0 
@@ -12351,46 +12333,46 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I2(s_axi_arlen[7]),
         .O(\num_transactions_q[1]_i_2__0_n_0 ));
   LUT6 #(
-    .INIT(64'hF8C8380800000000)) 
+    .INIT(64'hF8A8580800000000)) 
     \num_transactions_q[2]_i_1__0 
-       (.I0(s_axi_arlen[7]),
-        .I1(s_axi_arsize[0]),
+       (.I0(s_axi_arsize[0]),
+        .I1(s_axi_arlen[7]),
         .I2(s_axi_arsize[1]),
         .I3(s_axi_arlen[6]),
         .I4(s_axi_arlen[5]),
         .I5(s_axi_arsize[2]),
         .O(\num_transactions_q[2]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair25" *) 
+  (* SOFT_HLUTNM = "soft_lutpair30" *) 
   LUT5 #(
     .INIT(32'h88800080)) 
     \num_transactions_q[3]_i_1__0 
-       (.I0(s_axi_arsize[2]),
-        .I1(s_axi_arsize[1]),
+       (.I0(s_axi_arsize[1]),
+        .I1(s_axi_arsize[2]),
         .I2(s_axi_arlen[7]),
         .I3(s_axi_arsize[0]),
         .I4(s_axi_arlen[6]),
         .O(num_transactions[3]));
   FDRE \num_transactions_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(num_transactions[0]),
         .Q(num_transactions_q[0]),
         .R(SR));
   FDRE \num_transactions_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\num_transactions_q[1]_i_1__0_n_0 ),
         .Q(num_transactions_q[1]),
         .R(SR));
   FDRE \num_transactions_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\num_transactions_q[2]_i_1__0_n_0 ),
         .Q(num_transactions_q[2]),
         .R(SR));
   FDRE \num_transactions_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(num_transactions[3]),
         .Q(num_transactions_q[3]),
         .R(SR));
@@ -12399,14 +12381,14 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     \pushed_commands[0]_i_1__0 
        (.I0(pushed_commands_reg[0]),
         .O(\pushed_commands[0]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair36" *) 
+  (* SOFT_HLUTNM = "soft_lutpair43" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \pushed_commands[1]_i_1__0 
        (.I0(pushed_commands_reg[1]),
         .I1(pushed_commands_reg[0]),
         .O(p_0_in__0[1]));
-  (* SOFT_HLUTNM = "soft_lutpair36" *) 
+  (* SOFT_HLUTNM = "soft_lutpair43" *) 
   LUT3 #(
     .INIT(8'h6A)) 
     \pushed_commands[2]_i_1__0 
@@ -12414,7 +12396,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I1(pushed_commands_reg[0]),
         .I2(pushed_commands_reg[1]),
         .O(p_0_in__0[2]));
-  (* SOFT_HLUTNM = "soft_lutpair26" *) 
+  (* SOFT_HLUTNM = "soft_lutpair27" *) 
   LUT4 #(
     .INIT(16'h6AAA)) 
     \pushed_commands[3]_i_1__0 
@@ -12423,7 +12405,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I2(pushed_commands_reg[1]),
         .I3(pushed_commands_reg[0]),
         .O(p_0_in__0[3]));
-  (* SOFT_HLUTNM = "soft_lutpair26" *) 
+  (* SOFT_HLUTNM = "soft_lutpair27" *) 
   LUT5 #(
     .INIT(32'h6AAAAAAA)) 
     \pushed_commands[4]_i_1__0 
@@ -12443,7 +12425,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I4(pushed_commands_reg[0]),
         .I5(pushed_commands_reg[4]),
         .O(p_0_in__0[5]));
-  (* SOFT_HLUTNM = "soft_lutpair43" *) 
+  (* SOFT_HLUTNM = "soft_lutpair38" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \pushed_commands[6]_i_1__0 
@@ -12453,10 +12435,10 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
   LUT2 #(
     .INIT(4'hB)) 
     \pushed_commands[7]_i_1__0 
-       (.I0(s_axi_arready),
+       (.I0(S_AXI_AREADY_I_reg_0),
         .I1(out),
         .O(\pushed_commands[7]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair43" *) 
+  (* SOFT_HLUTNM = "soft_lutpair38" *) 
   LUT3 #(
     .INIT(8'h6A)) 
     \pushed_commands[7]_i_2__0 
@@ -12544,7 +12526,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .D(cmd_queue_n_181),
         .Q(s_axi_rid),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair24" *) 
+  (* SOFT_HLUTNM = "soft_lutpair19" *) 
   LUT3 #(
     .INIT(8'h10)) 
     si_full_size_q_i_1__0
@@ -12556,26 +12538,26 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     .INIT(1'b0)) 
     si_full_size_q_reg
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(si_full_size_q_i_1__0_n_0),
         .Q(si_full_size_q),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair31" *) 
+  (* SOFT_HLUTNM = "soft_lutpair28" *) 
   LUT3 #(
     .INIT(8'h01)) 
     \split_addr_mask_q[0]_i_1__0 
-       (.I0(s_axi_arsize[2]),
-        .I1(s_axi_arsize[1]),
+       (.I0(s_axi_arsize[1]),
+        .I1(s_axi_arsize[2]),
         .I2(s_axi_arsize[0]),
         .O(split_addr_mask[0]));
-  (* SOFT_HLUTNM = "soft_lutpair38" *) 
+  (* SOFT_HLUTNM = "soft_lutpair34" *) 
   LUT2 #(
     .INIT(4'h1)) 
     \split_addr_mask_q[1]_i_1__0 
-       (.I0(s_axi_arsize[1]),
-        .I1(s_axi_arsize[2]),
+       (.I0(s_axi_arsize[2]),
+        .I1(s_axi_arsize[1]),
         .O(split_addr_mask[1]));
-  (* SOFT_HLUTNM = "soft_lutpair23" *) 
+  (* SOFT_HLUTNM = "soft_lutpair18" *) 
   LUT3 #(
     .INIT(8'h15)) 
     \split_addr_mask_q[2]_i_1__0 
@@ -12583,13 +12565,13 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I1(s_axi_arsize[1]),
         .I2(s_axi_arsize[0]),
         .O(\split_addr_mask_q[2]_i_1__0_n_0 ));
-  (* SOFT_HLUTNM = "soft_lutpair42" *) 
+  (* SOFT_HLUTNM = "soft_lutpair36" *) 
   LUT1 #(
     .INIT(2'h1)) 
     \split_addr_mask_q[3]_i_1__0 
        (.I0(s_axi_arsize[2]),
         .O(split_addr_mask[3]));
-  (* SOFT_HLUTNM = "soft_lutpair29" *) 
+  (* SOFT_HLUTNM = "soft_lutpair25" *) 
   LUT3 #(
     .INIT(8'h1F)) 
     \split_addr_mask_q[4]_i_1__0 
@@ -12597,66 +12579,66 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I1(s_axi_arsize[1]),
         .I2(s_axi_arsize[2]),
         .O(split_addr_mask[4]));
-  (* SOFT_HLUTNM = "soft_lutpair48" *) 
+  (* SOFT_HLUTNM = "soft_lutpair42" *) 
   LUT2 #(
     .INIT(4'h7)) 
     \split_addr_mask_q[5]_i_1__0 
-       (.I0(s_axi_arsize[2]),
-        .I1(s_axi_arsize[1]),
+       (.I0(s_axi_arsize[1]),
+        .I1(s_axi_arsize[2]),
         .O(split_addr_mask[5]));
-  (* SOFT_HLUTNM = "soft_lutpair25" *) 
+  (* SOFT_HLUTNM = "soft_lutpair30" *) 
   LUT3 #(
     .INIT(8'h7F)) 
     \split_addr_mask_q[6]_i_1__0 
        (.I0(s_axi_arsize[2]),
-        .I1(s_axi_arsize[0]),
-        .I2(s_axi_arsize[1]),
+        .I1(s_axi_arsize[1]),
+        .I2(s_axi_arsize[0]),
         .O(split_addr_mask[6]));
   FDRE \split_addr_mask_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[0]),
         .Q(\split_addr_mask_q_reg_n_0_[0] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[1]),
         .Q(\split_addr_mask_q_reg_n_0_[1] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(\split_addr_mask_q[2]_i_1__0_n_0 ),
         .Q(\split_addr_mask_q_reg_n_0_[2] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[31] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(1'b1),
         .Q(\split_addr_mask_q_reg_n_0_[31] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[3]),
         .Q(\split_addr_mask_q_reg_n_0_[3] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[4]),
         .Q(\split_addr_mask_q_reg_n_0_[4] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[5]),
         .Q(\split_addr_mask_q_reg_n_0_[5] ),
         .R(SR));
   FDRE \split_addr_mask_q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(split_addr_mask[6]),
         .Q(\split_addr_mask_q_reg_n_0_[6] ),
         .R(SR));
@@ -12668,7 +12650,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .D(cmd_split_i),
         .Q(split_ongoing),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair34" *) 
+  (* SOFT_HLUTNM = "soft_lutpair33" *) 
   LUT4 #(
     .INIT(16'hAA80)) 
     \unalignment_addr_q[0]_i_1__0 
@@ -12683,7 +12665,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
        (.I0(s_axi_araddr[3]),
         .I1(s_axi_arsize[2]),
         .O(unalignment_addr[1]));
-  (* SOFT_HLUTNM = "soft_lutpair32" *) 
+  (* SOFT_HLUTNM = "soft_lutpair33" *) 
   LUT4 #(
     .INIT(16'hA800)) 
     \unalignment_addr_q[2]_i_1__0 
@@ -12692,54 +12674,54 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I2(s_axi_arsize[1]),
         .I3(s_axi_arsize[2]),
         .O(unalignment_addr[2]));
-  (* SOFT_HLUTNM = "soft_lutpair38" *) 
+  (* SOFT_HLUTNM = "soft_lutpair44" *) 
   LUT3 #(
     .INIT(8'h80)) 
     \unalignment_addr_q[3]_i_1__0 
        (.I0(s_axi_araddr[5]),
-        .I1(s_axi_arsize[2]),
-        .I2(s_axi_arsize[1]),
+        .I1(s_axi_arsize[1]),
+        .I2(s_axi_arsize[2]),
         .O(unalignment_addr[3]));
-  (* SOFT_HLUTNM = "soft_lutpair32" *) 
+  (* SOFT_HLUTNM = "soft_lutpair34" *) 
   LUT4 #(
     .INIT(16'h8000)) 
     \unalignment_addr_q[4]_i_1__0 
        (.I0(s_axi_araddr[6]),
         .I1(s_axi_arsize[2]),
-        .I2(s_axi_arsize[0]),
-        .I3(s_axi_arsize[1]),
+        .I2(s_axi_arsize[1]),
+        .I3(s_axi_arsize[0]),
         .O(unalignment_addr[4]));
   FDRE \unalignment_addr_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[0]),
         .Q(unalignment_addr_q[0]),
         .R(SR));
   FDRE \unalignment_addr_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[1]),
         .Q(unalignment_addr_q[1]),
         .R(SR));
   FDRE \unalignment_addr_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[2]),
         .Q(unalignment_addr_q[2]),
         .R(SR));
   FDRE \unalignment_addr_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[3]),
         .Q(unalignment_addr_q[3]),
         .R(SR));
   FDRE \unalignment_addr_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(unalignment_addr[4]),
         .Q(unalignment_addr_q[4]),
         .R(SR));
-  (* SOFT_HLUTNM = "soft_lutpair18" *) 
+  (* SOFT_HLUTNM = "soft_lutpair20" *) 
   LUT5 #(
     .INIT(32'h000000E0)) 
     wrap_need_to_split_q_i_1__0
@@ -12750,30 +12732,30 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I4(legal_wrap_len_q_i_1__0_n_0),
         .O(wrap_need_to_split));
   LUT6 #(
-    .INIT(64'hFFFFFFAEFFAEFFAE)) 
+    .INIT(64'hFFEAFFEAFFFFFFEA)) 
     wrap_need_to_split_q_i_2__0
-       (.I0(wrap_unaligned_len[0]),
-        .I1(s_axi_araddr[3]),
-        .I2(\masked_addr_q[3]_i_2__0_n_0 ),
-        .I3(wrap_unaligned_len[2]),
-        .I4(s_axi_araddr[5]),
-        .I5(\masked_addr_q[5]_i_2__0_n_0 ),
+       (.I0(wrap_unaligned_len[2]),
+        .I1(s_axi_araddr[5]),
+        .I2(\masked_addr_q[5]_i_2__0_n_0 ),
+        .I3(wrap_unaligned_len[0]),
+        .I4(s_axi_araddr[3]),
+        .I5(\masked_addr_q[3]_i_2__0_n_0 ),
         .O(wrap_need_to_split_q_i_2__0_n_0));
   LUT6 #(
-    .INIT(64'hFFFFFFFFFFFFF888)) 
+    .INIT(64'hFFFFFFEAFFEAFFEA)) 
     wrap_need_to_split_q_i_3__0
-       (.I0(s_axi_araddr[8]),
-        .I1(\masked_addr_q[8]_i_2__0_n_0 ),
-        .I2(s_axi_araddr[9]),
-        .I3(\masked_addr_q[9]_i_2__0_n_0 ),
-        .I4(wrap_unaligned_len[4]),
-        .I5(wrap_unaligned_len[5]),
+       (.I0(wrap_unaligned_len[4]),
+        .I1(s_axi_araddr[7]),
+        .I2(\masked_addr_q[7]_i_2__0_n_0 ),
+        .I3(wrap_unaligned_len[6]),
+        .I4(s_axi_araddr[9]),
+        .I5(\masked_addr_q[9]_i_2__0_n_0 ),
         .O(wrap_need_to_split_q_i_3__0_n_0));
   FDRE #(
     .INIT(1'b0)) 
     wrap_need_to_split_q_reg
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_need_to_split),
         .Q(wrap_need_to_split_q),
         .R(SR));
@@ -12797,7 +12779,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I1(wrap_unaligned_len_q[0]),
         .I2(wrap_unaligned_len_q[1]),
         .O(wrap_rest_len0[2]));
-  (* SOFT_HLUTNM = "soft_lutpair22" *) 
+  (* SOFT_HLUTNM = "soft_lutpair21" *) 
   LUT4 #(
     .INIT(16'hAAA9)) 
     \wrap_rest_len[3]_i_1__0 
@@ -12806,7 +12788,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I2(wrap_unaligned_len_q[1]),
         .I3(wrap_unaligned_len_q[0]),
         .O(wrap_rest_len0[3]));
-  (* SOFT_HLUTNM = "soft_lutpair22" *) 
+  (* SOFT_HLUTNM = "soft_lutpair21" *) 
   LUT5 #(
     .INIT(32'hAAAAAAA9)) 
     \wrap_rest_len[4]_i_1__0 
@@ -12826,14 +12808,14 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I4(wrap_unaligned_len_q[0]),
         .I5(wrap_unaligned_len_q[3]),
         .O(wrap_rest_len0[5]));
-  (* SOFT_HLUTNM = "soft_lutpair39" *) 
+  (* SOFT_HLUTNM = "soft_lutpair40" *) 
   LUT2 #(
     .INIT(4'h6)) 
     \wrap_rest_len[6]_i_1__0 
        (.I0(wrap_unaligned_len_q[6]),
         .I1(\wrap_rest_len[7]_i_2__0_n_0 ),
         .O(wrap_rest_len0[6]));
-  (* SOFT_HLUTNM = "soft_lutpair39" *) 
+  (* SOFT_HLUTNM = "soft_lutpair40" *) 
   LUT3 #(
     .INIT(8'h9A)) 
     \wrap_rest_len[7]_i_1__0 
@@ -12917,20 +12899,20 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
     .INIT(64'hA8A8A8A8A8A8A808)) 
     \wrap_unaligned_len_q[2]_i_1__0 
        (.I0(s_axi_araddr[4]),
-        .I1(\masked_addr_q[4]_i_2_n_0 ),
+        .I1(\masked_addr_q[8]_i_2__0_n_0 ),
         .I2(s_axi_arsize[2]),
         .I3(s_axi_arlen[0]),
         .I4(s_axi_arsize[0]),
         .I5(s_axi_arsize[1]),
         .O(wrap_unaligned_len[2]));
-  (* SOFT_HLUTNM = "soft_lutpair46" *) 
+  (* SOFT_HLUTNM = "soft_lutpair45" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \wrap_unaligned_len_q[3]_i_1__0 
        (.I0(s_axi_araddr[5]),
         .I1(\masked_addr_q[5]_i_2__0_n_0 ),
         .O(wrap_unaligned_len[3]));
-  (* SOFT_HLUTNM = "soft_lutpair33" *) 
+  (* SOFT_HLUTNM = "soft_lutpair32" *) 
   LUT4 #(
     .INIT(16'hA808)) 
     \wrap_unaligned_len_q[4]_i_1__0 
@@ -12939,23 +12921,23 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .I2(s_axi_arsize[2]),
         .I3(\masked_addr_q[6]_i_2__0_n_0 ),
         .O(wrap_unaligned_len[4]));
+  (* SOFT_HLUTNM = "soft_lutpair46" *) 
+  LUT2 #(
+    .INIT(4'h8)) 
+    \wrap_unaligned_len_q[5]_i_1__0 
+       (.I0(s_axi_araddr[7]),
+        .I1(\masked_addr_q[7]_i_2__0_n_0 ),
+        .O(wrap_unaligned_len[5]));
   (* SOFT_HLUTNM = "soft_lutpair35" *) 
   LUT4 #(
     .INIT(16'hA808)) 
-    \wrap_unaligned_len_q[5]_i_1__0 
-       (.I0(s_axi_araddr[7]),
-        .I1(\masked_addr_q[7]_i_3__0_n_0 ),
-        .I2(s_axi_arsize[2]),
-        .I3(\masked_addr_q[7]_i_2__0_n_0 ),
-        .O(wrap_unaligned_len[5]));
-  (* SOFT_HLUTNM = "soft_lutpair45" *) 
-  LUT2 #(
-    .INIT(4'h8)) 
     \wrap_unaligned_len_q[6]_i_1__0 
        (.I0(s_axi_araddr[8]),
-        .I1(\masked_addr_q[8]_i_2__0_n_0 ),
+        .I1(\masked_addr_q[8]_i_3__0_n_0 ),
+        .I2(s_axi_arsize[2]),
+        .I3(\masked_addr_q[8]_i_2__0_n_0 ),
         .O(wrap_unaligned_len[6]));
-  (* SOFT_HLUTNM = "soft_lutpair44" *) 
+  (* SOFT_HLUTNM = "soft_lutpair48" *) 
   LUT2 #(
     .INIT(4'h8)) 
     \wrap_unaligned_len_q[7]_i_1__0 
@@ -12964,55 +12946,55 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterize
         .O(wrap_unaligned_len[7]));
   FDRE \wrap_unaligned_len_q_reg[0] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[0]),
         .Q(wrap_unaligned_len_q[0]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[1] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[1]),
         .Q(wrap_unaligned_len_q[1]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[2] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[2]),
         .Q(wrap_unaligned_len_q[2]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[3] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[3]),
         .Q(wrap_unaligned_len_q[3]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[4] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[4]),
         .Q(wrap_unaligned_len_q[4]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[5] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[5]),
         .Q(wrap_unaligned_len_q[5]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[6] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[6]),
         .Q(wrap_unaligned_len_q[6]),
         .R(SR));
   FDRE \wrap_unaligned_len_q_reg[7] 
        (.C(CLK),
-        .CE(s_axi_arready),
+        .CE(S_AXI_AREADY_I_reg_0),
         .D(wrap_unaligned_len[7]),
         .Q(wrap_unaligned_len_q[7]),
         .R(SR));
 endmodule
 
-module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
+module design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_axi_downsizer
    (s_axi_bresp,
     din,
     E,
@@ -13021,8 +13003,8 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
     m_axi_awregion,
     m_axi_awqos,
     m_axi_wlast,
-    \m_axi_arsize[2] ,
-    s_axi_arready,
+    access_fit_mi_side_q_reg,
+    S_AXI_AREADY_I_reg,
     m_axi_arcache,
     m_axi_arprot,
     m_axi_arregion,
@@ -13094,8 +13076,8 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
   output [3:0]m_axi_awregion;
   output [3:0]m_axi_awqos;
   output m_axi_wlast;
-  output [10:0]\m_axi_arsize[2] ;
-  output [0:0]s_axi_arready;
+  output [10:0]access_fit_mi_side_q_reg;
+  output [0:0]S_AXI_AREADY_I_reg;
   output [3:0]m_axi_arcache;
   output [2:0]m_axi_arprot;
   output [3:0]m_axi_arregion;
@@ -13162,6 +13144,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
 
   wire CLK;
   wire [0:0]E;
+  wire [0:0]S_AXI_AREADY_I_reg;
   wire \USE_B_CHANNEL.cmd_b_queue/inst/empty ;
   wire \USE_READ.rd_cmd_fix ;
   wire [7:0]\USE_READ.rd_cmd_length ;
@@ -13182,6 +13165,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
   wire \USE_WRITE.write_addr_inst_n_72 ;
   wire \USE_WRITE.write_data_inst_n_3 ;
   wire \USE_WRITE.write_data_inst_n_4 ;
+  wire [10:0]access_fit_mi_side_q_reg;
   wire [1:0]areset_d;
   wire \cmd_queue/inst/empty ;
   wire [3:0]current_word_1;
@@ -13199,7 +13183,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
   wire [3:0]m_axi_arqos;
   wire m_axi_arready;
   wire [3:0]m_axi_arregion;
-  wire [10:0]\m_axi_arsize[2] ;
   wire m_axi_arvalid;
   wire [31:0]m_axi_awaddr;
   wire [1:0]m_axi_awburst;
@@ -13241,7 +13224,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
   wire [0:0]s_axi_arlock;
   wire [2:0]s_axi_arprot;
   wire [3:0]s_axi_arqos;
-  wire [0:0]s_axi_arready;
   wire [3:0]s_axi_arregion;
   wire [2:0]s_axi_arsize;
   wire s_axi_arvalid;
@@ -13271,29 +13253,26 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
   wire [15:0]s_axi_wstrb;
   wire s_axi_wvalid;
 
-  design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer__parameterized0 \USE_READ.read_addr_inst 
+  design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_a_downsizer__parameterized0 \USE_READ.read_addr_inst 
        (.CLK(CLK),
         .D(p_0_in),
         .E(p_10_out),
         .Q(length_counter_1_reg),
         .SR(\USE_WRITE.write_addr_inst_n_10 ),
-        .\S_AXI_RRESP_ACC_reg[0] (\USE_READ.read_addr_inst_n_198 ),
-        .\S_AXI_RRESP_ACC_reg[0]_0 (\USE_READ.read_data_inst_n_8 ),
-        .\WORD_LANE[1].S_AXI_RDATA_II_reg[63] (p_8_out),
-        .\WORD_LANE[2].S_AXI_RDATA_II_reg[95] (p_5_out),
-        .\WORD_LANE[3].S_AXI_RDATA_II_reg[127] (p_2_out),
-        .\WORD_LANE[3].S_AXI_RDATA_II_reg[96] (\USE_READ.read_addr_inst_n_24 ),
+        .S_AXI_AREADY_I_reg_0(S_AXI_AREADY_I_reg),
+        .\S_AXI_RRESP_ACC_reg[0] (\USE_READ.read_data_inst_n_8 ),
+        .\WORD_LANE[0].S_AXI_RDATA_II[31]_i_3 (\USE_READ.read_data_inst_n_7 ),
+        .access_fit_mi_side_q_reg_0(access_fit_mi_side_q_reg),
         .areset_d(areset_d),
-        .\areset_d_reg[1] (\USE_WRITE.write_addr_inst_n_72 ),
+        .command_ongoing_reg_0(\USE_WRITE.write_addr_inst_n_72 ),
         .\current_word_1_reg[3] (current_word_1),
         .dout({\USE_READ.rd_cmd_fix ,\USE_READ.rd_cmd_mirror ,\USE_READ.rd_cmd_length }),
         .empty(\cmd_queue/inst/empty ),
-        .empty_fwft_i_reg(\USE_READ.read_data_inst_n_2 ),
-        .first_mi_word_reg(pop_mi_data),
-        .first_mi_word_reg_0(\USE_READ.read_data_inst_n_7 ),
+        .first_mi_word_reg(\USE_READ.read_data_inst_n_3 ),
         .first_word(first_word),
-        .\goreg_dm.dout_i_reg[8] (\USE_READ.read_data_inst_n_3 ),
-        .\goreg_dm.dout_i_reg[9] (\USE_READ.read_data_inst_n_4 ),
+        .\goreg_dm.dout_i_reg[0] (\USE_READ.read_addr_inst_n_198 ),
+        .\goreg_dm.dout_i_reg[28] (\USE_READ.read_data_inst_n_2 ),
+        .\goreg_dm.dout_i_reg[2] (pop_mi_data),
         .m_axi_araddr(m_axi_araddr),
         .m_axi_arburst(m_axi_arburst),
         .m_axi_arcache(m_axi_arcache),
@@ -13302,7 +13281,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
         .m_axi_arqos(m_axi_arqos),
         .m_axi_arready(m_axi_arready),
         .m_axi_arregion(m_axi_arregion),
-        .\m_axi_arsize[2] (\m_axi_arsize[2] ),
         .m_axi_arvalid(m_axi_arvalid),
         .m_axi_rdata(m_axi_rdata),
         .m_axi_rlast(m_axi_rlast),
@@ -13318,7 +13296,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
         .s_axi_arlock(s_axi_arlock),
         .s_axi_arprot(s_axi_arprot),
         .s_axi_arqos(s_axi_arqos),
-        .s_axi_arready(s_axi_arready),
         .s_axi_arregion(s_axi_arregion),
         .s_axi_arsize(s_axi_arsize),
         .s_axi_arvalid(s_axi_arvalid),
@@ -13326,34 +13303,39 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
         .s_axi_rid(s_axi_rid),
         .s_axi_rlast(s_axi_rlast),
         .s_axi_rready(s_axi_rready),
-        .s_axi_rvalid(s_axi_rvalid));
-  design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer \USE_READ.read_data_inst 
+        .s_axi_rready_0(\USE_READ.read_addr_inst_n_24 ),
+        .s_axi_rready_1(p_8_out),
+        .s_axi_rready_2(p_5_out),
+        .s_axi_rready_3(p_2_out),
+        .s_axi_rvalid(s_axi_rvalid),
+        .s_axi_rvalid_0(\USE_READ.read_data_inst_n_4 ));
+  design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_r_downsizer \USE_READ.read_data_inst 
        (.CLK(CLK),
         .D(p_0_in),
         .E(pop_mi_data),
         .Q(length_counter_1_reg),
         .SR(\USE_WRITE.write_addr_inst_n_10 ),
         .\S_AXI_RRESP_ACC_reg[0]_0 (\USE_READ.read_data_inst_n_8 ),
-        .\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 (\USE_READ.read_data_inst_n_7 ),
+        .\S_AXI_RRESP_ACC_reg[0]_1 (\USE_READ.read_addr_inst_n_198 ),
+        .\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 (p_10_out),
+        .\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 (p_8_out),
+        .\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 (p_5_out),
+        .\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 (p_2_out),
+        .\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 (\USE_READ.read_addr_inst_n_24 ),
         .\current_word_1_reg[3]_0 (current_word_1),
         .dout({\USE_READ.rd_cmd_fix ,\USE_READ.rd_cmd_mirror ,\USE_READ.rd_cmd_length }),
         .empty(\cmd_queue/inst/empty ),
-        .empty_fwft_i_reg(\USE_READ.read_addr_inst_n_24 ),
-        .first_mi_word_reg_0(\USE_READ.read_data_inst_n_3 ),
+        .empty_fwft_i_reg(\USE_READ.read_data_inst_n_2 ),
+        .first_mi_word_reg_0(\USE_READ.read_data_inst_n_7 ),
         .first_word(first_word),
-        .\goreg_dm.dout_i_reg[0] (\USE_READ.read_addr_inst_n_198 ),
-        .\goreg_dm.dout_i_reg[10] (p_10_out),
-        .\goreg_dm.dout_i_reg[10]_0 (p_8_out),
-        .\goreg_dm.dout_i_reg[10]_1 (p_5_out),
-        .\goreg_dm.dout_i_reg[10]_2 (p_2_out),
-        .\goreg_dm.dout_i_reg[28] (\USE_READ.read_data_inst_n_2 ),
+        .\goreg_dm.dout_i_reg[8] (\USE_READ.read_data_inst_n_3 ),
+        .\goreg_dm.dout_i_reg[9] (\USE_READ.read_data_inst_n_4 ),
         .m_axi_rdata(m_axi_rdata),
         .m_axi_rlast(m_axi_rlast),
         .m_axi_rresp(m_axi_rresp),
         .p_1_in(p_1_in),
-        .s_axi_rresp(s_axi_rresp),
-        .s_axi_rvalid(\USE_READ.read_data_inst_n_4 ));
-  design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_b_downsizer \USE_WRITE.USE_SPLIT.write_resp_inst 
+        .s_axi_rresp(s_axi_rresp));
+  design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_b_downsizer \USE_WRITE.USE_SPLIT.write_resp_inst 
        (.CLK(CLK),
         .SR(\USE_WRITE.write_addr_inst_n_10 ),
         .dout({\USE_WRITE.wr_cmd_b_split ,\USE_WRITE.wr_cmd_b_repeat }),
@@ -13365,22 +13347,22 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
         .s_axi_bready(s_axi_bready),
         .s_axi_bresp(s_axi_bresp),
         .s_axi_bvalid(s_axi_bvalid));
-  design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_a_downsizer \USE_WRITE.write_addr_inst 
+  design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_a_downsizer \USE_WRITE.write_addr_inst 
        (.CLK(CLK),
         .D(p_0_in_0),
         .E(p_2_in),
         .Q(length_counter_1_reg_2),
         .SR(\USE_WRITE.write_addr_inst_n_10 ),
+        .S_AXI_AREADY_I_reg_0(E),
         .areset_d(areset_d),
-        .command_ongoing_reg_0(\USE_WRITE.write_addr_inst_n_72 ),
-        .\current_word_1_reg[2] ({\USE_WRITE.wr_cmd_fix ,\USE_WRITE.wr_cmd_length }),
+        .\areset_d_reg[1]_0 (\USE_WRITE.write_addr_inst_n_72 ),
         .\current_word_1_reg[3] (current_word_1_1),
+        .\current_word_1_reg[3]_0 (\USE_WRITE.write_data_inst_n_4 ),
         .din(din),
         .dout({\USE_WRITE.wr_cmd_b_split ,\USE_WRITE.wr_cmd_b_repeat }),
         .empty(\USE_B_CHANNEL.cmd_b_queue/inst/empty ),
         .first_mi_word(first_mi_word),
-        .first_word_reg(\USE_WRITE.write_data_inst_n_4 ),
-        .\goreg_dm.dout_i_reg[8] (\USE_WRITE.write_data_inst_n_3 ),
+        .\goreg_dm.dout_i_reg[28] ({\USE_WRITE.wr_cmd_fix ,\USE_WRITE.wr_cmd_length }),
         .m_axi_awaddr(m_axi_awaddr),
         .m_axi_awburst(m_axi_awburst),
         .m_axi_awcache(m_axi_awcache),
@@ -13405,30 +13387,30 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer
         .s_axi_awlock(s_axi_awlock),
         .s_axi_awprot(s_axi_awprot),
         .s_axi_awqos(s_axi_awqos),
-        .s_axi_awready(E),
         .s_axi_awregion(s_axi_awregion),
         .s_axi_awsize(s_axi_awsize),
         .s_axi_awvalid(s_axi_awvalid),
         .s_axi_bid(s_axi_bid),
         .s_axi_wdata(s_axi_wdata),
         .s_axi_wready(s_axi_wready),
+        .s_axi_wready_0(\USE_WRITE.write_data_inst_n_3 ),
         .s_axi_wstrb(s_axi_wstrb),
         .s_axi_wvalid(s_axi_wvalid));
-  design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer \USE_WRITE.write_data_inst 
+  design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_w_downsizer \USE_WRITE.write_data_inst 
        (.CLK(CLK),
         .D(p_0_in_0),
         .E(p_2_in),
         .Q(length_counter_1_reg_2),
         .SR(\USE_WRITE.write_addr_inst_n_10 ),
-        .\current_word_1_reg[3]_0 (\USE_WRITE.write_data_inst_n_4 ),
-        .\current_word_1_reg[3]_1 (current_word_1_1),
+        .\current_word_1_reg[3]_0 (current_word_1_1),
         .first_mi_word(first_mi_word),
-        .\goreg_dm.dout_i_reg[28] ({\USE_WRITE.wr_cmd_fix ,\USE_WRITE.wr_cmd_length }),
-        .m_axi_wlast(m_axi_wlast),
-        .s_axi_wready(\USE_WRITE.write_data_inst_n_3 ));
+        .first_word_reg_0(\USE_WRITE.write_data_inst_n_4 ),
+        .\goreg_dm.dout_i_reg[8] (\USE_WRITE.write_data_inst_n_3 ),
+        .\m_axi_wdata[31]_INST_0_i_3 ({\USE_WRITE.wr_cmd_fix ,\USE_WRITE.wr_cmd_length }),
+        .m_axi_wlast(m_axi_wlast));
 endmodule
 
-module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_b_downsizer
+module design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_b_downsizer
    (rd_en,
     s_axi_bvalid,
     m_axi_bready,
@@ -13711,21 +13693,21 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_b_downsizer
         .Q(repeat_cnt_reg__0[7]),
         .R(SR));
   LUT6 #(
-    .INIT(64'hAEAAAFAAAAAAA2AA)) 
+    .INIT(64'hAAAAAAAAECAEAAAA)) 
     \s_axi_bresp[0]_INST_0 
        (.I0(m_axi_bresp[0]),
-        .I1(S_AXI_BRESP_ACC[1]),
-        .I2(first_mi_word),
-        .I3(dout[8]),
-        .I4(m_axi_bresp[1]),
-        .I5(S_AXI_BRESP_ACC[0]),
+        .I1(S_AXI_BRESP_ACC[0]),
+        .I2(m_axi_bresp[1]),
+        .I3(S_AXI_BRESP_ACC[1]),
+        .I4(dout[8]),
+        .I5(first_mi_word),
         .O(s_axi_bresp[0]));
   LUT4 #(
-    .INIT(16'hBAAA)) 
+    .INIT(16'hAEAA)) 
     \s_axi_bresp[1]_INST_0 
        (.I0(m_axi_bresp[1]),
-        .I1(first_mi_word),
-        .I2(dout[8]),
+        .I1(dout[8]),
+        .I2(first_mi_word),
         .I3(S_AXI_BRESP_ACC[1]),
         .O(s_axi_bresp[1]));
   (* SOFT_HLUTNM = "soft_lutpair57" *) 
@@ -13756,14 +13738,14 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_b_downsizer
         .O(s_axi_bvalid_INST_0_i_2_n_0));
 endmodule
 
-module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
+module design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_r_downsizer
    (first_word,
     Q,
-    \goreg_dm.dout_i_reg[28] ,
-    first_mi_word_reg_0,
-    s_axi_rvalid,
+    empty_fwft_i_reg,
+    \goreg_dm.dout_i_reg[8] ,
+    \goreg_dm.dout_i_reg[9] ,
     s_axi_rresp,
-    \WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ,
+    first_mi_word_reg_0,
     \S_AXI_RRESP_ACC_reg[0]_0 ,
     \current_word_1_reg[3]_0 ,
     p_1_in,
@@ -13773,22 +13755,22 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
     CLK,
     dout,
     empty,
-    \goreg_dm.dout_i_reg[0] ,
+    \S_AXI_RRESP_ACC_reg[0]_1 ,
     m_axi_rresp,
     D,
-    empty_fwft_i_reg,
-    \goreg_dm.dout_i_reg[10] ,
+    \WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ,
+    \WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ,
     m_axi_rdata,
-    \goreg_dm.dout_i_reg[10]_0 ,
-    \goreg_dm.dout_i_reg[10]_1 ,
-    \goreg_dm.dout_i_reg[10]_2 );
+    \WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ,
+    \WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ,
+    \WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 );
   output first_word;
   output [0:0]Q;
-  output \goreg_dm.dout_i_reg[28] ;
-  output first_mi_word_reg_0;
-  output s_axi_rvalid;
+  output empty_fwft_i_reg;
+  output \goreg_dm.dout_i_reg[8] ;
+  output \goreg_dm.dout_i_reg[9] ;
   output [1:0]s_axi_rresp;
-  output \WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ;
+  output first_mi_word_reg_0;
   output \S_AXI_RRESP_ACC_reg[0]_0 ;
   output [3:0]\current_word_1_reg[3]_0 ;
   output [127:0]p_1_in;
@@ -13798,15 +13780,15 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
   input CLK;
   input [9:0]dout;
   input empty;
-  input \goreg_dm.dout_i_reg[0] ;
+  input \S_AXI_RRESP_ACC_reg[0]_1 ;
   input [1:0]m_axi_rresp;
   input [3:0]D;
-  input [0:0]empty_fwft_i_reg;
-  input [0:0]\goreg_dm.dout_i_reg[10] ;
+  input [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ;
+  input [0:0]\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ;
   input [31:0]m_axi_rdata;
-  input [0:0]\goreg_dm.dout_i_reg[10]_0 ;
-  input [0:0]\goreg_dm.dout_i_reg[10]_1 ;
-  input [0:0]\goreg_dm.dout_i_reg[10]_2 ;
+  input [0:0]\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ;
+  input [0:0]\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ;
+  input [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ;
 
   wire CLK;
   wire [3:0]D;
@@ -13815,19 +13797,20 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
   wire [0:0]SR;
   wire [1:0]S_AXI_RRESP_ACC;
   wire \S_AXI_RRESP_ACC_reg[0]_0 ;
-  wire \WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ;
+  wire \S_AXI_RRESP_ACC_reg[0]_1 ;
+  wire [0:0]\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ;
+  wire [0:0]\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ;
+  wire [0:0]\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ;
+  wire [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ;
+  wire [0:0]\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ;
   wire [3:0]\current_word_1_reg[3]_0 ;
   wire [9:0]dout;
   wire empty;
-  wire [0:0]empty_fwft_i_reg;
+  wire empty_fwft_i_reg;
   wire first_mi_word_reg_0;
   wire first_word;
-  wire \goreg_dm.dout_i_reg[0] ;
-  wire [0:0]\goreg_dm.dout_i_reg[10] ;
-  wire [0:0]\goreg_dm.dout_i_reg[10]_0 ;
-  wire [0:0]\goreg_dm.dout_i_reg[10]_1 ;
-  wire [0:0]\goreg_dm.dout_i_reg[10]_2 ;
-  wire \goreg_dm.dout_i_reg[28] ;
+  wire \goreg_dm.dout_i_reg[8] ;
+  wire \goreg_dm.dout_i_reg[9] ;
   wire \length_counter_1[1]_i_1__0_n_0 ;
   wire \length_counter_1[2]_i_2__0_n_0 ;
   wire \length_counter_1[3]_i_2_n_0 ;
@@ -13842,7 +13825,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
   wire [7:0]next_length_counter__0;
   wire [127:0]p_1_in;
   wire [1:0]s_axi_rresp;
-  wire s_axi_rvalid;
   wire s_axi_rvalid_INST_0_i_10_n_0;
   wire s_axi_rvalid_INST_0_i_11_n_0;
   wire s_axi_rvalid_INST_0_i_12_n_0;
@@ -13863,772 +13845,772 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
         .R(SR));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[0] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[0]),
         .Q(p_1_in[0]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[10] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[10]),
         .Q(p_1_in[10]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[11] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[11]),
         .Q(p_1_in[11]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[12] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[12]),
         .Q(p_1_in[12]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[13] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[13]),
         .Q(p_1_in[13]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[14] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[14]),
         .Q(p_1_in[14]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[15] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[15]),
         .Q(p_1_in[15]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[16] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[16]),
         .Q(p_1_in[16]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[17] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[17]),
         .Q(p_1_in[17]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[18] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[18]),
         .Q(p_1_in[18]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[19] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[19]),
         .Q(p_1_in[19]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[1] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[1]),
         .Q(p_1_in[1]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[20] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[20]),
         .Q(p_1_in[20]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[21] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[21]),
         .Q(p_1_in[21]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[22] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[22]),
         .Q(p_1_in[22]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[23] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[23]),
         .Q(p_1_in[23]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[24] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[24]),
         .Q(p_1_in[24]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[25] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[25]),
         .Q(p_1_in[25]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[26] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[26]),
         .Q(p_1_in[26]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[27] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[27]),
         .Q(p_1_in[27]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[28] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[28]),
         .Q(p_1_in[28]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[29] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[29]),
         .Q(p_1_in[29]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[2] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[2]),
         .Q(p_1_in[2]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[30] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[30]),
         .Q(p_1_in[30]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[31] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[31]),
         .Q(p_1_in[31]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[3] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[3]),
         .Q(p_1_in[3]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[4] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[4]),
         .Q(p_1_in[4]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[5] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[5]),
         .Q(p_1_in[5]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[6] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[6]),
         .Q(p_1_in[6]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[7] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[7]),
         .Q(p_1_in[7]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[8] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[8]),
         .Q(p_1_in[8]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[0].S_AXI_RDATA_II_reg[9] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10] ),
+        .CE(\WORD_LANE[0].S_AXI_RDATA_II_reg[31]_0 ),
         .D(m_axi_rdata[9]),
         .Q(p_1_in[9]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[32] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[0]),
         .Q(p_1_in[32]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[33] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[1]),
         .Q(p_1_in[33]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[34] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[2]),
         .Q(p_1_in[34]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[35] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[3]),
         .Q(p_1_in[35]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[36] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[4]),
         .Q(p_1_in[36]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[37] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[5]),
         .Q(p_1_in[37]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[38] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[6]),
         .Q(p_1_in[38]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[39] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[7]),
         .Q(p_1_in[39]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[40] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[8]),
         .Q(p_1_in[40]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[41] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[9]),
         .Q(p_1_in[41]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[42] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[10]),
         .Q(p_1_in[42]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[43] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[11]),
         .Q(p_1_in[43]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[44] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[12]),
         .Q(p_1_in[44]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[45] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[13]),
         .Q(p_1_in[45]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[46] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[14]),
         .Q(p_1_in[46]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[47] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[15]),
         .Q(p_1_in[47]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[48] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[16]),
         .Q(p_1_in[48]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[49] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[17]),
         .Q(p_1_in[49]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[50] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[18]),
         .Q(p_1_in[50]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[51] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[19]),
         .Q(p_1_in[51]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[52] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[20]),
         .Q(p_1_in[52]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[53] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[21]),
         .Q(p_1_in[53]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[54] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[22]),
         .Q(p_1_in[54]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[55] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[23]),
         .Q(p_1_in[55]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[56] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[24]),
         .Q(p_1_in[56]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[57] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[25]),
         .Q(p_1_in[57]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[58] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[26]),
         .Q(p_1_in[58]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[59] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[27]),
         .Q(p_1_in[59]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[60] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[28]),
         .Q(p_1_in[60]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[61] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[29]),
         .Q(p_1_in[61]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[62] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[30]),
         .Q(p_1_in[62]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[1].S_AXI_RDATA_II_reg[63] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_0 ),
+        .CE(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ),
         .D(m_axi_rdata[31]),
         .Q(p_1_in[63]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[64] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[0]),
         .Q(p_1_in[64]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[65] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[1]),
         .Q(p_1_in[65]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[66] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[2]),
         .Q(p_1_in[66]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[67] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[3]),
         .Q(p_1_in[67]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[68] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[4]),
         .Q(p_1_in[68]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[69] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[5]),
         .Q(p_1_in[69]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[70] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[6]),
         .Q(p_1_in[70]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[71] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[7]),
         .Q(p_1_in[71]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[72] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[8]),
         .Q(p_1_in[72]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[73] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[9]),
         .Q(p_1_in[73]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[74] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[10]),
         .Q(p_1_in[74]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[75] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[11]),
         .Q(p_1_in[75]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[76] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[12]),
         .Q(p_1_in[76]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[77] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[13]),
         .Q(p_1_in[77]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[78] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[14]),
         .Q(p_1_in[78]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[79] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[15]),
         .Q(p_1_in[79]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[80] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[16]),
         .Q(p_1_in[80]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[81] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[17]),
         .Q(p_1_in[81]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[82] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[18]),
         .Q(p_1_in[82]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[83] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[19]),
         .Q(p_1_in[83]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[84] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[20]),
         .Q(p_1_in[84]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[85] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[21]),
         .Q(p_1_in[85]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[86] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[22]),
         .Q(p_1_in[86]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[87] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[23]),
         .Q(p_1_in[87]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[88] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[24]),
         .Q(p_1_in[88]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[89] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[25]),
         .Q(p_1_in[89]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[90] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[26]),
         .Q(p_1_in[90]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[91] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[27]),
         .Q(p_1_in[91]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[92] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[28]),
         .Q(p_1_in[92]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[93] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[29]),
         .Q(p_1_in[93]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[94] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[30]),
         .Q(p_1_in[94]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[2].S_AXI_RDATA_II_reg[95] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_1 ),
+        .CE(\WORD_LANE[2].S_AXI_RDATA_II_reg[95]_0 ),
         .D(m_axi_rdata[31]),
         .Q(p_1_in[95]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[100] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[4]),
         .Q(p_1_in[100]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[101] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[5]),
         .Q(p_1_in[101]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[102] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[6]),
         .Q(p_1_in[102]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[103] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[7]),
         .Q(p_1_in[103]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[104] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[8]),
         .Q(p_1_in[104]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[105] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[9]),
         .Q(p_1_in[105]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[106] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[10]),
         .Q(p_1_in[106]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[107] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[11]),
         .Q(p_1_in[107]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[108] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[12]),
         .Q(p_1_in[108]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[109] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[13]),
         .Q(p_1_in[109]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[110] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[14]),
         .Q(p_1_in[110]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[111] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[15]),
         .Q(p_1_in[111]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[112] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[16]),
         .Q(p_1_in[112]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[113] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[17]),
         .Q(p_1_in[113]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[114] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[18]),
         .Q(p_1_in[114]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[115] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[19]),
         .Q(p_1_in[115]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[116] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[20]),
         .Q(p_1_in[116]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[117] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[21]),
         .Q(p_1_in[117]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[118] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[22]),
         .Q(p_1_in[118]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[119] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[23]),
         .Q(p_1_in[119]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[120] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[24]),
         .Q(p_1_in[120]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[121] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[25]),
         .Q(p_1_in[121]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[122] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[26]),
         .Q(p_1_in[122]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[123] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[27]),
         .Q(p_1_in[123]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[124] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[28]),
         .Q(p_1_in[124]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[125] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[29]),
         .Q(p_1_in[125]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[126] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[30]),
         .Q(p_1_in[126]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[127] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[31]),
         .Q(p_1_in[127]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[96] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[0]),
         .Q(p_1_in[96]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[97] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[1]),
         .Q(p_1_in[97]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[98] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[2]),
         .Q(p_1_in[98]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \WORD_LANE[3].S_AXI_RDATA_II_reg[99] 
        (.C(CLK),
-        .CE(\goreg_dm.dout_i_reg[10]_2 ),
+        .CE(\WORD_LANE[3].S_AXI_RDATA_II_reg[127]_0 ),
         .D(m_axi_rdata[3]),
         .Q(p_1_in[99]),
-        .R(empty_fwft_i_reg));
+        .R(\WORD_LANE[3].S_AXI_RDATA_II_reg[96]_0 ));
   FDRE \current_word_1_reg[0] 
        (.C(CLK),
         .CE(E),
@@ -14660,8 +14642,8 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
         .I1(dout[7]),
         .I2(first_word),
         .I3(Q),
-        .I4(first_mi_word_reg_0),
-        .O(\goreg_dm.dout_i_reg[28] ));
+        .I4(\goreg_dm.dout_i_reg[8] ),
+        .O(empty_fwft_i_reg));
   FDSE first_mi_word_reg
        (.C(CLK),
         .CE(E),
@@ -14851,7 +14833,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
         .I3(s_axi_rvalid_INST_0_i_11_n_0),
         .I4(s_axi_rvalid_INST_0_i_10_n_0),
         .I5(m_axi_rready_INST_0_i_3_n_0),
-        .O(first_mi_word_reg_0));
+        .O(\goreg_dm.dout_i_reg[8] ));
   (* SOFT_HLUTNM = "soft_lutpair51" *) 
   LUT3 #(
     .INIT(8'hB8)) 
@@ -14866,13 +14848,13 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
     \s_axi_rdata[127]_INST_0_i_8 
        (.I0(first_word),
         .I1(dout[9]),
-        .O(\WORD_LANE[1].S_AXI_RDATA_II_reg[63]_0 ));
+        .O(first_mi_word_reg_0));
   (* SOFT_HLUTNM = "soft_lutpair52" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \s_axi_rresp[0]_INST_0 
        (.I0(S_AXI_RRESP_ACC[0]),
-        .I1(\goreg_dm.dout_i_reg[0] ),
+        .I1(\S_AXI_RRESP_ACC_reg[0]_1 ),
         .I2(m_axi_rresp[0]),
         .O(s_axi_rresp[0]));
   (* SOFT_HLUTNM = "soft_lutpair52" *) 
@@ -14880,7 +14862,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
     .INIT(8'hB8)) 
     \s_axi_rresp[1]_INST_0 
        (.I0(S_AXI_RRESP_ACC[1]),
-        .I1(\goreg_dm.dout_i_reg[0] ),
+        .I1(\S_AXI_RRESP_ACC_reg[0]_1 ),
         .I2(m_axi_rresp[1]),
         .O(s_axi_rresp[1]));
   LUT6 #(
@@ -14934,7 +14916,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_r_downsizer
         .I3(Q),
         .I4(first_word),
         .I5(dout[7]),
-        .O(s_axi_rvalid));
+        .O(\goreg_dm.dout_i_reg[9] ));
   LUT5 #(
     .INIT(32'h00000010)) 
     s_axi_rvalid_INST_0_i_6
@@ -14955,7 +14937,7 @@ endmodule
 (* C_S_AXI_DATA_WIDTH = "128" *) (* C_S_AXI_ID_WIDTH = "1" *) (* DowngradeIPIdentifiedWarnings = "yes" *) 
 (* P_AXI3 = "1" *) (* P_AXI4 = "0" *) (* P_AXILITE = "2" *) 
 (* P_CONVERSION = "2" *) (* P_MAX_SPLIT_BEATS = "256" *) 
-module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_top
+module design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_top
    (s_axi_aclk,
     s_axi_aresetn,
     s_axi_awid,
@@ -15191,9 +15173,11 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_top
   wire [15:0]s_axi_wstrb;
   wire s_axi_wvalid;
 
-  design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_axi_downsizer \gen_downsizer.gen_simple_downsizer.axi_downsizer_inst 
+  design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_axi_downsizer \gen_downsizer.gen_simple_downsizer.axi_downsizer_inst 
        (.CLK(s_axi_aclk),
         .E(s_axi_awready),
+        .S_AXI_AREADY_I_reg(s_axi_arready),
+        .access_fit_mi_side_q_reg({m_axi_arsize,m_axi_arlen}),
         .din({m_axi_awsize,m_axi_awlen}),
         .m_axi_araddr(m_axi_araddr),
         .m_axi_arburst(m_axi_arburst),
@@ -15203,7 +15187,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_top
         .m_axi_arqos(m_axi_arqos),
         .m_axi_arready(m_axi_arready),
         .m_axi_arregion(m_axi_arregion),
-        .\m_axi_arsize[2] ({m_axi_arsize,m_axi_arlen}),
         .m_axi_arvalid(m_axi_arvalid),
         .m_axi_awaddr(m_axi_awaddr),
         .m_axi_awburst(m_axi_awburst),
@@ -15236,7 +15219,6 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_top
         .s_axi_arlock(s_axi_arlock),
         .s_axi_arprot(s_axi_arprot),
         .s_axi_arqos(s_axi_arqos),
-        .s_axi_arready(s_axi_arready),
         .s_axi_arregion(s_axi_arregion),
         .s_axi_arsize(s_axi_arsize),
         .s_axi_arvalid(s_axi_arvalid),
@@ -15267,28 +15249,28 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_top
         .s_axi_wvalid(s_axi_wvalid));
 endmodule
 
-module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
+module design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_w_downsizer
    (first_mi_word,
     m_axi_wlast,
     Q,
-    s_axi_wready,
+    \goreg_dm.dout_i_reg[8] ,
+    first_word_reg_0,
     \current_word_1_reg[3]_0 ,
-    \current_word_1_reg[3]_1 ,
     SR,
     E,
     CLK,
-    \goreg_dm.dout_i_reg[28] ,
+    \m_axi_wdata[31]_INST_0_i_3 ,
     D);
   output first_mi_word;
   output m_axi_wlast;
   output [0:0]Q;
-  output s_axi_wready;
-  output \current_word_1_reg[3]_0 ;
-  output [3:0]\current_word_1_reg[3]_1 ;
+  output \goreg_dm.dout_i_reg[8] ;
+  output first_word_reg_0;
+  output [3:0]\current_word_1_reg[3]_0 ;
   input [0:0]SR;
   input [0:0]E;
   input CLK;
-  input [8:0]\goreg_dm.dout_i_reg[28] ;
+  input [8:0]\m_axi_wdata[31]_INST_0_i_3 ;
   input [3:0]D;
 
   wire CLK;
@@ -15296,16 +15278,17 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
   wire [0:0]E;
   wire [0:0]Q;
   wire [0:0]SR;
-  wire \current_word_1_reg[3]_0 ;
-  wire [3:0]\current_word_1_reg[3]_1 ;
+  wire [3:0]\current_word_1_reg[3]_0 ;
   wire first_mi_word;
-  wire [8:0]\goreg_dm.dout_i_reg[28] ;
+  wire first_word_reg_0;
+  wire \goreg_dm.dout_i_reg[8] ;
   wire \length_counter_1[1]_i_1_n_0 ;
   wire \length_counter_1[2]_i_2_n_0 ;
   wire \length_counter_1[4]_i_2_n_0 ;
   wire \length_counter_1[5]_i_2_n_0 ;
   wire \length_counter_1[6]_i_2_n_0 ;
   wire [6:0]length_counter_1_reg;
+  wire [8:0]\m_axi_wdata[31]_INST_0_i_3 ;
   wire m_axi_wlast;
   wire m_axi_wlast_INST_0_i_1_n_0;
   wire m_axi_wlast_INST_0_i_2_n_0;
@@ -15314,32 +15297,31 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
   wire m_axi_wlast_INST_0_i_5_n_0;
   wire m_axi_wlast_INST_0_i_6_n_0;
   wire [7:0]next_length_counter;
-  wire s_axi_wready;
   wire s_axi_wready_INST_0_i_10_n_0;
 
   FDRE \current_word_1_reg[0] 
        (.C(CLK),
         .CE(E),
         .D(D[0]),
-        .Q(\current_word_1_reg[3]_1 [0]),
+        .Q(\current_word_1_reg[3]_0 [0]),
         .R(SR));
   FDRE \current_word_1_reg[1] 
        (.C(CLK),
         .CE(E),
         .D(D[1]),
-        .Q(\current_word_1_reg[3]_1 [1]),
+        .Q(\current_word_1_reg[3]_0 [1]),
         .R(SR));
   FDRE \current_word_1_reg[2] 
        (.C(CLK),
         .CE(E),
         .D(D[2]),
-        .Q(\current_word_1_reg[3]_1 [2]),
+        .Q(\current_word_1_reg[3]_0 [2]),
         .R(SR));
   FDRE \current_word_1_reg[3] 
        (.C(CLK),
         .CE(E),
         .D(D[3]),
-        .Q(\current_word_1_reg[3]_1 [3]),
+        .Q(\current_word_1_reg[3]_0 [3]),
         .R(SR));
   FDSE first_word_reg
        (.C(CLK),
@@ -15353,95 +15335,95 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
     \length_counter_1[0]_i_1 
        (.I0(length_counter_1_reg[0]),
         .I1(first_mi_word),
-        .I2(\goreg_dm.dout_i_reg[28] [0]),
+        .I2(\m_axi_wdata[31]_INST_0_i_3 [0]),
         .O(next_length_counter[0]));
   (* SOFT_HLUTNM = "soft_lutpair108" *) 
   LUT5 #(
     .INIT(32'hCCA533A5)) 
     \length_counter_1[1]_i_1 
        (.I0(length_counter_1_reg[0]),
-        .I1(\goreg_dm.dout_i_reg[28] [0]),
+        .I1(\m_axi_wdata[31]_INST_0_i_3 [0]),
         .I2(length_counter_1_reg[1]),
         .I3(first_mi_word),
-        .I4(\goreg_dm.dout_i_reg[28] [1]),
+        .I4(\m_axi_wdata[31]_INST_0_i_3 [1]),
         .O(\length_counter_1[1]_i_1_n_0 ));
   LUT6 #(
     .INIT(64'hFAFAFC030505FC03)) 
     \length_counter_1[2]_i_1 
-       (.I0(\goreg_dm.dout_i_reg[28] [1]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [1]),
         .I1(length_counter_1_reg[1]),
         .I2(\length_counter_1[2]_i_2_n_0 ),
         .I3(length_counter_1_reg[2]),
         .I4(first_mi_word),
-        .I5(\goreg_dm.dout_i_reg[28] [2]),
+        .I5(\m_axi_wdata[31]_INST_0_i_3 [2]),
         .O(next_length_counter[2]));
   (* SOFT_HLUTNM = "soft_lutpair109" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     \length_counter_1[2]_i_2 
-       (.I0(\goreg_dm.dout_i_reg[28] [0]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [0]),
         .I1(first_mi_word),
         .I2(length_counter_1_reg[0]),
         .O(\length_counter_1[2]_i_2_n_0 ));
   LUT6 #(
     .INIT(64'hAFAFCF305050CF30)) 
     \length_counter_1[3]_i_1 
-       (.I0(\goreg_dm.dout_i_reg[28] [2]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [2]),
         .I1(length_counter_1_reg[2]),
         .I2(m_axi_wlast_INST_0_i_4_n_0),
         .I3(length_counter_1_reg[3]),
         .I4(first_mi_word),
-        .I5(\goreg_dm.dout_i_reg[28] [3]),
+        .I5(\m_axi_wdata[31]_INST_0_i_3 [3]),
         .O(next_length_counter[3]));
   LUT6 #(
     .INIT(64'hAFAFCF305050CF30)) 
     \length_counter_1[4]_i_1 
-       (.I0(\goreg_dm.dout_i_reg[28] [3]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [3]),
         .I1(length_counter_1_reg[3]),
         .I2(\length_counter_1[4]_i_2_n_0 ),
         .I3(length_counter_1_reg[4]),
         .I4(first_mi_word),
-        .I5(\goreg_dm.dout_i_reg[28] [4]),
+        .I5(\m_axi_wdata[31]_INST_0_i_3 [4]),
         .O(next_length_counter[4]));
   LUT6 #(
     .INIT(64'h0000000305050003)) 
     \length_counter_1[4]_i_2 
-       (.I0(\goreg_dm.dout_i_reg[28] [1]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [1]),
         .I1(length_counter_1_reg[1]),
         .I2(\length_counter_1[2]_i_2_n_0 ),
         .I3(length_counter_1_reg[2]),
         .I4(first_mi_word),
-        .I5(\goreg_dm.dout_i_reg[28] [2]),
+        .I5(\m_axi_wdata[31]_INST_0_i_3 [2]),
         .O(\length_counter_1[4]_i_2_n_0 ));
   LUT6 #(
     .INIT(64'hAFAFCF305050CF30)) 
     \length_counter_1[5]_i_1 
-       (.I0(\goreg_dm.dout_i_reg[28] [4]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [4]),
         .I1(length_counter_1_reg[4]),
         .I2(\length_counter_1[5]_i_2_n_0 ),
         .I3(length_counter_1_reg[5]),
         .I4(first_mi_word),
-        .I5(\goreg_dm.dout_i_reg[28] [5]),
+        .I5(\m_axi_wdata[31]_INST_0_i_3 [5]),
         .O(next_length_counter[5]));
   LUT6 #(
     .INIT(64'h0000003050500030)) 
     \length_counter_1[5]_i_2 
-       (.I0(\goreg_dm.dout_i_reg[28] [2]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [2]),
         .I1(length_counter_1_reg[2]),
         .I2(m_axi_wlast_INST_0_i_4_n_0),
         .I3(length_counter_1_reg[3]),
         .I4(first_mi_word),
-        .I5(\goreg_dm.dout_i_reg[28] [3]),
+        .I5(\m_axi_wdata[31]_INST_0_i_3 [3]),
         .O(\length_counter_1[5]_i_2_n_0 ));
   LUT6 #(
     .INIT(64'hAFAFCF305050CF30)) 
     \length_counter_1[6]_i_1 
-       (.I0(\goreg_dm.dout_i_reg[28] [5]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [5]),
         .I1(length_counter_1_reg[5]),
         .I2(\length_counter_1[6]_i_2_n_0 ),
         .I3(length_counter_1_reg[6]),
         .I4(first_mi_word),
-        .I5(\goreg_dm.dout_i_reg[28] [6]),
+        .I5(\m_axi_wdata[31]_INST_0_i_3 [6]),
         .O(next_length_counter[6]));
   LUT6 #(
     .INIT(64'h0000000000044404)) 
@@ -15450,18 +15432,18 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
         .I1(m_axi_wlast_INST_0_i_4_n_0),
         .I2(length_counter_1_reg[2]),
         .I3(first_mi_word),
-        .I4(\goreg_dm.dout_i_reg[28] [2]),
+        .I4(\m_axi_wdata[31]_INST_0_i_3 [2]),
         .I5(m_axi_wlast_INST_0_i_2_n_0),
         .O(\length_counter_1[6]_i_2_n_0 ));
   LUT6 #(
     .INIT(64'hAFAFCF305050CF30)) 
     \length_counter_1[7]_i_1 
-       (.I0(\goreg_dm.dout_i_reg[28] [6]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [6]),
         .I1(length_counter_1_reg[6]),
         .I2(m_axi_wlast_INST_0_i_1_n_0),
         .I3(Q),
         .I4(first_mi_word),
-        .I5(\goreg_dm.dout_i_reg[28] [7]),
+        .I5(\m_axi_wdata[31]_INST_0_i_3 [7]),
         .O(next_length_counter[7]));
   FDRE \length_counter_1_reg[0] 
        (.C(CLK),
@@ -15514,12 +15496,12 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
   LUT6 #(
     .INIT(64'h0000003050500030)) 
     m_axi_wlast_INST_0
-       (.I0(\goreg_dm.dout_i_reg[28] [6]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [6]),
         .I1(length_counter_1_reg[6]),
         .I2(m_axi_wlast_INST_0_i_1_n_0),
         .I3(Q),
         .I4(first_mi_word),
-        .I5(\goreg_dm.dout_i_reg[28] [7]),
+        .I5(\m_axi_wdata[31]_INST_0_i_3 [7]),
         .O(m_axi_wlast));
   LUT5 #(
     .INIT(32'h00000010)) 
@@ -15534,7 +15516,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
   LUT3 #(
     .INIT(8'hB8)) 
     m_axi_wlast_INST_0_i_2
-       (.I0(\goreg_dm.dout_i_reg[28] [4]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [4]),
         .I1(first_mi_word),
         .I2(length_counter_1_reg[4]),
         .O(m_axi_wlast_INST_0_i_2_n_0));
@@ -15542,7 +15524,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
   LUT3 #(
     .INIT(8'hB8)) 
     m_axi_wlast_INST_0_i_3
-       (.I0(\goreg_dm.dout_i_reg[28] [2]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [2]),
         .I1(first_mi_word),
         .I2(length_counter_1_reg[2]),
         .O(m_axi_wlast_INST_0_i_3_n_0));
@@ -15551,16 +15533,16 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
     .INIT(32'h00053305)) 
     m_axi_wlast_INST_0_i_4
        (.I0(length_counter_1_reg[0]),
-        .I1(\goreg_dm.dout_i_reg[28] [0]),
+        .I1(\m_axi_wdata[31]_INST_0_i_3 [0]),
         .I2(length_counter_1_reg[1]),
         .I3(first_mi_word),
-        .I4(\goreg_dm.dout_i_reg[28] [1]),
+        .I4(\m_axi_wdata[31]_INST_0_i_3 [1]),
         .O(m_axi_wlast_INST_0_i_4_n_0));
   (* SOFT_HLUTNM = "soft_lutpair111" *) 
   LUT3 #(
     .INIT(8'hB8)) 
     m_axi_wlast_INST_0_i_5
-       (.I0(\goreg_dm.dout_i_reg[28] [3]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [3]),
         .I1(first_mi_word),
         .I2(length_counter_1_reg[3]),
         .O(m_axi_wlast_INST_0_i_5_n_0));
@@ -15568,7 +15550,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
   LUT3 #(
     .INIT(8'hB8)) 
     m_axi_wlast_INST_0_i_6
-       (.I0(\goreg_dm.dout_i_reg[28] [5]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [5]),
         .I1(first_mi_word),
         .I2(length_counter_1_reg[5]),
         .O(m_axi_wlast_INST_0_i_6_n_0));
@@ -15576,7 +15558,7 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
   LUT3 #(
     .INIT(8'hB8)) 
     s_axi_wready_INST_0_i_10
-       (.I0(\goreg_dm.dout_i_reg[28] [6]),
+       (.I0(\m_axi_wdata[31]_INST_0_i_3 [6]),
         .I1(first_mi_word),
         .I2(length_counter_1_reg[6]),
         .O(s_axi_wready_INST_0_i_10_n_0));
@@ -15589,17 +15571,17 @@ module design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_w_downsizer
         .I3(m_axi_wlast_INST_0_i_3_n_0),
         .I4(m_axi_wlast_INST_0_i_2_n_0),
         .I5(s_axi_wready_INST_0_i_10_n_0),
-        .O(s_axi_wready));
+        .O(\goreg_dm.dout_i_reg[8] ));
   (* SOFT_HLUTNM = "soft_lutpair112" *) 
   LUT2 #(
     .INIT(4'hE)) 
     s_axi_wready_INST_0_i_7
        (.I0(first_mi_word),
-        .I1(\goreg_dm.dout_i_reg[28] [8]),
-        .O(\current_word_1_reg[3]_0 ));
+        .I1(\m_axi_wdata[31]_INST_0_i_3 [8]),
+        .O(first_word_reg_0));
 endmodule
 
-(* CHECK_LICENSE_TYPE = "design_1_auto_ds_3,axi_dwidth_converter_v2_1_16_top,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "axi_dwidth_converter_v2_1_16_top,Vivado 2018.1" *) 
+(* CHECK_LICENSE_TYPE = "design_1_auto_ds_0,axi_dwidth_converter_v2_1_18_top,{}" *) (* DowngradeIPIdentifiedWarnings = "yes" *) (* X_CORE_INFO = "axi_dwidth_converter_v2_1_18_top,Vivado 2018.3" *) 
 (* NotValidForBitStream *)
 module design_1_auto_ds_2
    (s_axi_aclk,
@@ -15674,8 +15656,8 @@ module design_1_auto_ds_2
     m_axi_rlast,
     m_axi_rvalid,
     m_axi_rready);
-  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 SI_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SI_CLK, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, ASSOCIATED_BUSIF S_AXI:M_AXI, ASSOCIATED_RESET S_AXI_ARESETN" *) input s_axi_aclk;
-  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 SI_RST RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SI_RST, POLARITY ACTIVE_LOW, TYPE INTERCONNECT" *) input s_axi_aresetn;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 SI_CLK CLK" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SI_CLK, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, ASSOCIATED_BUSIF S_AXI:M_AXI, ASSOCIATED_RESET S_AXI_ARESETN, INSERT_VIP 0" *) input s_axi_aclk;
+  (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 SI_RST RST" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME SI_RST, POLARITY ACTIVE_LOW, INSERT_VIP 0, TYPE INTERCONNECT" *) input s_axi_aresetn;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI AWADDR" *) input [31:0]s_axi_awaddr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI AWLEN" *) input [7:0]s_axi_awlen;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI AWSIZE" *) input [2:0]s_axi_awsize;
@@ -15710,7 +15692,7 @@ module design_1_auto_ds_2
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI RRESP" *) output [1:0]s_axi_rresp;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI RLAST" *) output s_axi_rlast;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI RVALID" *) output s_axi_rvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI RREADY" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXI, DATA_WIDTH 128, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 4, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *) input s_axi_rready;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 S_AXI RREADY" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S_AXI, DATA_WIDTH 128, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 1, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 8, NUM_WRITE_OUTSTANDING 8, MAX_BURST_LENGTH 4, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) input s_axi_rready;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI AWADDR" *) output [31:0]m_axi_awaddr;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI AWLEN" *) output [7:0]m_axi_awlen;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI AWSIZE" *) output [2:0]m_axi_awsize;
@@ -15745,7 +15727,7 @@ module design_1_auto_ds_2
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI RRESP" *) input [1:0]m_axi_rresp;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI RLAST" *) input m_axi_rlast;
   (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI RVALID" *) input m_axi_rvalid;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI RREADY" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXI, DATA_WIDTH 32, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 2, NUM_WRITE_OUTSTANDING 2, MAX_BURST_LENGTH 16, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0" *) output m_axi_rready;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:aximm:1.0 M_AXI RREADY" *) (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME M_AXI, DATA_WIDTH 32, PROTOCOL AXI4, FREQ_HZ 100000000, ID_WIDTH 0, ADDR_WIDTH 32, AWUSER_WIDTH 0, ARUSER_WIDTH 0, WUSER_WIDTH 0, RUSER_WIDTH 0, BUSER_WIDTH 0, READ_WRITE_MODE READ_WRITE, HAS_BURST 1, HAS_LOCK 1, HAS_PROT 1, HAS_CACHE 1, HAS_QOS 1, HAS_REGION 0, HAS_WSTRB 1, HAS_BRESP 1, HAS_RRESP 1, SUPPORTS_NARROW_BURST 0, NUM_READ_OUTSTANDING 8, NUM_WRITE_OUTSTANDING 8, MAX_BURST_LENGTH 16, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, NUM_READ_THREADS 1, NUM_WRITE_THREADS 1, RUSER_BITS_PER_BYTE 0, WUSER_BITS_PER_BYTE 0, INSERT_VIP 0" *) output m_axi_rready;
 
   wire [31:0]m_axi_araddr;
   wire [1:0]m_axi_arburst;
@@ -15848,7 +15830,7 @@ module design_1_auto_ds_2
   (* P_AXILITE = "2" *) 
   (* P_CONVERSION = "2" *) 
   (* P_MAX_SPLIT_BEATS = "256" *) 
-  design_1_auto_ds_2_axi_dwidth_converter_v2_1_16_top inst
+  design_1_auto_ds_2_axi_dwidth_converter_v2_1_18_top inst
        (.m_axi_aclk(1'b0),
         .m_axi_araddr(m_axi_araddr),
         .m_axi_arburst(m_axi_arburst),
@@ -16054,24 +16036,24 @@ module design_1_auto_ds_2_dmem
     clk,
     EN,
     din,
-    \gc0.count_d1_reg[4] ,
+    \gpr1.dout_i_reg[1]_0 ,
     count_d10_in,
-    \gpregsm1.curr_fwft_state_reg[0] );
+    \gpr1.dout_i_reg[0]_0 );
   output [8:0]dout_i;
   input clk;
   input EN;
   input [4:0]din;
-  input [4:0]\gc0.count_d1_reg[4] ;
+  input [4:0]\gpr1.dout_i_reg[1]_0 ;
   input [4:0]count_d10_in;
-  input [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  input [0:0]\gpr1.dout_i_reg[0]_0 ;
 
   wire EN;
   wire clk;
   wire [4:0]count_d10_in;
   wire [4:0]din;
   wire [8:0]dout_i;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  wire [0:0]\gpr1.dout_i_reg[0]_0 ;
+  wire [4:0]\gpr1.dout_i_reg[1]_0 ;
   wire [8:0]p_0_out;
   wire [1:0]NLW_RAM_reg_0_31_0_5_DOD_UNCONNECTED;
   wire [1:1]NLW_RAM_reg_0_31_6_8_DOB_UNCONNECTED;
@@ -16079,10 +16061,14 @@ module design_1_auto_ds_2_dmem
   wire [1:0]NLW_RAM_reg_0_31_6_8_DOD_UNCONNECTED;
 
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "0" *) 
+  (* ram_slice_end = "5" *) 
   RAM32M RAM_reg_0_31_0_5
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_0 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_0 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_0 ),
         .ADDRD(count_d10_in),
         .DIA(din[1:0]),
         .DIB(din[3:2]),
@@ -16095,10 +16081,14 @@ module design_1_auto_ds_2_dmem
         .WCLK(clk),
         .WE(EN));
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "6" *) 
+  (* ram_slice_end = "8" *) 
   RAM32M RAM_reg_0_31_6_8
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_0 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_0 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_0 ),
         .ADDRD(count_d10_in),
         .DIA({1'b0,1'b0}),
         .DIB({1'b0,din[4]}),
@@ -16114,7 +16104,7 @@ module design_1_auto_ds_2_dmem
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[0] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[0]),
         .Q(dout_i[0]),
         .R(1'b0));
@@ -16122,7 +16112,7 @@ module design_1_auto_ds_2_dmem
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[1] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[1]),
         .Q(dout_i[1]),
         .R(1'b0));
@@ -16130,7 +16120,7 @@ module design_1_auto_ds_2_dmem
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[2] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[2]),
         .Q(dout_i[2]),
         .R(1'b0));
@@ -16138,7 +16128,7 @@ module design_1_auto_ds_2_dmem
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[3] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[3]),
         .Q(dout_i[3]),
         .R(1'b0));
@@ -16146,7 +16136,7 @@ module design_1_auto_ds_2_dmem
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[4] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[4]),
         .Q(dout_i[4]),
         .R(1'b0));
@@ -16154,7 +16144,7 @@ module design_1_auto_ds_2_dmem
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[5] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[5]),
         .Q(dout_i[5]),
         .R(1'b0));
@@ -16162,7 +16152,7 @@ module design_1_auto_ds_2_dmem
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[6] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[6]),
         .Q(dout_i[6]),
         .R(1'b0));
@@ -16170,7 +16160,7 @@ module design_1_auto_ds_2_dmem
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[7] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[7]),
         .Q(dout_i[7]),
         .R(1'b0));
@@ -16178,7 +16168,7 @@ module design_1_auto_ds_2_dmem
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[8] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[8]),
         .Q(dout_i[8]),
         .R(1'b0));
@@ -16188,28 +16178,28 @@ endmodule
 module design_1_auto_ds_2_dmem__parameterized0
    (dout_i,
     clk,
-    ram_full_fb_i_reg,
+    \gpr1.dout_i_reg[1]_0 ,
     din,
-    \gc0.count_d1_reg[4] ,
+    \gpr1.dout_i_reg[1]_1 ,
     Q,
-    \gpregsm1.curr_fwft_state_reg[0] );
+    \gpr1.dout_i_reg[0]_0 );
   output [27:0]dout_i;
   input clk;
-  input [0:0]ram_full_fb_i_reg;
+  input [0:0]\gpr1.dout_i_reg[1]_0 ;
   input [28:0]din;
-  input [4:0]\gc0.count_d1_reg[4] ;
+  input [4:0]\gpr1.dout_i_reg[1]_1 ;
   input [4:0]Q;
-  input [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  input [0:0]\gpr1.dout_i_reg[0]_0 ;
 
   wire [4:0]Q;
   wire RAM_reg_0_31_24_28_n_2;
   wire clk;
   wire [28:0]din;
   wire [27:0]dout_i;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  wire [0:0]\gpr1.dout_i_reg[0]_0 ;
+  wire [0:0]\gpr1.dout_i_reg[1]_0 ;
+  wire [4:0]\gpr1.dout_i_reg[1]_1 ;
   wire [28:0]p_0_out;
-  wire [0:0]ram_full_fb_i_reg;
   wire [1:0]NLW_RAM_reg_0_31_0_5_DOD_UNCONNECTED;
   wire [1:0]NLW_RAM_reg_0_31_12_17_DOD_UNCONNECTED;
   wire [1:0]NLW_RAM_reg_0_31_18_23_DOD_UNCONNECTED;
@@ -16218,10 +16208,14 @@ module design_1_auto_ds_2_dmem__parameterized0
   wire [1:0]NLW_RAM_reg_0_31_6_11_DOD_UNCONNECTED;
 
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "0" *) 
+  (* ram_slice_end = "5" *) 
   RAM32M RAM_reg_0_31_0_5
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[1:0]),
         .DIB(din[3:2]),
@@ -16232,12 +16226,16 @@ module design_1_auto_ds_2_dmem__parameterized0
         .DOC(p_0_out[5:4]),
         .DOD(NLW_RAM_reg_0_31_0_5_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "12" *) 
+  (* ram_slice_end = "17" *) 
   RAM32M RAM_reg_0_31_12_17
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[13:12]),
         .DIB(din[15:14]),
@@ -16248,12 +16246,16 @@ module design_1_auto_ds_2_dmem__parameterized0
         .DOC(p_0_out[17:16]),
         .DOD(NLW_RAM_reg_0_31_12_17_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "18" *) 
+  (* ram_slice_end = "23" *) 
   RAM32M RAM_reg_0_31_18_23
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[19:18]),
         .DIB(din[21:20]),
@@ -16264,12 +16266,16 @@ module design_1_auto_ds_2_dmem__parameterized0
         .DOC(p_0_out[23:22]),
         .DOD(NLW_RAM_reg_0_31_18_23_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "24" *) 
+  (* ram_slice_end = "28" *) 
   RAM32M RAM_reg_0_31_24_28
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[25:24]),
         .DIB(din[27:26]),
@@ -16280,12 +16286,16 @@ module design_1_auto_ds_2_dmem__parameterized0
         .DOC({NLW_RAM_reg_0_31_24_28_DOC_UNCONNECTED[1],p_0_out[28]}),
         .DOD(NLW_RAM_reg_0_31_24_28_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "6" *) 
+  (* ram_slice_end = "11" *) 
   RAM32M RAM_reg_0_31_6_11
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[7:6]),
         .DIB(din[9:8]),
@@ -16296,12 +16306,12 @@ module design_1_auto_ds_2_dmem__parameterized0
         .DOC(p_0_out[11:10]),
         .DOD(NLW_RAM_reg_0_31_6_11_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   FDRE #(
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[0] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[0]),
         .Q(dout_i[0]),
         .R(1'b0));
@@ -16309,7 +16319,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[10] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[10]),
         .Q(dout_i[10]),
         .R(1'b0));
@@ -16317,7 +16327,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[11] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[11]),
         .Q(dout_i[11]),
         .R(1'b0));
@@ -16325,7 +16335,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[12] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[12]),
         .Q(dout_i[12]),
         .R(1'b0));
@@ -16333,7 +16343,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[13] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[13]),
         .Q(dout_i[13]),
         .R(1'b0));
@@ -16341,7 +16351,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[14] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[14]),
         .Q(dout_i[14]),
         .R(1'b0));
@@ -16349,7 +16359,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[15] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[15]),
         .Q(dout_i[15]),
         .R(1'b0));
@@ -16357,7 +16367,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[16] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[16]),
         .Q(dout_i[16]),
         .R(1'b0));
@@ -16365,7 +16375,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[17] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[17]),
         .Q(dout_i[17]),
         .R(1'b0));
@@ -16373,7 +16383,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[18] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[18]),
         .Q(dout_i[18]),
         .R(1'b0));
@@ -16381,7 +16391,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[19] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[19]),
         .Q(dout_i[19]),
         .R(1'b0));
@@ -16389,7 +16399,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[1] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[1]),
         .Q(dout_i[1]),
         .R(1'b0));
@@ -16397,7 +16407,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[20] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[20]),
         .Q(dout_i[20]),
         .R(1'b0));
@@ -16405,7 +16415,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[21] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[21]),
         .Q(dout_i[21]),
         .R(1'b0));
@@ -16413,7 +16423,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[22] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[22]),
         .Q(dout_i[22]),
         .R(1'b0));
@@ -16421,7 +16431,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[23] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[23]),
         .Q(dout_i[23]),
         .R(1'b0));
@@ -16429,7 +16439,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[24] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[24]),
         .Q(dout_i[24]),
         .R(1'b0));
@@ -16437,7 +16447,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[25] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[25]),
         .Q(dout_i[25]),
         .R(1'b0));
@@ -16445,7 +16455,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[26] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[26]),
         .Q(dout_i[26]),
         .R(1'b0));
@@ -16453,7 +16463,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[28] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[28]),
         .Q(dout_i[27]),
         .R(1'b0));
@@ -16461,7 +16471,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[2] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[2]),
         .Q(dout_i[2]),
         .R(1'b0));
@@ -16469,7 +16479,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[3] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[3]),
         .Q(dout_i[3]),
         .R(1'b0));
@@ -16477,7 +16487,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[4] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[4]),
         .Q(dout_i[4]),
         .R(1'b0));
@@ -16485,7 +16495,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[5] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[5]),
         .Q(dout_i[5]),
         .R(1'b0));
@@ -16493,7 +16503,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[6] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[6]),
         .Q(dout_i[6]),
         .R(1'b0));
@@ -16501,7 +16511,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[7] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[7]),
         .Q(dout_i[7]),
         .R(1'b0));
@@ -16509,7 +16519,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[8] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[8]),
         .Q(dout_i[8]),
         .R(1'b0));
@@ -16517,7 +16527,7 @@ module design_1_auto_ds_2_dmem__parameterized0
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[9] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[9]),
         .Q(dout_i[9]),
         .R(1'b0));
@@ -16527,27 +16537,27 @@ endmodule
 module design_1_auto_ds_2_dmem__parameterized0_10
    (dout_i,
     clk,
-    ram_full_fb_i_reg,
+    \gpr1.dout_i_reg[1]_0 ,
     din,
-    \gc0.count_d1_reg[4] ,
+    \gpr1.dout_i_reg[1]_1 ,
     Q,
-    \gpregsm1.curr_fwft_state_reg[0] );
+    \gpr1.dout_i_reg[0]_0 );
   output [28:0]dout_i;
   input clk;
-  input [0:0]ram_full_fb_i_reg;
+  input [0:0]\gpr1.dout_i_reg[1]_0 ;
   input [28:0]din;
-  input [4:0]\gc0.count_d1_reg[4] ;
+  input [4:0]\gpr1.dout_i_reg[1]_1 ;
   input [4:0]Q;
-  input [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  input [0:0]\gpr1.dout_i_reg[0]_0 ;
 
   wire [4:0]Q;
   wire clk;
   wire [28:0]din;
   wire [28:0]dout_i;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  wire [0:0]\gpr1.dout_i_reg[0]_0 ;
+  wire [0:0]\gpr1.dout_i_reg[1]_0 ;
+  wire [4:0]\gpr1.dout_i_reg[1]_1 ;
   wire [28:0]p_0_out;
-  wire [0:0]ram_full_fb_i_reg;
   wire [1:0]NLW_RAM_reg_0_31_0_5_DOD_UNCONNECTED;
   wire [1:0]NLW_RAM_reg_0_31_12_17_DOD_UNCONNECTED;
   wire [1:0]NLW_RAM_reg_0_31_18_23_DOD_UNCONNECTED;
@@ -16556,10 +16566,14 @@ module design_1_auto_ds_2_dmem__parameterized0_10
   wire [1:0]NLW_RAM_reg_0_31_6_11_DOD_UNCONNECTED;
 
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "0" *) 
+  (* ram_slice_end = "5" *) 
   RAM32M RAM_reg_0_31_0_5
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[1:0]),
         .DIB(din[3:2]),
@@ -16570,12 +16584,16 @@ module design_1_auto_ds_2_dmem__parameterized0_10
         .DOC(p_0_out[5:4]),
         .DOD(NLW_RAM_reg_0_31_0_5_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "12" *) 
+  (* ram_slice_end = "17" *) 
   RAM32M RAM_reg_0_31_12_17
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[13:12]),
         .DIB(din[15:14]),
@@ -16586,12 +16604,16 @@ module design_1_auto_ds_2_dmem__parameterized0_10
         .DOC(p_0_out[17:16]),
         .DOD(NLW_RAM_reg_0_31_12_17_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "18" *) 
+  (* ram_slice_end = "23" *) 
   RAM32M RAM_reg_0_31_18_23
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[19:18]),
         .DIB(din[21:20]),
@@ -16602,12 +16624,16 @@ module design_1_auto_ds_2_dmem__parameterized0_10
         .DOC(p_0_out[23:22]),
         .DOD(NLW_RAM_reg_0_31_18_23_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "24" *) 
+  (* ram_slice_end = "28" *) 
   RAM32M RAM_reg_0_31_24_28
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[25:24]),
         .DIB(din[27:26]),
@@ -16618,12 +16644,16 @@ module design_1_auto_ds_2_dmem__parameterized0_10
         .DOC({NLW_RAM_reg_0_31_24_28_DOC_UNCONNECTED[1],p_0_out[28]}),
         .DOD(NLW_RAM_reg_0_31_24_28_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   (* METHODOLOGY_DRC_VIOS = "" *) 
+  (* ram_addr_begin = "0" *) 
+  (* ram_addr_end = "31" *) 
+  (* ram_slice_begin = "6" *) 
+  (* ram_slice_end = "11" *) 
   RAM32M RAM_reg_0_31_6_11
-       (.ADDRA(\gc0.count_d1_reg[4] ),
-        .ADDRB(\gc0.count_d1_reg[4] ),
-        .ADDRC(\gc0.count_d1_reg[4] ),
+       (.ADDRA(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRB(\gpr1.dout_i_reg[1]_1 ),
+        .ADDRC(\gpr1.dout_i_reg[1]_1 ),
         .ADDRD(Q),
         .DIA(din[7:6]),
         .DIB(din[9:8]),
@@ -16634,12 +16664,12 @@ module design_1_auto_ds_2_dmem__parameterized0_10
         .DOC(p_0_out[11:10]),
         .DOD(NLW_RAM_reg_0_31_6_11_DOD_UNCONNECTED[1:0]),
         .WCLK(clk),
-        .WE(ram_full_fb_i_reg));
+        .WE(\gpr1.dout_i_reg[1]_0 ));
   FDRE #(
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[0] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[0]),
         .Q(dout_i[0]),
         .R(1'b0));
@@ -16647,7 +16677,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[10] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[10]),
         .Q(dout_i[10]),
         .R(1'b0));
@@ -16655,7 +16685,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[11] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[11]),
         .Q(dout_i[11]),
         .R(1'b0));
@@ -16663,7 +16693,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[12] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[12]),
         .Q(dout_i[12]),
         .R(1'b0));
@@ -16671,7 +16701,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[13] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[13]),
         .Q(dout_i[13]),
         .R(1'b0));
@@ -16679,7 +16709,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[14] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[14]),
         .Q(dout_i[14]),
         .R(1'b0));
@@ -16687,7 +16717,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[15] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[15]),
         .Q(dout_i[15]),
         .R(1'b0));
@@ -16695,7 +16725,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[16] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[16]),
         .Q(dout_i[16]),
         .R(1'b0));
@@ -16703,7 +16733,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[17] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[17]),
         .Q(dout_i[17]),
         .R(1'b0));
@@ -16711,7 +16741,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[18] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[18]),
         .Q(dout_i[18]),
         .R(1'b0));
@@ -16719,7 +16749,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[19] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[19]),
         .Q(dout_i[19]),
         .R(1'b0));
@@ -16727,7 +16757,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[1] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[1]),
         .Q(dout_i[1]),
         .R(1'b0));
@@ -16735,7 +16765,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[20] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[20]),
         .Q(dout_i[20]),
         .R(1'b0));
@@ -16743,7 +16773,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[21] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[21]),
         .Q(dout_i[21]),
         .R(1'b0));
@@ -16751,7 +16781,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[22] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[22]),
         .Q(dout_i[22]),
         .R(1'b0));
@@ -16759,7 +16789,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[23] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[23]),
         .Q(dout_i[23]),
         .R(1'b0));
@@ -16767,7 +16797,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[24] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[24]),
         .Q(dout_i[24]),
         .R(1'b0));
@@ -16775,7 +16805,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[25] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[25]),
         .Q(dout_i[25]),
         .R(1'b0));
@@ -16783,7 +16813,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[26] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[26]),
         .Q(dout_i[26]),
         .R(1'b0));
@@ -16791,7 +16821,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[27] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[27]),
         .Q(dout_i[27]),
         .R(1'b0));
@@ -16799,7 +16829,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[28] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[28]),
         .Q(dout_i[28]),
         .R(1'b0));
@@ -16807,7 +16837,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[2] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[2]),
         .Q(dout_i[2]),
         .R(1'b0));
@@ -16815,7 +16845,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[3] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[3]),
         .Q(dout_i[3]),
         .R(1'b0));
@@ -16823,7 +16853,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[4] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[4]),
         .Q(dout_i[4]),
         .R(1'b0));
@@ -16831,7 +16861,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[5] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[5]),
         .Q(dout_i[5]),
         .R(1'b0));
@@ -16839,7 +16869,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[6] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[6]),
         .Q(dout_i[6]),
         .R(1'b0));
@@ -16847,7 +16877,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[7] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[7]),
         .Q(dout_i[7]),
         .R(1'b0));
@@ -16855,7 +16885,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[8] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[8]),
         .Q(dout_i[8]),
         .R(1'b0));
@@ -16863,7 +16893,7 @@ module design_1_auto_ds_2_dmem__parameterized0_10
     .INIT(1'b0)) 
     \gpr1.dout_i_reg[9] 
        (.C(clk),
-        .CE(\gpregsm1.curr_fwft_state_reg[0] ),
+        .CE(\gpr1.dout_i_reg[0]_0 ),
         .D(p_0_out[9]),
         .Q(dout_i[9]),
         .R(1'b0));
@@ -16913,12 +16943,12 @@ module design_1_auto_ds_2_fifo_generator_ramfifo
         .Q(rd_pntr_plus1),
         .clk(clk),
         .empty(empty),
-        .\gc0.count_reg[4] (p_8_out),
-        .\gpr1.dout_i_reg[1] (p_0_out_0),
-        .\gpregsm1.user_valid_reg ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (rstblk_n_1),
+        .\gc0.count_d1_reg[0] (rstblk_n_1),
+        .\gc0.count_d1_reg[4] (p_0_out_0),
+        .\gpregsm1.curr_fwft_state_reg[1] ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
         .out(p_2_out),
-        .ram_full_fb_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
+        .ram_empty_fb_i_reg(p_8_out),
+        .ram_empty_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
         .rd_en(rd_en));
   design_1_auto_ds_2_wr_logic_1 \gntv_or_sync_fifo.gl0.wr 
        (.AR(rstblk_n_1),
@@ -16926,11 +16956,11 @@ module design_1_auto_ds_2_fifo_generator_ramfifo
         .Q(p_12_out),
         .clk(clk),
         .full(full),
-        .\gc0.count_d1_reg[4] (p_0_out_0),
-        .\gc0.count_reg[4] (rd_pntr_plus1),
         .out(p_2_out),
-        .ram_empty_fb_i_reg(p_8_out),
-        .ram_empty_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
+        .ram_empty_fb_i_i_2(rd_pntr_plus1),
+        .ram_empty_fb_i_i_3(p_0_out_0),
+        .ram_empty_i_reg(p_8_out),
+        .ram_full_fb_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
         .wr_en(wr_en));
   design_1_auto_ds_2_memory \gntv_or_sync_fifo.mem 
        (.E(rstblk_n_0),
@@ -16939,13 +16969,13 @@ module design_1_auto_ds_2_fifo_generator_ramfifo
         .count_d10_in(p_12_out),
         .din(din),
         .dout(dout),
-        .\gc0.count_d1_reg[4] (p_0_out_0),
-        .\gpregsm1.curr_fwft_state_reg[0] (ram_rd_en_i));
+        .\gpr1.dout_i_reg[0] (ram_rd_en_i),
+        .\gpr1.dout_i_reg[1] (p_0_out_0));
   design_1_auto_ds_2_reset_blk_ramfifo__xdcDup__1 rstblk
        (.AR(rstblk_n_1),
         .E(rstblk_n_0),
         .clk(clk),
-        .\gpregsm1.curr_fwft_state_reg[1] ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
+        .\goreg_dm.dout_i_reg[8] ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
         .rd_en(rd_en),
         .rst(rst));
 endmodule
@@ -16995,12 +17025,12 @@ module design_1_auto_ds_2_fifo_generator_ramfifo__parameterized0
         .Q(rd_pntr_plus1),
         .clk(clk),
         .empty(empty),
-        .\gc0.count_reg[4] (p_8_out),
-        .\gpr1.dout_i_reg[1] (p_0_out_0),
-        .\gpregsm1.user_valid_reg ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (rstblk_n_1),
+        .\gc0.count_d1_reg[0] (rstblk_n_1),
+        .\gc0.count_d1_reg[4] (p_0_out_0),
+        .\gpregsm1.curr_fwft_state_reg[1] ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
         .out(p_2_out),
-        .ram_full_fb_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
+        .ram_empty_fb_i_reg(p_8_out),
+        .ram_empty_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
         .rd_en(rd_en));
   design_1_auto_ds_2_wr_logic_8 \gntv_or_sync_fifo.gl0.wr 
        (.AR(rstblk_n_1),
@@ -17008,11 +17038,11 @@ module design_1_auto_ds_2_fifo_generator_ramfifo__parameterized0
         .Q(p_12_out),
         .clk(clk),
         .full(full),
-        .\gc0.count_d1_reg[4] (p_0_out_0),
-        .\gc0.count_reg[4] (rd_pntr_plus1),
         .out(p_2_out),
-        .ram_empty_fb_i_reg(p_8_out),
-        .ram_empty_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
+        .ram_empty_fb_i_i_2(rd_pntr_plus1),
+        .ram_empty_fb_i_i_3(p_0_out_0),
+        .ram_empty_i_reg(p_8_out),
+        .ram_full_fb_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
         .wr_en(wr_en));
   design_1_auto_ds_2_memory__parameterized0_9 \gntv_or_sync_fifo.mem 
        (.E(rstblk_n_0),
@@ -17020,14 +17050,14 @@ module design_1_auto_ds_2_fifo_generator_ramfifo__parameterized0
         .clk(clk),
         .din(din),
         .dout(dout),
-        .\gc0.count_d1_reg[4] (p_0_out_0),
-        .\gpregsm1.curr_fwft_state_reg[0] (ram_rd_en_i),
-        .ram_full_fb_i_reg(p_19_out));
+        .\gpr1.dout_i_reg[0] (ram_rd_en_i),
+        .\gpr1.dout_i_reg[1] (p_19_out),
+        .\gpr1.dout_i_reg[1]_0 (p_0_out_0));
   design_1_auto_ds_2_reset_blk_ramfifo rstblk
        (.AR(rstblk_n_1),
         .E(rstblk_n_0),
         .clk(clk),
-        .\gpregsm1.curr_fwft_state_reg[1] ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
+        .\goreg_dm.dout_i_reg[28] ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
         .rd_en(rd_en),
         .rst(rst));
 endmodule
@@ -17077,12 +17107,12 @@ module design_1_auto_ds_2_fifo_generator_ramfifo__parameterized0__xdcDup__1
         .Q(rd_pntr_plus1),
         .clk(clk),
         .empty(empty),
-        .\gc0.count_reg[4] (p_8_out),
-        .\gpr1.dout_i_reg[1] (p_0_out_0),
-        .\gpregsm1.user_valid_reg ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (rstblk_n_1),
+        .\gc0.count_d1_reg[0] (rstblk_n_1),
+        .\gc0.count_d1_reg[4] (p_0_out_0),
+        .\gpregsm1.curr_fwft_state_reg[1] ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
         .out(p_2_out),
-        .ram_full_fb_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
+        .ram_empty_fb_i_reg(p_8_out),
+        .ram_empty_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
         .rd_en(rd_en));
   design_1_auto_ds_2_wr_logic \gntv_or_sync_fifo.gl0.wr 
        (.AR(rstblk_n_1),
@@ -17090,11 +17120,11 @@ module design_1_auto_ds_2_fifo_generator_ramfifo__parameterized0__xdcDup__1
         .Q(p_12_out),
         .clk(clk),
         .full(full),
-        .\gc0.count_d1_reg[4] (p_0_out_0),
-        .\gc0.count_reg[4] (rd_pntr_plus1),
         .out(p_2_out),
-        .ram_empty_fb_i_reg(p_8_out),
-        .ram_empty_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
+        .ram_empty_fb_i_i_2(rd_pntr_plus1),
+        .ram_empty_fb_i_i_3(p_0_out_0),
+        .ram_empty_i_reg(p_8_out),
+        .ram_full_fb_i_reg(\gntv_or_sync_fifo.gl0.wr_n_1 ),
         .wr_en(wr_en));
   design_1_auto_ds_2_memory__parameterized0 \gntv_or_sync_fifo.mem 
        (.E(rstblk_n_0),
@@ -17102,14 +17132,14 @@ module design_1_auto_ds_2_fifo_generator_ramfifo__parameterized0__xdcDup__1
         .clk(clk),
         .din(din),
         .dout(dout),
-        .\gc0.count_d1_reg[4] (p_0_out_0),
-        .\gpregsm1.curr_fwft_state_reg[0] (ram_rd_en_i),
-        .ram_full_fb_i_reg(p_19_out));
+        .\gpr1.dout_i_reg[0] (ram_rd_en_i),
+        .\gpr1.dout_i_reg[1] (p_19_out),
+        .\gpr1.dout_i_reg[1]_0 (p_0_out_0));
   design_1_auto_ds_2_reset_blk_ramfifo__xdcDup__2 rstblk
        (.AR(rstblk_n_1),
         .E(rstblk_n_0),
         .clk(clk),
-        .\gpregsm1.curr_fwft_state_reg[1] ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
+        .\goreg_dm.dout_i_reg[28] ({\gntv_or_sync_fifo.gl0.rd_n_1 ,\gr1.gr1_int.rfwft/p_0_in }),
         .rd_en(rd_en),
         .rst(rst));
 endmodule
@@ -17298,7 +17328,7 @@ endmodule
 (* C_WR_PNTR_WIDTH_AXIS = "10" *) (* C_WR_PNTR_WIDTH_RACH = "4" *) (* C_WR_PNTR_WIDTH_RDCH = "10" *) 
 (* C_WR_PNTR_WIDTH_WACH = "4" *) (* C_WR_PNTR_WIDTH_WDCH = "10" *) (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
 (* C_WR_RESPONSE_LATENCY = "1" *) 
-module design_1_auto_ds_2_fifo_generator_v13_2_2
+module design_1_auto_ds_2_fifo_generator_v13_2_3
    (backup,
     backup_marker,
     clk,
@@ -18376,7 +18406,7 @@ module design_1_auto_ds_2_fifo_generator_v13_2_2
   assign wr_rst_busy = \<const0> ;
   GND GND
        (.G(\<const0> ));
-  design_1_auto_ds_2_fifo_generator_v13_2_2_synth inst_fifo_gen
+  design_1_auto_ds_2_fifo_generator_v13_2_3_synth inst_fifo_gen
        (.clk(clk),
         .din({din[8],din[3:0]}),
         .dout(dout),
@@ -18454,8 +18484,8 @@ endmodule
 (* C_WR_DEPTH_WRCH = "16" *) (* C_WR_FREQ = "1" *) (* C_WR_PNTR_WIDTH = "5" *) 
 (* C_WR_PNTR_WIDTH_AXIS = "10" *) (* C_WR_PNTR_WIDTH_RACH = "4" *) (* C_WR_PNTR_WIDTH_RDCH = "10" *) 
 (* C_WR_PNTR_WIDTH_WACH = "4" *) (* C_WR_PNTR_WIDTH_WDCH = "10" *) (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
-(* C_WR_RESPONSE_LATENCY = "1" *) (* ORIG_REF_NAME = "fifo_generator_v13_2_2" *) 
-module design_1_auto_ds_2_fifo_generator_v13_2_2__parameterized0
+(* C_WR_RESPONSE_LATENCY = "1" *) (* ORIG_REF_NAME = "fifo_generator_v13_2_3" *) 
+module design_1_auto_ds_2_fifo_generator_v13_2_3__parameterized0
    (backup,
     backup_marker,
     clk,
@@ -19533,7 +19563,7 @@ module design_1_auto_ds_2_fifo_generator_v13_2_2__parameterized0
   assign wr_rst_busy = \<const0> ;
   GND GND
        (.G(\<const0> ));
-  design_1_auto_ds_2_fifo_generator_v13_2_2_synth__parameterized0 inst_fifo_gen
+  design_1_auto_ds_2_fifo_generator_v13_2_3_synth__parameterized0 inst_fifo_gen
        (.clk(clk),
         .din(din),
         .dout(dout),
@@ -19611,8 +19641,8 @@ endmodule
 (* C_WR_DEPTH_WRCH = "16" *) (* C_WR_FREQ = "1" *) (* C_WR_PNTR_WIDTH = "5" *) 
 (* C_WR_PNTR_WIDTH_AXIS = "10" *) (* C_WR_PNTR_WIDTH_RACH = "4" *) (* C_WR_PNTR_WIDTH_RDCH = "10" *) 
 (* C_WR_PNTR_WIDTH_WACH = "4" *) (* C_WR_PNTR_WIDTH_WDCH = "10" *) (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
-(* C_WR_RESPONSE_LATENCY = "1" *) (* ORIG_REF_NAME = "fifo_generator_v13_2_2" *) 
-module design_1_auto_ds_2_fifo_generator_v13_2_2__parameterized0__xdcDup__1
+(* C_WR_RESPONSE_LATENCY = "1" *) (* ORIG_REF_NAME = "fifo_generator_v13_2_3" *) 
+module design_1_auto_ds_2_fifo_generator_v13_2_3__parameterized0__xdcDup__1
    (backup,
     backup_marker,
     clk,
@@ -20693,7 +20723,7 @@ module design_1_auto_ds_2_fifo_generator_v13_2_2__parameterized0__xdcDup__1
   assign wr_rst_busy = \<const0> ;
   GND GND
        (.G(\<const0> ));
-  design_1_auto_ds_2_fifo_generator_v13_2_2_synth__parameterized0__xdcDup__1 inst_fifo_gen
+  design_1_auto_ds_2_fifo_generator_v13_2_3_synth__parameterized0__xdcDup__1 inst_fifo_gen
        (.clk(clk),
         .din(din),
         .dout({\^dout [28],\^dout [26:0]}),
@@ -20704,7 +20734,7 @@ module design_1_auto_ds_2_fifo_generator_v13_2_2__parameterized0__xdcDup__1
         .wr_en(wr_en));
 endmodule
 
-module design_1_auto_ds_2_fifo_generator_v13_2_2_synth
+module design_1_auto_ds_2_fifo_generator_v13_2_3_synth
    (empty,
     full,
     dout,
@@ -20742,8 +20772,8 @@ module design_1_auto_ds_2_fifo_generator_v13_2_2_synth
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_v13_2_2_synth" *) 
-module design_1_auto_ds_2_fifo_generator_v13_2_2_synth__parameterized0
+(* ORIG_REF_NAME = "fifo_generator_v13_2_3_synth" *) 
+module design_1_auto_ds_2_fifo_generator_v13_2_3_synth__parameterized0
    (empty,
     full,
     dout,
@@ -20781,8 +20811,8 @@ module design_1_auto_ds_2_fifo_generator_v13_2_2_synth__parameterized0
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_v13_2_2_synth" *) 
-module design_1_auto_ds_2_fifo_generator_v13_2_2_synth__parameterized0__xdcDup__1
+(* ORIG_REF_NAME = "fifo_generator_v13_2_3_synth" *) 
+module design_1_auto_ds_2_fifo_generator_v13_2_3_synth__parameterized0__xdcDup__1
    (empty,
     full,
     dout,
@@ -20826,17 +20856,17 @@ module design_1_auto_ds_2_memory
     clk,
     EN,
     din,
-    \gc0.count_d1_reg[4] ,
+    \gpr1.dout_i_reg[1] ,
     count_d10_in,
-    \gpregsm1.curr_fwft_state_reg[0] );
+    \gpr1.dout_i_reg[0] );
   output [8:0]dout;
   input [0:0]E;
   input clk;
   input EN;
   input [4:0]din;
-  input [4:0]\gc0.count_d1_reg[4] ;
+  input [4:0]\gpr1.dout_i_reg[1] ;
   input [4:0]count_d10_in;
-  input [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  input [0:0]\gpr1.dout_i_reg[0] ;
 
   wire [0:0]E;
   wire EN;
@@ -20845,8 +20875,8 @@ module design_1_auto_ds_2_memory
   wire [4:0]din;
   wire [8:0]dout;
   wire [8:0]dout_i;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  wire [0:0]\gpr1.dout_i_reg[0] ;
+  wire [4:0]\gpr1.dout_i_reg[1] ;
 
   design_1_auto_ds_2_dmem \gdm.dm_gen.dm 
        (.EN(EN),
@@ -20854,8 +20884,8 @@ module design_1_auto_ds_2_memory
         .count_d10_in(count_d10_in),
         .din(din),
         .dout_i(dout_i),
-        .\gc0.count_d1_reg[4] (\gc0.count_d1_reg[4] ),
-        .\gpregsm1.curr_fwft_state_reg[0] (\gpregsm1.curr_fwft_state_reg[0] ));
+        .\gpr1.dout_i_reg[0]_0 (\gpr1.dout_i_reg[0] ),
+        .\gpr1.dout_i_reg[1]_0 (\gpr1.dout_i_reg[1] ));
   FDRE #(
     .INIT(1'b0)) 
     \goreg_dm.dout_i_reg[0] 
@@ -20935,19 +20965,19 @@ module design_1_auto_ds_2_memory__parameterized0
    (dout,
     E,
     clk,
-    ram_full_fb_i_reg,
+    \gpr1.dout_i_reg[1] ,
     din,
-    \gc0.count_d1_reg[4] ,
+    \gpr1.dout_i_reg[1]_0 ,
     Q,
-    \gpregsm1.curr_fwft_state_reg[0] );
+    \gpr1.dout_i_reg[0] );
   output [27:0]dout;
   input [0:0]E;
   input clk;
-  input [0:0]ram_full_fb_i_reg;
+  input [0:0]\gpr1.dout_i_reg[1] ;
   input [28:0]din;
-  input [4:0]\gc0.count_d1_reg[4] ;
+  input [4:0]\gpr1.dout_i_reg[1]_0 ;
   input [4:0]Q;
-  input [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  input [0:0]\gpr1.dout_i_reg[0] ;
 
   wire [0:0]E;
   wire [4:0]Q;
@@ -20955,18 +20985,18 @@ module design_1_auto_ds_2_memory__parameterized0
   wire [28:0]din;
   wire [27:0]dout;
   wire [28:0]dout_i;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
-  wire [0:0]ram_full_fb_i_reg;
+  wire [0:0]\gpr1.dout_i_reg[0] ;
+  wire [0:0]\gpr1.dout_i_reg[1] ;
+  wire [4:0]\gpr1.dout_i_reg[1]_0 ;
 
   design_1_auto_ds_2_dmem__parameterized0 \gdm.dm_gen.dm 
        (.Q(Q),
         .clk(clk),
         .din(din),
         .dout_i({dout_i[28],dout_i[26:0]}),
-        .\gc0.count_d1_reg[4] (\gc0.count_d1_reg[4] ),
-        .\gpregsm1.curr_fwft_state_reg[0] (\gpregsm1.curr_fwft_state_reg[0] ),
-        .ram_full_fb_i_reg(ram_full_fb_i_reg));
+        .\gpr1.dout_i_reg[0]_0 (\gpr1.dout_i_reg[0] ),
+        .\gpr1.dout_i_reg[1]_0 (\gpr1.dout_i_reg[1] ),
+        .\gpr1.dout_i_reg[1]_1 (\gpr1.dout_i_reg[1]_0 ));
   FDRE #(
     .INIT(1'b0)) 
     \goreg_dm.dout_i_reg[0] 
@@ -21198,19 +21228,19 @@ module design_1_auto_ds_2_memory__parameterized0_9
    (dout,
     E,
     clk,
-    ram_full_fb_i_reg,
+    \gpr1.dout_i_reg[1] ,
     din,
-    \gc0.count_d1_reg[4] ,
+    \gpr1.dout_i_reg[1]_0 ,
     Q,
-    \gpregsm1.curr_fwft_state_reg[0] );
+    \gpr1.dout_i_reg[0] );
   output [28:0]dout;
   input [0:0]E;
   input clk;
-  input [0:0]ram_full_fb_i_reg;
+  input [0:0]\gpr1.dout_i_reg[1] ;
   input [28:0]din;
-  input [4:0]\gc0.count_d1_reg[4] ;
+  input [4:0]\gpr1.dout_i_reg[1]_0 ;
   input [4:0]Q;
-  input [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
+  input [0:0]\gpr1.dout_i_reg[0] ;
 
   wire [0:0]E;
   wire [4:0]Q;
@@ -21218,18 +21248,18 @@ module design_1_auto_ds_2_memory__parameterized0_9
   wire [28:0]din;
   wire [28:0]dout;
   wire [28:0]dout_i;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [0:0]\gpregsm1.curr_fwft_state_reg[0] ;
-  wire [0:0]ram_full_fb_i_reg;
+  wire [0:0]\gpr1.dout_i_reg[0] ;
+  wire [0:0]\gpr1.dout_i_reg[1] ;
+  wire [4:0]\gpr1.dout_i_reg[1]_0 ;
 
   design_1_auto_ds_2_dmem__parameterized0_10 \gdm.dm_gen.dm 
        (.Q(Q),
         .clk(clk),
         .din(din),
         .dout_i(dout_i),
-        .\gc0.count_d1_reg[4] (\gc0.count_d1_reg[4] ),
-        .\gpregsm1.curr_fwft_state_reg[0] (\gpregsm1.curr_fwft_state_reg[0] ),
-        .ram_full_fb_i_reg(ram_full_fb_i_reg));
+        .\gpr1.dout_i_reg[0]_0 (\gpr1.dout_i_reg[0] ),
+        .\gpr1.dout_i_reg[1]_0 (\gpr1.dout_i_reg[1] ),
+        .\gpr1.dout_i_reg[1]_1 (\gpr1.dout_i_reg[1]_0 ));
   FDRE #(
     .INIT(1'b0)) 
     \goreg_dm.dout_i_reg[0] 
@@ -21466,21 +21496,21 @@ endmodule
 
 module design_1_auto_ds_2_rd_bin_cntr
    (Q,
-    \gpr1.dout_i_reg[1] ,
+    \gc0.count_d1_reg[4]_0 ,
     E,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] );
+    \gc0.count_d1_reg[0]_0 );
   output [4:0]Q;
-  output [4:0]\gpr1.dout_i_reg[1] ;
+  output [4:0]\gc0.count_d1_reg[4]_0 ;
   input [0:0]E;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input \gc0.count_d1_reg[0]_0 ;
 
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
-  wire [4:0]\gpr1.dout_i_reg[1] ;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  wire \gc0.count_d1_reg[0]_0 ;
+  wire [4:0]\gc0.count_d1_reg[4]_0 ;
   wire [4:0]plusOp;
 
   LUT1 #(
@@ -21527,55 +21557,55 @@ module design_1_auto_ds_2_rd_bin_cntr
     \gc0.count_d1_reg[0] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[0]),
-        .Q(\gpr1.dout_i_reg[1] [0]));
+        .Q(\gc0.count_d1_reg[4]_0 [0]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[1] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[1]),
-        .Q(\gpr1.dout_i_reg[1] [1]));
+        .Q(\gc0.count_d1_reg[4]_0 [1]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[2] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[2]),
-        .Q(\gpr1.dout_i_reg[1] [2]));
+        .Q(\gc0.count_d1_reg[4]_0 [2]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[3] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[3]),
-        .Q(\gpr1.dout_i_reg[1] [3]));
+        .Q(\gc0.count_d1_reg[4]_0 [3]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[4] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[4]),
-        .Q(\gpr1.dout_i_reg[1] [4]));
+        .Q(\gc0.count_d1_reg[4]_0 [4]));
   FDPE #(
     .INIT(1'b1)) 
     \gc0.count_reg[0] 
        (.C(clk),
         .CE(E),
         .D(plusOp[0]),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gc0.count_d1_reg[0]_0 ),
         .Q(Q[0]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_reg[1] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[1]),
         .Q(Q[1]));
   FDCE #(
@@ -21583,7 +21613,7 @@ module design_1_auto_ds_2_rd_bin_cntr
     \gc0.count_reg[2] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[2]),
         .Q(Q[2]));
   FDCE #(
@@ -21591,7 +21621,7 @@ module design_1_auto_ds_2_rd_bin_cntr
     \gc0.count_reg[3] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[3]),
         .Q(Q[3]));
   FDCE #(
@@ -21599,7 +21629,7 @@ module design_1_auto_ds_2_rd_bin_cntr
     \gc0.count_reg[4] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[4]),
         .Q(Q[4]));
 endmodule
@@ -21607,21 +21637,21 @@ endmodule
 (* ORIG_REF_NAME = "rd_bin_cntr" *) 
 module design_1_auto_ds_2_rd_bin_cntr_15
    (Q,
-    \gpr1.dout_i_reg[1] ,
+    \gc0.count_d1_reg[4]_0 ,
     E,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] );
+    \gc0.count_d1_reg[0]_0 );
   output [4:0]Q;
-  output [4:0]\gpr1.dout_i_reg[1] ;
+  output [4:0]\gc0.count_d1_reg[4]_0 ;
   input [0:0]E;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input \gc0.count_d1_reg[0]_0 ;
 
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
-  wire [4:0]\gpr1.dout_i_reg[1] ;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  wire \gc0.count_d1_reg[0]_0 ;
+  wire [4:0]\gc0.count_d1_reg[4]_0 ;
   wire [4:0]plusOp;
 
   LUT1 #(
@@ -21668,55 +21698,55 @@ module design_1_auto_ds_2_rd_bin_cntr_15
     \gc0.count_d1_reg[0] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[0]),
-        .Q(\gpr1.dout_i_reg[1] [0]));
+        .Q(\gc0.count_d1_reg[4]_0 [0]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[1] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[1]),
-        .Q(\gpr1.dout_i_reg[1] [1]));
+        .Q(\gc0.count_d1_reg[4]_0 [1]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[2] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[2]),
-        .Q(\gpr1.dout_i_reg[1] [2]));
+        .Q(\gc0.count_d1_reg[4]_0 [2]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[3] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[3]),
-        .Q(\gpr1.dout_i_reg[1] [3]));
+        .Q(\gc0.count_d1_reg[4]_0 [3]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[4] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[4]),
-        .Q(\gpr1.dout_i_reg[1] [4]));
+        .Q(\gc0.count_d1_reg[4]_0 [4]));
   FDPE #(
     .INIT(1'b1)) 
     \gc0.count_reg[0] 
        (.C(clk),
         .CE(E),
         .D(plusOp[0]),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gc0.count_d1_reg[0]_0 ),
         .Q(Q[0]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_reg[1] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[1]),
         .Q(Q[1]));
   FDCE #(
@@ -21724,7 +21754,7 @@ module design_1_auto_ds_2_rd_bin_cntr_15
     \gc0.count_reg[2] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[2]),
         .Q(Q[2]));
   FDCE #(
@@ -21732,7 +21762,7 @@ module design_1_auto_ds_2_rd_bin_cntr_15
     \gc0.count_reg[3] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[3]),
         .Q(Q[3]));
   FDCE #(
@@ -21740,7 +21770,7 @@ module design_1_auto_ds_2_rd_bin_cntr_15
     \gc0.count_reg[4] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[4]),
         .Q(Q[4]));
 endmodule
@@ -21748,21 +21778,21 @@ endmodule
 (* ORIG_REF_NAME = "rd_bin_cntr" *) 
 module design_1_auto_ds_2_rd_bin_cntr_6
    (Q,
-    \gpr1.dout_i_reg[1] ,
+    \gc0.count_d1_reg[4]_0 ,
     E,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] );
+    \gc0.count_d1_reg[0]_0 );
   output [4:0]Q;
-  output [4:0]\gpr1.dout_i_reg[1] ;
+  output [4:0]\gc0.count_d1_reg[4]_0 ;
   input [0:0]E;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input \gc0.count_d1_reg[0]_0 ;
 
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
-  wire [4:0]\gpr1.dout_i_reg[1] ;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  wire \gc0.count_d1_reg[0]_0 ;
+  wire [4:0]\gc0.count_d1_reg[4]_0 ;
   wire [4:0]plusOp;
 
   LUT1 #(
@@ -21809,55 +21839,55 @@ module design_1_auto_ds_2_rd_bin_cntr_6
     \gc0.count_d1_reg[0] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[0]),
-        .Q(\gpr1.dout_i_reg[1] [0]));
+        .Q(\gc0.count_d1_reg[4]_0 [0]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[1] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[1]),
-        .Q(\gpr1.dout_i_reg[1] [1]));
+        .Q(\gc0.count_d1_reg[4]_0 [1]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[2] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[2]),
-        .Q(\gpr1.dout_i_reg[1] [2]));
+        .Q(\gc0.count_d1_reg[4]_0 [2]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[3] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[3]),
-        .Q(\gpr1.dout_i_reg[1] [3]));
+        .Q(\gc0.count_d1_reg[4]_0 [3]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_d1_reg[4] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(Q[4]),
-        .Q(\gpr1.dout_i_reg[1] [4]));
+        .Q(\gc0.count_d1_reg[4]_0 [4]));
   FDPE #(
     .INIT(1'b1)) 
     \gc0.count_reg[0] 
        (.C(clk),
         .CE(E),
         .D(plusOp[0]),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gc0.count_d1_reg[0]_0 ),
         .Q(Q[0]));
   FDCE #(
     .INIT(1'b0)) 
     \gc0.count_reg[1] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[1]),
         .Q(Q[1]));
   FDCE #(
@@ -21865,7 +21895,7 @@ module design_1_auto_ds_2_rd_bin_cntr_6
     \gc0.count_reg[2] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[2]),
         .Q(Q[2]));
   FDCE #(
@@ -21873,7 +21903,7 @@ module design_1_auto_ds_2_rd_bin_cntr_6
     \gc0.count_reg[3] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[3]),
         .Q(Q[3]));
   FDCE #(
@@ -21881,7 +21911,7 @@ module design_1_auto_ds_2_rd_bin_cntr_6
     \gc0.count_reg[4] 
        (.C(clk),
         .CE(E),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gc0.count_d1_reg[0]_0 ),
         .D(plusOp[4]),
         .Q(Q[4]));
 endmodule
@@ -21890,19 +21920,19 @@ module design_1_auto_ds_2_rd_fwft
    (out,
     empty,
     E,
-    \gc0.count_reg[4] ,
+    ram_empty_fb_i_reg,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ,
+    \gpregsm1.user_valid_reg_0 ,
     rd_en,
-    ram_empty_fb_i_reg);
+    \gc0.count_reg[4] );
   output [1:0]out;
   output empty;
   output [0:0]E;
-  output [0:0]\gc0.count_reg[4] ;
+  output [0:0]ram_empty_fb_i_reg;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input \gpregsm1.user_valid_reg_0 ;
   input rd_en;
-  input ram_empty_fb_i_reg;
+  input \gc0.count_reg[4] ;
 
   wire [0:0]E;
   (* DONT_TOUCH *) wire aempty_fwft_fb_i;
@@ -21915,10 +21945,10 @@ module design_1_auto_ds_2_rd_fwft
   wire empty_fwft_fb_o_i0;
   (* DONT_TOUCH *) wire empty_fwft_i;
   wire empty_fwft_i0;
-  wire [0:0]\gc0.count_reg[4] ;
+  wire \gc0.count_reg[4] ;
+  wire \gpregsm1.user_valid_reg_0 ;
   wire [1:0]next_fwft_state;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
-  wire ram_empty_fb_i_reg;
+  wire [0:0]ram_empty_fb_i_reg;
   wire rd_en;
   (* DONT_TOUCH *) wire user_valid;
 
@@ -21930,7 +21960,7 @@ module design_1_auto_ds_2_rd_fwft
        (.I0(rd_en),
         .I1(curr_fwft_state[0]),
         .I2(curr_fwft_state[1]),
-        .I3(ram_empty_fb_i_reg),
+        .I3(\gc0.count_reg[4] ),
         .I4(aempty_fwft_fb_i),
         .O(aempty_fwft_i0));
   (* DONT_TOUCH *) 
@@ -21942,7 +21972,7 @@ module design_1_auto_ds_2_rd_fwft
        (.C(clk),
         .CE(1'b1),
         .D(aempty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(aempty_fwft_fb_i));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -21953,7 +21983,7 @@ module design_1_auto_ds_2_rd_fwft
        (.C(clk),
         .CE(1'b1),
         .D(aempty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(aempty_fwft_i));
   LUT4 #(
     .INIT(16'hF320)) 
@@ -21972,7 +22002,7 @@ module design_1_auto_ds_2_rd_fwft
        (.C(clk),
         .CE(1'b1),
         .D(empty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(empty_fwft_fb_i));
   LUT4 #(
     .INIT(16'hF320)) 
@@ -21991,7 +22021,7 @@ module design_1_auto_ds_2_rd_fwft
        (.C(clk),
         .CE(1'b1),
         .D(empty_fwft_fb_o_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(empty_fwft_fb_o_i));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22002,23 +22032,23 @@ module design_1_auto_ds_2_rd_fwft
        (.C(clk),
         .CE(1'b1),
         .D(empty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(empty_fwft_i));
   LUT4 #(
     .INIT(16'h4555)) 
     \gc0.count_d1[4]_i_1 
-       (.I0(ram_empty_fb_i_reg),
+       (.I0(\gc0.count_reg[4] ),
         .I1(rd_en),
         .I2(curr_fwft_state[1]),
         .I3(curr_fwft_state[0]),
-        .O(\gc0.count_reg[4] ));
+        .O(ram_empty_fb_i_reg));
   LUT4 #(
     .INIT(16'h00F7)) 
     \gpr1.dout_i[28]_i_1 
        (.I0(curr_fwft_state[0]),
         .I1(curr_fwft_state[1]),
         .I2(rd_en),
-        .I3(ram_empty_fb_i_reg),
+        .I3(\gc0.count_reg[4] ),
         .O(E));
   LUT3 #(
     .INIT(8'hBA)) 
@@ -22033,7 +22063,7 @@ module design_1_auto_ds_2_rd_fwft
        (.I0(curr_fwft_state[1]),
         .I1(rd_en),
         .I2(curr_fwft_state[0]),
-        .I3(ram_empty_fb_i_reg),
+        .I3(\gc0.count_reg[4] ),
         .O(next_fwft_state[1]));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22043,7 +22073,7 @@ module design_1_auto_ds_2_rd_fwft
     \gpregsm1.curr_fwft_state_reg[0] 
        (.C(clk),
         .CE(1'b1),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gpregsm1.user_valid_reg_0 ),
         .D(next_fwft_state[0]),
         .Q(curr_fwft_state[0]));
   (* DONT_TOUCH *) 
@@ -22054,7 +22084,7 @@ module design_1_auto_ds_2_rd_fwft
     \gpregsm1.curr_fwft_state_reg[1] 
        (.C(clk),
         .CE(1'b1),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gpregsm1.user_valid_reg_0 ),
         .D(next_fwft_state[1]),
         .Q(curr_fwft_state[1]));
   (* DONT_TOUCH *) 
@@ -22065,7 +22095,7 @@ module design_1_auto_ds_2_rd_fwft
     \gpregsm1.user_valid_reg 
        (.C(clk),
         .CE(1'b1),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gpregsm1.user_valid_reg_0 ),
         .D(next_fwft_state[0]),
         .Q(user_valid));
 endmodule
@@ -22075,19 +22105,19 @@ module design_1_auto_ds_2_rd_fwft_13
    (out,
     empty,
     E,
-    \gc0.count_reg[4] ,
+    ram_empty_fb_i_reg,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ,
+    \gpregsm1.user_valid_reg_0 ,
     rd_en,
-    ram_empty_fb_i_reg);
+    \gc0.count_reg[4] );
   output [1:0]out;
   output empty;
   output [0:0]E;
-  output [0:0]\gc0.count_reg[4] ;
+  output [0:0]ram_empty_fb_i_reg;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input \gpregsm1.user_valid_reg_0 ;
   input rd_en;
-  input ram_empty_fb_i_reg;
+  input \gc0.count_reg[4] ;
 
   wire [0:0]E;
   (* DONT_TOUCH *) wire aempty_fwft_fb_i;
@@ -22100,10 +22130,10 @@ module design_1_auto_ds_2_rd_fwft_13
   wire empty_fwft_fb_o_i0;
   (* DONT_TOUCH *) wire empty_fwft_i;
   wire empty_fwft_i0;
-  wire [0:0]\gc0.count_reg[4] ;
+  wire \gc0.count_reg[4] ;
+  wire \gpregsm1.user_valid_reg_0 ;
   wire [1:0]next_fwft_state;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
-  wire ram_empty_fb_i_reg;
+  wire [0:0]ram_empty_fb_i_reg;
   wire rd_en;
   (* DONT_TOUCH *) wire user_valid;
 
@@ -22115,7 +22145,7 @@ module design_1_auto_ds_2_rd_fwft_13
        (.I0(rd_en),
         .I1(curr_fwft_state[0]),
         .I2(curr_fwft_state[1]),
-        .I3(ram_empty_fb_i_reg),
+        .I3(\gc0.count_reg[4] ),
         .I4(aempty_fwft_fb_i),
         .O(aempty_fwft_i0));
   (* DONT_TOUCH *) 
@@ -22127,7 +22157,7 @@ module design_1_auto_ds_2_rd_fwft_13
        (.C(clk),
         .CE(1'b1),
         .D(aempty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(aempty_fwft_fb_i));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22138,7 +22168,7 @@ module design_1_auto_ds_2_rd_fwft_13
        (.C(clk),
         .CE(1'b1),
         .D(aempty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(aempty_fwft_i));
   LUT4 #(
     .INIT(16'hF320)) 
@@ -22157,7 +22187,7 @@ module design_1_auto_ds_2_rd_fwft_13
        (.C(clk),
         .CE(1'b1),
         .D(empty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(empty_fwft_fb_i));
   LUT4 #(
     .INIT(16'hF320)) 
@@ -22176,7 +22206,7 @@ module design_1_auto_ds_2_rd_fwft_13
        (.C(clk),
         .CE(1'b1),
         .D(empty_fwft_fb_o_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(empty_fwft_fb_o_i));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22187,23 +22217,23 @@ module design_1_auto_ds_2_rd_fwft_13
        (.C(clk),
         .CE(1'b1),
         .D(empty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(empty_fwft_i));
   LUT4 #(
     .INIT(16'h4555)) 
     \gc0.count_d1[4]_i_1 
-       (.I0(ram_empty_fb_i_reg),
+       (.I0(\gc0.count_reg[4] ),
         .I1(rd_en),
         .I2(curr_fwft_state[1]),
         .I3(curr_fwft_state[0]),
-        .O(\gc0.count_reg[4] ));
+        .O(ram_empty_fb_i_reg));
   LUT4 #(
     .INIT(16'h00F7)) 
     \gpr1.dout_i[28]_i_1 
        (.I0(curr_fwft_state[0]),
         .I1(curr_fwft_state[1]),
         .I2(rd_en),
-        .I3(ram_empty_fb_i_reg),
+        .I3(\gc0.count_reg[4] ),
         .O(E));
   LUT3 #(
     .INIT(8'hBA)) 
@@ -22218,7 +22248,7 @@ module design_1_auto_ds_2_rd_fwft_13
        (.I0(curr_fwft_state[1]),
         .I1(rd_en),
         .I2(curr_fwft_state[0]),
-        .I3(ram_empty_fb_i_reg),
+        .I3(\gc0.count_reg[4] ),
         .O(next_fwft_state[1]));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22228,7 +22258,7 @@ module design_1_auto_ds_2_rd_fwft_13
     \gpregsm1.curr_fwft_state_reg[0] 
        (.C(clk),
         .CE(1'b1),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gpregsm1.user_valid_reg_0 ),
         .D(next_fwft_state[0]),
         .Q(curr_fwft_state[0]));
   (* DONT_TOUCH *) 
@@ -22239,7 +22269,7 @@ module design_1_auto_ds_2_rd_fwft_13
     \gpregsm1.curr_fwft_state_reg[1] 
        (.C(clk),
         .CE(1'b1),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gpregsm1.user_valid_reg_0 ),
         .D(next_fwft_state[1]),
         .Q(curr_fwft_state[1]));
   (* DONT_TOUCH *) 
@@ -22250,7 +22280,7 @@ module design_1_auto_ds_2_rd_fwft_13
     \gpregsm1.user_valid_reg 
        (.C(clk),
         .CE(1'b1),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gpregsm1.user_valid_reg_0 ),
         .D(next_fwft_state[0]),
         .Q(user_valid));
 endmodule
@@ -22260,19 +22290,19 @@ module design_1_auto_ds_2_rd_fwft_4
    (out,
     empty,
     E,
-    \gc0.count_reg[4] ,
+    ram_empty_fb_i_reg,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ,
+    \gpregsm1.user_valid_reg_0 ,
     rd_en,
-    ram_empty_fb_i_reg);
+    \gc0.count_reg[4] );
   output [1:0]out;
   output empty;
   output [0:0]E;
-  output [0:0]\gc0.count_reg[4] ;
+  output [0:0]ram_empty_fb_i_reg;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input \gpregsm1.user_valid_reg_0 ;
   input rd_en;
-  input ram_empty_fb_i_reg;
+  input \gc0.count_reg[4] ;
 
   wire [0:0]E;
   (* DONT_TOUCH *) wire aempty_fwft_fb_i;
@@ -22285,10 +22315,10 @@ module design_1_auto_ds_2_rd_fwft_4
   wire empty_fwft_fb_o_i0;
   (* DONT_TOUCH *) wire empty_fwft_i;
   wire empty_fwft_i0;
-  wire [0:0]\gc0.count_reg[4] ;
+  wire \gc0.count_reg[4] ;
+  wire \gpregsm1.user_valid_reg_0 ;
   wire [1:0]next_fwft_state;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
-  wire ram_empty_fb_i_reg;
+  wire [0:0]ram_empty_fb_i_reg;
   wire rd_en;
   (* DONT_TOUCH *) wire user_valid;
 
@@ -22300,7 +22330,7 @@ module design_1_auto_ds_2_rd_fwft_4
        (.I0(rd_en),
         .I1(curr_fwft_state[0]),
         .I2(curr_fwft_state[1]),
-        .I3(ram_empty_fb_i_reg),
+        .I3(\gc0.count_reg[4] ),
         .I4(aempty_fwft_fb_i),
         .O(aempty_fwft_i0));
   (* DONT_TOUCH *) 
@@ -22312,7 +22342,7 @@ module design_1_auto_ds_2_rd_fwft_4
        (.C(clk),
         .CE(1'b1),
         .D(aempty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(aempty_fwft_fb_i));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22323,7 +22353,7 @@ module design_1_auto_ds_2_rd_fwft_4
        (.C(clk),
         .CE(1'b1),
         .D(aempty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(aempty_fwft_i));
   LUT4 #(
     .INIT(16'hF320)) 
@@ -22342,7 +22372,7 @@ module design_1_auto_ds_2_rd_fwft_4
        (.C(clk),
         .CE(1'b1),
         .D(empty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(empty_fwft_fb_i));
   LUT4 #(
     .INIT(16'hF320)) 
@@ -22361,7 +22391,7 @@ module design_1_auto_ds_2_rd_fwft_4
        (.C(clk),
         .CE(1'b1),
         .D(empty_fwft_fb_o_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(empty_fwft_fb_o_i));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22372,23 +22402,23 @@ module design_1_auto_ds_2_rd_fwft_4
        (.C(clk),
         .CE(1'b1),
         .D(empty_fwft_i0),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .PRE(\gpregsm1.user_valid_reg_0 ),
         .Q(empty_fwft_i));
   LUT4 #(
     .INIT(16'h4555)) 
     \gc0.count_d1[4]_i_1 
-       (.I0(ram_empty_fb_i_reg),
+       (.I0(\gc0.count_reg[4] ),
         .I1(rd_en),
         .I2(curr_fwft_state[1]),
         .I3(curr_fwft_state[0]),
-        .O(\gc0.count_reg[4] ));
+        .O(ram_empty_fb_i_reg));
   LUT4 #(
     .INIT(16'h00F7)) 
     \gpr1.dout_i[8]_i_1 
        (.I0(curr_fwft_state[0]),
         .I1(curr_fwft_state[1]),
         .I2(rd_en),
-        .I3(ram_empty_fb_i_reg),
+        .I3(\gc0.count_reg[4] ),
         .O(E));
   LUT3 #(
     .INIT(8'hBA)) 
@@ -22403,7 +22433,7 @@ module design_1_auto_ds_2_rd_fwft_4
        (.I0(curr_fwft_state[1]),
         .I1(rd_en),
         .I2(curr_fwft_state[0]),
-        .I3(ram_empty_fb_i_reg),
+        .I3(\gc0.count_reg[4] ),
         .O(next_fwft_state[1]));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22413,7 +22443,7 @@ module design_1_auto_ds_2_rd_fwft_4
     \gpregsm1.curr_fwft_state_reg[0] 
        (.C(clk),
         .CE(1'b1),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gpregsm1.user_valid_reg_0 ),
         .D(next_fwft_state[0]),
         .Q(curr_fwft_state[0]));
   (* DONT_TOUCH *) 
@@ -22424,7 +22454,7 @@ module design_1_auto_ds_2_rd_fwft_4
     \gpregsm1.curr_fwft_state_reg[1] 
        (.C(clk),
         .CE(1'b1),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gpregsm1.user_valid_reg_0 ),
         .D(next_fwft_state[1]),
         .Q(curr_fwft_state[1]));
   (* DONT_TOUCH *) 
@@ -22435,202 +22465,202 @@ module design_1_auto_ds_2_rd_fwft_4
     \gpregsm1.user_valid_reg 
        (.C(clk),
         .CE(1'b1),
-        .CLR(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .CLR(\gpregsm1.user_valid_reg_0 ),
         .D(next_fwft_state[0]),
         .Q(user_valid));
 endmodule
 
 module design_1_auto_ds_2_rd_logic
    (out,
-    \gpregsm1.user_valid_reg ,
+    \gpregsm1.curr_fwft_state_reg[1] ,
     empty,
     E,
     Q,
-    \gc0.count_reg[4] ,
-    \gpr1.dout_i_reg[1] ,
-    ram_full_fb_i_reg,
+    ram_empty_fb_i_reg,
+    \gc0.count_d1_reg[4] ,
+    ram_empty_i_reg,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ,
+    \gc0.count_d1_reg[0] ,
     rd_en);
   output out;
-  output [1:0]\gpregsm1.user_valid_reg ;
+  output [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
   output empty;
   output [0:0]E;
   output [4:0]Q;
-  output [0:0]\gc0.count_reg[4] ;
-  output [4:0]\gpr1.dout_i_reg[1] ;
-  input ram_full_fb_i_reg;
+  output [0:0]ram_empty_fb_i_reg;
+  output [4:0]\gc0.count_d1_reg[4] ;
+  input ram_empty_i_reg;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input \gc0.count_d1_reg[0] ;
   input rd_en;
 
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
   wire empty;
-  wire [0:0]\gc0.count_reg[4] ;
-  wire [4:0]\gpr1.dout_i_reg[1] ;
-  wire [1:0]\gpregsm1.user_valid_reg ;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  wire \gc0.count_d1_reg[0] ;
+  wire [4:0]\gc0.count_d1_reg[4] ;
+  wire [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
   wire out;
-  wire ram_full_fb_i_reg;
+  wire [0:0]ram_empty_fb_i_reg;
+  wire ram_empty_i_reg;
   wire rd_en;
 
   design_1_auto_ds_2_rd_fwft \gr1.gr1_int.rfwft 
        (.E(E),
         .clk(clk),
         .empty(empty),
-        .\gc0.count_reg[4] (\gc0.count_reg[4] ),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
-        .out(\gpregsm1.user_valid_reg ),
-        .ram_empty_fb_i_reg(out),
+        .\gc0.count_reg[4] (out),
+        .\gpregsm1.user_valid_reg_0 (\gc0.count_d1_reg[0] ),
+        .out(\gpregsm1.curr_fwft_state_reg[1] ),
+        .ram_empty_fb_i_reg(ram_empty_fb_i_reg),
         .rd_en(rd_en));
   design_1_auto_ds_2_rd_status_flags_ss \grss.rsts 
        (.clk(clk),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
         .out(out),
-        .ram_full_fb_i_reg(ram_full_fb_i_reg));
+        .ram_empty_fb_i_reg_0(\gc0.count_d1_reg[0] ),
+        .ram_empty_i_reg_0(ram_empty_i_reg));
   design_1_auto_ds_2_rd_bin_cntr rpntr
-       (.E(\gc0.count_reg[4] ),
+       (.E(ram_empty_fb_i_reg),
         .Q(Q),
         .clk(clk),
-        .\gpr1.dout_i_reg[1] (\gpr1.dout_i_reg[1] ),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ));
+        .\gc0.count_d1_reg[0]_0 (\gc0.count_d1_reg[0] ),
+        .\gc0.count_d1_reg[4]_0 (\gc0.count_d1_reg[4] ));
 endmodule
 
 (* ORIG_REF_NAME = "rd_logic" *) 
 module design_1_auto_ds_2_rd_logic_0
    (out,
-    \gpregsm1.user_valid_reg ,
+    \gpregsm1.curr_fwft_state_reg[1] ,
     empty,
     E,
     Q,
-    \gc0.count_reg[4] ,
-    \gpr1.dout_i_reg[1] ,
-    ram_full_fb_i_reg,
+    ram_empty_fb_i_reg,
+    \gc0.count_d1_reg[4] ,
+    ram_empty_i_reg,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ,
+    \gc0.count_d1_reg[0] ,
     rd_en);
   output out;
-  output [1:0]\gpregsm1.user_valid_reg ;
+  output [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
   output empty;
   output [0:0]E;
   output [4:0]Q;
-  output [0:0]\gc0.count_reg[4] ;
-  output [4:0]\gpr1.dout_i_reg[1] ;
-  input ram_full_fb_i_reg;
+  output [0:0]ram_empty_fb_i_reg;
+  output [4:0]\gc0.count_d1_reg[4] ;
+  input ram_empty_i_reg;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input \gc0.count_d1_reg[0] ;
   input rd_en;
 
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
   wire empty;
-  wire [0:0]\gc0.count_reg[4] ;
-  wire [4:0]\gpr1.dout_i_reg[1] ;
-  wire [1:0]\gpregsm1.user_valid_reg ;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  wire \gc0.count_d1_reg[0] ;
+  wire [4:0]\gc0.count_d1_reg[4] ;
+  wire [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
   wire out;
-  wire ram_full_fb_i_reg;
+  wire [0:0]ram_empty_fb_i_reg;
+  wire ram_empty_i_reg;
   wire rd_en;
 
   design_1_auto_ds_2_rd_fwft_4 \gr1.gr1_int.rfwft 
        (.E(E),
         .clk(clk),
         .empty(empty),
-        .\gc0.count_reg[4] (\gc0.count_reg[4] ),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
-        .out(\gpregsm1.user_valid_reg ),
-        .ram_empty_fb_i_reg(out),
+        .\gc0.count_reg[4] (out),
+        .\gpregsm1.user_valid_reg_0 (\gc0.count_d1_reg[0] ),
+        .out(\gpregsm1.curr_fwft_state_reg[1] ),
+        .ram_empty_fb_i_reg(ram_empty_fb_i_reg),
         .rd_en(rd_en));
   design_1_auto_ds_2_rd_status_flags_ss_5 \grss.rsts 
        (.clk(clk),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
         .out(out),
-        .ram_full_fb_i_reg(ram_full_fb_i_reg));
+        .ram_empty_fb_i_reg_0(\gc0.count_d1_reg[0] ),
+        .ram_empty_i_reg_0(ram_empty_i_reg));
   design_1_auto_ds_2_rd_bin_cntr_6 rpntr
-       (.E(\gc0.count_reg[4] ),
+       (.E(ram_empty_fb_i_reg),
         .Q(Q),
         .clk(clk),
-        .\gpr1.dout_i_reg[1] (\gpr1.dout_i_reg[1] ),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ));
+        .\gc0.count_d1_reg[0]_0 (\gc0.count_d1_reg[0] ),
+        .\gc0.count_d1_reg[4]_0 (\gc0.count_d1_reg[4] ));
 endmodule
 
 (* ORIG_REF_NAME = "rd_logic" *) 
 module design_1_auto_ds_2_rd_logic_7
    (out,
-    \gpregsm1.user_valid_reg ,
+    \gpregsm1.curr_fwft_state_reg[1] ,
     empty,
     E,
     Q,
-    \gc0.count_reg[4] ,
-    \gpr1.dout_i_reg[1] ,
-    ram_full_fb_i_reg,
+    ram_empty_fb_i_reg,
+    \gc0.count_d1_reg[4] ,
+    ram_empty_i_reg,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ,
+    \gc0.count_d1_reg[0] ,
     rd_en);
   output out;
-  output [1:0]\gpregsm1.user_valid_reg ;
+  output [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
   output empty;
   output [0:0]E;
   output [4:0]Q;
-  output [0:0]\gc0.count_reg[4] ;
-  output [4:0]\gpr1.dout_i_reg[1] ;
-  input ram_full_fb_i_reg;
+  output [0:0]ram_empty_fb_i_reg;
+  output [4:0]\gc0.count_d1_reg[4] ;
+  input ram_empty_i_reg;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input \gc0.count_d1_reg[0] ;
   input rd_en;
 
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
   wire empty;
-  wire [0:0]\gc0.count_reg[4] ;
-  wire [4:0]\gpr1.dout_i_reg[1] ;
-  wire [1:0]\gpregsm1.user_valid_reg ;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  wire \gc0.count_d1_reg[0] ;
+  wire [4:0]\gc0.count_d1_reg[4] ;
+  wire [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
   wire out;
-  wire ram_full_fb_i_reg;
+  wire [0:0]ram_empty_fb_i_reg;
+  wire ram_empty_i_reg;
   wire rd_en;
 
   design_1_auto_ds_2_rd_fwft_13 \gr1.gr1_int.rfwft 
        (.E(E),
         .clk(clk),
         .empty(empty),
-        .\gc0.count_reg[4] (\gc0.count_reg[4] ),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
-        .out(\gpregsm1.user_valid_reg ),
-        .ram_empty_fb_i_reg(out),
+        .\gc0.count_reg[4] (out),
+        .\gpregsm1.user_valid_reg_0 (\gc0.count_d1_reg[0] ),
+        .out(\gpregsm1.curr_fwft_state_reg[1] ),
+        .ram_empty_fb_i_reg(ram_empty_fb_i_reg),
         .rd_en(rd_en));
   design_1_auto_ds_2_rd_status_flags_ss_14 \grss.rsts 
        (.clk(clk),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
         .out(out),
-        .ram_full_fb_i_reg(ram_full_fb_i_reg));
+        .ram_empty_fb_i_reg_0(\gc0.count_d1_reg[0] ),
+        .ram_empty_i_reg_0(ram_empty_i_reg));
   design_1_auto_ds_2_rd_bin_cntr_15 rpntr
-       (.E(\gc0.count_reg[4] ),
+       (.E(ram_empty_fb_i_reg),
         .Q(Q),
         .clk(clk),
-        .\gpr1.dout_i_reg[1] (\gpr1.dout_i_reg[1] ),
-        .\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] (\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ));
+        .\gc0.count_d1_reg[0]_0 (\gc0.count_d1_reg[0] ),
+        .\gc0.count_d1_reg[4]_0 (\gc0.count_d1_reg[4] ));
 endmodule
 
 module design_1_auto_ds_2_rd_status_flags_ss
    (out,
-    ram_full_fb_i_reg,
+    ram_empty_i_reg_0,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] );
+    ram_empty_fb_i_reg_0);
   output out;
-  input ram_full_fb_i_reg;
+  input ram_empty_i_reg_0;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input ram_empty_fb_i_reg_0;
 
   wire clk;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
   (* DONT_TOUCH *) wire ram_empty_fb_i;
+  wire ram_empty_fb_i_reg_0;
   (* DONT_TOUCH *) wire ram_empty_i;
-  wire ram_full_fb_i_reg;
+  wire ram_empty_i_reg_0;
 
   assign out = ram_empty_fb_i;
   (* DONT_TOUCH *) 
@@ -22641,8 +22671,8 @@ module design_1_auto_ds_2_rd_status_flags_ss
     ram_empty_fb_i_reg
        (.C(clk),
         .CE(1'b1),
-        .D(ram_full_fb_i_reg),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .D(ram_empty_i_reg_0),
+        .PRE(ram_empty_fb_i_reg_0),
         .Q(ram_empty_fb_i));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22652,27 +22682,27 @@ module design_1_auto_ds_2_rd_status_flags_ss
     ram_empty_i_reg
        (.C(clk),
         .CE(1'b1),
-        .D(ram_full_fb_i_reg),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .D(ram_empty_i_reg_0),
+        .PRE(ram_empty_fb_i_reg_0),
         .Q(ram_empty_i));
 endmodule
 
 (* ORIG_REF_NAME = "rd_status_flags_ss" *) 
 module design_1_auto_ds_2_rd_status_flags_ss_14
    (out,
-    ram_full_fb_i_reg,
+    ram_empty_i_reg_0,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] );
+    ram_empty_fb_i_reg_0);
   output out;
-  input ram_full_fb_i_reg;
+  input ram_empty_i_reg_0;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input ram_empty_fb_i_reg_0;
 
   wire clk;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
   (* DONT_TOUCH *) wire ram_empty_fb_i;
+  wire ram_empty_fb_i_reg_0;
   (* DONT_TOUCH *) wire ram_empty_i;
-  wire ram_full_fb_i_reg;
+  wire ram_empty_i_reg_0;
 
   assign out = ram_empty_fb_i;
   (* DONT_TOUCH *) 
@@ -22683,8 +22713,8 @@ module design_1_auto_ds_2_rd_status_flags_ss_14
     ram_empty_fb_i_reg
        (.C(clk),
         .CE(1'b1),
-        .D(ram_full_fb_i_reg),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .D(ram_empty_i_reg_0),
+        .PRE(ram_empty_fb_i_reg_0),
         .Q(ram_empty_fb_i));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22694,27 +22724,27 @@ module design_1_auto_ds_2_rd_status_flags_ss_14
     ram_empty_i_reg
        (.C(clk),
         .CE(1'b1),
-        .D(ram_full_fb_i_reg),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .D(ram_empty_i_reg_0),
+        .PRE(ram_empty_fb_i_reg_0),
         .Q(ram_empty_i));
 endmodule
 
 (* ORIG_REF_NAME = "rd_status_flags_ss" *) 
 module design_1_auto_ds_2_rd_status_flags_ss_5
    (out,
-    ram_full_fb_i_reg,
+    ram_empty_i_reg_0,
     clk,
-    \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] );
+    ram_empty_fb_i_reg_0);
   output out;
-  input ram_full_fb_i_reg;
+  input ram_empty_i_reg_0;
   input clk;
-  input \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
+  input ram_empty_fb_i_reg_0;
 
   wire clk;
-  wire \ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ;
   (* DONT_TOUCH *) wire ram_empty_fb_i;
+  wire ram_empty_fb_i_reg_0;
   (* DONT_TOUCH *) wire ram_empty_i;
-  wire ram_full_fb_i_reg;
+  wire ram_empty_i_reg_0;
 
   assign out = ram_empty_fb_i;
   (* DONT_TOUCH *) 
@@ -22725,8 +22755,8 @@ module design_1_auto_ds_2_rd_status_flags_ss_5
     ram_empty_fb_i_reg
        (.C(clk),
         .CE(1'b1),
-        .D(ram_full_fb_i_reg),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .D(ram_empty_i_reg_0),
+        .PRE(ram_empty_fb_i_reg_0),
         .Q(ram_empty_fb_i));
   (* DONT_TOUCH *) 
   (* KEEP = "yes" *) 
@@ -22736,8 +22766,8 @@ module design_1_auto_ds_2_rd_status_flags_ss_5
     ram_empty_i_reg
        (.C(clk),
         .CE(1'b1),
-        .D(ram_full_fb_i_reg),
-        .PRE(\ngwrdrst.grst.g7serrst.gnsckt_wrst.gcc_rst.sckt_wr_rst_cc_reg[1] ),
+        .D(ram_empty_i_reg_0),
+        .PRE(ram_empty_fb_i_reg_0),
         .Q(ram_empty_i));
 endmodule
 
@@ -22747,18 +22777,18 @@ module design_1_auto_ds_2_reset_blk_ramfifo
     rst,
     clk,
     rd_en,
-    \gpregsm1.curr_fwft_state_reg[1] );
+    \goreg_dm.dout_i_reg[28] );
   output [0:0]E;
   output [0:0]AR;
   input rst;
   input clk;
   input rd_en;
-  input [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
+  input [1:0]\goreg_dm.dout_i_reg[28] ;
 
   wire [0:0]AR;
   wire [0:0]E;
   wire clk;
-  wire [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
+  wire [1:0]\goreg_dm.dout_i_reg[28] ;
   wire rd_en;
   wire rst;
   (* async_reg = "true" *) (* msgon = "true" *) wire rst_wr_reg2;
@@ -22775,8 +22805,8 @@ module design_1_auto_ds_2_reset_blk_ramfifo
     .INIT(64'h00000000000000B0)) 
     \goreg_dm.dout_i[28]_i_1 
        (.I0(rd_en),
-        .I1(\gpregsm1.curr_fwft_state_reg[1] [0]),
-        .I2(\gpregsm1.curr_fwft_state_reg[1] [1]),
+        .I1(\goreg_dm.dout_i_reg[28] [0]),
+        .I2(\goreg_dm.dout_i_reg[28] [1]),
         .I3(rst_wr_reg2),
         .I4(sckt_wr_rst_cc[0]),
         .I5(sckt_wr_rst_cc[1]),
@@ -22818,18 +22848,18 @@ module design_1_auto_ds_2_reset_blk_ramfifo__xdcDup__1
     rst,
     clk,
     rd_en,
-    \gpregsm1.curr_fwft_state_reg[1] );
+    \goreg_dm.dout_i_reg[8] );
   output [0:0]E;
   output [0:0]AR;
   input rst;
   input clk;
   input rd_en;
-  input [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
+  input [1:0]\goreg_dm.dout_i_reg[8] ;
 
   wire [0:0]AR;
   wire [0:0]E;
   wire clk;
-  wire [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
+  wire [1:0]\goreg_dm.dout_i_reg[8] ;
   wire rd_en;
   wire rst;
   (* async_reg = "true" *) (* msgon = "true" *) wire rst_wr_reg2;
@@ -22846,8 +22876,8 @@ module design_1_auto_ds_2_reset_blk_ramfifo__xdcDup__1
     .INIT(64'h00000000000000B0)) 
     \goreg_dm.dout_i[8]_i_1 
        (.I0(rd_en),
-        .I1(\gpregsm1.curr_fwft_state_reg[1] [0]),
-        .I2(\gpregsm1.curr_fwft_state_reg[1] [1]),
+        .I1(\goreg_dm.dout_i_reg[8] [0]),
+        .I2(\goreg_dm.dout_i_reg[8] [1]),
         .I3(rst_wr_reg2),
         .I4(sckt_wr_rst_cc[0]),
         .I5(sckt_wr_rst_cc[1]),
@@ -22889,18 +22919,18 @@ module design_1_auto_ds_2_reset_blk_ramfifo__xdcDup__2
     rst,
     clk,
     rd_en,
-    \gpregsm1.curr_fwft_state_reg[1] );
+    \goreg_dm.dout_i_reg[28] );
   output [0:0]E;
   output [0:0]AR;
   input rst;
   input clk;
   input rd_en;
-  input [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
+  input [1:0]\goreg_dm.dout_i_reg[28] ;
 
   wire [0:0]AR;
   wire [0:0]E;
   wire clk;
-  wire [1:0]\gpregsm1.curr_fwft_state_reg[1] ;
+  wire [1:0]\goreg_dm.dout_i_reg[28] ;
   wire rd_en;
   wire rst;
   (* async_reg = "true" *) (* msgon = "true" *) wire rst_wr_reg2;
@@ -22917,8 +22947,8 @@ module design_1_auto_ds_2_reset_blk_ramfifo__xdcDup__2
     .INIT(64'h00000000000000B0)) 
     \goreg_dm.dout_i[28]_i_1 
        (.I0(rd_en),
-        .I1(\gpregsm1.curr_fwft_state_reg[1] [0]),
-        .I2(\gpregsm1.curr_fwft_state_reg[1] [1]),
+        .I1(\goreg_dm.dout_i_reg[28] [0]),
+        .I2(\goreg_dm.dout_i_reg[28] [1]),
         .I3(rst_wr_reg2),
         .I4(sckt_wr_rst_cc[0]),
         .I5(sckt_wr_rst_cc[1]),
@@ -22955,26 +22985,26 @@ endmodule
 
 module design_1_auto_ds_2_wr_bin_cntr
    (ram_full_comb,
-    ram_empty_i_reg,
+    ram_full_fb_i_reg,
     Q,
     wr_en,
-    ram_empty_fb_i_reg,
+    ram_empty_i_reg,
     out,
-    ram_empty_fb_i_reg_0,
-    \gc0.count_d1_reg[4] ,
-    \gc0.count_reg[4] ,
+    ram_empty_i_reg_0,
+    ram_empty_fb_i_i_3_0,
+    ram_empty_fb_i_i_2_0,
     E,
     clk,
     AR);
   output ram_full_comb;
-  output ram_empty_i_reg;
+  output ram_full_fb_i_reg;
   output [4:0]Q;
   input wr_en;
-  input [0:0]ram_empty_fb_i_reg;
+  input [0:0]ram_empty_i_reg;
   input out;
-  input ram_empty_fb_i_reg_0;
-  input [4:0]\gc0.count_d1_reg[4] ;
-  input [4:0]\gc0.count_reg[4] ;
+  input ram_empty_i_reg_0;
+  input [4:0]ram_empty_fb_i_i_3_0;
+  input [4:0]ram_empty_fb_i_i_2_0;
   input [0:0]E;
   input clk;
   input [0:0]AR;
@@ -22983,21 +23013,21 @@ module design_1_auto_ds_2_wr_bin_cntr
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [4:0]\gc0.count_reg[4] ;
   wire \gntv_or_sync_fifo.gl0.rd/grss.rsts/comp1 ;
   wire \gwss.wsts/comp0 ;
   wire \gwss.wsts/comp1 ;
   wire out;
   wire [4:0]p_13_out;
   wire [4:0]plusOp__0;
+  wire [4:0]ram_empty_fb_i_i_2_0;
+  wire [4:0]ram_empty_fb_i_i_3_0;
   wire ram_empty_fb_i_i_4_n_0;
   wire ram_empty_fb_i_i_5_n_0;
-  wire [0:0]ram_empty_fb_i_reg;
-  wire ram_empty_fb_i_reg_0;
-  wire ram_empty_i_reg;
+  wire [0:0]ram_empty_i_reg;
+  wire ram_empty_i_reg_0;
   wire ram_full_comb;
   wire ram_full_fb_i_i_3_n_0;
+  wire ram_full_fb_i_reg;
   wire wr_en;
 
   LUT1 #(
@@ -23121,49 +23151,49 @@ module design_1_auto_ds_2_wr_bin_cntr
   LUT6 #(
     .INIT(64'hFF0FFFFF88008888)) 
     ram_empty_fb_i_i_1
-       (.I0(ram_empty_fb_i_reg),
+       (.I0(ram_empty_i_reg),
         .I1(\gntv_or_sync_fifo.gl0.rd/grss.rsts/comp1 ),
         .I2(\gwss.wsts/comp0 ),
         .I3(out),
         .I4(wr_en),
-        .I5(ram_empty_fb_i_reg_0),
-        .O(ram_empty_i_reg));
+        .I5(ram_empty_i_reg_0),
+        .O(ram_full_fb_i_reg));
   LUT5 #(
     .INIT(32'h90090000)) 
     ram_empty_fb_i_i_2
        (.I0(Q[1]),
-        .I1(\gc0.count_reg[4] [1]),
+        .I1(ram_empty_fb_i_i_2_0[1]),
         .I2(Q[0]),
-        .I3(\gc0.count_reg[4] [0]),
+        .I3(ram_empty_fb_i_i_2_0[0]),
         .I4(ram_empty_fb_i_i_4_n_0),
         .O(\gntv_or_sync_fifo.gl0.rd/grss.rsts/comp1 ));
   LUT5 #(
     .INIT(32'h90090000)) 
     ram_empty_fb_i_i_3
        (.I0(Q[1]),
-        .I1(\gc0.count_d1_reg[4] [1]),
+        .I1(ram_empty_fb_i_i_3_0[1]),
         .I2(Q[0]),
-        .I3(\gc0.count_d1_reg[4] [0]),
+        .I3(ram_empty_fb_i_i_3_0[0]),
         .I4(ram_empty_fb_i_i_5_n_0),
         .O(\gwss.wsts/comp0 ));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     ram_empty_fb_i_i_4
        (.I0(Q[3]),
-        .I1(\gc0.count_reg[4] [3]),
+        .I1(ram_empty_fb_i_i_2_0[3]),
         .I2(Q[2]),
-        .I3(\gc0.count_reg[4] [2]),
-        .I4(\gc0.count_reg[4] [4]),
+        .I3(ram_empty_fb_i_i_2_0[2]),
+        .I4(ram_empty_fb_i_i_2_0[4]),
         .I5(Q[4]),
         .O(ram_empty_fb_i_i_4_n_0));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     ram_empty_fb_i_i_5
        (.I0(Q[3]),
-        .I1(\gc0.count_d1_reg[4] [3]),
+        .I1(ram_empty_fb_i_i_3_0[3]),
         .I2(Q[2]),
-        .I3(\gc0.count_d1_reg[4] [2]),
-        .I4(\gc0.count_d1_reg[4] [4]),
+        .I3(ram_empty_fb_i_i_3_0[2]),
+        .I4(ram_empty_fb_i_i_3_0[4]),
         .I5(Q[4]),
         .O(ram_empty_fb_i_i_5_n_0));
   LUT5 #(
@@ -23172,7 +23202,7 @@ module design_1_auto_ds_2_wr_bin_cntr
        (.I0(wr_en),
         .I1(\gwss.wsts/comp1 ),
         .I2(\gwss.wsts/comp0 ),
-        .I3(ram_empty_fb_i_reg),
+        .I3(ram_empty_i_reg),
         .I4(out),
         .O(ram_full_comb));
   (* SOFT_HLUTNM = "soft_lutpair67" *) 
@@ -23180,19 +23210,19 @@ module design_1_auto_ds_2_wr_bin_cntr
     .INIT(32'h90090000)) 
     ram_full_fb_i_i_2
        (.I0(p_13_out[1]),
-        .I1(\gc0.count_d1_reg[4] [1]),
+        .I1(ram_empty_fb_i_i_3_0[1]),
         .I2(p_13_out[0]),
-        .I3(\gc0.count_d1_reg[4] [0]),
+        .I3(ram_empty_fb_i_i_3_0[0]),
         .I4(ram_full_fb_i_i_3_n_0),
         .O(\gwss.wsts/comp1 ));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     ram_full_fb_i_i_3
        (.I0(p_13_out[3]),
-        .I1(\gc0.count_d1_reg[4] [3]),
+        .I1(ram_empty_fb_i_i_3_0[3]),
         .I2(p_13_out[2]),
-        .I3(\gc0.count_d1_reg[4] [2]),
-        .I4(\gc0.count_d1_reg[4] [4]),
+        .I3(ram_empty_fb_i_i_3_0[2]),
+        .I4(ram_empty_fb_i_i_3_0[4]),
         .I5(p_13_out[4]),
         .O(ram_full_fb_i_i_3_n_0));
 endmodule
@@ -23200,26 +23230,26 @@ endmodule
 (* ORIG_REF_NAME = "wr_bin_cntr" *) 
 module design_1_auto_ds_2_wr_bin_cntr_12
    (ram_full_comb,
-    ram_empty_i_reg,
+    ram_full_fb_i_reg,
     Q,
     wr_en,
-    ram_empty_fb_i_reg,
+    ram_empty_i_reg,
     out,
-    ram_empty_fb_i_reg_0,
-    \gc0.count_d1_reg[4] ,
-    \gc0.count_reg[4] ,
+    ram_empty_i_reg_0,
+    ram_empty_fb_i_i_3_0,
+    ram_empty_fb_i_i_2_0,
     E,
     clk,
     AR);
   output ram_full_comb;
-  output ram_empty_i_reg;
+  output ram_full_fb_i_reg;
   output [4:0]Q;
   input wr_en;
-  input [0:0]ram_empty_fb_i_reg;
+  input [0:0]ram_empty_i_reg;
   input out;
-  input ram_empty_fb_i_reg_0;
-  input [4:0]\gc0.count_d1_reg[4] ;
-  input [4:0]\gc0.count_reg[4] ;
+  input ram_empty_i_reg_0;
+  input [4:0]ram_empty_fb_i_i_3_0;
+  input [4:0]ram_empty_fb_i_i_2_0;
   input [0:0]E;
   input clk;
   input [0:0]AR;
@@ -23228,21 +23258,21 @@ module design_1_auto_ds_2_wr_bin_cntr_12
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [4:0]\gc0.count_reg[4] ;
   wire \gntv_or_sync_fifo.gl0.rd/grss.rsts/comp1 ;
   wire \gwss.wsts/comp0 ;
   wire \gwss.wsts/comp1 ;
   wire out;
   wire [4:0]p_13_out;
   wire [4:0]plusOp__0;
+  wire [4:0]ram_empty_fb_i_i_2_0;
+  wire [4:0]ram_empty_fb_i_i_3_0;
   wire ram_empty_fb_i_i_4_n_0;
   wire ram_empty_fb_i_i_5_n_0;
-  wire [0:0]ram_empty_fb_i_reg;
-  wire ram_empty_fb_i_reg_0;
-  wire ram_empty_i_reg;
+  wire [0:0]ram_empty_i_reg;
+  wire ram_empty_i_reg_0;
   wire ram_full_comb;
   wire ram_full_fb_i_i_3_n_0;
+  wire ram_full_fb_i_reg;
   wire wr_en;
 
   LUT1 #(
@@ -23366,49 +23396,49 @@ module design_1_auto_ds_2_wr_bin_cntr_12
   LUT6 #(
     .INIT(64'hFF0FFFFF88008888)) 
     ram_empty_fb_i_i_1
-       (.I0(ram_empty_fb_i_reg),
+       (.I0(ram_empty_i_reg),
         .I1(\gntv_or_sync_fifo.gl0.rd/grss.rsts/comp1 ),
         .I2(\gwss.wsts/comp0 ),
         .I3(out),
         .I4(wr_en),
-        .I5(ram_empty_fb_i_reg_0),
-        .O(ram_empty_i_reg));
+        .I5(ram_empty_i_reg_0),
+        .O(ram_full_fb_i_reg));
   LUT5 #(
     .INIT(32'h90090000)) 
     ram_empty_fb_i_i_2
        (.I0(Q[1]),
-        .I1(\gc0.count_reg[4] [1]),
+        .I1(ram_empty_fb_i_i_2_0[1]),
         .I2(Q[0]),
-        .I3(\gc0.count_reg[4] [0]),
+        .I3(ram_empty_fb_i_i_2_0[0]),
         .I4(ram_empty_fb_i_i_4_n_0),
         .O(\gntv_or_sync_fifo.gl0.rd/grss.rsts/comp1 ));
   LUT5 #(
     .INIT(32'h90090000)) 
     ram_empty_fb_i_i_3
        (.I0(Q[1]),
-        .I1(\gc0.count_d1_reg[4] [1]),
+        .I1(ram_empty_fb_i_i_3_0[1]),
         .I2(Q[0]),
-        .I3(\gc0.count_d1_reg[4] [0]),
+        .I3(ram_empty_fb_i_i_3_0[0]),
         .I4(ram_empty_fb_i_i_5_n_0),
         .O(\gwss.wsts/comp0 ));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     ram_empty_fb_i_i_4
        (.I0(Q[3]),
-        .I1(\gc0.count_reg[4] [3]),
+        .I1(ram_empty_fb_i_i_2_0[3]),
         .I2(Q[2]),
-        .I3(\gc0.count_reg[4] [2]),
-        .I4(\gc0.count_reg[4] [4]),
+        .I3(ram_empty_fb_i_i_2_0[2]),
+        .I4(ram_empty_fb_i_i_2_0[4]),
         .I5(Q[4]),
         .O(ram_empty_fb_i_i_4_n_0));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     ram_empty_fb_i_i_5
        (.I0(Q[3]),
-        .I1(\gc0.count_d1_reg[4] [3]),
+        .I1(ram_empty_fb_i_i_3_0[3]),
         .I2(Q[2]),
-        .I3(\gc0.count_d1_reg[4] [2]),
-        .I4(\gc0.count_d1_reg[4] [4]),
+        .I3(ram_empty_fb_i_i_3_0[2]),
+        .I4(ram_empty_fb_i_i_3_0[4]),
         .I5(Q[4]),
         .O(ram_empty_fb_i_i_5_n_0));
   LUT5 #(
@@ -23417,7 +23447,7 @@ module design_1_auto_ds_2_wr_bin_cntr_12
        (.I0(wr_en),
         .I1(\gwss.wsts/comp1 ),
         .I2(\gwss.wsts/comp0 ),
-        .I3(ram_empty_fb_i_reg),
+        .I3(ram_empty_i_reg),
         .I4(out),
         .O(ram_full_comb));
   (* SOFT_HLUTNM = "soft_lutpair2" *) 
@@ -23425,19 +23455,19 @@ module design_1_auto_ds_2_wr_bin_cntr_12
     .INIT(32'h90090000)) 
     ram_full_fb_i_i_2
        (.I0(p_13_out[1]),
-        .I1(\gc0.count_d1_reg[4] [1]),
+        .I1(ram_empty_fb_i_i_3_0[1]),
         .I2(p_13_out[0]),
-        .I3(\gc0.count_d1_reg[4] [0]),
+        .I3(ram_empty_fb_i_i_3_0[0]),
         .I4(ram_full_fb_i_i_3_n_0),
         .O(\gwss.wsts/comp1 ));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     ram_full_fb_i_i_3
        (.I0(p_13_out[3]),
-        .I1(\gc0.count_d1_reg[4] [3]),
+        .I1(ram_empty_fb_i_i_3_0[3]),
         .I2(p_13_out[2]),
-        .I3(\gc0.count_d1_reg[4] [2]),
-        .I4(\gc0.count_d1_reg[4] [4]),
+        .I3(ram_empty_fb_i_i_3_0[2]),
+        .I4(ram_empty_fb_i_i_3_0[4]),
         .I5(p_13_out[4]),
         .O(ram_full_fb_i_i_3_n_0));
 endmodule
@@ -23445,26 +23475,26 @@ endmodule
 (* ORIG_REF_NAME = "wr_bin_cntr" *) 
 module design_1_auto_ds_2_wr_bin_cntr_3
    (ram_full_comb,
-    ram_empty_i_reg,
+    ram_full_fb_i_reg,
     Q,
     wr_en,
-    ram_empty_fb_i_reg,
+    ram_empty_i_reg,
     out,
-    ram_empty_fb_i_reg_0,
-    \gc0.count_d1_reg[4] ,
-    \gc0.count_reg[4] ,
+    ram_empty_i_reg_0,
+    ram_empty_fb_i_i_3_0,
+    ram_empty_fb_i_i_2_0,
     E,
     clk,
     AR);
   output ram_full_comb;
-  output ram_empty_i_reg;
+  output ram_full_fb_i_reg;
   output [4:0]Q;
   input wr_en;
-  input [0:0]ram_empty_fb_i_reg;
+  input [0:0]ram_empty_i_reg;
   input out;
-  input ram_empty_fb_i_reg_0;
-  input [4:0]\gc0.count_d1_reg[4] ;
-  input [4:0]\gc0.count_reg[4] ;
+  input ram_empty_i_reg_0;
+  input [4:0]ram_empty_fb_i_i_3_0;
+  input [4:0]ram_empty_fb_i_i_2_0;
   input [0:0]E;
   input clk;
   input [0:0]AR;
@@ -23473,21 +23503,21 @@ module design_1_auto_ds_2_wr_bin_cntr_3
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [4:0]\gc0.count_reg[4] ;
   wire \gntv_or_sync_fifo.gl0.rd/grss.rsts/comp1 ;
   wire \gwss.wsts/comp0 ;
   wire \gwss.wsts/comp1 ;
   wire out;
   wire [4:0]p_13_out;
   wire [4:0]plusOp__0;
+  wire [4:0]ram_empty_fb_i_i_2_0;
+  wire [4:0]ram_empty_fb_i_i_3_0;
   wire ram_empty_fb_i_i_4_n_0;
   wire ram_empty_fb_i_i_5_n_0;
-  wire [0:0]ram_empty_fb_i_reg;
-  wire ram_empty_fb_i_reg_0;
-  wire ram_empty_i_reg;
+  wire [0:0]ram_empty_i_reg;
+  wire ram_empty_i_reg_0;
   wire ram_full_comb;
   wire ram_full_fb_i_i_3_n_0;
+  wire ram_full_fb_i_reg;
   wire wr_en;
 
   LUT1 #(
@@ -23611,49 +23641,49 @@ module design_1_auto_ds_2_wr_bin_cntr_3
   LUT6 #(
     .INIT(64'hFF0FFFFF88008888)) 
     ram_empty_fb_i_i_1
-       (.I0(ram_empty_fb_i_reg),
+       (.I0(ram_empty_i_reg),
         .I1(\gntv_or_sync_fifo.gl0.rd/grss.rsts/comp1 ),
         .I2(\gwss.wsts/comp0 ),
         .I3(out),
         .I4(wr_en),
-        .I5(ram_empty_fb_i_reg_0),
-        .O(ram_empty_i_reg));
+        .I5(ram_empty_i_reg_0),
+        .O(ram_full_fb_i_reg));
   LUT5 #(
     .INIT(32'h90090000)) 
     ram_empty_fb_i_i_2
        (.I0(Q[1]),
-        .I1(\gc0.count_reg[4] [1]),
+        .I1(ram_empty_fb_i_i_2_0[1]),
         .I2(Q[0]),
-        .I3(\gc0.count_reg[4] [0]),
+        .I3(ram_empty_fb_i_i_2_0[0]),
         .I4(ram_empty_fb_i_i_4_n_0),
         .O(\gntv_or_sync_fifo.gl0.rd/grss.rsts/comp1 ));
   LUT5 #(
     .INIT(32'h90090000)) 
     ram_empty_fb_i_i_3
        (.I0(Q[1]),
-        .I1(\gc0.count_d1_reg[4] [1]),
+        .I1(ram_empty_fb_i_i_3_0[1]),
         .I2(Q[0]),
-        .I3(\gc0.count_d1_reg[4] [0]),
+        .I3(ram_empty_fb_i_i_3_0[0]),
         .I4(ram_empty_fb_i_i_5_n_0),
         .O(\gwss.wsts/comp0 ));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     ram_empty_fb_i_i_4
        (.I0(Q[3]),
-        .I1(\gc0.count_reg[4] [3]),
+        .I1(ram_empty_fb_i_i_2_0[3]),
         .I2(Q[2]),
-        .I3(\gc0.count_reg[4] [2]),
-        .I4(\gc0.count_reg[4] [4]),
+        .I3(ram_empty_fb_i_i_2_0[2]),
+        .I4(ram_empty_fb_i_i_2_0[4]),
         .I5(Q[4]),
         .O(ram_empty_fb_i_i_4_n_0));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     ram_empty_fb_i_i_5
        (.I0(Q[3]),
-        .I1(\gc0.count_d1_reg[4] [3]),
+        .I1(ram_empty_fb_i_i_3_0[3]),
         .I2(Q[2]),
-        .I3(\gc0.count_d1_reg[4] [2]),
-        .I4(\gc0.count_d1_reg[4] [4]),
+        .I3(ram_empty_fb_i_i_3_0[2]),
+        .I4(ram_empty_fb_i_i_3_0[4]),
         .I5(Q[4]),
         .O(ram_empty_fb_i_i_5_n_0));
   LUT5 #(
@@ -23662,7 +23692,7 @@ module design_1_auto_ds_2_wr_bin_cntr_3
        (.I0(wr_en),
         .I1(\gwss.wsts/comp1 ),
         .I2(\gwss.wsts/comp0 ),
-        .I3(ram_empty_fb_i_reg),
+        .I3(ram_empty_i_reg),
         .I4(out),
         .O(ram_full_comb));
   (* SOFT_HLUTNM = "soft_lutpair62" *) 
@@ -23670,59 +23700,59 @@ module design_1_auto_ds_2_wr_bin_cntr_3
     .INIT(32'h90090000)) 
     ram_full_fb_i_i_2
        (.I0(p_13_out[1]),
-        .I1(\gc0.count_d1_reg[4] [1]),
+        .I1(ram_empty_fb_i_i_3_0[1]),
         .I2(p_13_out[0]),
-        .I3(\gc0.count_d1_reg[4] [0]),
+        .I3(ram_empty_fb_i_i_3_0[0]),
         .I4(ram_full_fb_i_i_3_n_0),
         .O(\gwss.wsts/comp1 ));
   LUT6 #(
     .INIT(64'h9009000000009009)) 
     ram_full_fb_i_i_3
        (.I0(p_13_out[3]),
-        .I1(\gc0.count_d1_reg[4] [3]),
+        .I1(ram_empty_fb_i_i_3_0[3]),
         .I2(p_13_out[2]),
-        .I3(\gc0.count_d1_reg[4] [2]),
-        .I4(\gc0.count_d1_reg[4] [4]),
+        .I3(ram_empty_fb_i_i_3_0[2]),
+        .I4(ram_empty_fb_i_i_3_0[4]),
         .I5(p_13_out[4]),
         .O(ram_full_fb_i_i_3_n_0));
 endmodule
 
 module design_1_auto_ds_2_wr_logic
    (full,
-    ram_empty_i_reg,
+    ram_full_fb_i_reg,
     E,
     Q,
     clk,
     AR,
     wr_en,
-    ram_empty_fb_i_reg,
+    ram_empty_i_reg,
     out,
-    \gc0.count_d1_reg[4] ,
-    \gc0.count_reg[4] );
+    ram_empty_fb_i_i_3,
+    ram_empty_fb_i_i_2);
   output full;
-  output ram_empty_i_reg;
+  output ram_full_fb_i_reg;
   output [0:0]E;
   output [4:0]Q;
   input clk;
   input [0:0]AR;
   input wr_en;
-  input [0:0]ram_empty_fb_i_reg;
+  input [0:0]ram_empty_i_reg;
   input out;
-  input [4:0]\gc0.count_d1_reg[4] ;
-  input [4:0]\gc0.count_reg[4] ;
+  input [4:0]ram_empty_fb_i_i_3;
+  input [4:0]ram_empty_fb_i_i_2;
 
   wire [0:0]AR;
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
   wire full;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [4:0]\gc0.count_reg[4] ;
   wire \gwss.wsts_n_0 ;
   wire out;
-  wire [0:0]ram_empty_fb_i_reg;
-  wire ram_empty_i_reg;
+  wire [4:0]ram_empty_fb_i_i_2;
+  wire [4:0]ram_empty_fb_i_i_3;
+  wire [0:0]ram_empty_i_reg;
   wire ram_full_comb;
+  wire ram_full_fb_i_reg;
   wire wr_en;
 
   design_1_auto_ds_2_wr_status_flags_ss \gwss.wsts 
@@ -23738,53 +23768,53 @@ module design_1_auto_ds_2_wr_logic
         .E(E),
         .Q(Q),
         .clk(clk),
-        .\gc0.count_d1_reg[4] (\gc0.count_d1_reg[4] ),
-        .\gc0.count_reg[4] (\gc0.count_reg[4] ),
         .out(\gwss.wsts_n_0 ),
-        .ram_empty_fb_i_reg(ram_empty_fb_i_reg),
-        .ram_empty_fb_i_reg_0(out),
+        .ram_empty_fb_i_i_2_0(ram_empty_fb_i_i_2),
+        .ram_empty_fb_i_i_3_0(ram_empty_fb_i_i_3),
         .ram_empty_i_reg(ram_empty_i_reg),
+        .ram_empty_i_reg_0(out),
         .ram_full_comb(ram_full_comb),
+        .ram_full_fb_i_reg(ram_full_fb_i_reg),
         .wr_en(wr_en));
 endmodule
 
 (* ORIG_REF_NAME = "wr_logic" *) 
 module design_1_auto_ds_2_wr_logic_1
    (full,
-    ram_empty_i_reg,
+    ram_full_fb_i_reg,
     E,
     Q,
     clk,
     AR,
     wr_en,
-    ram_empty_fb_i_reg,
+    ram_empty_i_reg,
     out,
-    \gc0.count_d1_reg[4] ,
-    \gc0.count_reg[4] );
+    ram_empty_fb_i_i_3,
+    ram_empty_fb_i_i_2);
   output full;
-  output ram_empty_i_reg;
+  output ram_full_fb_i_reg;
   output [0:0]E;
   output [4:0]Q;
   input clk;
   input [0:0]AR;
   input wr_en;
-  input [0:0]ram_empty_fb_i_reg;
+  input [0:0]ram_empty_i_reg;
   input out;
-  input [4:0]\gc0.count_d1_reg[4] ;
-  input [4:0]\gc0.count_reg[4] ;
+  input [4:0]ram_empty_fb_i_i_3;
+  input [4:0]ram_empty_fb_i_i_2;
 
   wire [0:0]AR;
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
   wire full;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [4:0]\gc0.count_reg[4] ;
   wire \gwss.wsts_n_0 ;
   wire out;
-  wire [0:0]ram_empty_fb_i_reg;
-  wire ram_empty_i_reg;
+  wire [4:0]ram_empty_fb_i_i_2;
+  wire [4:0]ram_empty_fb_i_i_3;
+  wire [0:0]ram_empty_i_reg;
   wire ram_full_comb;
+  wire ram_full_fb_i_reg;
   wire wr_en;
 
   design_1_auto_ds_2_wr_status_flags_ss_2 \gwss.wsts 
@@ -23800,53 +23830,53 @@ module design_1_auto_ds_2_wr_logic_1
         .E(E),
         .Q(Q),
         .clk(clk),
-        .\gc0.count_d1_reg[4] (\gc0.count_d1_reg[4] ),
-        .\gc0.count_reg[4] (\gc0.count_reg[4] ),
         .out(\gwss.wsts_n_0 ),
-        .ram_empty_fb_i_reg(ram_empty_fb_i_reg),
-        .ram_empty_fb_i_reg_0(out),
+        .ram_empty_fb_i_i_2_0(ram_empty_fb_i_i_2),
+        .ram_empty_fb_i_i_3_0(ram_empty_fb_i_i_3),
         .ram_empty_i_reg(ram_empty_i_reg),
+        .ram_empty_i_reg_0(out),
         .ram_full_comb(ram_full_comb),
+        .ram_full_fb_i_reg(ram_full_fb_i_reg),
         .wr_en(wr_en));
 endmodule
 
 (* ORIG_REF_NAME = "wr_logic" *) 
 module design_1_auto_ds_2_wr_logic_8
    (full,
-    ram_empty_i_reg,
+    ram_full_fb_i_reg,
     E,
     Q,
     clk,
     AR,
     wr_en,
-    ram_empty_fb_i_reg,
+    ram_empty_i_reg,
     out,
-    \gc0.count_d1_reg[4] ,
-    \gc0.count_reg[4] );
+    ram_empty_fb_i_i_3,
+    ram_empty_fb_i_i_2);
   output full;
-  output ram_empty_i_reg;
+  output ram_full_fb_i_reg;
   output [0:0]E;
   output [4:0]Q;
   input clk;
   input [0:0]AR;
   input wr_en;
-  input [0:0]ram_empty_fb_i_reg;
+  input [0:0]ram_empty_i_reg;
   input out;
-  input [4:0]\gc0.count_d1_reg[4] ;
-  input [4:0]\gc0.count_reg[4] ;
+  input [4:0]ram_empty_fb_i_i_3;
+  input [4:0]ram_empty_fb_i_i_2;
 
   wire [0:0]AR;
   wire [0:0]E;
   wire [4:0]Q;
   wire clk;
   wire full;
-  wire [4:0]\gc0.count_d1_reg[4] ;
-  wire [4:0]\gc0.count_reg[4] ;
   wire \gwss.wsts_n_0 ;
   wire out;
-  wire [0:0]ram_empty_fb_i_reg;
-  wire ram_empty_i_reg;
+  wire [4:0]ram_empty_fb_i_i_2;
+  wire [4:0]ram_empty_fb_i_i_3;
+  wire [0:0]ram_empty_i_reg;
   wire ram_full_comb;
+  wire ram_full_fb_i_reg;
   wire wr_en;
 
   design_1_auto_ds_2_wr_status_flags_ss_11 \gwss.wsts 
@@ -23862,13 +23892,13 @@ module design_1_auto_ds_2_wr_logic_8
         .E(E),
         .Q(Q),
         .clk(clk),
-        .\gc0.count_d1_reg[4] (\gc0.count_d1_reg[4] ),
-        .\gc0.count_reg[4] (\gc0.count_reg[4] ),
         .out(\gwss.wsts_n_0 ),
-        .ram_empty_fb_i_reg(ram_empty_fb_i_reg),
-        .ram_empty_fb_i_reg_0(out),
+        .ram_empty_fb_i_i_2_0(ram_empty_fb_i_i_2),
+        .ram_empty_fb_i_i_3_0(ram_empty_fb_i_i_3),
         .ram_empty_i_reg(ram_empty_i_reg),
+        .ram_empty_i_reg_0(out),
         .ram_full_comb(ram_full_comb),
+        .ram_full_fb_i_reg(ram_full_fb_i_reg),
         .wr_en(wr_en));
 endmodule
 

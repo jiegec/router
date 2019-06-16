@@ -20,7 +20,7 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2018.1
+set scripts_vivado_version 2018.3
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
@@ -194,6 +194,7 @@ proc create_hier_cell_s00_nodes { parentCell nameHier } {
    CONFIG.MAX_PAYLD_BYTES {8} \
    CONFIG.M_SEND_PIPELINE {0} \
    CONFIG.NUM_MI {1} \
+   CONFIG.NUM_OUTSTANDING {2} \
    CONFIG.NUM_SI {1} \
    CONFIG.PAYLD_WIDTH {138} \
    CONFIG.S00_NUM_BYTES {8} \
@@ -243,6 +244,7 @@ proc create_hier_cell_s00_nodes { parentCell nameHier } {
    CONFIG.MAX_PAYLD_BYTES {8} \
    CONFIG.M_SEND_PIPELINE {0} \
    CONFIG.NUM_MI {1} \
+   CONFIG.NUM_OUTSTANDING {2} \
    CONFIG.NUM_SI {1} \
    CONFIG.PAYLD_WIDTH {83} \
    CONFIG.S00_NUM_BYTES {8} \
@@ -332,7 +334,9 @@ proc create_hier_cell_s00_entry_pipeline { parentCell nameHier } {
    CONFIG.MSC000_ROUTE {0b1} \
    CONFIG.MSC_ROUTE_WIDTH {1} \
    CONFIG.NUM_MSC {1} \
+   CONFIG.NUM_READ_OUTSTANDING {2} \
    CONFIG.NUM_SEG {1} \
+   CONFIG.NUM_WRITE_OUTSTANDING {2} \
    CONFIG.RDATA_WIDTH {64} \
    CONFIG.READ_WRITE_MODE {READ_ONLY} \
    CONFIG.SEG000_BASE_ADDR {0x0000000000000000} \
@@ -342,6 +346,7 @@ proc create_hier_cell_s00_entry_pipeline { parentCell nameHier } {
    CONFIG.SEG000_SIZE {30} \
    CONFIG.SEG000_SUPPORTS_READ {1} \
    CONFIG.SEG000_SUPPORTS_WRITE {1} \
+   CONFIG.SUPPORTS_NARROW {0} \
    CONFIG.SUPPORTS_READ_DECERR {1} \
    CONFIG.S_ARUSER_WIDTH {0} \
    CONFIG.S_PROTOCOL {AXI4} \
@@ -365,8 +370,10 @@ proc create_hier_cell_s00_entry_pipeline { parentCell nameHier } {
    CONFIG.MSC000_RDATA_WIDTH {64} \
    CONFIG.MSC000_WDATA_WIDTH {64} \
    CONFIG.NUM_MSC {1} \
+   CONFIG.NUM_READ_OUTSTANDING {2} \
    CONFIG.NUM_READ_THREADS {1} \
    CONFIG.NUM_SEG {1} \
+   CONFIG.NUM_WRITE_OUTSTANDING {2} \
    CONFIG.NUM_WRITE_THREADS {1} \
    CONFIG.RDATA_WIDTH {64} \
    CONFIG.READ_WRITE_MODE {READ_ONLY} \
@@ -386,6 +393,8 @@ proc create_hier_cell_s00_entry_pipeline { parentCell nameHier } {
    CONFIG.IS_CASCADED {0} \
    CONFIG.MEP_IDENTIFIER {0} \
    CONFIG.MEP_IDENTIFIER_WIDTH {1} \
+   CONFIG.NUM_READ_OUTSTANDING {2} \
+   CONFIG.NUM_WRITE_OUTSTANDING {2} \
    CONFIG.RDATA_WIDTH {64} \
    CONFIG.READ_WRITE_MODE {READ_ONLY} \
    CONFIG.SEP_ROUTE_WIDTH {1} \
@@ -470,6 +479,8 @@ proc create_hier_cell_m00_exit_pipeline { parentCell nameHier } {
    CONFIG.M_WUSER_BITS_PER_BYTE {0} \
    CONFIG.M_WUSER_WIDTH {0} \
    CONFIG.NUM_MSC {1} \
+   CONFIG.NUM_READ_OUTSTANDING {2} \
+   CONFIG.NUM_WRITE_OUTSTANDING {2} \
    CONFIG.RDATA_WIDTH {64} \
    CONFIG.READ_WRITE_MODE {READ_ONLY} \
    CONFIG.SSC000_ROUTE {0b1} \
@@ -595,11 +606,17 @@ proc create_root_design { parentCell } {
   set M00_AXI [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 M00_AXI ]
   set_property -dict [ list \
    CONFIG.MAX_BURST_LENGTH {16} \
+   CONFIG.NUM_READ_OUTSTANDING {2} \
+   CONFIG.NUM_WRITE_OUTSTANDING {2} \
    CONFIG.RUSER_BITS_PER_BYTE {0} \
    CONFIG.SUPPORTS_NARROW_BURST {0} \
    CONFIG.WUSER_BITS_PER_BYTE {0} \
    ] $M00_AXI
   set S00_AXI [ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 S00_AXI ]
+  set_property -dict [ list \
+   CONFIG.NUM_READ_OUTSTANDING {2} \
+   CONFIG.NUM_WRITE_OUTSTANDING {2} \
+   ] $S00_AXI
 
   # Create ports
   set aclk [ create_bd_port -dir I -type clk aclk ]
@@ -692,6 +709,7 @@ proc create_root_design { parentCell } {
   # Restore current instance
   current_bd_instance $oldCurInst
 
+  validate_bd_design
   save_bd_design
 }
 # End of create_root_design()

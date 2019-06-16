@@ -341,7 +341,7 @@ module tri_mode_ethernet_mac_0_block (
    // Instantiate the TEMAC encrypted HDL
    // DO NOT MODIFY this instantiation
    //---------------------------------------------------------------------------
-   tri_mode_ethernet_mac_v9_0_11 #(
+   tri_mode_ethernet_mac_v9_0_13 #(
       .C_S_AXI_ADDR_WIDTH        (12),
       .C_PHYSICAL_INTERFACE      ("RGMII"),
       .C_INTERNAL_MODE_TYPE      ("BASEX"),

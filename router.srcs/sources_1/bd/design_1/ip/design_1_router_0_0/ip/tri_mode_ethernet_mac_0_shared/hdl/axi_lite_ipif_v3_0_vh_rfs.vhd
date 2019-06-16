@@ -1800,7 +1800,7 @@ function slv64_2_slv_awidth(slv64_addr_array   : SLV64_ARRAY_TYPE;
                         return short_addr_array_type is
 
     variable temp_addr   : std_logic_vector(0 to 63);
-    variable slv_array   : short_addr_array_type;
+    variable slv_array   : short_addr_array_type:= ( ( others => ( others => '0' ) ) );
     begin
         for array_index in 0 to slv64_addr_array'length-1 loop
             temp_addr := slv64_addr_array(array_index);

@@ -20,7 +20,7 @@ set script_folder [_tcl::get_script_folder]
 ################################################################
 # Check if script is running in correct Vivado version.
 ################################################################
-set scripts_vivado_version 2018.1
+set scripts_vivado_version 2018.3
 set current_vivado_version [version -short]
 
 if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
@@ -173,7 +173,7 @@ proc create_root_design { parentCell } {
   set reset_n_in [ create_bd_port -dir I -type rst reset_n_in ]
 
   # Create instance: axi_bram_ctrl_0, and set properties
-  set axi_bram_ctrl_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.0 axi_bram_ctrl_0 ]
+  set axi_bram_ctrl_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_bram_ctrl:4.1 axi_bram_ctrl_0 ]
   set_property -dict [ list \
    CONFIG.DATA_WIDTH {128} \
    CONFIG.ECC_TYPE {0} \
@@ -183,15 +183,8 @@ proc create_root_design { parentCell } {
   # Create instance: axi_dynclk_0, and set properties
   set axi_dynclk_0 [ create_bd_cell -type ip -vlnv digilentinc.com:ip:axi_dynclk:1.0 axi_dynclk_0 ]
 
-  set_property -dict [ list \
-   CONFIG.SUPPORTS_NARROW_BURST {0} \
-   CONFIG.NUM_READ_OUTSTANDING {1} \
-   CONFIG.NUM_WRITE_OUTSTANDING {1} \
-   CONFIG.MAX_BURST_LENGTH {1} \
- ] [get_bd_intf_pins /axi_dynclk_0/s00_axi]
-
   # Create instance: axi_fifo_mm_s_0, and set properties
-  set axi_fifo_mm_s_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_fifo_mm_s:4.1 axi_fifo_mm_s_0 ]
+  set axi_fifo_mm_s_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_fifo_mm_s:4.2 axi_fifo_mm_s_0 ]
   set_property -dict [ list \
    CONFIG.C_DATA_INTERFACE_TYPE {0} \
    CONFIG.C_USE_TX_CTRL {0} \
@@ -462,7 +455,7 @@ proc create_root_design { parentCell } {
  ] $ps7_0_axi_periph
 
   # Create instance: router_0, and set properties
-  set router_0 [ create_bd_cell -type ip -vlnv me.jiegec:ip:router:1.4 router_0 ]
+  set router_0 [ create_bd_cell -type ip -vlnv me.jiegec:ip:router:1.6 router_0 ]
 
   # Create instance: rst_ps7_0_142M, and set properties
   set rst_ps7_0_142M [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 rst_ps7_0_142M ]
@@ -726,6 +719,7 @@ proc create_root_design { parentCell } {
   # Restore current instance
   current_bd_instance $oldCurInst
 
+  validate_bd_design
   save_bd_design
 }
 # End of create_root_design()
