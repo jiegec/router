@@ -89,3 +89,4 @@ Packages
 !.gitmodules
 !*.tex
 !*.pdf
+!*.png

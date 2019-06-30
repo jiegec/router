@@ -1,5 +1,6 @@
 \documentclass{ctexart}
 \usepackage{enumerate}
+\usepackage{graphicx}
 \newcommand{\tmaffiliation}[1]{\\ #1}
 
 \begin{document}
@@ -85,6 +86,8 @@
 
   在写入 ARP 表的时机选择上，采取了接受到一个 ARP 请求/回复的时候，按照 Sender IP 和 Sender MAC Address 来插入。这样免去了在大量 IP 转发时不断更新 ARP 表，也能保证正确性和效率。
 
+  在 router/docs/ 下有一个单独的 ARP 表的文档。
+
 \subsubsection{转发表}
   转发表和 ARP 表类似，也是一个数据结构，但是为了保证最长匹配，要求转发表中的表项按照前缀长度不降来排列，这样只要找到第一条匹配的，就可以保证是最长匹配。有一些论文探讨了如何采用更高效的树的接口来进行同样的操作，在本次实验中并没有实验，留作后人继续改进。
 
@@ -108,4 +111,20 @@
   以上的步骤，都是流水线操作，等到前一步得到足够的信息后立即开始下一步，如转发 IP 包时，只要读取到 IP 头中的目的 IP 地址信息就开始查询，这样可以保证转发的效率，这就是为什么把 ARP 表和转发表放全局并不会带来太多的性能损失的原因。
 
 \subsection{软件部分（ARM/MicroBlaze over AX7021/Pynq）}
+  在实现完硬件部分后，就开始了软件部分的编写。最初的目标就是实现一个 RIP 路由器，后来在这个基础上又增加了 HDMI 的可视化输出功能，最后移植一部分功能到 MicroBlaze 和 Pynq-Z1 with KSZ8795 平台上。
+
+  最初实现一个可用的 ARM 上运行的软硬结合的路由器大概需要这些步骤：
+
+  \begin{itemize}
+    \item 修改硬件部分，使得它可以给 CPU 收/发以太网帧，也可以让 CPU 读写转发表，并读取统计信息，具体的实现方法在上面硬件部分已经有讲述。
+    \item 在 Xilinx SDK 中采用 Xilinx 提供的 BSP 里对应的驱动：AXI Bram Controller，AXI-Stream FIFO 和 AXI GPIO 来和硬件部分交互，分别负责转发表的更新，以太网帧的收发和统计数据的读取。
+    \item 接着，用 C 代码实现简单的轮询，不断从 AXI-Stream FIFO 中读取以太网帧，并注册一个时钟中断，每秒进行一次更新，输出当前状态并把路由表写入转发表。
+    \item 接着实现 ARP 响应，RIP的接收和广播，按照规则更新路由表。
+    \item 最后添加 HDMI 输出，通过 VDMA 把 FrameBuffer 更新到视频输出，以 20fps 的帧率更新显示，手动绘制各个图案和文字。
+  \end{itemize}
+
+  \begin{figure}[htbp]
+    \includegraphics[width=\linewidth]{router.png}
+    \caption{组件之间连接的图示}
+  \end{figure}
 \end{document}
