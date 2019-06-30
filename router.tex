@@ -54,6 +54,11 @@
 
   其中 router 项目为最早出现的子项目，首先作为一个纯硬件项目开始开发，实现完硬件转发后，开始实现软件部分，继续扩展后，为了测试在不同平台和情况下的使用，把它分离出单独的 naiverouter 项目，以一个独立的 IP 的形式加入到其余的项目之中。
 
+\subsection{实验环境}
+  项目都采用 Vivado 2018.3 版本，只要打开相应的工程，得到相应的 bitstream 后，打开 Vivado SDK ，编译并写入 bitstream 后就可以得到期望的结果。详情请查询 Vivado 相关文档。
+
+  使用的硬件有：Alinx AX7021 ，它核心是一个 Xilinx Zynq 7020 （xc7z020clg484-2），扩展板上有4PL+1PS个网口；Pynq-Z1 和 KSZ8795 扩展板，扩展板上有四个网口，用于测试 KSZ8795 芯片的功能。
+
 \section{具体实现}
 \subsection{硬件部分（NaiveRouter）}
 \subsubsection{总体架构}
