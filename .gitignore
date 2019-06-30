@@ -87,5 +87,5 @@ Packages
 !README.md
 !docs/*
 !.gitmodules
-!*.tm
+!*.tex
 !*.pdf
