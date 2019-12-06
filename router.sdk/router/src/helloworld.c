@@ -358,16 +358,16 @@ int routingTableCmp(const void *a, const void *b) {
     } else if (aa->metric >= 16 && bb->metric < 16) {
         return 1;
     }
-    // larget netmask first
+    // largeet netmask first
     if (aa->netmask > bb->netmask)
         return -1;
     else if (aa->netmask < bb->netmask)
         return 1;
 
-    // larget ip first
-    if (aa->ip > bb->ip)
+    // smallest ip first
+    if (aa->ip < bb->ip)
         return -1;
-    else if (aa->ip < bb->ip)
+    else if (aa->ip > bb->ip)
         return 1;
     return 0;
 }
