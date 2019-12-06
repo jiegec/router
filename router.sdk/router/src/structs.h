@@ -91,6 +91,7 @@ struct Route {
     u32 nexthop;
     u32 port;
     u32 updateTime;
+    u32 origin;
 };
 
 #endif /* SRC_STRUCTS_H_ */

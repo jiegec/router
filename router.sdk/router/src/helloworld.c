@@ -212,6 +212,9 @@ void handleEthernetFrame(u8 port, u8 *data) {
                 // RIP
                 printf("Got RIP response from port %d:\n", port);
                 u16 totalLength = bswap16(ip->totalLength);
+                u32 sourceIP;
+                memcpy(&sourceIP, ip->sourceIP, sizeof(u32));
+                sourceIP = bswap32(sourceIP);
                 int totalRoutes = (totalLength - 20 - 8 - 4) / 20;
                 for (int routes = 0;routes < totalRoutes;routes++) {
                     u32 ip_net = bswap32(ip->payload.udp.payload.rip.routes[routes].ip);
@@ -231,36 +234,45 @@ void handleEthernetFrame(u8 port, u8 *data) {
                     printIP(nexthop);
                     printf(" metric %ld\n", metric);
 
+                    metric += 1;
+                    if (metric > 16) {
+                        metric = 16;
+                    }
+
                     int flag = 0;
                     for (int i = 0;i < routingTableSize;i++) {
                         if (routingTable[i].ip == ip_net && routingTable[i].netmask == netmask) {
-                            if (metric >= 16) {
-                                if (routingTable[i].port == port) {
+                            if (routingTable[i].origin == sourceIP) {
+                                routingTable[i].updateTime = time;
+                            }
+                            if (metric < routingTable[i].metric || memcmp(ip->sourceIP, &routingTable[i].origin, 4) == 0) {
+                                // update this entry
+                                if (metric >= 16) {
                                     // remove this entry
                                     memmove(&routingTable[i], &routingTable[i+1], sizeof(struct Route) * (routingTableSize - i - 1));
                                     routingTableSize --;
                                     i --;
+                                } else {
+                                    routingTable[i].metric = metric;
+                                    routingTable[i].nexthop = nexthop;
+                                    routingTable[i].port = port;
+                                    routingTable[i].updateTime = time;
                                 }
-                            } else if (metric < routingTable[i].metric) {
-                                // update this entry
-                                routingTable[i].metric = metric + 1;
-                                routingTable[i].nexthop = nexthop;
-                                routingTable[i].port = port;
-                                routingTable[i].updateTime = time;
                             }
                             flag = 1;
                             break;
                         }
                     }
                     
-                    if (!flag) {
+                    if (!flag && metric < 16) {
                         // add this entry
                         routingTable[routingTableSize].ip = ip_net;
                         routingTable[routingTableSize].netmask = netmask;
                         routingTable[routingTableSize].nexthop = nexthop;
                         routingTable[routingTableSize].port = port;
-                        routingTable[routingTableSize].metric = metric + 1;
+                        routingTable[routingTableSize].metric = metric;
                         routingTable[routingTableSize].updateTime = time;
+                        routingTable[routingTableSize].origin = sourceIP;
                         routingTableSize ++;
                     }
                 }
@@ -289,20 +301,19 @@ void sendRIPReponse() {
 
         int routes = 0;
         for (int r = 0;r < routingTableSize;r++) {
+            ip->payload.udp.payload.rip.routes[routes].family = bswap16(2);
+            ip->payload.udp.payload.rip.routes[routes].routeTag = 0;
+            ip->payload.udp.payload.rip.routes[routes].ip = bswap32(routingTable[r].ip);
+            ip->payload.udp.payload.rip.routes[routes].netmask = bswap32(routingTable[r].netmask);
+            ip->payload.udp.payload.rip.routes[routes].nexthop = bswap32(0);
             if (routingTable[r].port != port) {
                 // not this port, split horizon
-                ip->payload.udp.payload.rip.routes[routes].family = bswap16(2);
-                ip->payload.udp.payload.rip.routes[routes].routeTag = 0;
-                ip->payload.udp.payload.rip.routes[routes].ip = bswap32(routingTable[r].ip);
-                ip->payload.udp.payload.rip.routes[routes].netmask = bswap32(routingTable[r].netmask);
-                ip->payload.udp.payload.rip.routes[routes].nexthop = bswap32(0);
-                if (routingTable[r].metric >= 16) {
-                    ip->payload.udp.payload.rip.routes[routes].metric = bswap32(16);
-                } else {
-                    ip->payload.udp.payload.rip.routes[routes].metric = bswap32(routingTable[r].metric);
-                }
-                routes++;
+                ip->payload.udp.payload.rip.routes[routes].metric = bswap32(routingTable[r].metric);
+            } else {
+                // from this port, reverse poisoning
+                ip->payload.udp.payload.rip.routes[routes].metric = bswap32(16);
             }
+            routes++;
         }
 
         if (routes == 0) {
@@ -414,14 +425,15 @@ void printCurrentRoutingTable() {
             printIP(routingTable[i].netmask);
             printf(" via ");
             printIP(routingTable[i].nexthop);
-            printf(" dev port%ld metric %ld timer %ld\n", routingTable[i].port, routingTable[i].metric, time - routingTable[i].updateTime);
+            printf(" dev port%ld metric %ld timer %ld learned from ", routingTable[i].port, routingTable[i].metric, time - routingTable[i].updateTime);
+            printIP(routingTable[i].origin);
+            printf("\n");
         } else {
             printf("\t%d: ", i);
             printIP(routingTable[i].ip);
             printf(" netmask ");
             printIP(routingTable[i].netmask);
             printf(" dev port%ld\n", routingTable[i].port);
-
         }
     }
     applyCurrentRoutingTable();
@@ -664,6 +676,7 @@ int main()
         routingTable[i].nexthop = 0; // direct route
         routingTable[i].port = i;
         routingTable[i].updateTime = 0;
+        routingTable[i].origin = 0; // myself
         routingTableSize++;
     }
 
