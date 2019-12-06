@@ -10,4 +10,6 @@ webtalk/
 !.project
 !.cproject
 !*.mss
+!*.bif
+!/Makefile
 RemoteSystems*/

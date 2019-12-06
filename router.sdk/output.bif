@@ -1,0 +1,7 @@
+//arch = zynq; split = false; format = BIN
+the_ROM_image:
+{
+	[bootloader]./fsbl/Debug/fsbl.elf
+	./design_1_wrapper_hw_platform_0/design_1_wrapper.bit
+	./router/Debug/router.elf
+}
