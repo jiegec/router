@@ -223,7 +223,7 @@ void handleEthernetFrame(u8 port, u8 *data) {
                     }
                     u32 metric = bswap32(ip->payload.udp.payload.rip.routes[routes].metric);
 
-                    printf("\t%d:", routes);
+                    printf("\t%d: ", routes);
                     printIP(ip_net);
                     printf(" netmask ");
                     printIP(netmask);
