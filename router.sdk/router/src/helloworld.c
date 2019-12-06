@@ -140,6 +140,16 @@ void fillIpChecksum(struct Ip *ip) {
     ip->headerChecksum = ~checksum;
 }
 
+void fillIcmpChecksum(struct Icmp *icmp, u32 length) {
+    icmp->checksum = 0;
+    u16 *data = ((u16 *)icmp);
+    u16 checksum = 0;
+    for (int i = 0; i < length / 2; i++) {
+        checksum = checksumAdd(checksum, data[i]);
+    }
+    icmp->checksum = ~checksum;
+}
+
 void printIP(u32 ip) {
     int p1 = ip >> 24, p2 = (ip >> 16) & 0xFF, p3 = (ip >> 8) & 0xFF, p4 = ip & 0xFF;
     printf("%d.%d.%d.%d", p1, p2, p3, p4);
@@ -178,7 +188,10 @@ void handleEthernetFrame(u8 port, u8 *data) {
         // IP
         struct Ip *ip = (struct Ip *)data;
         struct Ip *ipResp = (struct Ip *)buffer;
-        if (ip->protocol == 1) {
+        u32 destIP;
+        memcpy(&destIP, ip->destIP, sizeof(u32));
+        destIP = bswap32(destIP);
+        if (ip->protocol == 1 && destIP == portIP) {
             // ICMP
             if (ip->payload.icmp.type == 8) {
                 //printf("Got ICMP echo request\n");
@@ -278,6 +291,33 @@ void handleEthernetFrame(u8 port, u8 *data) {
                 }
 
             }
+        } else if (ip->ttl == 1) {
+            // send ICMP Time Exceeded
+            memcpy(ipResp->ethernet.dstMAC, ip->ethernet.srcMAC, 6);
+            memcpy(ipResp->ethernet.srcMAC, portMAC, 6);
+            ipResp->ethernet.etherType = bswap16(0x0800);
+            ipResp->versionIHL = 0x45;
+            ipResp->dsf = 0;
+            u16 totalLength = 20 + 4 + 4 + 20 + 8;
+            ipResp->totalLength = bswap16(totalLength);
+            ipResp->identification = 0;
+            ipResp->flags = 0;
+            ipResp->ttl = 64;
+            ipResp->protocol = 1;
+            ipResp->headerChecksum = 0;
+            memcpy(ipResp->sourceIP, portIP, 4);
+            memcpy(ipResp->destIP, ip->sourceIP, 4);
+            ipResp->payload.icmp.type = 11; // Time exceeded
+            ipResp->payload.icmp.code = 0;
+            ipResp->payload.icmp.checksum = 0;
+            // unused
+            memset(ipResp->payload.icmp.data, 0, 4);
+            // assuming IHL=5
+            memcpy(ipResp->payload.icmp.data + 4, &ip->versionIHL, 20 + 8);
+
+            fillIcmpChecksum(&ipResp->payload.icmp, 4 + 4 + 20 + 8);
+            fillIpChecksum(ipResp);
+            sendToFifo(port, buffer, totalLength + 14);
         }
     }
 }
@@ -533,7 +573,7 @@ void timerInterruptHandler(void *data) {
         if ((time % 10) == 0) {
             sendRIPReponse();
         }
-        printf("time %d:\n", time);
+        printf("time %ld:\n", time);
         printCurrentRoutingTable();
     }
 
