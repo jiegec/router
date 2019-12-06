@@ -489,6 +489,10 @@ void timerInterruptHandler(void *data) {
         curChan82 = chan82;
 
         for (int i = 0;i < routingTableSize;i++) {
+            if (routingTable[i].nexthop == 0) {
+                // direct routes, skip
+                continue;
+            }
             if ((time - routingTable[i].updateTime) > INVALID_TIME) {
                 routingTable[i].metric = 16;
             }
@@ -642,7 +646,18 @@ int main()
     XScuGic_Enable(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR);
     XScuTimer_EnableInterrupt(&timerInstance);
 
+    for (int i = 0; i < 4;i++) {
+        routingTable[i].ip = 0x0a000000 + (i << 8);
+        routingTable[i].netmask = 0xffffff00;
+        routingTable[i].metric = 1;
+        routingTable[i].nexthop = 0; // direct route
+        routingTable[i].port = i;
+        routingTable[i].updateTime = 0;
+        routingTableSize++;
+    }
+
     Xil_ExceptionEnable();
+
 
     printf("Waiting for data\n");
     for (int time = 0;;time++) {
