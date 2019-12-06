@@ -9,3 +9,4 @@ webtalk/
 *.prefs
 !.project
 !.cproject
+RemoteSystems*/

@@ -502,6 +502,7 @@ void timerInterruptHandler(void *data) {
         if ((time % 10) == 0) {
             sendRIPReponse();
         }
+        printf("time %d:\n", time);
         printCurrentRoutingTable();
     }
 
