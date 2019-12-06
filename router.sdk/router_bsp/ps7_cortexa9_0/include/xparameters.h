@@ -27,6 +27,7 @@
 #define PLATFORM_ZYNQ
  
 /* Definitions for sleep timer configuration */
+#define XSLEEP_TIMER_IS_DEFAULT_TIMER
  
  
 /******************************************************************/
@@ -70,6 +71,7 @@
 #define XPAR_AXI_VDMA_0_ENABLE_DEBUG_INFO_15 1U
 #define XPAR_AXI_VDMA_0_ENABLE_DEBUG_ALL 0U
 #define XPAR_AXI_VDMA_0_ADDR_WIDTH 32U
+#define XPAR_AXI_VDMA_0_ENABLE_VERT_FLIP 0U
 
 
 /******************************************************************/
@@ -111,6 +113,7 @@
 #define XPAR_AXIVDMA_0_ENABLE_DEBUG_INFO_15 1U
 #define XPAR_AXIVDMA_0_ENABLE_DEBUG_ALL 0U
 #define XPAR_AXIVDMA_0_c_addr_width 32U
+#define XPAR_AXIVDMA_0_c_enable_vert_flip 0U
 
 
 /******************************************************************/
@@ -596,6 +599,7 @@
 #define XPAR_XSDPS_0_BUS_WIDTH 0
 #define XPAR_XSDPS_0_MIO_BANK 0
 #define XPAR_XSDPS_0_HAS_EMIO 0
+#define XPAR_XSDPS_0_IS_CACHE_COHERENT 0
 
 
 /******************************************************************/

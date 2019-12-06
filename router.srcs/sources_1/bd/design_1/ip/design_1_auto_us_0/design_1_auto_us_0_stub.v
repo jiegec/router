@@ -1,8 +1,8 @@
 // Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
-// Date        : Mon Jun 17 01:18:41 2019
-// Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.2 LTS
+// Date        : Fri Dec  6 13:08:42 2019
+// Host        : oslab-Ubuntu16 running 64-bit Ubuntu 18.04.3 LTS
 // Command     : write_verilog -force -mode synth_stub -rename_top design_1_auto_us_0 -prefix
 //               design_1_auto_us_0_ design_1_auto_us_0_stub.v
 // Design      : design_1_auto_us_0

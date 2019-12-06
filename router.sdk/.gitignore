@@ -7,3 +7,5 @@ router.hdf
 *.bit
 webtalk/
 *.prefs
+!.project
+!.cproject
