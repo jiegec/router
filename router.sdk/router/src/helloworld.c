@@ -358,7 +358,7 @@ int routingTableCmp(const void *a, const void *b) {
     } else if (aa->metric >= 16 && bb->metric < 16) {
         return 1;
     }
-    // largeet netmask first
+    // largest netmask first
     if (aa->netmask > bb->netmask)
         return -1;
     else if (aa->netmask < bb->netmask)
