@@ -363,8 +363,13 @@ int routingTableCmp(const void *a, const void *b) {
         return -1;
     else if (aa->netmask < bb->netmask)
         return 1;
-    else
-        return 0;
+
+    // larget ip first
+    if (aa->ip > bb->ip)
+        return -1;
+    else if (aa->ip < bb->ip)
+        return 1;
+    return 0;
 }
 
 void applyCurrentRoutingTable() {
