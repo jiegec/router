@@ -279,7 +279,7 @@ void sendRIPReponse() {
     u32 buffer[512];
     for (u8 port = 0;port < ENABLE_PORT;port++) {
         u8 portIP[] = {10, 0, port, 1};
-        u8 ripIP[4] = {10, 0, port, 255};
+        u8 ripIP[4] = {224, 0, 0, 9};
         struct Ip *ip = (struct Ip *) buffer;
         memcpy(ip->ethernet.dstMAC, ripMAC, 6);
         memcpy(ip->ethernet.srcMAC, portMAC, 6);
@@ -290,7 +290,7 @@ void sendRIPReponse() {
         int routes = 0;
         for (int r = 0;r < routingTableSize;r++) {
             if (routingTable[r].port != port) {
-                // not this port
+                // not this port, split horizon
                 ip->payload.udp.payload.rip.routes[routes].family = bswap16(2);
                 ip->payload.udp.payload.rip.routes[routes].routeTag = 0;
                 ip->payload.udp.payload.rip.routes[routes].ip = bswap32(routingTable[r].ip);
@@ -320,7 +320,7 @@ void sendRIPReponse() {
         ip->totalLength = bswap16(totalLength);
         ip->identification = 0;
         ip->flags = 0;
-        ip->ttl = 64;
+        ip->ttl = 1;
         ip->protocol = 17; // UDP
         memcpy(ip->sourceIP, portIP, 4);
         memcpy(ip->destIP, ripIP, 4);
