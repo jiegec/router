@@ -9,4 +9,5 @@ webtalk/
 *.prefs
 !.project
 !.cproject
+!*.mss
 RemoteSystems*/

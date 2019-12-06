@@ -381,7 +381,7 @@ u32 all_routes[1024][4];
 void printCurrentRoutingTable() {
     u32 offset = 0;
     int j = 0;
-    for (int flag = 1;flag;j++) {
+    for (int flag = 1;flag && j < 1024;j++) {
         u32 route[4];
         flag = 0;
         for (u32 i = 0;i < 4;i++) {
@@ -406,13 +406,23 @@ void printCurrentRoutingTable() {
     }
     printf("Software table:\n");
     for (int i = 0;i < routingTableSize;i++) {
-        printf("\t%d: ", i);
-        printIP(routingTable[i].ip);
-        printf(" netmask ");
-        printIP(routingTable[i].netmask);
-        printf(" via ");
-        printIP(routingTable[i].nexthop);
-        printf(" dev port%ld metric %ld timer %ld\n", routingTable[i].port, routingTable[i].metric, time - routingTable[i].updateTime);
+        if (routingTable[i].nexthop != 0) {
+            // indirect
+            printf("\t%d: ", i);
+            printIP(routingTable[i].ip);
+            printf(" netmask ");
+            printIP(routingTable[i].netmask);
+            printf(" via ");
+            printIP(routingTable[i].nexthop);
+            printf(" dev port%ld metric %ld timer %ld\n", routingTable[i].port, routingTable[i].metric, time - routingTable[i].updateTime);
+        } else {
+            printf("\t%d: ", i);
+            printIP(routingTable[i].ip);
+            printf(" netmask ");
+            printIP(routingTable[i].netmask);
+            printf(" dev port%ld\n", routingTable[i].port);
+
+        }
     }
     applyCurrentRoutingTable();
 }
@@ -646,7 +656,8 @@ int main()
     XScuGic_Enable(&gicInstance, XPAR_PS7_SCUTIMER_0_INTR);
     XScuTimer_EnableInterrupt(&timerInstance);
 
-    for (int i = 0; i < 4;i++) {
+    routingTableSize = 0;
+    for (int i = 0; i < 4; i++) {
         routingTable[i].ip = 0x0a000000 + (i << 8);
         routingTable[i].netmask = 0xffffff00;
         routingTable[i].metric = 1;
